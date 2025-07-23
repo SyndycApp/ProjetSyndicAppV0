@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SyndicApp.Infrastructure.Persistence;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 

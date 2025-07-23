@@ -17,8 +17,9 @@ public class LocalCommercial : BaseEntity
     public Guid? LocataireId { get; set; }
     public User? Locataire { get; set; }
 
-    public Guid? ActiviteCommercialeId { get; set; }
-    public ActiviteCommerciale? Activite { get; set; }
+    public Guid? ActiviteId { get; set; }
+    public virtual ActiviteCommerciale? Activite { get; set; }
 
     public string? ContratLocationUrl { get; set; }  // fichier PDF, facultatif
+
 }

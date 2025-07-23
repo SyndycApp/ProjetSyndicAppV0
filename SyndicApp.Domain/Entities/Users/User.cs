@@ -2,6 +2,7 @@ using SyndicApp.Domain.Entities.Common;
 using SyndicApp.Domain.Entities.Communication;
 using SyndicApp.Domain.Entities.Finances;
 using SyndicApp.Domain.Entities.Residences;
+using SyndicApp.Domain.Entities.Assemblees;
 using System;
 using System.Collections.Generic;
 
@@ -22,4 +23,9 @@ public class User : BaseEntity
     public ICollection<Message> MessagesEnvoyes { get; set; } = new List<Message>();
     public ICollection<Notification> Notifications { get; set; } = new List<Notification>();
     public ICollection<Paiement> Paiements { get; set; } = new List<Paiement>();
+    public ICollection<AffectationLot> AffectationsLots { get; set; } = new List<AffectationLot>();
+    public virtual ICollection<Vote> Votes { get; set; } = new List<Vote>();
+    public ICollection<UserConversation> UserConversations { get; set; } = new List<UserConversation>();
+
+
 }

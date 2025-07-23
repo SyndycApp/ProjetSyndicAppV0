@@ -2,6 +2,7 @@ using SyndicApp.Domain.Entities.Common;
 using SyndicApp.Domain.Entities.Personnel;
 using SyndicApp.Domain.Entities.Residences;
 using System.Collections.Generic;
+using SyndicApp.Domain.Entities.Incidents;
 
 namespace SyndicApp.Domain.Entities.Personnel;
 

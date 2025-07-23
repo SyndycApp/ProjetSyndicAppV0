@@ -17,3 +17,4 @@ public class AffectationLot : BaseEntity
 
     public bool EstProprietaire { get; set; }
 }
+

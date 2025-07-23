@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using SyndicApp.Domain.Entities.Common;
 
 namespace SyndicApp.Domain.Entities.Residences
 {

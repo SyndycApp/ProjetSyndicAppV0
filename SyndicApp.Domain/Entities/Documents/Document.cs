@@ -8,16 +8,19 @@ namespace SyndicApp.Domain.Entities.Documents;
 
 public class Document : BaseEntity
 {
+
     public string Nom { get; set; } = string.Empty;
     public string CheminFichier { get; set; } = string.Empty;
     public DateTime DateAjout { get; set; }
 
-    public Guid? CategorieDocumentId { get; set; }
-    public CategorieDocument? Categorie { get; set; }
+    public Guid? CategorieId { get; set; }
+    public virtual CategorieDocument? Categorie { get; set; }
 
     public Guid? ResidenceId { get; set; }
     public Residence? Residence { get; set; }
 
     public Guid? AjouteParId { get; set; }
     public User? AjoutePar { get; set; }
+
+
 }

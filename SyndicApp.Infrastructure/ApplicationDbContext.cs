@@ -12,6 +12,7 @@ using SyndicApp.Domain.Entities.LocauxCommerciaux;
 using SyndicApp.Domain.Entities.Personnel;
 using SyndicApp.Domain.Entities.Residences;
 using SyndicApp.Domain.Entities.Users;
+using SyndicApp.Infrastructure.Identity;
 using System;
 
 namespace SyndicApp.Infrastructure.Persistence
@@ -60,6 +61,7 @@ namespace SyndicApp.Infrastructure.Persistence
         // Communication
         public DbSet<Conversation> Conversations => Set<Conversation>();
         public DbSet<Message> Messages => Set<Message>();
+        public DbSet<UserConversation> UserConversations => Set<UserConversation>();
 
         // Locaux commerciaux
         public DbSet<LocalCommercial> LocauxCommerciaux => Set<LocalCommercial>();
@@ -72,43 +74,37 @@ namespace SyndicApp.Infrastructure.Persistence
         {
             base.OnModelCreating(modelBuilder);
 
-            // Relations AffectationLot
+            // === Relations Clés Composées ===
+
+            // AffectationLot (User - Lot)
             modelBuilder.Entity<AffectationLot>()
-                .HasKey(al => new { al.UserId, al.LotId });
+                .HasKey(a => new { a.UserId, a.LotId });
 
             modelBuilder.Entity<AffectationLot>()
-                .HasOne(al => al.User)
+                .HasOne(a => a.User)
                 .WithMany(u => u.AffectationsLots)
-                .HasForeignKey(al => al.UserId);
+                .HasForeignKey(a => a.UserId);
 
             modelBuilder.Entity<AffectationLot>()
-                .HasOne(al => al.Lot)
+                .HasOne(a => a.Lot)
                 .WithMany(l => l.AffectationsLots)
-                .HasForeignKey(al => al.LotId);
+                .HasForeignKey(a => a.LotId);
 
-            // Paiement
-            modelBuilder.Entity<Paiement>()
-                .HasOne(p => p.AppelDeFonds)
-                .WithMany(a => a.Paiements)
-                .HasForeignKey(p => p.AppelDeFondsId);
+            // UserConversation (User - Conversation)
+            modelBuilder.Entity<UserConversation>()
+                .HasKey(uc => new { uc.UserId, uc.ConversationId });
 
-            modelBuilder.Entity<Paiement>()
-                .HasOne(p => p.User)
-                .WithMany(u => u.Paiements)
-                .HasForeignKey(p => p.UserId);
+            modelBuilder.Entity<UserConversation>()
+                .HasOne(uc => uc.User)
+                .WithMany(u => u.UserConversations)
+                .HasForeignKey(uc => uc.UserId);
 
-            // Intervention
-            modelBuilder.Entity<Intervention>()
-                .HasOne(i => i.Incident)
-                .WithMany(x => x.Interventions)
-                .HasForeignKey(i => i.IncidentId);
+            modelBuilder.Entity<UserConversation>()
+                .HasOne(uc => uc.Conversation)
+                .WithMany(c => c.UserConversations)
+                .HasForeignKey(uc => uc.ConversationId);
 
-            modelBuilder.Entity<Intervention>()
-                .HasOne(i => i.Employe)
-                .WithMany(e => e.Interventions)
-                .HasForeignKey(i => i.EmployeId);
-
-            // Vote
+            // Vote (AG - User)
             modelBuilder.Entity<Vote>()
                 .HasKey(v => new { v.AssembleeGeneraleId, v.UserId });
 
@@ -122,42 +118,73 @@ namespace SyndicApp.Infrastructure.Persistence
                 .WithMany(u => u.Votes)
                 .HasForeignKey(v => v.UserId);
 
-            // Lot -> Residence
+            // === Relations Simples ===
+
+            modelBuilder.Entity<Paiement>()
+                .HasOne(p => p.AppelDeFonds)
+                .WithMany(a => a.Paiements)
+                .HasForeignKey(p => p.AppelDeFondsId);
+
+            modelBuilder.Entity<Paiement>()
+                .HasOne(p => p.User)
+                .WithMany(u => u.Paiements)
+                .HasForeignKey(p => p.UserId);
+
+            modelBuilder.Entity<Intervention>()
+                .HasOne(i => i.Incident)
+                .WithMany(x => x.Interventions)
+                .HasForeignKey(i => i.IncidentId);
+
+            modelBuilder.Entity<Intervention>()
+                .HasOne(i => i.Employe)
+                .WithMany(e => e.Interventions)
+                .HasForeignKey(i => i.EmployeId);
+
             modelBuilder.Entity<Lot>()
                 .HasOne(l => l.Residence)
                 .WithMany(r => r.Lots)
                 .HasForeignKey(l => l.ResidenceId);
 
-            // LocataireTemporaire -> Lot
             modelBuilder.Entity<LocataireTemporaire>()
                 .HasOne(lt => lt.Lot)
                 .WithMany(l => l.LocationsTemporaires)
                 .HasForeignKey(lt => lt.LotId);
 
-            // Document -> Catégorie
             modelBuilder.Entity<Document>()
                 .HasOne(d => d.Categorie)
                 .WithMany(c => c.Documents)
                 .HasForeignKey(d => d.CategorieId);
 
-            // Annonce -> Catégorie
             modelBuilder.Entity<Annonce>()
                 .HasOne(a => a.Categorie)
                 .WithMany(c => c.Annonces)
                 .HasForeignKey(a => a.CategorieId);
 
-            // LocalCommercial -> Activite
             modelBuilder.Entity<LocalCommercial>()
                 .HasOne(l => l.Activite)
                 .WithMany(a => a.Locaux)
                 .HasForeignKey(l => l.ActiviteId);
 
-            // Message -> Conversation
             modelBuilder.Entity<Message>()
                 .HasOne(m => m.Conversation)
                 .WithMany(c => c.Messages)
                 .HasForeignKey(m => m.ConversationId);
 
+            // === Précision sur les champs decimal ===
+
+            modelBuilder.Entity<AppelDeFonds>()
+                .Property(a => a.MontantTotal)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<Charge>()
+                .Property(c => c.Montant)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<Paiement>()
+                .Property(p => p.Montant)
+                .HasPrecision(18, 2);
+
+            // === Application auto de IEntityTypeConfiguration<T> ===
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         }
     }

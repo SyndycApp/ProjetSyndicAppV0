@@ -11,9 +11,11 @@ public class Annonce : BaseEntity
     public string Contenu { get; set; } = string.Empty;
     public DateTime DatePublication { get; set; }
 
-    public Guid CategorieAnnonceId { get; set; }
-    public CategorieAnnonce CategorieAnnonce { get; set; } = null!;
+    public Guid CategorieId { get; set; }
+    public virtual CategorieAnnonce Categorie { get; set; } = null!;
 
     public Guid UserId { get; set; }
     public User User { get; set; } = null!;
+
+
 }

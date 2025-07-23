@@ -1,4 +1,5 @@
 using System;
+using SyndicApp.Domain.Entities.Common;
 
 namespace SyndicApp.Domain.Entities.Personnel
 {

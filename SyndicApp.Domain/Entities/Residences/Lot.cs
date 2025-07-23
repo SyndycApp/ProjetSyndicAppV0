@@ -15,5 +15,10 @@ public class Lot : BaseEntity
     public Residence Residence { get; set; } = null!;
 
     public ICollection<AffectationLot> Affectations { get; set; } = new List<AffectationLot>();
-    public ICollection<LocataireTemporaire> LocationsTemp { get; set; } = new List<LocataireTemporaire>();
+    public virtual ICollection<LocataireTemporaire> LocationsTemporaires { get; set; } = new List<LocataireTemporaire>();
+
+    public ICollection<AffectationLot> AffectationsLots { get; set; } = new List<AffectationLot>();
+
+
+
 }
