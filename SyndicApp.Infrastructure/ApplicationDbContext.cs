@@ -15,7 +15,7 @@ using SyndicApp.Domain.Entities.Users;
 using SyndicApp.Infrastructure.Identity;
 using System;
 
-namespace SyndicApp.Infrastructure.Persistence
+namespace SyndicApp.Infrastructure
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {

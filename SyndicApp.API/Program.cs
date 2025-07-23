@@ -1,32 +1,52 @@
-using Microsoft.EntityFrameworkCore;
-using SyndicApp.Infrastructure.Persistence;
-using Microsoft.OpenApi.Models;
+Ôªøusing Microsoft.OpenApi.Models;
+using SyndicApp.Infrastructure;
+using System.Text.Json.Serialization;
+using SyndicApp.Infrastructure.Identity;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. Configuration de la chaÓne de connexion SQL Server
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+// Ajout de la config JWT depuis appsettings
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
 
-// 2. Ajout des services de contrÙleurs API
-builder.Services.AddControllers();
+// Ajouter les services
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
 
-// 3. Swagger (OpenAPI) pour líenvironnement de dÈveloppement
+// Swagger
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "SyndicApp API",
+        Version = "v1",
+        Description = "API de gestion pour l'application SyndicApp"
+    });
+});
+
+// üîê Ajout d'Identity + JWT + DbContext
+builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
-// 4. Middleware pipeline
+// Swagger en dev
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "SyndicApp API v1");
+        c.RoutePrefix = string.Empty;
+    });
 }
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication(); // üîê N'oublie pas √ßa
 app.UseAuthorization();
 
 app.MapControllers();
