@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "LIhsHfQywY0=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\elala\\Desktop\\SyndicAppV0\\ProjetSyndicAppV0\\SyndicApp.API\\SyndicApp.API\\SyndicApp.API.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\elala\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.7\\microsoft.aspnetcore.openapi.9.0.7.nupkg.sha512",
+    "C:\\Users\\elala\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}
