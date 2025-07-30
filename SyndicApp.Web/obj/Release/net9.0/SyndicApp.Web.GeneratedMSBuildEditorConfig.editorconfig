@@ -24,12 +24,8 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Counter.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/FetchData.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRmV0Y2hEYXRhLnJhem9y
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = TWFpbkxheW91dC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/ForgotPassword.razor]
@@ -42,6 +38,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Login.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9naW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Logout.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9nb3V0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTmF2TWVudS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Register.razor]

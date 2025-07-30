@@ -1,5 +1,11 @@
 @page "/register"
 @using SyndicApp.Application.DTOs.Auth
+@using System.Net.Http.Json
+@using System.Text.Json
+@using System.Text.Json.Serialization
+
+@inject HttpClient Http
+@inject NavigationManager Navigation
 
 <style>
     .register-container {
@@ -37,6 +43,7 @@
         margin-top: 1rem;
         text-align: center;
         font-weight: 600;
+        white-space: pre-wrap;
     }
 
     .register-links {
@@ -125,17 +132,46 @@
     private async Task HandleRegister()
     {
         errorMessage = null;
+
         try
         {
             var response = await Http.PostAsJsonAsync("api/auth/register", registerModel);
+
             if (response.IsSuccessStatusCode)
             {
                 Navigation.NavigateTo("/login");
+                return;
+            }
+
+            var raw = await response.Content.ReadAsStringAsync();
+
+            if (string.IsNullOrWhiteSpace(raw))
+            {
+                errorMessage = "Erreur serveur inconnue (réponse vide)";
             }
             else
             {
-                var content = await response.Content.ReadAsStringAsync();
-                errorMessage = $"Échec de l'inscription : {content}";
+                try
+                {
+                    var errorObj = JsonSerializer.Deserialize<ErrorResponse>(raw, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    });
+
+                    if (errorObj != null && !string.IsNullOrEmpty(errorObj.Message))
+                    {
+                        errorMessage = $"Échec de l'inscription : {errorObj.Message}\n" +
+                                       $"{string.Join("\n", errorObj.Details ?? new List<string>())}";
+                    }
+                    else
+                    {
+                        errorMessage = $"Échec de l'inscription (raw) : '{raw}'";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    errorMessage = $"Erreur JSON: {ex.Message}";
+                }
             }
         }
         catch (Exception ex)
@@ -144,6 +180,9 @@
         }
     }
 
-    [Inject] public HttpClient Http { get; set; } = default!;
-    [Inject] public NavigationManager Navigation { get; set; } = default!;
+    private class ErrorResponse
+    {
+        public string? Message { get; set; }
+        public List<string>? Details { get; set; }
+    }
 }

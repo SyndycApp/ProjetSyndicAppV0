@@ -33,6 +33,15 @@ builder.Services.AddSwaggerGen(c =>
 // 🔐 Ajout d'Identity + JWT + DbContext
 builder.Services.AddInfrastructure(builder.Configuration);
 
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequiredLength = 6;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireLowercase = false;
+});
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())

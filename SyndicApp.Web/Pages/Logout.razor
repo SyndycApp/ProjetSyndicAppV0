@@ -1,0 +1,12 @@
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject NavigationManager navigation
+
+<button @onclick="PerformLogout">Se déconnecter</button>
+
+@code {
+    private async Task PerformLogout()
+    {
+        await localStorage.RemoveItemAsync("authToken");
+        navigation.NavigateTo("/login");
+    }
+}

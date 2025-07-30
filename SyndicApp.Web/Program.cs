@@ -1,19 +1,24 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
+using Blazored.LocalStorage;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Ajout des services Blazor Server
+// Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
-// Ajout de HttpClient pour injection dans les composants Razor
+// Add Blazored.LocalStorage
+builder.Services.AddBlazoredLocalStorage();
+
+// Configure HttpClient with base address
 builder.Services.AddHttpClient();
 
-builder.Services.AddScoped(sp => new HttpClient
+builder.Services.AddScoped(sp =>
 {
-    BaseAddress = new Uri("https://localhost:7263/") // ou l'URL de ton API
+    var client = sp.GetRequiredService<IHttpClientFactory>().CreateClient();
+    client.BaseAddress = new Uri("http://localhost:5041/");
+    return client;
 });
+
 
 var app = builder.Build();
 

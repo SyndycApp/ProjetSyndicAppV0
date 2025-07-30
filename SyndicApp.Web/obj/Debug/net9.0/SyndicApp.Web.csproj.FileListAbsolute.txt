@@ -46,3 +46,4 @@ C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Web\obj\Debug\net
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Web\obj\Debug\net9.0\SyndicApp.Web.pdb
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Web\obj\Debug\net9.0\SyndicApp.Web.genruntimeconfig.cache
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Web\obj\Debug\net9.0\ref\SyndicApp.Web.dll
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Web\bin\Debug\net9.0\Blazored.LocalStorage.dll

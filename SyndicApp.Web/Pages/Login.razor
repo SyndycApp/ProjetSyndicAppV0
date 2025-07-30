@@ -39,24 +39,25 @@
         font-weight: 600;
     }
 
-    .login-links {
+    input::placeholder {
+        color: #999;
+    }
+
+    .login-footer {
         margin-top: 1.5rem;
         text-align: center;
     }
 
-    .login-links a {
+    .login-footer a {
         color: #1c3d5a;
+        font-weight: 600;
         text-decoration: none;
         margin: 0 0.5rem;
-        font-weight: 500;
     }
 
-    .login-links a:hover {
+    .login-footer a:hover {
         text-decoration: underline;
-    }
-
-    input::placeholder {
-        color: #999;
+        color: #145374;
     }
 </style>
 
@@ -84,9 +85,9 @@
         <p class="error-message">@errorMessage</p>
     }
 
-    <div class="login-links">
+    <div class="login-footer">
         <a href="/register">Créer un compte</a> |
-        <a href="/forgot-password">Mot de passe oublié ?</a>
+        <a href="/forgotpassword">Mot de passe oublié ?</a>
     </div>
 </div>
 
