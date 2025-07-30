@@ -16,3 +16,5 @@ C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Infrastructure\ob
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Infrastructure\obj\Debug\net9.0\SyndicApp.Infrastructure.pdb
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Infrastructure\obj\Debug\net9.0\SyndicApp.Infrastructure.genruntimeconfig.cache
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Infrastructure\obj\Debug\net9.0\ref\SyndicApp.Infrastructure.dll
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Infrastructure\bin\Debug\net9.0\SyndicApp.Application.dll
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Infrastructure\bin\Debug\net9.0\SyndicApp.Application.pdb

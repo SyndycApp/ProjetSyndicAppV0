@@ -8,6 +8,8 @@ using SyndicApp.Domain.Entities.Users;
 using SyndicApp.Infrastructure;
 using SyndicApp.Infrastructure.Identity;
 using System.Text;
+using SyndicApp.Application.Interfaces;
+using SyndicApp.Infrastructure.Services;
 
 namespace SyndicApp.Infrastructure
 {
@@ -30,7 +32,7 @@ namespace SyndicApp.Infrastructure
             .AddDefaultTokenProviders();
 
             // 3. Lecture de la section JwtSettings
-            var jwtSettings = configuration.GetSection("JwtSettings").Get<JwtSettings>();
+            var jwtSettings = configuration.GetSection("JwtSettings").Get<JwtSettings>()!;
             var key = Encoding.UTF8.GetBytes(jwtSettings.Secret);
 
             // 4. Ajout de l’authentification JWT
@@ -56,6 +58,10 @@ namespace SyndicApp.Infrastructure
                     ClockSkew = TimeSpan.Zero // pas de délai de tolérance
                 };
             });
+
+            // Injection de AuthService et JwtTokenGenerator
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
 
             return services;
         }

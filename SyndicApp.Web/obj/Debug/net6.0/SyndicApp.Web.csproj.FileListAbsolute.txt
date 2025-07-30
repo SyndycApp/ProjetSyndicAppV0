@@ -1,0 +1,9 @@
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Web\obj\Debug\net6.0\rpswa.dswa.cache.json
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Web\obj\Debug\net6.0\SyndicApp.Web.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Web\obj\Debug\net6.0\SyndicApp.Web.AssemblyInfoInputs.cache
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Web\obj\Debug\net6.0\SyndicApp.Web.AssemblyInfo.cs
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Web\obj\Debug\net6.0\SyndicApp.Web.csproj.CoreCompileInputs.cache
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Web\obj\Debug\net6.0\SyndicApp.Web.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Web\obj\Debug\net6.0\SyndicApp.Web.RazorAssemblyInfo.cache
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Web\obj\Debug\net6.0\SyndicApp.Web.RazorAssemblyInfo.cs
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Web\obj\Debug\net6.0\SyndicApp.Web.sourcelink.json

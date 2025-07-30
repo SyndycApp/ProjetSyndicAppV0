@@ -2,6 +2,8 @@
 using SyndicApp.Infrastructure;
 using System.Text.Json.Serialization;
 using SyndicApp.Infrastructure.Identity;
+using Microsoft.AspNetCore.Identity;
+using SyndicApp.Infrastructure.Data;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,6 +35,15 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var logger = services.GetRequiredService<ILogger<Program>>();
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
+
+    await RolesSeeder.SeedAsync(roleManager, logger);
+    await SeedData.Initialize(services);
+}
 // Swagger en dev
 if (app.Environment.IsDevelopment())
 {

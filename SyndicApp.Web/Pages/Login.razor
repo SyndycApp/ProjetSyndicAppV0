@@ -1,0 +1,125 @@
+@page "/login"
+@using SyndicApp.Application.DTOs.Auth
+
+<style>
+    .login-container {
+        max-width: 400px;
+        margin: 3rem auto;
+        padding: 2rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        background-color: #fff;
+    }
+
+    .login-title {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        font-weight: 700;
+        color: #1c3d5a;
+        font-size: 1.8rem;
+    }
+
+    .btn-login {
+        width: 100%;
+        background-color: #1c3d5a;
+        border: none;
+        color: white;
+        font-weight: 600;
+    }
+
+    .btn-login:hover {
+        background-color: #145374;
+    }
+
+    .error-message {
+        color: #c00;
+        margin-top: 1rem;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .login-links {
+        margin-top: 1.5rem;
+        text-align: center;
+    }
+
+    .login-links a {
+        color: #1c3d5a;
+        text-decoration: none;
+        margin: 0 0.5rem;
+        font-weight: 500;
+    }
+
+    .login-links a:hover {
+        text-decoration: underline;
+    }
+
+    input::placeholder {
+        color: #999;
+    }
+</style>
+
+<div class="login-container">
+    <h2 class="login-title">Connexion</h2>
+
+    <EditForm Model="loginModel" OnValidSubmit="HandleLogin">
+        <DataAnnotationsValidator />
+
+        <div class="mb-3">
+            <InputText class="form-control" @bind-Value="loginModel.Email" placeholder="Adresse email" />
+            <ValidationMessage For="@(() => loginModel.Email)" />
+        </div>
+
+        <div class="mb-3">
+            <InputText class="form-control" @bind-Value="loginModel.Password" placeholder="Mot de passe" type="password" />
+            <ValidationMessage For="@(() => loginModel.Password)" />
+        </div>
+
+        <button type="submit" class="btn btn-login">Se connecter</button>
+    </EditForm>
+
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <p class="error-message">@errorMessage</p>
+    }
+
+    <div class="login-links">
+        <a href="/register">Créer un compte</a> |
+        <a href="/forgot-password">Mot de passe oublié ?</a>
+    </div>
+</div>
+
+@code {
+    private LoginDto loginModel = new();
+    private string? errorMessage;
+
+    private async Task HandleLogin()
+    {
+        errorMessage = null;
+        try
+        {
+            var response = await Http.PostAsJsonAsync("api/auth/login", loginModel);
+            if (response.IsSuccessStatusCode)
+            {
+                var user = await response.Content.ReadFromJsonAsync<UserDto>();
+                // TODO: Stocker le token et rediriger selon rôle
+                Navigation.NavigateTo("/");
+            }
+            else
+            {
+                errorMessage = "Échec de la connexion : email ou mot de passe incorrect.";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Erreur : {ex.Message}";
+        }
+    }
+
+    [Inject]
+    public HttpClient Http { get; set; } = default!;
+
+    [Inject]
+    public NavigationManager Navigation { get; set; } = default!;
+}

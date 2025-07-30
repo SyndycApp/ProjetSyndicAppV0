@@ -1751,6 +1751,16 @@
           }
         }
       },
+      "SyndicApp.Application/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "compile": {
+          "bin/placeholder/SyndicApp.Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SyndicApp.Application.dll": {}
+        }
+      },
       "SyndicApp.Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
@@ -1769,6 +1779,7 @@
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "9.0.7",
           "Microsoft.EntityFrameworkCore": "9.0.7",
           "Microsoft.EntityFrameworkCore.SqlServer": "9.0.7",
+          "SyndicApp.Application": "1.0.0",
           "SyndicApp.Domain": "1.0.0"
         },
         "compile": {
@@ -5085,6 +5096,11 @@
         "system.windows.extensions.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "SyndicApp.Application/1.0.0": {
+      "type": "project",
+      "path": "../SyndicApp.Application/SyndicApp.Application.csproj",
+      "msbuildProject": "../SyndicApp.Application/SyndicApp.Application.csproj"
     },
     "SyndicApp.Domain/1.0.0": {
       "type": "project",

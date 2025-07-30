@@ -1,0 +1,149 @@
+@page "/register"
+@using SyndicApp.Application.DTOs.Auth
+
+<style>
+    .register-container {
+        max-width: 400px;
+        margin: 3rem auto;
+        padding: 2rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        background-color: #fff;
+    }
+
+    .register-title {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        font-weight: 700;
+        color: #1c3d5a;
+        font-size: 1.8rem;
+    }
+
+    .btn-register {
+        width: 100%;
+        background-color: #28a745;
+        border: none;
+        color: white;
+        font-weight: 600;
+    }
+
+    .btn-register:hover {
+        background-color: #218838;
+    }
+
+    .error-message {
+        color: #c00;
+        margin-top: 1rem;
+        text-align: center;
+        font-weight: 600;
+    }
+
+    .register-links {
+        margin-top: 1.5rem;
+        text-align: center;
+    }
+
+    .register-links a {
+        color: #1c3d5a;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .register-links a:hover {
+        text-decoration: underline;
+    }
+
+    input::placeholder {
+        color: #999;
+    }
+</style>
+
+<div class="register-container">
+    <h2 class="register-title">Créer un compte</h2>
+
+    <EditForm Model="registerModel" OnValidSubmit="HandleRegister">
+        <DataAnnotationsValidator />
+
+        <div class="mb-3">
+            <InputText class="form-control" @bind-Value="registerModel.FullName" placeholder="Nom complet" />
+            <ValidationMessage For="@(() => registerModel.FullName)" />
+        </div>
+
+        <div class="mb-3">
+            <InputText class="form-control" @bind-Value="registerModel.Email" placeholder="Email" />
+            <ValidationMessage For="@(() => registerModel.Email)" />
+        </div>
+
+        <div class="mb-3">
+            <InputText class="form-control" type="password" @bind-Value="registerModel.Password" placeholder="Mot de passe" />
+            <ValidationMessage For="@(() => registerModel.Password)" />
+        </div>
+
+        <div class="mb-3">
+            <InputText class="form-control" type="password" @bind-Value="registerModel.ConfirmPassword" placeholder="Confirmer le mot de passe" />
+            <ValidationMessage For="@(() => registerModel.ConfirmPassword)" />
+        </div>
+
+        <div class="mb-3">
+            <InputText class="form-control" @bind-Value="registerModel.Adresse" placeholder="Adresse" />
+            <ValidationMessage For="@(() => registerModel.Adresse)" />
+        </div>
+
+        <div class="mb-3">
+            <InputDate class="form-control" @bind-Value="registerModel.DateNaissance" />
+            <ValidationMessage For="@(() => registerModel.DateNaissance)" />
+        </div>
+
+        <div class="mb-3">
+            <select class="form-select" @bind="registerModel.Role">
+                <option value="Copropriétaire">Copropriétaire</option>
+                <option value="Locataire">Locataire</option>
+                <option value="Gardien">Gardien</option>
+                <option value="Syndic">Syndic</option>
+            </select>
+            <ValidationMessage For="@(() => registerModel.Role)" />
+        </div>
+
+        <button type="submit" class="btn btn-register">S'inscrire</button>
+    </EditForm>
+
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <p class="error-message">@errorMessage</p>
+    }
+
+    <div class="register-links">
+        <a href="/login">? Retour à la connexion</a>
+    </div>
+</div>
+
+@code {
+    private RegisterDto registerModel = new();
+    private string? errorMessage;
+
+    private async Task HandleRegister()
+    {
+        errorMessage = null;
+        try
+        {
+            var response = await Http.PostAsJsonAsync("api/auth/register", registerModel);
+            if (response.IsSuccessStatusCode)
+            {
+                Navigation.NavigateTo("/login");
+            }
+            else
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                errorMessage = $"Échec de l'inscription : {content}";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Erreur : {ex.Message}";
+        }
+    }
+
+    [Inject] public HttpClient Http { get; set; } = default!;
+    [Inject] public NavigationManager Navigation { get; set; } = default!;
+}
