@@ -1,5 +1,16 @@
 ﻿@page "/"
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject NavigationManager Navigation
 
-<h1>Bienvenue dans votre application</h1>
-
+<h3>Bienvenue dans votre application</h3>
 <p>Ceci est la page d'accueil visible uniquement après connexion.</p>
+
+<button class="btn btn-danger" @onclick="Logout">Déconnexion</button>
+
+@code {
+    private async Task Logout()
+    {
+        await localStorage.RemoveItemAsync("authToken");
+        Navigation.NavigateTo("/login", true);
+    }
+}

@@ -1,10 +1,16 @@
-<nav class="sidebar">
-    <ul class="nav flex-column">
-        <li class="nav-item">
-            <NavLink href="" class="nav-link" Match="NavLinkMatch.All">
-                Accueil
-            </NavLink>
-        </li>
-        <!-- Ajoute ici d’autres liens spécifiques -->
-    </ul>
-</nav>
+@inject NavigationManager Navigation
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+
+<!-- Exemple simple d'un bouton logout -->
+
+<li class="nav-item">
+    <button class="btn btn-link nav-link" @onclick="Logout">Se déconnecter</button>
+</li>
+
+@code {
+    private async Task Logout()
+    {
+        await localStorage.RemoveItemAsync("authToken");
+        Navigation.NavigateTo("/login", true);
+    }
+}
