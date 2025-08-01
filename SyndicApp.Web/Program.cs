@@ -19,6 +19,8 @@ builder.Services.AddScoped(sp =>
     return client;
 });
 
+builder.Services.AddScoped<IPasswordService, PasswordService>();
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 var app = builder.Build();
 

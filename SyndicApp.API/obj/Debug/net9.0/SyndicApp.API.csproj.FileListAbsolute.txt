@@ -176,3 +176,4 @@ C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\obj\Debug\net
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\bin\Debug\net9.0\SyndicApp.Application.dll
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\bin\Debug\net9.0\SyndicApp.Application.pdb
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\bin\Debug\net9.0\BCrypt.Net-Next.dll

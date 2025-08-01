@@ -1,4 +1,8 @@
-public class ForgotPasswordDto
+namespace SyndicApp.Application.DTOs.Auth
+
 {
-    public string Email { get; set; } = string.Empty;
+    public class ForgotPasswordDto
+    {
+        public string Email { get; set; } = string.Empty;
+    }
 }

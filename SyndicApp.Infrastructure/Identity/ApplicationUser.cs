@@ -18,5 +18,8 @@ namespace SyndicApp.Infrastructure.Identity
 		public bool IsActive { get; set; } = true;
 		public string? RefreshToken { get; set; }
 		public DateTime? RefreshTokenExpiryTime { get; set; }
-	}
+
+        public string? PasswordResetToken { get; set; }
+        public DateTime? PasswordResetTokenExpires { get; set; }
+    }
 }
