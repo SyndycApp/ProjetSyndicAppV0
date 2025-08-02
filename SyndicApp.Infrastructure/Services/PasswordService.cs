@@ -53,7 +53,7 @@ namespace SyndicApp.Infrastructure.Services
 
             if (user is null) return false;
 
-            user.PasswordHash = BCrypt.HashPassword(model.NewPassword);
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.NewPassword);
             user.PasswordResetToken = null;
             user.PasswordResetTokenExpires = null;
             await _db.SaveChangesAsync();

@@ -1,8 +1,9 @@
+using Microsoft.Extensions.Configuration;
+using SyndicApp.Application.Interfaces;
+using System;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
-using Microsoft.Extensions.Configuration;
-using SyndicApp.Application.Interfaces;
 
 namespace SyndicApp.Infrastructure.Services
 {
@@ -19,6 +20,10 @@ namespace SyndicApp.Infrastructure.Services
             var user = _cfg["Smtp:User"];
             var pass = _cfg["Smtp:Pass"];
             var from = _cfg["Smtp:FromEmail"]!;
+            if (string.IsNullOrEmpty(from))
+            {
+                throw new InvalidOperationException("Smtp:FromEmail is not configured.");
+            }
             var name = _cfg["Smtp:FromName"] ?? "SyndicApp";
 
             using var client = new SmtpClient(host, port)

@@ -1,6 +1,14 @@
 using Blazored.LocalStorage;
+using SyndicApp.Application.Interfaces;
+using SyndicApp.Infrastructure.Services;
+using SyndicApp.Infrastructure; // pour ApplicationDbContext
+using Microsoft.EntityFrameworkCore; // pour UseSqlServer
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Ajout DbContext avec connexion SQL Server
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -19,6 +27,7 @@ builder.Services.AddScoped(sp =>
     return client;
 });
 
+// Injection des services métier
 builder.Services.AddScoped<IPasswordService, PasswordService>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 

@@ -35,9 +35,16 @@ builder.Services.Configure<IdentityOptions>(o =>
 
 builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
 builder.Services.AddTransient<IPasswordService, PasswordService>();
+builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
+
 
 builder.Services.AddDataProtection()
     .PersistKeysToFileSystem(new DirectoryInfo(Path.Combine(builder.Environment.ContentRootPath, "keys")));
+
+
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.SetMinimumLevel(LogLevel.Debug);
 
 var app = builder.Build();
 

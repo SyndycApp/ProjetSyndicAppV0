@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SyndicApp.Application\SyndicApp.Application.csproj" />
+    <ProjectReference Include="..\SyndicApp.Infrastructure\SyndicApp.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

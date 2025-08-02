@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using SyndicApp.Application.DTOs.Auth;
 using SyndicApp.Infrastructure;
+using SyndicApp.Application.Interfaces;
 
 namespace SyndicApp.API.Controllers
 {
