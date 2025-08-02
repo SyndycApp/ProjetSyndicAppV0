@@ -43,7 +43,8 @@ namespace SyndicApp.Infrastructure.Services
             user.PasswordResetTokenExpires = DateTime.UtcNow.AddHours(1);
             await _db.SaveChangesAsync();
 
-            var url = $"https://tonapp.com/resetpassword?token={Uri.EscapeDataString(token)}";
+            var url = $"https://localhost:7263/resetpassword?token={Uri.EscapeDataString(token)}";
+
             await _email.SendAsync(user.Email, "Réinitialisation de votre mot de passe",
                 $"<p>Cliquez <a href=\"{url}\">ici</a> pour changer votre mot de passe.</p>");
 
