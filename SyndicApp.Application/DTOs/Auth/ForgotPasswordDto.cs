@@ -1,8 +1,10 @@
-namespace SyndicApp.Application.DTOs.Auth
+using System.ComponentModel.DataAnnotations;
 
+namespace SyndicApp.Application.DTOs.Auth
 {
     public class ForgotPasswordDto
     {
-        public string Email { get; set; } = string.Empty;
+        [Required, EmailAddress]
+        public string Email { get; init; } = string.Empty;
     }
 }

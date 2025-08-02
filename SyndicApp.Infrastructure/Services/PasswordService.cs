@@ -1,4 +1,6 @@
 // Fichier : SyndicApp.Infrastructure/Services/PasswordService.cs
+using System.Security.Cryptography;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
 using SyndicApp.Application.DTOs.Auth;
 using SyndicApp.Application.Interfaces;
@@ -11,62 +13,51 @@ namespace SyndicApp.Infrastructure.Services
 {
     public class PasswordService : IPasswordService
     {
-        private readonly ApplicationDbContext _context;
-        private readonly IEmailSender _emailSender;
+        private readonly ApplicationDbContext _db;
+        private readonly IEmailSender _email;
+        private readonly IDataProtector _protector;
 
-        public PasswordService(ApplicationDbContext context, IEmailSender emailSender)
+        public PasswordService(ApplicationDbContext db, IEmailSender email, IDataProtectionProvider provider)
         {
-            _context = context;
-            _emailSender = emailSender;
+            _db = db;
+            _email = email;
+            _protector = provider.CreateProtector("PasswordResetTokens");
         }
 
         public async Task<bool> GenerateResetTokenAsync(string email)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-            if (user == null)
-                return false;
+            var user = await _db.Users.SingleOrDefaultAsync(u => u.Email == email);
+            if (user is null) return false;
 
-            user.PasswordResetToken = Guid.NewGuid().ToString();
+            var raw = Convert.ToHexString(RandomNumberGenerator.GetBytes(32));
+            var token = _protector.Protect($"{raw}|{DateTime.UtcNow:O}");
+
+            user.PasswordResetToken = token;
             user.PasswordResetTokenExpires = DateTime.UtcNow.AddHours(1);
+            await _db.SaveChangesAsync();
 
-            await _context.SaveChangesAsync();
-
-            var resetUrl = $"https://tonapp.com/resetpassword?token={user.PasswordResetToken}";
-
-            await _emailSender.SendEmailAsync(user.Email, "Réinitialisation mot de passe",
-                $"Cliquez sur ce lien pour réinitialiser votre mot de passe : {resetUrl}");
+            var url = $"https://tonapp.com/resetpassword?token={Uri.EscapeDataString(token)}";
+            await _email.SendAsync(user.Email, "RÃ©initialisation de votre mot de passe",
+                $"<p>Cliquez <a href=\"{url}\">ici</a> pour changer votre mot de passe.</p>");
 
             return true;
         }
 
-        public async Task<bool> ResetPasswordAsync(ResetPasswordDto model)
+         public async Task<bool> ResetPasswordAsync(ResetPasswordDto model)
         {
-            if (string.IsNullOrEmpty(model.Token) ||
-                string.IsNullOrEmpty(model.NewPassword) ||
-                string.IsNullOrEmpty(model.ConfirmPassword) ||
-                model.NewPassword != model.ConfirmPassword)
-                return false;
+            if (model.NewPassword != model.ConfirmPassword) return false;
 
-            var user = await _context.Users.FirstOrDefaultAsync(u =>
+            var user = await _db.Users.SingleOrDefaultAsync(u =>
                 u.PasswordResetToken == model.Token &&
                 u.PasswordResetTokenExpires > DateTime.UtcNow);
 
-            if (user == null)
-                return false;
+            if (user is null) return false;
 
-            user.PasswordHash = HashPassword(model.NewPassword);
+            user.PasswordHash = BCrypt.HashPassword(model.NewPassword);
             user.PasswordResetToken = null;
             user.PasswordResetTokenExpires = null;
-
-            await _context.SaveChangesAsync();
-
+            await _db.SaveChangesAsync();
             return true;
-        }
-
-        private string HashPassword(string password)
-        {
-            // Utilise BCrypt.Net-Next (à ajouter via NuGet)
-            return BCrypt.Net.BCrypt.HashPassword(password);
         }
     }
 }
