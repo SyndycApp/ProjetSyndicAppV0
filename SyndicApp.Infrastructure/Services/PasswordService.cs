@@ -24,10 +24,17 @@ namespace SyndicApp.Infrastructure.Services
             _protector = provider.CreateProtector("PasswordResetTokens");
         }
 
+
         public async Task<bool> GenerateResetTokenAsync(string email)
         {
+            if (string.IsNullOrWhiteSpace(email))
+                throw new ArgumentException("L'adresse email ne peut pas être vide ou nulle.", nameof(email));
+
             var user = await _db.Users.SingleOrDefaultAsync(u => u.Email == email);
             if (user is null) return false;
+
+            if (string.IsNullOrWhiteSpace(user.Email))
+                throw new InvalidOperationException("L'utilisateur n'a pas d'adresse email valide.");
 
             var raw = Convert.ToHexString(RandomNumberGenerator.GetBytes(32));
             var token = _protector.Protect($"{raw}|{DateTime.UtcNow:O}");
@@ -43,7 +50,8 @@ namespace SyndicApp.Infrastructure.Services
             return true;
         }
 
-         public async Task<bool> ResetPasswordAsync(ResetPasswordDto model)
+
+        public async Task<bool> ResetPasswordAsync(ResetPasswordDto model)
         {
             if (model.NewPassword != model.ConfirmPassword) return false;
 
