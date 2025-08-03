@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SyndicApp.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e2568cfe5aae13a95a74cdedbe632281ffa43c5b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b2b51e61b4b38f41fce8cd298b9671d39395ed02")]
 [assembly: System.Reflection.AssemblyProductAttribute("SyndicApp.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SyndicApp.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -24,11 +24,21 @@ namespace SyndicApp.API.Controllers
         [HttpPost("forgot")]
         public async Task<IActionResult> Forgot([FromBody] ForgotPasswordDto dto)
         {
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-            await _svc.GenerateResetTokenAsync(dto.Email);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (string.IsNullOrWhiteSpace(dto.Email))
+                return BadRequest("L'adresse email est requise.");
+
+            var result = await _svc.GenerateResetTokenAsync(dto.Email);
+
+            if (!result)
+                return NotFound("Aucun utilisateur trouvé avec cet email.");
+
             return Ok();
         }
-  
+
+
         [HttpPost("reset")]
         public async Task<IActionResult> Reset([FromBody] ResetPasswordDto dto)
         {
