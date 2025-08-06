@@ -136,7 +136,6 @@ namespace SyndicApp.Infrastructure.Services
         }
 
 
-
         public async Task<Result<UserDto>> GetByIdAsync(Guid userId)
         {
             try

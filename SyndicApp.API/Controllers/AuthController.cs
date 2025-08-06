@@ -27,13 +27,9 @@ namespace SyndicApp.API.Controllers
         [HttpPost("logout")]
         public IActionResult Logout()
         {
-            // Si pas de refresh token, juste retourner OK.
             return Ok(new { message = "Déconnexion réussie" });
         }
 
-        /// <summary>
-        /// Enregistre un nouvel utilisateur (Syndic, Copropriétaire, etc.)
-        /// </summary>
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
@@ -81,9 +77,6 @@ namespace SyndicApp.API.Controllers
             return Ok(result.Data);
         }
 
-        /// <summary>
-        /// Connecte un utilisateur existant
-        /// </summary>
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDto loginDto)
         {
@@ -94,9 +87,6 @@ namespace SyndicApp.API.Controllers
             return Ok(result.Data);
         }
 
-        /// <summary>
-        /// Récupère les infos de l'utilisateur connecté
-        /// </summary>
         [Authorize]
         [HttpGet("me")]
         public async Task<IActionResult> Me()
