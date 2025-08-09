@@ -1,0 +1,112 @@
+@page "/residences/create"
+@inject HttpClient Http
+@inject NavigationManager Nav
+
+<h3 class="mb-4">Créer une résidence</h3>
+
+@if (errorMessages.Any())
+{
+    <div class="alert alert-danger">
+        <ul>
+            @foreach (var err in errorMessages)
+            {
+                <li>@err</li>
+            }
+        </ul>
+    </div>
+}
+
+<EditForm Model="@createDto" OnValidSubmit="SubmitCreateResidence">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="mb-3">
+        <label for="nom" class="form-label">Nom</label>
+        <InputText id="nom" @bind-Value="createDto.Nom" class="form-control" />
+        <ValidationMessage For="@(() => createDto.Nom)" />
+    </div>
+
+    <div class="mb-3">
+        <label for="adresse" class="form-label">Adresse</label>
+        <InputText id="adresse" @bind-Value="createDto.Adresse" class="form-control" />
+        <ValidationMessage For="@(() => createDto.Adresse)" />
+    </div>
+
+    <div class="mb-3">
+        <label for="ville" class="form-label">Ville</label>
+        <InputText id="ville" @bind-Value="createDto.Ville" class="form-control" />
+        <ValidationMessage For="@(() => createDto.Ville)" />
+    </div>
+
+    <div class="mb-3">
+        <label for="codePostal" class="form-label">Code Postal</label>
+        <InputText id="codePostal" @bind-Value="createDto.CodePostal" class="form-control" />
+        <ValidationMessage For="@(() => createDto.CodePostal)" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+</EditForm>
+
+@code {
+    private CreateResidenceDto createDto = new();
+
+    private List<string> errorMessages = new();
+
+    private async Task SubmitCreateResidence()
+    {
+        errorMessages.Clear();
+
+        var response = await Http.PostAsJsonAsync("api/residences", createDto);
+
+        if (response.IsSuccessStatusCode)
+        {
+            Nav.NavigateTo("/residences");
+        }
+        else
+        {
+            var content = await response.Content.ReadAsStringAsync();
+
+            try
+            {
+                var errorResponse = System.Text.Json.JsonSerializer.Deserialize<ErrorResponse>(content, new System.Text.Json.JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
+
+                if (errorResponse?.Errors != null && errorResponse.Errors.Any())
+                {
+                    errorMessages = errorResponse.Errors.ToList();
+                }
+                else
+                {
+                    errorMessages.Add("Erreur inconnue lors de la création.");
+                }
+            }
+            catch
+            {
+                errorMessages.Add("Erreur inconnue lors de la création.");
+            }
+        }
+    }
+
+    public class CreateResidenceDto
+    {
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Le nom est obligatoire")]
+        public string Nom { get; set; } = string.Empty;
+
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "L'adresse est obligatoire")]
+        public string Adresse { get; set; } = string.Empty;
+
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "La ville est obligatoire")]
+        public string Ville { get; set; } = string.Empty;
+
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Le code postal est obligatoire")]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^\d{5}$", ErrorMessage = "Le code postal doit contenir 5 chiffres")]
+        public string CodePostal { get; set; } = string.Empty;
+    }
+
+    public class ErrorResponse
+    {
+        public string[] Errors { get; set; } = Array.Empty<string>();
+    }
+}

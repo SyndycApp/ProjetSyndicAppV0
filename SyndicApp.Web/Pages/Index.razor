@@ -8,6 +8,12 @@
 <button class="btn btn-danger" @onclick="Logout">Déconnexion</button>
 
 @code {
+    protected override async Task OnInitializedAsync()
+    {
+        // Pour tester, force la redirection vers /residences sans condition
+        Navigation.NavigateTo("/residences", true);
+    }
+
     private async Task Logout()
     {
         await localStorage.RemoveItemAsync("authToken");

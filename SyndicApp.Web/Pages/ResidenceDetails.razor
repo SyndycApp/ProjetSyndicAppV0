@@ -1,0 +1,31 @@
+@page "/residences/details/{Id:guid}"
+@inject HttpClient Http
+
+<h3>Détails de la résidence</h3>
+
+@if (residence == null)
+{
+    <p><em>Chargement...</em></p>
+}
+else
+{
+    <p><b>Nom :</b> @residence.nom</p>
+    <p><b>Adresse :</b> @residence.adresse</p>
+}
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+    private ResidenceDto? residence;
+
+    protected override async Task OnInitializedAsync()
+    {
+        residence = await Http.GetFromJsonAsync<ResidenceDto>($"api/residences/{Id}");
+    }
+
+    public class ResidenceDto
+    {
+        public Guid id { get; set; }
+        public string nom { get; set; }
+        public string adresse { get; set; }
+    }
+}

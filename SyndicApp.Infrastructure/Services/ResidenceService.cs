@@ -1,7 +1,6 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using SyndicApp.Application.DTOs.Auth;
 using SyndicApp.Application.DTOs.Residences;
 using SyndicApp.Application.Interfaces;
 using SyndicApp.Domain.Entities.Residences;
@@ -40,7 +39,8 @@ namespace SyndicApp.Infrastructure.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Erreur lors de la création de la résidence");
-                return Result<ResidenceDto>.Fail("Erreur lors de la création");
+                return Result<ResidenceDto>.Fail("Erreur lors de la création de la résidence.");
+
             }
         }
 

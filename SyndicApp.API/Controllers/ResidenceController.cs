@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using SyndicApp.Application.DTOs.Residences;
 using SyndicApp.Application.Interfaces;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SyndicApp.API.Controllers
@@ -17,16 +19,45 @@ namespace SyndicApp.API.Controllers
 			_residenceService = residenceService;
 		}
 
-		// === RESIDENCES ===
+        private IActionResult BadRequestErrors(object errors)
+        {
+            string[] errorArray = errors switch
+            {
+                null => new[] { "Erreur inconnue." },
+                string s => new[] { s },
+                IEnumerable<string> list => list.ToArray(),
+                _ => new[] { errors.ToString() ?? "Erreur inconnue." }
+            };
 
-		[HttpPost]
-		public async Task<IActionResult> CreateResidence([FromBody] CreateResidenceDto dto)
-		{
-			var result = await _residenceService.CreateResidenceAsync(dto);
-			return result.Success ? Ok(result.Data) : BadRequest(result.Errors);
-		}
+            return BadRequest(new { Errors = errorArray });
+        }
 
-		[HttpPut]
+
+        // === RESIDENCES ===
+
+        [HttpPost]
+        public async Task<IActionResult> CreateResidence([FromBody] CreateResidenceDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => e.ErrorMessage)
+                    .Where(msg => !string.IsNullOrEmpty(msg))
+                    .ToArray();
+
+                return BadRequest(new { Errors = errors });
+            }
+
+            var result = await _residenceService.CreateResidenceAsync(dto);
+
+            if (result.Success)
+                return Ok(result.Data);
+
+            return BadRequestErrors(result.Errors);
+        }
+
+        [HttpPut]
 		public async Task<IActionResult> UpdateResidence([FromBody] UpdateResidenceDto dto)
 		{
 			var result = await _residenceService.UpdateResidenceAsync(dto);

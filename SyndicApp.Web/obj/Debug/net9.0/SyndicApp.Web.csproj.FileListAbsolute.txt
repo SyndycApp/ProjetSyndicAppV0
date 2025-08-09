@@ -106,3 +106,5 @@ C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Web\bin\Debug\net
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Web\bin\Debug\net9.0\SyndicApp.Infrastructure.dll
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Web\bin\Debug\net9.0\SyndicApp.Infrastructure.pdb
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Web\bin\Debug\net9.0\SyndicApp.Domain.pdb
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Web\bin\Debug\net9.0\AutoMapper.dll
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Web\bin\Debug\net9.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
