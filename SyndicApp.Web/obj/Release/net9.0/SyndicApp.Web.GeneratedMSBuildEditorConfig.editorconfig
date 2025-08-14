@@ -28,52 +28,168 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = TWFpbkxheW91dC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/CreateResidence.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ3JlYXRlUmVzaWRlbmNlLnJhem9y
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/AnnoncesDocuments/Annonces.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQW5ub25jZXNEb2N1bWVudHNcQW5ub25jZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/DeleteResidence.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGVsZXRlUmVzaWRlbmNlLnJhem9y
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/AnnoncesDocuments/Documents.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQW5ub25jZXNEb2N1bWVudHNcRG9jdW1lbnRzLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/EditResidence.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRWRpdFJlc2lkZW5jZS5yYXpvcg==
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/AnnoncesDocuments/Upload.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQW5ub25jZXNEb2N1bWVudHNcVXBsb2FkLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/ForgotPassword.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRm9yZ290UGFzc3dvcmQucmF6b3I=
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/AssembleesGenerales/CreateConvocation.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXNzZW1ibGVlc0dlbmVyYWxlc1xDcmVhdGVDb252b2NhdGlvbi5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Index.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/AssembleesGenerales/IndexAssembleesGenerales.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXNzZW1ibGVlc0dlbmVyYWxlc1xJbmRleEFzc2VtYmxlZXNHZW5lcmFsZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Login.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9naW4ucmF6b3I=
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/AssembleesGenerales/ResultatsVote.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXNzZW1ibGVlc0dlbmVyYWxlc1xSZXN1bHRhdHNWb3RlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Logout.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9nb3V0LnJhem9y
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/AssembleesGenerales/Vote.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXNzZW1ibGVlc0dlbmVyYWxlc1xWb3RlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Auth/ForgotPassword.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aFxGb3Jnb3RQYXNzd29yZC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Auth/Login.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aFxMb2dpbi5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Auth/Logout.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aFxMb2dvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Auth/Register.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aFxSZWdpc3Rlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Auth/ResetPassword.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aFxSZXNldFBhc3N3b3JkLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Charges/AppelsDeFonds.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2hhcmdlc1xBcHBlbHNEZUZvbmRzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Charges/IndexCharge.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2hhcmdlc1xJbmRleENoYXJnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Charges/Paiements.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2hhcmdlc1xQYWllbWVudHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Dashboard/CoproprietaireDashboard.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGFzaGJvYXJkXENvcHJvcHJpZXRhaXJlRGFzaGJvYXJkLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Dashboard/GardienDashboard.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGFzaGJvYXJkXEdhcmRpZW5EYXNoYm9hcmQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Dashboard/LocataireDashboard.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGFzaGJvYXJkXExvY2F0YWlyZURhc2hib2FyZC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Dashboard/SyndicDashboard.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGFzaGJvYXJkXFN5bmRpY0Rhc2hib2FyZC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Incidents/DeclareIncidents.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5jaWRlbnRzXERlY2xhcmVJbmNpZGVudHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Incidents/DetailsIncidents.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5jaWRlbnRzXERldGFpbHNJbmNpZGVudHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Incidents/ListIncidents.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5jaWRlbnRzXExpc3RJbmNpZGVudHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/LocauxCommerciaux/CreateLocauxCommerciaux.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9jYXV4Q29tbWVyY2lhdXhcQ3JlYXRlTG9jYXV4Q29tbWVyY2lhdXgucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/LocauxCommerciaux/EditLocauxCommerciaux.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9jYXV4Q29tbWVyY2lhdXhcRWRpdExvY2F1eENvbW1lcmNpYXV4LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/LocauxCommerciaux/IndexLocauxCommerciaux.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9jYXV4Q29tbWVyY2lhdXhcSW5kZXhMb2NhdXhDb21tZXJjaWF1eC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Messagerie/Conversations.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWVzc2FnZXJpZVxDb252ZXJzYXRpb25zLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Messagerie/Messages.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWVzc2FnZXJpZVxNZXNzYWdlcy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTmF2TWVudS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Register.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVnaXN0ZXIucmF6b3I=
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Personnel/Candidatures.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGVyc29ubmVsXENhbmRpZGF0dXJlcy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/ResetPassword.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVzZXRQYXNzd29yZC5yYXpvcg==
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Personnel/CreatePersonnel.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGVyc29ubmVsXENyZWF0ZVBlcnNvbm5lbC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/ResidenceDetails.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVzaWRlbmNlRGV0YWlscy5yYXpvcg==
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Personnel/IndexPersonnel.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGVyc29ubmVsXEluZGV4UGVyc29ubmVsLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Personnel/OffresEmploi.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGVyc29ubmVsXE9mZnJlc0VtcGxvaS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Residences.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVzaWRlbmNlcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Residences/CreateResidence.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVzaWRlbmNlc1xDcmVhdGVSZXNpZGVuY2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Residences/DeleteResidence.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVzaWRlbmNlc1xEZWxldGVSZXNpZGVuY2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Residences/EditResidence.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVzaWRlbmNlc1xFZGl0UmVzaWRlbmNlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Residences/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVzaWRlbmNlc1xJbmRleC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Residences/LotResidence.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVzaWRlbmNlc1xMb3RSZXNpZGVuY2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Residences/ResidenceDetails.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVzaWRlbmNlc1xSZXNpZGVuY2VEZXRhaWxzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Users/AffectationsLots.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcQWZmZWN0YXRpb25zTG90cy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Users/Manage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlcnNcTWFuYWdlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Shared/SurveyPrompt.razor]
