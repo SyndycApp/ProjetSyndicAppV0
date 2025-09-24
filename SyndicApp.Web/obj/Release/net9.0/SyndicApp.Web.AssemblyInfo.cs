@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SyndicApp.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0df168ee4138cf8dd341baa3a3e7534b7e48713c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1cebac1c60d2cd33bce3798834316cdcab1db1dd")]
 [assembly: System.Reflection.AssemblyProductAttribute("SyndicApp.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SyndicApp.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

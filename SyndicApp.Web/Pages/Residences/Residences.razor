@@ -1,0 +1,101 @@
+@page "/residences"
+@inject HttpClient Http
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject NavigationManager Navigation
+
+<div class="d-flex" style="min-height: 100vh;">
+
+    <!-- Navbar verticale -->
+    <nav class="bg-light border-right p-3" style="width: 220px;">
+        <h4 class="mb-4">SyndicApp</h4>
+        <ul class="nav flex-column">
+            <li class="nav-item mb-2">
+                <a class="nav-link" href="/">Accueil</a>
+            </li>
+            <li class="nav-item mb-2">
+                <a class="nav-link active" href="/residences">Liste Résidences</a>
+            </li>
+            <li class="nav-item mb-2">
+                <a class="nav-link" href="/residences/create">Créer Résidence</a>
+            </li>
+            <li class="nav-item mb-2">
+                <a class="nav-link" href="/residences/edit/00000000-0000-0000-0000-000000000000">Modifier Résidence</a>
+            </li>
+            <li class="nav-item mt-3">
+                <button class="btn btn-danger w-100" @onclick="Logout">Se déconnecter</button>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Contenu principal -->
+    <div class="flex-grow-1 p-4">
+        <h3>Liste des Résidences</h3>
+
+        @if (residences == null)
+        {
+            <p><em>Chargement...</em></p>
+        }
+        else if (!residences.Any())
+        {
+            <p>Aucune résidence trouvée.</p>
+        }
+        else
+        {
+            <table class="table table-striped table-hover mt-3">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Nom</th>
+                        <th>Adresse</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var res in residences)
+                {
+                    <tr>
+                        <td>@res.nom</td>
+                        <td>@res.adresse</td>
+                        <td>
+                            <a class="btn btn-sm btn-info me-1" href="/residences/details/@res.id">Détails</a>
+                            <a class="btn btn-sm btn-warning me-1" href="/residences/edit/@res.id">Modifier</a>
+                            <a class="btn btn-sm btn-danger" href="/residences/delete/@res.id">Supprimer</a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        }
+
+        <a href="/residences/create" class="btn btn-primary mt-3">Ajouter une résidence</a>
+    </div>
+
+</div>
+
+@code {
+    private List<ResidenceDto>? residences;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            residences = await Http.GetFromJsonAsync<List<ResidenceDto>>("api/residences");
+        }
+        catch
+        {
+            residences = new List<ResidenceDto>(); // pour éviter l'erreur si API non joignable
+        }
+    }
+
+    private async Task Logout()
+    {
+        await localStorage.RemoveItemAsync("authToken");
+        Navigation.NavigateTo("/login", true);
+    }
+
+    public class ResidenceDto
+    {
+        public Guid id { get; set; }
+        public string nom { get; set; }
+        public string adresse { get; set; }
+    }
+}

@@ -156,10 +156,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGVyc29ubmVsXE9mZnJlc0VtcGxvaS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Residences.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVzaWRlbmNlcy5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Residences/CreateResidence.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVzaWRlbmNlc1xDcmVhdGVSZXNpZGVuY2UucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
@@ -182,6 +178,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Residences/ResidenceDetails.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVzaWRlbmNlc1xSZXNpZGVuY2VEZXRhaWxzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Residences/Residences.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVzaWRlbmNlc1xSZXNpZGVuY2VzLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Web/Pages/Users/AffectationsLots.razor]
