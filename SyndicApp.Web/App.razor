@@ -1,7 +1,19 @@
-﻿<CascadingAuthenticationState>
+﻿@using Microsoft.AspNetCore.Components.Authorization
+
+<CascadingAuthenticationState>
     <Router AppAssembly="@typeof(Program).Assembly">
         <Found Context="routeData">
-            <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                <NotAuthorized>
+                    <LayoutView Layout="@typeof(MainLayout)">
+                        <p class="text-center p-4">Veuillez vous connecter.</p>
+                        <a class="btn btn-primary" href="/login">Aller à la connexion</a>
+                    </LayoutView>
+                </NotAuthorized>
+                <Authorizing>
+                    <p class="text-center p-4 text-muted">Vérification…</p>
+                </Authorizing>
+            </AuthorizeRouteView>
             <FocusOnNavigate RouteData="@routeData" Selector="h1" />
         </Found>
         <NotFound>

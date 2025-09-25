@@ -1,0 +1,73 @@
+@page "/dashboard"
+@using System.Security.Claims
+@using System.Text
+@using Microsoft.AspNetCore.Components.Authorization
+@inject NavigationManager Navigation
+
+<div class="text-center p-5 text-muted">Redirection…</div>
+
+@code {
+    // Récupère l'état d'auth depuis CascadingAuthenticationState (App.razor)
+    [CascadingParameter] 
+    private Task<AuthenticationState>? AuthenticationStateTask { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        string? role = await GetRoleFromClaims();
+
+        // Fallback: permet aussi de tester via /dashboard?role=Syndic
+        role ??= GetRoleFromQuery();
+
+        var path = PathForRole(role);
+        Navigation.NavigateTo(path, forceLoad: true);
+    }
+
+    private async Task<string?> GetRoleFromClaims()
+    {
+        if (AuthenticationStateTask is null) return null;
+        var user = (await AuthenticationStateTask).User;
+        if (user?.Identity?.IsAuthenticated != true) return null;
+
+        var claim = user.Claims.FirstOrDefault(c =>
+            c.Type == ClaimTypes.Role ||
+            c.Type == "role" ||
+            c.Type.EndsWith("/role", StringComparison.OrdinalIgnoreCase));
+
+        return claim?.Value;
+    }
+
+    private string? GetRoleFromQuery()
+    {
+        var uri = new Uri(Navigation.Uri);
+        var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
+        return query.Get("role");
+    }
+
+    private static string PathForRole(string? role)
+    {
+        if (string.IsNullOrWhiteSpace(role)) return "/dashboard/syndic";
+        var key = RemoveDiacritics(role).ToLowerInvariant();
+
+        return key switch
+        {
+            "syndic"         => "/dashboard/syndic",
+            "coproprietaire" => "/dashboard/coproprietaire",
+            "copropriétaire" => "/dashboard/coproprietaire",
+            "locataire"      => "/dashboard/locataire",
+            "gardien"        => "/dashboard/gardien",
+            _                => "/dashboard/syndic"
+        };
+    }
+
+    private static string RemoveDiacritics(string s)
+    {
+        var norm = s.Normalize(NormalizationForm.FormD);
+        var sb = new StringBuilder(norm.Length);
+        foreach (var ch in norm)
+        {
+            var cat = System.Globalization.CharUnicodeInfo.GetUnicodeCategory(ch);
+            if (cat != System.Globalization.UnicodeCategory.NonSpacingMark) sb.Append(ch);
+        }
+        return sb.ToString().Normalize(NormalizationForm.FormC);
+    }
+}
