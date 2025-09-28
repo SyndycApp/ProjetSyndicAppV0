@@ -8,7 +8,7 @@ namespace SyndicApp.Domain.Entities.Residences;
 public class Lot : BaseEntity
 {
     public string NumeroLot { get; set; } = string.Empty;
-    public string Type { get; set; } = string.Empty; // Ex : Appartement, Garage, Local Commercial
+    public string Type { get; set; } = string.Empty; 
     public double Surface { get; set; }
 
     public Guid ResidenceId { get; set; }

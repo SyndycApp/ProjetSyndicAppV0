@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SyndicApp.Infrastructure\SyndicApp.Infrastructure.csproj" />
     <ProjectReference Include="..\SyndicApp.Domain\SyndicApp.Domain.csproj" />
+    <ProjectReference Include="..\SyndicApp.Application\SyndicApp.Application.csproj" />
   </ItemGroup>
 
 </Project>

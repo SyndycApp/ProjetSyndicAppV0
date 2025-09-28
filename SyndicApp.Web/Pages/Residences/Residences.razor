@@ -1,43 +1,48 @@
-@page "/residences"
-@inject HttpClient Http
-@inject Blazored.LocalStorage.ILocalStorageService localStorage
+Ôªø@page "/residences"
+@using SyndicApp.Application.DTOs.Residences
+@inject IHttpClientFactory ClientFactory
+@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
 @inject NavigationManager Navigation
 
 <div class="d-flex" style="min-height: 100vh;">
 
     <!-- Navbar verticale -->
-    <nav class="bg-light border-right p-3" style="width: 220px;">
+    <nav class="bg-light border-end p-3" style="width: 220px;">
         <h4 class="mb-4">SyndicApp</h4>
         <ul class="nav flex-column">
             <li class="nav-item mb-2">
                 <a class="nav-link" href="/">Accueil</a>
             </li>
             <li class="nav-item mb-2">
-                <a class="nav-link active" href="/residences">Liste RÈsidences</a>
+                <a class="nav-link active" href="/residences">Liste R√©sidences</a>
             </li>
             <li class="nav-item mb-2">
-                <a class="nav-link" href="/residences/create">CrÈer RÈsidence</a>
+                <a class="nav-link" href="/residences/create">Cr√©er R√©sidence</a>
             </li>
             <li class="nav-item mb-2">
-                <a class="nav-link" href="/residences/edit/00000000-0000-0000-0000-000000000000">Modifier RÈsidence</a>
+                <a class="nav-link" href="/residences/edit/00000000-0000-0000-0000-000000000000">Modifier R√©sidence</a>
             </li>
             <li class="nav-item mt-3">
-                <button class="btn btn-danger w-100" @onclick="Logout">Se dÈconnecter</button>
+                <button class="btn btn-danger w-100" @onclick="Logout">Se d√©connecter</button>
             </li>
         </ul>
     </nav>
 
     <!-- Contenu principal -->
     <div class="flex-grow-1 p-4">
-        <h3>Liste des RÈsidences</h3>
+        <h3>Liste des R√©sidences</h3>
 
-        @if (residences == null)
+        @if (!string.IsNullOrEmpty(error))
         {
-            <p><em>Chargement...</em></p>
+            <div class="alert alert-danger mt-3">@error</div>
+        }
+        else if (residences is null)
+        {
+            <p class="mt-3"><em>Chargement...</em></p>
         }
         else if (!residences.Any())
         {
-            <p>Aucune rÈsidence trouvÈe.</p>
+            <p class="mt-3">Aucune r√©sidence trouv√©e.</p>
         }
         else
         {
@@ -46,19 +51,23 @@
                     <tr>
                         <th>Nom</th>
                         <th>Adresse</th>
-                        <th>Actions</th>
+                        <th>Ville</th>
+                        <th>Code Postal</th>
+                        <th style="width:260px;">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                @foreach (var res in residences)
+                @foreach (var r in residences)
                 {
                     <tr>
-                        <td>@res.nom</td>
-                        <td>@res.adresse</td>
+                        <td>@r.Nom</td>
+                        <td>@r.Adresse</td>
+                        <td>@r.Ville</td>
+                        <td>@r.CodePostal</td>
                         <td>
-                            <a class="btn btn-sm btn-info me-1" href="/residences/details/@res.id">DÈtails</a>
-                            <a class="btn btn-sm btn-warning me-1" href="/residences/edit/@res.id">Modifier</a>
-                            <a class="btn btn-sm btn-danger" href="/residences/delete/@res.id">Supprimer</a>
+                            <a class="btn btn-sm btn-info me-1" href="/residences/details/@r.Id">D√©tails</a>
+                            <a class="btn btn-sm btn-warning me-1" href="/residences/edit/@r.Id">Modifier</a>
+                            <a class="btn btn-sm btn-danger" href="/residences/delete/@r.Id">Supprimer</a>
                         </td>
                     </tr>
                 }
@@ -66,36 +75,50 @@
             </table>
         }
 
-        <a href="/residences/create" class="btn btn-primary mt-3">Ajouter une rÈsidence</a>
+        <a href="/residences/create" class="btn btn-primary mt-3">Ajouter une r√©sidence</a>
     </div>
 
 </div>
 
 @code {
     private List<ResidenceDto>? residences;
+    private string? error;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            residences = await Http.GetFromJsonAsync<List<ResidenceDto>>("api/residences");
+            var http = ClientFactory.CreateClient("api"); // BaseAddress = https://localhost:7172/
+
+            // (optionnel) Ajouter le Bearer si ton API est prot√©g√©e
+            var token = await LocalStorage.GetItemAsync<string>("authToken");
+            if (!string.IsNullOrWhiteSpace(token))
+                http.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+            // ‚úÖ route singulier conforme √† ResidenceController
+            var resp = await http.GetAsync("api/residence");
+
+            if (resp.IsSuccessStatusCode)
+            {
+                residences = await resp.Content.ReadFromJsonAsync<List<ResidenceDto>>();
+            }
+            else
+            {
+                var body = await resp.Content.ReadAsStringAsync();
+                error = $"Erreur HTTP {(int)resp.StatusCode} : {resp.ReasonPhrase}. {body}";
+                residences = new();
+            }
         }
-        catch
+        catch (Exception ex)
         {
-            residences = new List<ResidenceDto>(); // pour Èviter l'erreur si API non joignable
+            error = ex.Message;
+            residences = new();
         }
     }
 
     private async Task Logout()
     {
-        await localStorage.RemoveItemAsync("authToken");
+        await LocalStorage.RemoveItemAsync("authToken");
         Navigation.NavigateTo("/login", true);
-    }
-
-    public class ResidenceDto
-    {
-        public Guid id { get; set; }
-        public string nom { get; set; }
-        public string adresse { get; set; }
     }
 }

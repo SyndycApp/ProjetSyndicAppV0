@@ -9,7 +9,9 @@ using SyndicApp.Infrastructure;
 using SyndicApp.Infrastructure.Identity;
 using System.Text;
 using SyndicApp.Application.Interfaces;
+using SyndicApp.Application.Interfaces.Residences;
 using SyndicApp.Infrastructure.Services;
+using SyndicApp.Infrastructure.Services.Residences;
 
 namespace SyndicApp.Infrastructure
 {
@@ -21,6 +23,7 @@ namespace SyndicApp.Infrastructure
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
+            
             // 2. Ajout d'ASP.NET Identity avec GUID comme clé
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
             {
@@ -62,6 +65,11 @@ namespace SyndicApp.Infrastructure
             // Injection de AuthService et JwtTokenGenerator
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+            services.AddScoped<IResidenceService, ResidenceService>();
+            services.AddScoped<IBatimentService, BatimentService>(); 
+            services.AddScoped<ILotService, LotService>();
+            services.AddScoped<IAffectationLotService, AffectationLotService>();    
+            services.AddScoped<ILocataireTemporaireService, LocataireTemporaireService>();
 
             return services;
         }

@@ -9,5 +9,6 @@ namespace SyndicApp.Application.Interfaces
         Task<Result<UserDto>> RegisterAsync(RegisterDto dto);
         Task<Result<UserDto>> LoginAsync(LoginDto dto);
         Task<Result<UserDto>> GetByIdAsync(Guid userId);
+        Task<Result<List<UserDto>>> GetAllAsync();
     }
 }

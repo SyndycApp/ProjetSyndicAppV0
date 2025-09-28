@@ -30,6 +30,14 @@ namespace SyndicApp.API.Controllers
             return Ok(new { message = "Déconnexion réussie" });
         }
 
+        [HttpGet]
+        public async Task<ActionResult<List<UserDto>>> GetAll()
+        {
+            var res = await _authService.GetAllAsync();
+            return Ok(res);
+        }
+
+
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {

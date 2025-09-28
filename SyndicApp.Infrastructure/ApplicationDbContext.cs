@@ -1,18 +1,17 @@
-using Microsoft.AspNetCore.Identity;
+ï»¿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SyndicApp.Domain.Entities.Annonces;
 using SyndicApp.Domain.Entities.Assemblees;
 using SyndicApp.Domain.Entities.Common;
-using SyndicApp.Domain.Entities.Communication;
 using SyndicApp.Domain.Entities.Documents;
 using SyndicApp.Domain.Entities.Finances;
 using SyndicApp.Domain.Entities.Incidents;
 using SyndicApp.Domain.Entities.LocauxCommerciaux;
 using SyndicApp.Domain.Entities.Personnel;
 using SyndicApp.Domain.Entities.Residences;
-using SyndicApp.Domain.Entities.Users;
 using SyndicApp.Infrastructure.Identity;
+using SyndicApp.Domain.Entities.Communication;
 using System;
 
 namespace SyndicApp.Infrastructure
@@ -21,12 +20,12 @@ namespace SyndicApp.Infrastructure
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-        // Users
-        public DbSet<User> UsersApp => Set<User>();
+        // Affectations
         public DbSet<AffectationLot> AffectationsLots => Set<AffectationLot>();
 
-        // Residences
+        // RÃ©sidences
         public DbSet<Residence> Residences => Set<Residence>();
+        public DbSet<Batiment> Batiments => Set<Batiment>();
         public DbSet<Lot> Lots => Set<Lot>();
         public DbSet<LocataireTemporaire> LocatairesTemporaires => Set<LocataireTemporaire>();
 
@@ -48,7 +47,7 @@ namespace SyndicApp.Infrastructure
         public DbSet<Annonce> Annonces => Set<Annonce>();
         public DbSet<CategorieAnnonce> CategoriesAnnonces => Set<CategorieAnnonce>();
 
-        // Assemblées
+        // AssemblÃ©es
         public DbSet<AssembleeGenerale> AssembleesGenerales => Set<AssembleeGenerale>();
         public DbSet<Convocation> Convocations => Set<Convocation>();
         public DbSet<Vote> Votes => Set<Vote>();
@@ -74,23 +73,71 @@ namespace SyndicApp.Infrastructure
         {
             base.OnModelCreating(modelBuilder);
 
-            // === Relations Clés Composées ===
+            // Residence
+            modelBuilder.Entity<Residence>(b =>
+            {
+                b.Property(x => x.Nom).HasMaxLength(200).IsRequired();
+                b.Property(x => x.Adresse).HasMaxLength(300);
+                b.Property(x => x.Ville).HasMaxLength(150);
+                b.Property(x => x.CodePostal).HasMaxLength(20);
+            });
 
-            // AffectationLot (User - Lot)
+            // Lot -> Residence
+            modelBuilder.Entity<Lot>()
+                .HasOne(l => l.Residence)
+                .WithMany(r => r.Lots)
+                .HasForeignKey(l => l.ResidenceId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Batiment (table au singulier)
+            modelBuilder.Entity<Batiment>().ToTable("Batiment");
+
+            modelBuilder.Entity<Batiment>()
+                .HasOne(b => b.Residence)
+                .WithMany()
+                .HasForeignKey(b => b.ResidenceId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Pas de FK Lot -> Batiment
+            modelBuilder.Entity<Lot>()
+                .Ignore(l => l.AffectationsLots);
+
+            // LocataireTemporaire -> Lot
+            modelBuilder.Entity<LocataireTemporaire>()
+                .HasOne(lt => lt.Lot)
+                .WithMany(l => l.LocationsTemporaires)
+                .HasForeignKey(lt => lt.LotId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // AffectationLot
+            modelBuilder.Entity<AffectationLot>(b =>
+            {
+                b.HasOne(a => a.Lot)
+                 .WithMany(l => l.Affectations)
+                 .HasForeignKey(a => a.LotId)
+                 .OnDelete(DeleteBehavior.Cascade);
+
+                b.HasOne<ApplicationUser>()
+                 .WithMany()
+                 .HasForeignKey(a => a.UserId)
+                 .OnDelete(DeleteBehavior.Cascade);
+
+                b.Property(a => a.EstProprietaire).IsRequired();
+
+                b.HasIndex(a => new { a.LotId, a.UserId, a.DateFin })
+                 .HasDatabaseName("IX_AffectationLot_UniqueActive");
+            });
+
+            // ApplicationDbContext.OnModelCreating
             modelBuilder.Entity<AffectationLot>()
-                .HasKey(a => new { a.UserId, a.LotId });
+                .HasIndex(a => new { a.LotId })
+                .HasDatabaseName("UX_Lot_OccupantActif")
+                .HasFilter("[DateFin] IS NULL")
+                .IsUnique();
 
-            modelBuilder.Entity<AffectationLot>()
-                .HasOne(a => a.User)
-                .WithMany(u => u.AffectationsLots)
-                .HasForeignKey(a => a.UserId);
 
-            modelBuilder.Entity<AffectationLot>()
-                .HasOne(a => a.Lot)
-                .WithMany(l => l.AffectationsLots)
-                .HasForeignKey(a => a.LotId);
 
-            // UserConversation (User - Conversation)
+            // Messagerie
             modelBuilder.Entity<UserConversation>()
                 .HasKey(uc => new { uc.UserId, uc.ConversationId });
 
@@ -104,22 +151,30 @@ namespace SyndicApp.Infrastructure
                 .WithMany(c => c.UserConversations)
                 .HasForeignKey(uc => uc.ConversationId);
 
-            // Vote (AG - User)
-            modelBuilder.Entity<Vote>()
-                .HasKey(v => new { v.AssembleeGeneraleId, v.UserId });
+            modelBuilder.Entity<Message>()
+                .HasOne(m => m.Conversation)
+                .WithMany(c => c.Messages)
+                .HasForeignKey(m => m.ConversationId);
 
+            // AssemblÃ©es
             modelBuilder.Entity<Vote>()
                 .HasOne(v => v.AssembleeGenerale)
                 .WithMany(ag => ag.Votes)
-                .HasForeignKey(v => v.AssembleeGeneraleId);
+                .HasForeignKey(v => v.AssembleeGeneraleId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Vote>()
                 .HasOne(v => v.User)
                 .WithMany(u => u.Votes)
-                .HasForeignKey(v => v.UserId);
+                .HasForeignKey(v => v.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
-            // === Relations Simples ===
+            modelBuilder.Entity<Vote>()
+                .HasIndex(v => new { v.AssembleeGeneraleId, v.UserId })
+                .IsUnique()
+                .HasDatabaseName("UX_Vote_UniqueParAG");
 
+            // Finances
             modelBuilder.Entity<Paiement>()
                 .HasOne(p => p.AppelDeFonds)
                 .WithMany(a => a.Paiements)
@@ -130,6 +185,7 @@ namespace SyndicApp.Infrastructure
                 .WithMany(u => u.Paiements)
                 .HasForeignKey(p => p.UserId);
 
+            // Incidents
             modelBuilder.Entity<Intervention>()
                 .HasOne(i => i.Incident)
                 .WithMany(x => x.Interventions)
@@ -140,38 +196,25 @@ namespace SyndicApp.Infrastructure
                 .WithMany(e => e.Interventions)
                 .HasForeignKey(i => i.EmployeId);
 
-            modelBuilder.Entity<Lot>()
-                .HasOne(l => l.Residence)
-                .WithMany(r => r.Lots)
-                .HasForeignKey(l => l.ResidenceId);
-
-            modelBuilder.Entity<LocataireTemporaire>()
-                .HasOne(lt => lt.Lot)
-                .WithMany(l => l.LocationsTemporaires)
-                .HasForeignKey(lt => lt.LotId);
-
+            // Documents
             modelBuilder.Entity<Document>()
                 .HasOne(d => d.Categorie)
                 .WithMany(c => c.Documents)
                 .HasForeignKey(d => d.CategorieId);
 
+            // Annonces
             modelBuilder.Entity<Annonce>()
                 .HasOne(a => a.Categorie)
                 .WithMany(c => c.Annonces)
                 .HasForeignKey(a => a.CategorieId);
 
+            // Locaux commerciaux
             modelBuilder.Entity<LocalCommercial>()
                 .HasOne(l => l.Activite)
                 .WithMany(a => a.Locaux)
                 .HasForeignKey(l => l.ActiviteId);
 
-            modelBuilder.Entity<Message>()
-                .HasOne(m => m.Conversation)
-                .WithMany(c => c.Messages)
-                .HasForeignKey(m => m.ConversationId);
-
-            // === Précision sur les champs decimal ===
-
+            // Decimals
             modelBuilder.Entity<AppelDeFonds>()
                 .Property(a => a.MontantTotal)
                 .HasPrecision(18, 2);
@@ -184,7 +227,6 @@ namespace SyndicApp.Infrastructure
                 .Property(p => p.Montant)
                 .HasPrecision(18, 2);
 
-            // === Application auto de IEntityTypeConfiguration<T> ===
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         }
     }

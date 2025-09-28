@@ -57,7 +57,7 @@
     {
         errorMessages.Clear();
 
-        var response = await Http.PostAsJsonAsync("api/residences", createDto);
+        var response = await Http.PostAsJsonAsync("api/residence", createDto);
 
         if (response.IsSuccessStatusCode)
         {

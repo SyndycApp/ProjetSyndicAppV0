@@ -1,192 +1,79 @@
 using Microsoft.AspNetCore.Mvc;
 using SyndicApp.Application.DTOs.Residences;
-using SyndicApp.Application.Interfaces;
+using SyndicApp.Application.Interfaces.Residences;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SyndicApp.API.Controllers
 {
-	[ApiController]
-	[Route("api/[controller]")]
-	public class ResidenceController : ControllerBase
-	{
-		private readonly IResidenceService _residenceService;
+    [ApiController]
+    [Route("api/[controller]")]
+    public class ResidencesController : ControllerBase
+    {
+        private readonly IResidenceService _svc;
 
-		public ResidenceController(IResidenceService residenceService)
-		{
-			_residenceService = residenceService;
-		}
-
-        private IActionResult BadRequestErrors(object errors)
+        public ResidencesController(IResidenceService svc)
         {
-            string[] errorArray = errors switch
-            {
-                null => new[] { "Erreur inconnue." },
-                string s => new[] { s },
-                IEnumerable<string> list => list.ToArray(),
-                _ => new[] { errors.ToString() ?? "Erreur inconnue." }
-            };
-
-            return BadRequest(new { Errors = errorArray });
+            _svc = svc;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ResidenceDto>>> GetAll()
+        {
+            var data = await _svc.GetAllAsync();
+            return Ok(data);
+        }
 
-        // === RESIDENCES ===
+        [HttpGet("{id:guid}")]
+        public async Task<ActionResult<ResidenceDto>> Get(Guid id)
+        {
+            var dto = await _svc.GetByIdAsync(id);
+            if (dto is null) return NotFound();
+            return Ok(dto);
+        }
 
         [HttpPost]
-        public async Task<IActionResult> CreateResidence([FromBody] CreateResidenceDto dto)
+        public async Task<ActionResult> Create(CreateResidenceDto dto)
         {
-            if (!ModelState.IsValid)
-            {
-                var errors = ModelState.Values
-                    .SelectMany(v => v.Errors)
-                    .Select(e => e.ErrorMessage)
-                    .Where(msg => !string.IsNullOrEmpty(msg))
-                    .ToArray();
-
-                return BadRequest(new { Errors = errors });
-            }
-
-            var result = await _residenceService.CreateResidenceAsync(dto);
-
-            if (result.Success)
-                return Ok(result.Data);
-
-            return BadRequestErrors(result.Errors);
+            var id = await _svc.CreateAsync(dto);
+            return CreatedAtAction(nameof(Get), new { id }, new { id });
         }
 
-        [HttpPut]
-		public async Task<IActionResult> UpdateResidence([FromBody] UpdateResidenceDto dto)
-		{
-			var result = await _residenceService.UpdateResidenceAsync(dto);
-			return result.Success ? Ok(result.Data) : BadRequest(result.Errors);
-		}
+        [HttpGet("{id:guid}/lots")]
+        public async Task<ActionResult<IReadOnlyList<LotDto>>> GetLots(Guid id, CancellationToken ct)
+        {
+            var lots = await _svc.GetLotsAsync(id, ct);
+            return Ok(lots);
+        }
 
-		[HttpDelete("{id:guid}")]
-		public async Task<IActionResult> DeleteResidence(Guid id)
-		{
-			var result = await _residenceService.DeleteResidenceAsync(id);
-			return result.Success ? Ok() : BadRequest(result.Errors);
-		}
+        [HttpPut("{id:guid}")]
+        public async Task<ActionResult> Update(Guid id, UpdateResidenceDto dto)
+        {
+            var updated = await _svc.UpdateAsync(id, dto);
+            return updated ? NoContent() : NotFound();
+        }
 
-		[HttpGet("{id:guid}")]
-		public async Task<IActionResult> GetResidenceById(Guid id)
-		{
-			var result = await _residenceService.GetResidenceByIdAsync(id);
-			return result.Success ? Ok(result.Data) : NotFound(result.Errors);
-		}
+        [HttpGet("{id:guid}/occupants")]
+        public async Task<ActionResult<IReadOnlyList<ResidenceOccupantDto>>> GetOccupants(Guid id, CancellationToken ct)
+        {
+            var occupants = await _svc.GetOccupantsAsync(id, ct);
+            return Ok(occupants);
+        }
 
-		[HttpGet]
-		public async Task<IActionResult> GetAllResidences()
-		{
-			var result = await _residenceService.GetAllResidencesAsync();
-			return result.Success ? Ok(result.Data) : BadRequest(result.Errors);
-		}
+        [HttpDelete("{id:guid}")]
+        public async Task<ActionResult> Delete(Guid id)
+        {
+            var deleted = await _svc.DeleteAsync(id);
+            return deleted ? NoContent() : NotFound();
+        }
 
-		// === LOTS ===
-
-		[HttpPost("lots")]
-		public async Task<IActionResult> CreateLot([FromBody] CreateLotDto dto)
-		{
-			var result = await _residenceService.CreateLotAsync(dto);
-			return result.Success ? Ok(result.Data) : BadRequest(result.Errors);
-		}
-
-		[HttpPut("lots")]
-		public async Task<IActionResult> UpdateLot([FromBody] UpdateLotDto dto)
-		{
-			var result = await _residenceService.UpdateLotAsync(dto);
-			return result.Success ? Ok(result.Data) : BadRequest(result.Errors);
-		}
-
-		[HttpDelete("lots/{id:guid}")]
-		public async Task<IActionResult> DeleteLot(Guid id)
-		{
-			var result = await _residenceService.DeleteLotAsync(id);
-			return result.Success ? Ok() : BadRequest(result.Errors);
-		}
-
-		[HttpGet("{residenceId:guid}/lots")]
-		public async Task<IActionResult> GetLotsByResidence(Guid residenceId)
-		{
-			var result = await _residenceService.GetLotsByResidenceIdAsync(residenceId);
-			return result.Success ? Ok(result.Data) : BadRequest(result.Errors);
-		}
-
-		[HttpGet("lots/{id:guid}")]
-		public async Task<IActionResult> GetLotById(Guid id)
-		{
-			var result = await _residenceService.GetLotByIdAsync(id);
-			return result.Success ? Ok(result.Data) : NotFound(result.Errors);
-		}
-
-		// === AFFECTATIONS LOTS ===
-
-		[HttpPost("affectations")]
-		public async Task<IActionResult> CreateAffectation([FromBody] CreateAffectationLotDto dto)
-		{
-			var result = await _residenceService.CreateAffectationAsync(dto);
-			return result.Success ? Ok(result.Data) : BadRequest(result.Errors);
-		}
-
-		[HttpPut("affectations")]
-		public async Task<IActionResult> UpdateAffectation([FromBody] UpdateAffectationLotDto dto)
-		{
-			var result = await _residenceService.UpdateAffectationAsync(dto);
-			return result.Success ? Ok(result.Data) : BadRequest(result.Errors);
-		}
-
-		[HttpDelete("affectations/{id:guid}")]
-		public async Task<IActionResult> DeleteAffectation(Guid id)
-		{
-			var result = await _residenceService.DeleteAffectationAsync(id);
-			return result.Success ? Ok() : BadRequest(result.Errors);
-		}
-
-		[HttpGet("lots/{lotId:guid}/affectations")]
-		public async Task<IActionResult> GetAffectationsByLotId(Guid lotId)
-		{
-			var result = await _residenceService.GetAffectationsByLotIdAsync(lotId);
-			return result.Success ? Ok(result.Data) : BadRequest(result.Errors);
-		}
-
-		[HttpGet("users/{userId:guid}/affectations")]
-		public async Task<IActionResult> GetAffectationsByUserId(Guid userId)
-		{
-			var result = await _residenceService.GetAffectationsByUserIdAsync(userId);
-			return result.Success ? Ok(result.Data) : BadRequest(result.Errors);
-		}
-
-		// === LOCATAIRES TEMPORAIRES ===
-
-		[HttpPost("locataires")]
-		public async Task<IActionResult> CreateLocataireTemporaire([FromBody] CreateLocataireTemporaireDto dto)
-		{
-			var result = await _residenceService.CreateLocataireTemporaireAsync(dto);
-			return result.Success ? Ok(result.Data) : BadRequest(result.Errors);
-		}
-
-		[HttpPut("locataires")]
-		public async Task<IActionResult> UpdateLocataireTemporaire([FromBody] UpdateLocataireTemporaireDto dto)
-		{
-			var result = await _residenceService.UpdateLocataireTemporaireAsync(dto);
-			return result.Success ? Ok(result.Data) : BadRequest(result.Errors);
-		}
-
-		[HttpDelete("locataires/{id:guid}")]
-		public async Task<IActionResult> DeleteLocataireTemporaire(Guid id)
-		{
-			var result = await _residenceService.DeleteLocataireTemporaireAsync(id);
-			return result.Success ? Ok() : BadRequest(result.Errors);
-		}
-
-		[HttpGet("lots/{lotId:guid}/locataires")]
-		public async Task<IActionResult> GetLocatairesTemporairesByLotId(Guid lotId)
-		{
-			var result = await _residenceService.GetLocatairesTemporairesByLotIdAsync(lotId);
-			return result.Success ? Ok(result.Data) : BadRequest(result.Errors);
-		}
-	}
+        [HttpGet("{id:guid}/details")]
+        public async Task<ActionResult<ResidenceDetailsDto>> GetDetails(Guid id, CancellationToken ct)
+        {
+            var d = await _svc.GetResidenceDetailsAsync(id, ct);
+            return d is null ? NotFound() : Ok(d);
+        }
+    }
 }

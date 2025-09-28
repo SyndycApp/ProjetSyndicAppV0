@@ -12,6 +12,7 @@
           "Microsoft.EntityFrameworkCore": "9.0.7",
           "Microsoft.EntityFrameworkCore.Tools": "9.0.7",
           "Swashbuckle.AspNetCore": "9.0.3",
+          "SyndicApp.Application": "1.0.0",
           "SyndicApp.Domain": "1.0.0",
           "SyndicApp.Infrastructure": "1.0.0"
         },

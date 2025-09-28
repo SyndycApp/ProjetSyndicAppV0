@@ -12,8 +12,8 @@ using SyndicApp.Infrastructure;
 namespace SyndicApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250723154706_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250928024324_AddUniqueActiveOccupantPerLot")]
+    partial class AddUniqueActiveOccupantPerLot
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -330,10 +330,11 @@ namespace SyndicApp.Infrastructure.Migrations
 
             modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.Vote", b =>
                 {
-                    b.Property<Guid>("AssembleeGeneraleId")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid>("AssembleeGeneraleId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Choix")
@@ -346,9 +347,6 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.Property<DateTime>("DateVote")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Question")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -356,9 +354,16 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("AssembleeGeneraleId", "UserId");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("AssembleeGeneraleId", "UserId")
+                        .IsUnique()
+                        .HasDatabaseName("UX_Vote_UniqueParAG");
 
                     b.ToTable("Votes");
                 });
@@ -455,6 +460,21 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.HasIndex("ExpediteurId");
 
                     b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Communication.UserConversation", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ConversationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("UserId", "ConversationId");
+
+                    b.HasIndex("ConversationId");
+
+                    b.ToTable("UserConversations");
                 });
 
             modelBuilder.Entity("SyndicApp.Domain.Entities.Documents.CategorieDocument", b =>
@@ -891,6 +911,84 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.ToTable("OffresEmploi");
                 });
 
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Residences.AffectationLot", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ApplicationUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateDebut")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateFin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("EstProprietaire")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("LotId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId1")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("LotId")
+                        .IsUnique()
+                        .HasDatabaseName("UX_Lot_OccupantActif")
+                        .HasFilter("[DateFin] IS NULL");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
+
+                    b.HasIndex("LotId", "UserId", "DateFin")
+                        .HasDatabaseName("IX_AffectationLot_UniqueActive");
+
+                    b.ToTable("AffectationsLots");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Residences.Batiment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Nom")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ResidenceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ResidenceId");
+
+                    b.ToTable("Batiment", (string)null);
+                });
+
             modelBuilder.Entity("SyndicApp.Domain.Entities.Residences.LocataireTemporaire", b =>
                 {
                     b.Property<Guid>("Id")
@@ -941,6 +1039,9 @@ namespace SyndicApp.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("BatimentId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -963,6 +1064,8 @@ namespace SyndicApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BatimentId");
+
                     b.HasIndex("ResidenceId");
 
                     b.ToTable("Lots");
@@ -976,77 +1079,33 @@ namespace SyndicApp.Infrastructure.Migrations
 
                     b.Property<string>("Adresse")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("CodePostal")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Nom")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Ville")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Residences");
-                });
-
-            modelBuilder.Entity("SyndicApp.Domain.Entities.Users.AffectationLot", b =>
-                {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("LotId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("ApplicationUserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateDebut")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DateFin")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("EstProprietaire")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("LotId1")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("UserId1")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("UserId", "LotId");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("LotId");
-
-                    b.HasIndex("LotId1");
-
-                    b.HasIndex("UserId1");
-
-                    b.ToTable("AffectationsLots");
                 });
 
             modelBuilder.Entity("SyndicApp.Domain.Entities.Users.Role", b =>
@@ -1105,22 +1164,7 @@ namespace SyndicApp.Infrastructure.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("UsersApp");
-                });
-
-            modelBuilder.Entity("SyndicApp.Domain.Entities.Users.UserConversation", b =>
-                {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ConversationId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("UserId", "ConversationId");
-
-                    b.HasIndex("ConversationId");
-
-                    b.ToTable("UserConversations");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("SyndicApp.Infrastructure.Identity.ApplicationUser", b =>
@@ -1175,6 +1219,12 @@ namespace SyndicApp.Infrastructure.Migrations
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordResetToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("PasswordResetTokenExpires")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
@@ -1379,6 +1429,25 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.Navigation("Expediteur");
                 });
 
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Communication.UserConversation", b =>
+                {
+                    b.HasOne("SyndicApp.Domain.Entities.Communication.Conversation", "Conversation")
+                        .WithMany("UserConversations")
+                        .HasForeignKey("ConversationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SyndicApp.Domain.Entities.Users.User", "User")
+                        .WithMany("UserConversations")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Conversation");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("SyndicApp.Domain.Entities.Documents.Document", b =>
                 {
                     b.HasOne("SyndicApp.Domain.Entities.Users.User", "AjoutePar")
@@ -1529,6 +1598,44 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.Navigation("OffreEmploi");
                 });
 
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Residences.AffectationLot", b =>
+                {
+                    b.HasOne("SyndicApp.Infrastructure.Identity.ApplicationUser", null)
+                        .WithMany("AffectationsLots")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("SyndicApp.Domain.Entities.Residences.Lot", "Lot")
+                        .WithMany("Affectations")
+                        .HasForeignKey("LotId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SyndicApp.Infrastructure.Identity.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SyndicApp.Domain.Entities.Users.User", null)
+                        .WithMany("AffectationsLots")
+                        .HasForeignKey("UserId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Lot");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Residences.Batiment", b =>
+                {
+                    b.HasOne("SyndicApp.Domain.Entities.Residences.Residence", "Residence")
+                        .WithMany()
+                        .HasForeignKey("ResidenceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Residence");
+                });
+
             modelBuilder.Entity("SyndicApp.Domain.Entities.Residences.LocataireTemporaire", b =>
                 {
                     b.HasOne("SyndicApp.Domain.Entities.Residences.Lot", "Lot")
@@ -1542,6 +1649,10 @@ namespace SyndicApp.Infrastructure.Migrations
 
             modelBuilder.Entity("SyndicApp.Domain.Entities.Residences.Lot", b =>
                 {
+                    b.HasOne("SyndicApp.Domain.Entities.Residences.Batiment", null)
+                        .WithMany("Lots")
+                        .HasForeignKey("BatimentId");
+
                     b.HasOne("SyndicApp.Domain.Entities.Residences.Residence", "Residence")
                         .WithMany("Lots")
                         .HasForeignKey("ResidenceId")
@@ -1549,37 +1660,6 @@ namespace SyndicApp.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Residence");
-                });
-
-            modelBuilder.Entity("SyndicApp.Domain.Entities.Users.AffectationLot", b =>
-                {
-                    b.HasOne("SyndicApp.Infrastructure.Identity.ApplicationUser", null)
-                        .WithMany("AffectationsLots")
-                        .HasForeignKey("ApplicationUserId");
-
-                    b.HasOne("SyndicApp.Domain.Entities.Residences.Lot", "Lot")
-                        .WithMany("AffectationsLots")
-                        .HasForeignKey("LotId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SyndicApp.Domain.Entities.Residences.Lot", null)
-                        .WithMany("Affectations")
-                        .HasForeignKey("LotId1");
-
-                    b.HasOne("SyndicApp.Domain.Entities.Users.User", "User")
-                        .WithMany("AffectationsLots")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SyndicApp.Domain.Entities.Users.User", null)
-                        .WithMany("Affectations")
-                        .HasForeignKey("UserId1");
-
-                    b.Navigation("Lot");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SyndicApp.Domain.Entities.Users.User", b =>
@@ -1591,25 +1671,6 @@ namespace SyndicApp.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Role");
-                });
-
-            modelBuilder.Entity("SyndicApp.Domain.Entities.Users.UserConversation", b =>
-                {
-                    b.HasOne("SyndicApp.Domain.Entities.Communication.Conversation", "Conversation")
-                        .WithMany("UserConversations")
-                        .HasForeignKey("ConversationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SyndicApp.Domain.Entities.Users.User", "User")
-                        .WithMany("UserConversations")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Conversation");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SyndicApp.Domain.Entities.Annonces.CategorieAnnonce", b =>
@@ -1665,11 +1726,14 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.Navigation("Candidatures");
                 });
 
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Residences.Batiment", b =>
+                {
+                    b.Navigation("Lots");
+                });
+
             modelBuilder.Entity("SyndicApp.Domain.Entities.Residences.Lot", b =>
                 {
                     b.Navigation("Affectations");
-
-                    b.Navigation("AffectationsLots");
 
                     b.Navigation("LocationsTemporaires");
                 });
@@ -1692,8 +1756,6 @@ namespace SyndicApp.Infrastructure.Migrations
 
             modelBuilder.Entity("SyndicApp.Domain.Entities.Users.User", b =>
                 {
-                    b.Navigation("Affectations");
-
                     b.Navigation("AffectationsLots");
 
                     b.Navigation("MessagesEnvoyes");

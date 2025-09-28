@@ -1,13 +1,11 @@
 using SyndicApp.Domain.Entities.Common;
-using SyndicApp.Domain.Entities.Residences;
 using System;
 
-namespace SyndicApp.Domain.Entities.Users;
-
+namespace SyndicApp.Domain.Entities.Residences
+{
 public class AffectationLot : BaseEntity
 {
     public Guid UserId { get; set; }
-    public User User { get; set; } = null!;
 
     public Guid LotId { get; set; }
     public Lot Lot { get; set; } = null!;
@@ -16,5 +14,6 @@ public class AffectationLot : BaseEntity
     public DateTime? DateFin { get; set; }
 
     public bool EstProprietaire { get; set; }
+}
 }
 

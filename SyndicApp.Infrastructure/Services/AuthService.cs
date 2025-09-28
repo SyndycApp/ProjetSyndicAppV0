@@ -135,6 +135,39 @@ namespace SyndicApp.Infrastructure.Services
             }
         }
 
+        public async Task<Result<List<UserDto>>> GetAllAsync()
+        {
+            try
+            {
+                var users = _userManager.Users.ToList();
+
+                if (!users.Any())
+                    return Result<List<UserDto>>.Fail("Aucun utilisateur trouvé.");
+
+                var result = new List<UserDto>();
+
+                foreach (var user in users)
+                {
+                    var roles = await _userManager.GetRolesAsync(user);
+
+                    result.Add(new UserDto
+                    {
+                        Id = user.Id,
+                        FullName = user.FullName,
+                        Email = user.Email ?? string.Empty,
+                        Roles = roles.ToList()
+                    });
+                }
+
+                return Result<List<UserDto>>.Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erreur interne lors de la récupération des utilisateurs");
+                return Result<List<UserDto>>.Fail("Erreur interne du serveur");
+            }
+        }
+
 
         public async Task<Result<UserDto>> GetByIdAsync(Guid userId)
         {
