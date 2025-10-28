@@ -1,7 +1,6 @@
 using SyndicApp.Domain.Entities.Common;
 using SyndicApp.Domain.Entities.Incidents;
 using SyndicApp.Domain.Entities.Residences;
-using SyndicApp.Domain.Entities.Users;
 using System;
 using System.Collections.Generic;
 
@@ -18,7 +17,9 @@ public class Incident : BaseEntity
     public Lot Lot { get; set; } = null!;
 
     public Guid DeclareParId { get; set; }
-    public User DeclarePar { get; set; } = null!;
+
+    public Guid? ResidenceId { get; set; }    
+    public Residence? Residence { get; set; }
 
     public ICollection<Intervention> Interventions { get; set; } = new List<Intervention>();
 }

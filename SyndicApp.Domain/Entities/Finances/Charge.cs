@@ -12,4 +12,7 @@ public class Charge : BaseEntity
 
     public Guid ResidenceId { get; set; }
     public Residence Residence { get; set; } = null!;
+
+    public Guid? LotId { get; set; }           // <— NEW (nullable)
+    public Lot? Lot { get; set; }
 }

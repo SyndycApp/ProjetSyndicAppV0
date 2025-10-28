@@ -1,4 +1,3 @@
-using SyndicApp.Domain.Entities.Users;
 using System;
 
 namespace SyndicApp.Domain.Entities.Common;
@@ -12,5 +11,4 @@ public class Notification : BaseEntity
 
     // Relations
     public Guid UserId { get; set; }
-    public User User { get; set; } = null!;
 }

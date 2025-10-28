@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SyndicApp.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Init_AllEntities : Migration
+    public partial class InitialClean : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -185,20 +185,6 @@ namespace SyndicApp.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Role",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Nom = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Role", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -305,6 +291,59 @@ namespace SyndicApp.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Notifications",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsRead = table.Column<bool>(type: "bit", nullable: false),
+                    SentAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Notifications", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Notifications_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Convocations",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AssembleeGeneraleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DateEnvoi = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EstLu = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Convocations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Convocations_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Convocations_AssembleesGenerales_AssembleeGeneraleId",
+                        column: x => x.AssembleeGeneraleId,
+                        principalTable: "AssembleesGenerales",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Decisions",
                 columns: table => new
                 {
@@ -323,6 +362,87 @@ namespace SyndicApp.Infrastructure.Migrations
                         name: "FK_Decisions_AssembleesGenerales_AssembleeGeneraleId",
                         column: x => x.AssembleeGeneraleId,
                         principalTable: "AssembleesGenerales",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Votes",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    AssembleeGeneraleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Question = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Choix = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateVote = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Votes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Votes_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Votes_AssembleesGenerales_AssembleeGeneraleId",
+                        column: x => x.AssembleeGeneraleId,
+                        principalTable: "AssembleesGenerales",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Messages",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ConversationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Contenu = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Messages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Messages_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Messages_Conversations_ConversationId",
+                        column: x => x.ConversationId,
+                        principalTable: "Conversations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserConversations",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ConversationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserConversations", x => new { x.UserId, x.ConversationId });
+                    table.ForeignKey(
+                        name: "FK_UserConversations_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserConversations_Conversations_ConversationId",
+                        column: x => x.ConversationId,
+                        principalTable: "Conversations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -354,6 +474,42 @@ namespace SyndicApp.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Annonces",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Titre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Contenu = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DatePublication = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CategorieId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ResidenceId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Annonces", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Annonces_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Annonces_CategoriesAnnonces_CategorieId",
+                        column: x => x.CategorieId,
+                        principalTable: "CategoriesAnnonces",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Annonces_Residences_ResidenceId",
+                        column: x => x.ResidenceId,
+                        principalTable: "Residences",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AppelsDeFonds",
                 columns: table => new
                 {
@@ -362,6 +518,7 @@ namespace SyndicApp.Infrastructure.Migrations
                     MontantTotal = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
                     DateEmission = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ResidenceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EstCloture = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -398,26 +555,45 @@ namespace SyndicApp.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Charges",
+                name: "Documents",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nom = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Montant = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    DateCharge = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ResidenceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CheminFichier = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateAjout = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AssembleeGeneraleId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CategorieId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ResidenceId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    AjouteParId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Charges", x => x.Id);
+                    table.PrimaryKey("PK_Documents", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Charges_Residences_ResidenceId",
-                        column: x => x.ResidenceId,
-                        principalTable: "Residences",
+                        name: "FK_Documents_AspNetUsers_AjouteParId",
+                        column: x => x.AjouteParId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
+                    table.ForeignKey(
+                        name: "FK_Documents_AssembleesGenerales_AssembleeGeneraleId",
+                        column: x => x.AssembleeGeneraleId,
+                        principalTable: "AssembleesGenerales",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Documents_CategoriesDocuments_CategorieId",
+                        column: x => x.CategorieId,
+                        principalTable: "CategoriesDocuments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Documents_Residences_ResidenceId",
+                        column: x => x.ResidenceId,
+                        principalTable: "Residences",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -445,25 +621,30 @@ namespace SyndicApp.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UsersApp",
+                name: "Paiements",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Nom = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Prenom = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Telephone = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Montant = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    DatePaiement = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AppelDeFondsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UsersApp", x => x.Id);
+                    table.PrimaryKey("PK_Paiements", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UsersApp_Role_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "Role",
+                        name: "FK_Paiements_AppelsDeFonds_AppelDeFondsId",
+                        column: x => x.AppelDeFondsId,
+                        principalTable: "AppelsDeFonds",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Paiements_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -498,247 +679,6 @@ namespace SyndicApp.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Annonces",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Titre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Contenu = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DatePublication = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CategorieId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ResidenceId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Annonces", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Annonces_CategoriesAnnonces_CategorieId",
-                        column: x => x.CategorieId,
-                        principalTable: "CategoriesAnnonces",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Annonces_Residences_ResidenceId",
-                        column: x => x.ResidenceId,
-                        principalTable: "Residences",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Annonces_UsersApp_UserId",
-                        column: x => x.UserId,
-                        principalTable: "UsersApp",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Convocations",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AssembleeGeneraleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DateEnvoi = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EstLu = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Convocations", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Convocations_AssembleesGenerales_AssembleeGeneraleId",
-                        column: x => x.AssembleeGeneraleId,
-                        principalTable: "AssembleesGenerales",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Convocations_UsersApp_UserId",
-                        column: x => x.UserId,
-                        principalTable: "UsersApp",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Documents",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Nom = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CheminFichier = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateAjout = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CategorieId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ResidenceId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    AjouteParId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    AssembleeGeneraleId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Documents", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Documents_AssembleesGenerales_AssembleeGeneraleId",
-                        column: x => x.AssembleeGeneraleId,
-                        principalTable: "AssembleesGenerales",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Documents_CategoriesDocuments_CategorieId",
-                        column: x => x.CategorieId,
-                        principalTable: "CategoriesDocuments",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Documents_Residences_ResidenceId",
-                        column: x => x.ResidenceId,
-                        principalTable: "Residences",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Documents_UsersApp_AjouteParId",
-                        column: x => x.AjouteParId,
-                        principalTable: "UsersApp",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Messages",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Contenu = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateEnvoi = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ConversationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ExpediteurId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Messages", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Messages_Conversations_ConversationId",
-                        column: x => x.ConversationId,
-                        principalTable: "Conversations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Messages_UsersApp_ExpediteurId",
-                        column: x => x.ExpediteurId,
-                        principalTable: "UsersApp",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Notifications",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsRead = table.Column<bool>(type: "bit", nullable: false),
-                    SentAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Notifications", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Notifications_UsersApp_UserId",
-                        column: x => x.UserId,
-                        principalTable: "UsersApp",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Paiements",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Montant = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
-                    DatePaiement = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AppelDeFondsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Paiements", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Paiements_AppelsDeFonds_AppelDeFondsId",
-                        column: x => x.AppelDeFondsId,
-                        principalTable: "AppelsDeFonds",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Paiements_UsersApp_UserId",
-                        column: x => x.UserId,
-                        principalTable: "UsersApp",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserConversations",
-                columns: table => new
-                {
-                    ConversationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserConversations", x => new { x.UserId, x.ConversationId });
-                    table.ForeignKey(
-                        name: "FK_UserConversations_Conversations_ConversationId",
-                        column: x => x.ConversationId,
-                        principalTable: "Conversations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UserConversations_UsersApp_UserId",
-                        column: x => x.UserId,
-                        principalTable: "UsersApp",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Votes",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    AssembleeGeneraleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Question = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Choix = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DateVote = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Votes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Votes_AssembleesGenerales_AssembleeGeneraleId",
-                        column: x => x.AssembleeGeneraleId,
-                        principalTable: "AssembleesGenerales",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Votes_UsersApp_UserId",
-                        column: x => x.UserId,
-                        principalTable: "UsersApp",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AffectationsLots",
                 columns: table => new
                 {
@@ -748,8 +688,7 @@ namespace SyndicApp.Infrastructure.Migrations
                     DateDebut = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateFin = table.Column<DateTime>(type: "datetime2", nullable: true),
                     EstProprietaire = table.Column<bool>(type: "bit", nullable: false),
-                    ApplicationUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UserId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ApplicationUserId3 = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -757,27 +696,52 @@ namespace SyndicApp.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_AffectationsLots", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AffectationsLots_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_AffectationsLots_AspNetUsers_ApplicationUserId3",
+                        column: x => x.ApplicationUserId3,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_AffectationsLots_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_AffectationsLots_Lots_LotId",
                         column: x => x.LotId,
                         principalTable: "Lots",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Charges",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Nom = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Montant = table.Column<decimal>(type: "decimal(18,2)", precision: 18, scale: 2, nullable: false),
+                    DateCharge = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ResidenceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    LotId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Charges", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AffectationsLots_UsersApp_UserId",
-                        column: x => x.UserId,
-                        principalTable: "UsersApp",
+                        name: "FK_Charges_Lots_LotId",
+                        column: x => x.LotId,
+                        principalTable: "Lots",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AffectationsLots_UsersApp_UserId1",
-                        column: x => x.UserId1,
-                        principalTable: "UsersApp",
-                        principalColumn: "Id");
+                        name: "FK_Charges_Residences_ResidenceId",
+                        column: x => x.ResidenceId,
+                        principalTable: "Residences",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -799,6 +763,12 @@ namespace SyndicApp.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Incidents", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Incidents_AspNetUsers_DeclareParId",
+                        column: x => x.DeclareParId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Incidents_Lots_LotId",
                         column: x => x.LotId,
                         principalTable: "Lots",
@@ -809,12 +779,6 @@ namespace SyndicApp.Infrastructure.Migrations
                         column: x => x.ResidenceId,
                         principalTable: "Residences",
                         principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Incidents_UsersApp_DeclareParId",
-                        column: x => x.DeclareParId,
-                        principalTable: "UsersApp",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -854,6 +818,7 @@ namespace SyndicApp.Infrastructure.Migrations
                     LocataireId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ActiviteId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ContratLocationUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ActiviteCommercialeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -861,9 +826,25 @@ namespace SyndicApp.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_LocauxCommerciaux", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_LocauxCommerciaux_ActivitesCommerciales_ActiviteCommercialeId",
+                        column: x => x.ActiviteCommercialeId,
+                        principalTable: "ActivitesCommerciales",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_LocauxCommerciaux_ActivitesCommerciales_ActiviteId",
                         column: x => x.ActiviteId,
                         principalTable: "ActivitesCommerciales",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LocauxCommerciaux_AspNetUsers_LocataireId",
+                        column: x => x.LocataireId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_LocauxCommerciaux_AspNetUsers_ProprietaireId",
+                        column: x => x.ProprietaireId,
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_LocauxCommerciaux_Lots_LotId",
@@ -871,16 +852,6 @@ namespace SyndicApp.Infrastructure.Migrations
                         principalTable: "Lots",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_LocauxCommerciaux_UsersApp_LocataireId",
-                        column: x => x.LocataireId,
-                        principalTable: "UsersApp",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_LocauxCommerciaux_UsersApp_ProprietaireId",
-                        column: x => x.ProprietaireId,
-                        principalTable: "UsersApp",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -904,12 +875,14 @@ namespace SyndicApp.Infrastructure.Migrations
                         name: "FK_Interventions_Employes_EmployeId",
                         column: x => x.EmployeId,
                         principalTable: "Employes",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Interventions_Incidents_IncidentId",
                         column: x => x.IncidentId,
                         principalTable: "Incidents",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Interventions_Residences_ResidenceId",
                         column: x => x.ResidenceId,
@@ -918,24 +891,19 @@ namespace SyndicApp.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AffectationLot_UniqueActive",
+                name: "IX_AffectationsLots_ApplicationUserId3",
                 table: "AffectationsLots",
-                columns: new[] { "LotId", "UserId", "DateFin" });
+                column: "ApplicationUserId3");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AffectationsLots_ApplicationUserId",
+                name: "IX_AffectationsLots_LotId",
                 table: "AffectationsLots",
-                column: "ApplicationUserId");
+                column: "LotId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AffectationsLots_UserId",
                 table: "AffectationsLots",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AffectationsLots_UserId1",
-                table: "AffectationsLots",
-                column: "UserId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Annonces_CategorieId",
@@ -1005,6 +973,11 @@ namespace SyndicApp.Infrastructure.Migrations
                 name: "IX_Candidatures_OffreEmploiId",
                 table: "Candidatures",
                 column: "OffreEmploiId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Charges_LotId",
+                table: "Charges",
+                column: "LotId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Charges_ResidenceId",
@@ -1087,6 +1060,11 @@ namespace SyndicApp.Infrastructure.Migrations
                 column: "LotId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_LocauxCommerciaux_ActiviteCommercialeId",
+                table: "LocauxCommerciaux",
+                column: "ActiviteCommercialeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_LocauxCommerciaux_ActiviteId",
                 table: "LocauxCommerciaux",
                 column: "ActiviteId");
@@ -1122,9 +1100,9 @@ namespace SyndicApp.Infrastructure.Migrations
                 column: "ConversationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Messages_ExpediteurId",
+                name: "IX_Messages_UserId",
                 table: "Messages",
-                column: "ExpediteurId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Notifications_UserId",
@@ -1145,11 +1123,6 @@ namespace SyndicApp.Infrastructure.Migrations
                 name: "IX_UserConversations_ConversationId",
                 table: "UserConversations",
                 column: "ConversationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UsersApp_RoleId",
-                table: "UsersApp",
-                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Votes_UserId",
@@ -1236,9 +1209,6 @@ namespace SyndicApp.Infrastructure.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "OffresEmploi");
 
             migrationBuilder.DropTable(
@@ -1263,16 +1233,13 @@ namespace SyndicApp.Infrastructure.Migrations
                 name: "AssembleesGenerales");
 
             migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
                 name: "Lots");
 
             migrationBuilder.DropTable(
-                name: "UsersApp");
-
-            migrationBuilder.DropTable(
                 name: "Batiment");
-
-            migrationBuilder.DropTable(
-                name: "Role");
 
             migrationBuilder.DropTable(
                 name: "Residences");

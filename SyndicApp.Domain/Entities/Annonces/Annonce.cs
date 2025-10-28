@@ -1,6 +1,6 @@
 using SyndicApp.Domain.Entities.Annonces;
 using SyndicApp.Domain.Entities.Common;
-using SyndicApp.Domain.Entities.Users;
+using SyndicApp.Domain.Entities.Residences;
 using System;
 
 namespace SyndicApp.Domain.Entities.Annonces;
@@ -13,9 +13,7 @@ public class Annonce : BaseEntity
 
     public Guid CategorieId { get; set; }
     public virtual CategorieAnnonce Categorie { get; set; } = null!;
-
+    public Guid? ResidenceId { get; set; }        
+    public Residence? Residence { get; set; }
     public Guid UserId { get; set; }
-    public User User { get; set; } = null!;
-
-
 }

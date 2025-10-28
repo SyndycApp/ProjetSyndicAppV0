@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
-using SyndicApp.Domain.Entities.Users;
 using SyndicApp.Domain.Entities.Residences;
 
 namespace SyndicApp.Infrastructure.Identity

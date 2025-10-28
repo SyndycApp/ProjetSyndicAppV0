@@ -11,6 +11,9 @@ using SyndicApp.Infrastructure.Identity;
 using SyndicApp.Infrastructure.Services;     // SmtpEmailSender, PasswordService (si c’est bien ton namespace)
 using System.Text.Json.Serialization;
 using SyndicApp.Infrastructure.Services.Residences;
+using SyndicApp.Application.Interfaces.Finances;
+using Microsoft.EntityFrameworkCore;
+using SyndicApp.Infrastructure.Services.Finances;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +28,7 @@ builder.Services.AddControllers()
         o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
     });
 
+var connString = builder.Configuration.GetConnectionString("DefaultConnection");
 // === CORS (autorise ton front Blazor local) ===
 builder.Services.AddCors(o => o.AddPolicy("LocalDev", p =>
     p.WithOrigins("https://localhost:7263") // adapte si ton port change
@@ -67,12 +71,21 @@ builder.Services.AddTransient<ILotService, LotService>();
 builder.Services.AddTransient<IBatimentService, BatimentService>();
 builder.Services.AddTransient<ILocataireTemporaireService, LocataireTemporaireService>();
 
+builder.Services.AddScoped<IChargeService, ChargeService>();
+builder.Services.AddScoped<IAppelDeFondsService, AppelDeFondsService>();
+builder.Services.AddScoped<IPaiementService, PaiementService>();
+builder.Services.AddScoped<ISoldeService, SoldeService>();
+
 // === DataProtection (persistance des clés pour cookies/tokens) ===
 builder.Services.AddDataProtection()
     .PersistKeysToFileSystem(new DirectoryInfo(Path.Combine(builder.Environment.ContentRootPath, "keys")));
 
 // === AutoMapper (profils dans l’assembly Infrastructure) ===
 builder.Services.AddAutoMapper(typeof(SyndicApp.Infrastructure.Services.Mapping.ResidenceProfile).Assembly);
+
+builder.Services.AddDbContext<ApplicationDbContext>(opts =>
+    opts.UseSqlServer(connString)
+);
 
 // === Logging console ===
 builder.Logging.ClearProviders();

@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using SyndicApp.Domain.Entities.Users;
 using SyndicApp.Infrastructure;
 using SyndicApp.Infrastructure.Identity;
 using System.Text;

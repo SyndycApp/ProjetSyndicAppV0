@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SyndicApp.Application.DTOs.Auth;
 using SyndicApp.Application.Interfaces;
-using SyndicApp.Domain.Entities.Users;
 using SyndicApp.Infrastructure.Identity;
 using System;
 using System.Collections.Generic;

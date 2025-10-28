@@ -1,24 +1,21 @@
-using SyndicApp.Domain.Entities.Common;
-using SyndicApp.Domain.Entities.Users;
+﻿using SyndicApp.Domain.Entities.Common;
+using SyndicApp.Domain.Entities.Incidents;
 using System;
 using System.Collections.Generic;
 
-namespace SyndicApp.Domain.Entities.Residences;
-
-public class Lot : BaseEntity
+namespace SyndicApp.Domain.Entities.Residences
 {
-    public string NumeroLot { get; set; } = string.Empty;
-    public string Type { get; set; } = string.Empty; 
-    public double Surface { get; set; }
+    public class Lot : BaseEntity
+    {
+        public string NumeroLot { get; set; } = string.Empty;
+        public string Type { get; set; } = string.Empty;
+        public double Surface { get; set; }
 
-    public Guid ResidenceId { get; set; }
-    public Residence Residence { get; set; } = null!;
+        public Guid ResidenceId { get; set; }
+        public Residence Residence { get; set; } = null!;
 
-    public ICollection<AffectationLot> Affectations { get; set; } = new List<AffectationLot>();
-    public virtual ICollection<LocataireTemporaire> LocationsTemporaires { get; set; } = new List<LocataireTemporaire>();
-
-    public ICollection<AffectationLot> AffectationsLots { get; set; } = new List<AffectationLot>();
-
-
-
+        public ICollection<AffectationLot> Affectations { get; set; } = new List<AffectationLot>();
+        public ICollection<Incident> Incidents { get; set; } = new List<Incident>();
+        public ICollection<LocataireTemporaire> LocationsTemporaires { get; set; } = new List<LocataireTemporaire>();
+    }
 }

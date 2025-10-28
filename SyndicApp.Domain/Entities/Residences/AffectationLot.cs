@@ -3,17 +3,18 @@ using System;
 
 namespace SyndicApp.Domain.Entities.Residences
 {
-public class AffectationLot : BaseEntity
-{
-    public Guid UserId { get; set; }
+    public class AffectationLot : BaseEntity
+    {
+        // FK vers AspNetUsers(Id)
+        public Guid UserId { get; set; }
 
-    public Guid LotId { get; set; }
-    public Lot Lot { get; set; } = null!;
+        // FK vers Lots(Id)
+        public Guid LotId { get; set; }
+        public Lot Lot { get; set; } = null!;
 
-    public DateTime DateDebut { get; set; }
-    public DateTime? DateFin { get; set; }
+        public DateTime DateDebut { get; set; }
+        public DateTime? DateFin { get; set; }
 
-    public bool EstProprietaire { get; set; }
+        public bool EstProprietaire { get; set; }
+    }
 }
-}
-

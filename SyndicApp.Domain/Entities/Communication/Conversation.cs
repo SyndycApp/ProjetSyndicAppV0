@@ -1,5 +1,4 @@
 using SyndicApp.Domain.Entities.Common;
-using SyndicApp.Domain.Entities.Users;
 using System;
 using System.Collections.Generic;
 
