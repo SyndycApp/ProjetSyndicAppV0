@@ -34,7 +34,12 @@ namespace SyndicApp.Infrastructure
 
         // Incidents
         public DbSet<Incident> Incidents => Set<Incident>();
+        public DbSet<DevisTravaux> DevisTravaux => Set<DevisTravaux>();
         public DbSet<Intervention> Interventions => Set<Intervention>();
+
+        public DbSet<IncidentHistorique> IncidentsHistoriques => Set<IncidentHistorique>();
+        public DbSet<DevisHistorique> DevisHistoriques => Set<DevisHistorique>();
+        public DbSet<InterventionHistorique> InterventionsHistoriques => Set<InterventionHistorique>();
 
         // Personnel
         public DbSet<Employe> Employes => Set<Employe>();
@@ -228,32 +233,258 @@ namespace SyndicApp.Infrastructure
             // ================= Incidents =================
             modelBuilder.Entity<Incident>(b =>
             {
-                b.HasOne(i => i.Lot)
-                 .WithMany(l => l.Incidents)
-                 .HasForeignKey(i => i.LotId)
-                 .OnDelete(DeleteBehavior.Cascade);
+                b.ToTable("Incidents");
 
-                b.HasOne(i => i.Residence)
-                 .WithMany(r => r.Incidents)      // <- mets r => r.Incidents si elle existe
-                 .HasForeignKey(i => i.ResidenceId)
-                 .OnDelete(DeleteBehavior.NoAction);
+                b.Property(x => x.Titre).HasMaxLength(200).IsRequired();
+                b.Property(x => x.Description).IsRequired();
+                b.Property(x => x.TypeIncident).HasMaxLength(100);
 
+                // Enums (stockés en int)
+                b.Property(x => x.Statut).IsRequired();
+                b.Property(x => x.Urgence).IsRequired();
+
+                b.Property(x => x.DateDeclaration).IsRequired();
+
+                // Index utiles
+                b.HasIndex(x => new { x.ResidenceId, x.Statut });
+                b.HasIndex(x => x.DateDeclaration);
+                b.HasIndex(x => x.DeclareParId);
+
+                // Residence OBLIGATOIRE (éviter cascades multi)
+                b.HasOne(x => x.Residence)
+                 .WithMany(r => r.Incidents)      // si la nav n’existe pas sur Residence, mets .WithMany()
+                 .HasForeignKey(x => x.ResidenceId)
+                 .OnDelete(DeleteBehavior.Restrict);
+
+                // Lot OPTIONNEL (Guid?) => SetNull pour éviter suppressions en chaîne
+                b.HasOne(x => x.Lot)
+                 .WithMany(l => l.Incidents)      // ou .WithMany() si pas de nav inverse
+                 .HasForeignKey(x => x.LotId)
+                 .OnDelete(DeleteBehavior.SetNull);
+
+                // Auteur : FK vers AspNetUsers (sans nav)
                 b.HasOne<ApplicationUser>()
                  .WithMany()
-                 .HasForeignKey(i => i.DeclareParId)
+                 .HasForeignKey(x => x.DeclareParId)
+                 .OnDelete(DeleteBehavior.Restrict);
+
+                // Interventions (0..n) – FK sur Intervention.IncidentId
+                b.HasMany(x => x.Interventions)
+                 .WithOne(i => i.Incident)
+                 .HasForeignKey(i => i.IncidentId)
+                 .OnDelete(DeleteBehavior.SetNull);
+
+                // Devis (0..n) – FK sur DevisTravaux.IncidentId
+                b.HasMany(x => x.Devis)
+                 .WithOne(d => d.Incident)
+                 .HasForeignKey(d => d.IncidentId)
+                 .OnDelete(DeleteBehavior.SetNull);
+
+                // Historique (1..n)
+                b.HasMany(x => x.Historique)
+                 .WithOne(h => h.Incident)
+                 .HasForeignKey(h => h.IncidentId)
+                 .OnDelete(DeleteBehavior.Cascade);
+
+                // Documents (many-to-many) avec table de jonction nommée
+                b.HasMany(x => x.Documents)
+                 .WithMany()
+                 .UsingEntity<Dictionary<string, object>>(
+                    "IncidentDocuments",
+                    right => right.HasOne<Document>()
+                                  .WithMany()
+                                  .HasForeignKey("DocumentId")
+                                  .OnDelete(DeleteBehavior.Cascade),
+                    left => left.HasOne<Incident>()
+                                 .WithMany()
+                                 .HasForeignKey("IncidentId")
+                                 .OnDelete(DeleteBehavior.Cascade),
+                    join =>
+                    {
+                        join.ToTable("IncidentDocuments");
+                        join.HasKey("IncidentId", "DocumentId");
+                        join.HasIndex("DocumentId");
+                    });
+            });
+
+            // ================= DevisTravaux =================
+            modelBuilder.Entity<DevisTravaux>(b =>
+            {
+                b.ToTable("DevisTravaux");
+
+                b.Property(x => x.Titre).HasMaxLength(200).IsRequired();
+                b.Property(x => x.Description).IsRequired();
+
+                b.Property(x => x.MontantHT).HasPrecision(18, 2);
+                b.Property(x => x.TauxTVA).HasPrecision(5, 4); // ex: 0.2000
+                b.Property(x => x.DateEmission).IsRequired();
+                b.Property(x => x.Statut).IsRequired();
+
+                // Index
+                b.HasIndex(x => new { x.ResidenceId, x.Statut });
+                b.HasIndex(x => x.DateEmission);
+                b.HasIndex(x => x.ValideParId);
+                b.HasIndex(x => x.DateDecision);
+
+                // Residence OBLIGATOIRE
+                b.HasOne(x => x.Residence)
+                 .WithMany(r => r.DevisTravaux)   // si pas de nav sur Residence, mets .WithMany()
+                 .HasForeignKey(x => x.ResidenceId)
+                 .OnDelete(DeleteBehavior.Restrict);
+
+                // Incident optionnel
+                b.HasOne(x => x.Incident)
+                 .WithMany(i => i.Devis)
+                 .HasForeignKey(x => x.IncidentId)
+                 .OnDelete(DeleteBehavior.SetNull);
+
+                // Interventions (0..n)
+                b.HasMany(x => x.Interventions)
+                 .WithOne(i => i.DevisTravaux)
+                 .HasForeignKey(i => i.DevisTravauxId)
+                 .OnDelete(DeleteBehavior.SetNull);
+
+                // Historique (1..n)
+                b.HasMany(x => x.Historique)
+                 .WithOne(h => h.DevisTravaux)
+                 .HasForeignKey(h => h.DevisTravauxId)
+                 .OnDelete(DeleteBehavior.Cascade);
+
+                // Documents (many-to-many)
+                b.HasMany(x => x.Documents)
+                 .WithMany()
+                 .UsingEntity<Dictionary<string, object>>(
+                    "DevisDocuments",
+                    right => right.HasOne<Document>()
+                                  .WithMany()
+                                  .HasForeignKey("DocumentId")
+                                  .OnDelete(DeleteBehavior.Cascade),
+                    left => left.HasOne<DevisTravaux>()
+                                 .WithMany()
+                                 .HasForeignKey("DevisTravauxId")
+                                 .OnDelete(DeleteBehavior.Cascade),
+                    join =>
+                    {
+                        join.ToTable("DevisDocuments");
+                        join.HasKey("DevisTravauxId", "DocumentId");
+                        join.HasIndex("DocumentId");
+                    });
+            });
+
+            // ================= Interventions =================
+            modelBuilder.Entity<Intervention>(b =>
+            {
+                b.ToTable("Interventions");
+
+                b.Property(x => x.Description).IsRequired();
+                b.Property(x => x.CoutEstime).HasPrecision(18, 2);
+                b.Property(x => x.CoutReel).HasPrecision(18, 2);
+                b.Property(x => x.Statut).IsRequired();
+
+                // Index
+                b.HasIndex(x => new { x.ResidenceId, x.Statut });
+                b.HasIndex(x => x.DatePrevue);
+                b.HasIndex(x => x.DateRealisation);
+                b.HasIndex(x => x.EmployeId);
+
+                // Residence OBLIGATOIRE
+                b.HasOne(x => x.Residence)
+                 .WithMany(r => r.Interventions)  // si pas de nav, mets .WithMany()
+                 .HasForeignKey(x => x.ResidenceId)
+                 .OnDelete(DeleteBehavior.Restrict);
+
+                // Devis optionnel (souvent présent si "Accepté")
+                b.HasOne(x => x.DevisTravaux)
+                 .WithMany(d => d.Interventions)
+                 .HasForeignKey(x => x.DevisTravauxId)
+                 .OnDelete(DeleteBehavior.SetNull);
+
+                // Incident optionnel
+                b.HasOne(x => x.Incident)
+                 .WithMany(i => i.Interventions)
+                 .HasForeignKey(x => x.IncidentId)
+                 .OnDelete(DeleteBehavior.SetNull);
+
+                // Employé interne optionnel
+                b.HasOne(x => x.Employe)
+                 .WithMany(e => e.Interventions)
+                 .HasForeignKey(x => x.EmployeId)
+                 .OnDelete(DeleteBehavior.SetNull);
+
+                // Documents (many-to-many)
+                b.HasMany(x => x.Documents)
+                 .WithMany()
+                 .UsingEntity<Dictionary<string, object>>(
+                    "InterventionDocuments",
+                    right => right.HasOne<Document>()
+                                  .WithMany()
+                                  .HasForeignKey("DocumentId")
+                                  .OnDelete(DeleteBehavior.Cascade),
+                    left => left.HasOne<Intervention>()
+                                 .WithMany()
+                                 .HasForeignKey("InterventionId")
+                                 .OnDelete(DeleteBehavior.Cascade),
+                    join =>
+                    {
+                        join.ToTable("InterventionDocuments");
+                        join.HasKey("InterventionId", "DocumentId");
+                        join.HasIndex("DocumentId");
+                    });
+
+                // Historique (1..n)
+                b.HasMany(x => x.Historique)
+                 .WithOne(h => h.Intervention)
+                 .HasForeignKey(h => h.InterventionId)
                  .OnDelete(DeleteBehavior.Cascade);
             });
 
-            modelBuilder.Entity<Intervention>(b =>
-            {
-                b.HasOne(i => i.Incident)
-                 .WithMany(x => x.Interventions)
-                 .HasForeignKey(i => i.IncidentId)
-                 .OnDelete(DeleteBehavior.Cascade);
 
-                b.HasOne(i => i.Employe)
-                 .WithMany(e => e.Interventions)
-                 .HasForeignKey(i => i.EmployeId)
+            // ================= Historiques Incidents/Devis/Interventions =================
+            modelBuilder.Entity<IncidentHistorique>(b =>
+            {
+                b.ToTable("IncidentsHistoriques");
+                b.Property(x => x.Action).HasMaxLength(250).IsRequired();
+                b.Property(x => x.Commentaire).HasMaxLength(1000);
+
+                b.HasIndex(x => x.IncidentId);
+                b.HasIndex(x => x.DateAction);
+                b.HasIndex(x => x.AuteurId);
+
+                b.HasOne(x => x.Incident)
+                 .WithMany(i => i.Historique)
+                 .HasForeignKey(x => x.IncidentId)
+                 .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<DevisHistorique>(b =>
+            {
+                b.ToTable("DevisHistoriques");
+                b.Property(x => x.Action).HasMaxLength(250).IsRequired();
+                b.Property(x => x.Commentaire).HasMaxLength(1000);
+
+                b.HasIndex(x => x.DevisTravauxId);
+                b.HasIndex(x => x.DateAction);
+                b.HasIndex(x => x.AuteurId);
+
+                b.HasOne(x => x.DevisTravaux)
+                 .WithMany(d => d.Historique)
+                 .HasForeignKey(x => x.DevisTravauxId)
+                 .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<InterventionHistorique>(b =>
+            {
+                b.ToTable("InterventionsHistoriques");
+                b.Property(x => x.Action).HasMaxLength(250).IsRequired();
+                b.Property(x => x.Commentaire).HasMaxLength(1000);
+
+                b.HasIndex(x => x.InterventionId);
+                b.HasIndex(x => x.DateAction);
+                b.HasIndex(x => x.AuteurId);
+
+                b.HasOne(x => x.Intervention)
+                 .WithMany(i => i.Historique)
+                 .HasForeignKey(x => x.InterventionId)
                  .OnDelete(DeleteBehavior.Cascade);
             });
 

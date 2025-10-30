@@ -1,42 +1,48 @@
 ﻿using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.OpenApi.Models;
-// ⚠️ Si tu utilises vraiment ces services, vérifie leurs namespaces.
-// Sinon, commente les deux lignes d’enregistrement plus bas.
-using SyndicApp.Application.Interfaces;       // IEmailSender, IPasswordService (si c’est bien ton namespace)
-using SyndicApp.Infrastructure;
-using SyndicApp.Application.Interfaces.Residences;
-using SyndicApp.Infrastructure.Data;
-using SyndicApp.Infrastructure.Identity;
-using SyndicApp.Infrastructure.Services;     // SmtpEmailSender, PasswordService (si c’est bien ton namespace)
-using System.Text.Json.Serialization;
-using SyndicApp.Infrastructure.Services.Residences;
-using SyndicApp.Application.Interfaces.Finances;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+using System.Text.Json.Serialization;
+
+using SyndicApp.Application.Interfaces;                 // IEmailSender, IPasswordService
+using SyndicApp.Application.Interfaces.Finances;
+using SyndicApp.Application.Interfaces.Incidents;
+using SyndicApp.Application.Interfaces.Residences;
+
+using SyndicApp.Infrastructure;
+using SyndicApp.Infrastructure.Data;                   // SeedData
+using SyndicApp.Infrastructure.Identity;               // JwtSettings, RolesSeeder
+using SyndicApp.Infrastructure.Services;               // SmtpEmailSender, PasswordService
 using SyndicApp.Infrastructure.Services.Finances;
+using SyndicApp.Infrastructure.Services.Incidents;
+using SyndicApp.Infrastructure.Services.Residences;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// === JWT (appsettings.json > "JwtSettings") ===
+// ================== CONFIG ==================
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
 
-// === Controllers & JSON ===
+// Controllers + JSON
 builder.Services.AddControllers()
     .AddJsonOptions(o =>
     {
-        // éviter les cycles EF → JSON
         o.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        o.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); // enums lisibles
     });
 
-var connString = builder.Configuration.GetConnectionString("DefaultConnection");
-// === CORS (autorise ton front Blazor local) ===
-builder.Services.AddCors(o => o.AddPolicy("LocalDev", p =>
-    p.WithOrigins("https://localhost:7263") // adapte si ton port change
-     .AllowAnyHeader()
-     .AllowAnyMethod()
-));
+// CORS (2 policies pratiques en dev)
+builder.Services.AddCors(o =>
+{
+    // Autorise n'importe quelle origine (DEV rapide : web, mobile, etc.)
+    o.AddPolicy("DevAll", p => p.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
-// === Swagger ===
+    // Exemple d’origine précise (si tu veux restreindre)
+    o.AddPolicy("LocalDev", p => p
+        .WithOrigins("https://localhost:7263", "http://localhost:7263")
+        .AllowAnyHeader().AllowAnyMethod());
+});
+
+// Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -48,10 +54,12 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// === Infrastructure (DbContext, Identity, AutoMapper, Services métiers, etc.) ===
+// ================== INFRASTRUCTURE ==================
+// En général, AddInfrastructure enregistre DbContext + Identity + autres.
+// Évite la double inscription de DbContext : NE PAS rajouter AddDbContext ici si AddInfrastructure le fait déjà.
 builder.Services.AddInfrastructure(builder.Configuration);
 
-// === Identity options (dev-friendly) ===
+// Identity (dev-friendly)
 builder.Services.Configure<IdentityOptions>(o =>
 {
     o.Password.RequireDigit = false;
@@ -61,10 +69,10 @@ builder.Services.Configure<IdentityOptions>(o =>
     o.Password.RequireLowercase = false;
 });
 
-// === Services transverses (si utilisés dans ton app) ===
-// Si les namespaces diffèrent, corrige les using ci-dessus ou commente ces deux lignes.
+// Services transverses & métiers
 builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
 builder.Services.AddTransient<IPasswordService, PasswordService>();
+
 builder.Services.AddTransient<IAffectationLotService, AffectationLotService>();
 builder.Services.AddTransient<IResidenceService, ResidenceService>();
 builder.Services.AddTransient<ILotService, LotService>();
@@ -76,25 +84,26 @@ builder.Services.AddScoped<IAppelDeFondsService, AppelDeFondsService>();
 builder.Services.AddScoped<IPaiementService, PaiementService>();
 builder.Services.AddScoped<ISoldeService, SoldeService>();
 
-// === DataProtection (persistance des clés pour cookies/tokens) ===
+builder.Services.AddScoped<IIncidentService, IncidentService>();
+builder.Services.AddScoped<IDevisTravauxService, DevisTravauxService>();
+builder.Services.AddScoped<IInterventionService, InterventionService>();
+
+// DataProtection (persistance des clés)
 builder.Services.AddDataProtection()
     .PersistKeysToFileSystem(new DirectoryInfo(Path.Combine(builder.Environment.ContentRootPath, "keys")));
 
-// === AutoMapper (profils dans l’assembly Infrastructure) ===
+// AutoMapper (si profils dans Infrastructure)
 builder.Services.AddAutoMapper(typeof(SyndicApp.Infrastructure.Services.Mapping.ResidenceProfile).Assembly);
 
-builder.Services.AddDbContext<ApplicationDbContext>(opts =>
-    opts.UseSqlServer(connString)
-);
-
-// === Logging console ===
+// Logging
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Logging.SetMinimumLevel(LogLevel.Debug);
 
+// ================== BUILD ==================
 var app = builder.Build();
 
-// === Seed rôles + données de démo ===
+// ================== SEEDING (après Build, avant Middleware) ==================
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -105,7 +114,7 @@ using (var scope = app.Services.CreateScope())
     await SeedData.Initialize(services);
 }
 
-// === Pipeline HTTP ===
+// ================== PIPELINE HTTP ==================
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -114,10 +123,17 @@ if (app.Environment.IsDevelopment())
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "SyndicApp API v1");
         c.RoutePrefix = string.Empty; // Swagger sur /
     });
+
+    // En dev, on autorise tout pour simplifier les tests (web + mobile)
+    app.UseCors("DevAll");
+}
+else
+{
+    // En prod, restreins (ex: LocalDev remplacé par tes domaines publics)
+    app.UseCors("LocalDev");
 }
 
 app.UseHttpsRedirection();
-app.UseCors("LocalDev");
 
 app.UseAuthentication();
 app.UseAuthorization();

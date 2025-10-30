@@ -10,3 +10,7 @@ C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Application\obj\D
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Application\obj\Debug\net9.0\refint\SyndicApp.Application.dll
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Application\obj\Debug\net9.0\SyndicApp.Application.pdb
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Application\obj\Debug\net9.0\ref\SyndicApp.Application.dll
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Application\obj\Debug\net9.0\SyndicApp.Application.csproj.AssemblyReference.cache
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Application\bin\Debug\net9.0\SyndicApp.Domain.dll
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Application\bin\Debug\net9.0\SyndicApp.Domain.pdb
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Application\obj\Debug\net9.0\SyndicAp.89EC5CA9.Up2Date

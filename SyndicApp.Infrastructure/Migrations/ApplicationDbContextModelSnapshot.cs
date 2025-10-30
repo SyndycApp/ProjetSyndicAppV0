@@ -22,19 +22,49 @@ namespace SyndicApp.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("EmployeResidence", b =>
+            modelBuilder.Entity("DevisDocuments", b =>
                 {
-                    b.Property<Guid>("EmployesAffectesId")
+                    b.Property<Guid>("DevisTravauxId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ResidencesAffecteesId")
+                    b.Property<Guid>("DocumentId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("EmployesAffectesId", "ResidencesAffecteesId");
+                    b.HasKey("DevisTravauxId", "DocumentId");
 
-                    b.HasIndex("ResidencesAffecteesId");
+                    b.HasIndex("DocumentId");
 
-                    b.ToTable("EmployeResidence");
+                    b.ToTable("DevisDocuments", (string)null);
+                });
+
+            modelBuilder.Entity("IncidentDocuments", b =>
+                {
+                    b.Property<Guid>("IncidentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("DocumentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("IncidentId", "DocumentId");
+
+                    b.HasIndex("DocumentId");
+
+                    b.ToTable("IncidentDocuments", (string)null);
+                });
+
+            modelBuilder.Entity("InterventionDocuments", b =>
+                {
+                    b.Property<Guid>("InterventionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("DocumentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("InterventionId", "DocumentId");
+
+                    b.HasIndex("DocumentId");
+
+                    b.ToTable("InterventionDocuments", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -590,6 +620,9 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.Property<Guid?>("LotId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("LotId1")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<decimal>("Montant")
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
@@ -601,6 +634,9 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.Property<Guid>("ResidenceId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("ResidenceId1")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
@@ -608,7 +644,11 @@ namespace SyndicApp.Infrastructure.Migrations
 
                     b.HasIndex("LotId");
 
+                    b.HasIndex("LotId1");
+
                     b.HasIndex("ResidenceId");
+
+                    b.HasIndex("ResidenceId1");
 
                     b.ToTable("Charges");
                 });
@@ -647,6 +687,112 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.ToTable("Paiements");
                 });
 
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Incidents.DevisHistorique", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<Guid>("AuteurId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Commentaire")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateAction")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("DevisTravauxId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuteurId");
+
+                    b.HasIndex("DateAction");
+
+                    b.HasIndex("DevisTravauxId");
+
+                    b.ToTable("DevisHistoriques", (string)null);
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Incidents.DevisTravaux", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CommentaireDecision")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateDecision")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateEmission")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("IncidentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("MontantHT")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("ResidenceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Statut")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TauxTVA")
+                        .HasPrecision(5, 4)
+                        .HasColumnType("decimal(5,4)");
+
+                    b.Property<string>("Titre")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("ValideParId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DateDecision");
+
+                    b.HasIndex("DateEmission");
+
+                    b.HasIndex("IncidentId");
+
+                    b.HasIndex("ValideParId");
+
+                    b.HasIndex("ResidenceId", "Statut");
+
+                    b.ToTable("DevisTravaux", (string)null);
+                });
+
             modelBuilder.Entity("SyndicApp.Domain.Entities.Incidents.Incident", b =>
                 {
                     b.Property<Guid>("Id")
@@ -666,31 +812,82 @@ namespace SyndicApp.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("EstResolu")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("LotId")
+                    b.Property<Guid?>("LotId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ResidenceId")
+                    b.Property<Guid>("ResidenceId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Statut")
+                        .HasColumnType("int");
 
                     b.Property<string>("Titre")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("TypeIncident")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Urgence")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DateDeclaration");
+
+                    b.HasIndex("DeclareParId");
+
+                    b.HasIndex("LotId");
+
+                    b.HasIndex("ResidenceId", "Statut");
+
+                    b.ToTable("Incidents", (string)null);
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Incidents.IncidentHistorique", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<Guid>("AuteurId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Commentaire")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateAction")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("IncidentId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DeclareParId");
+                    b.HasIndex("AuteurId");
 
-                    b.HasIndex("LotId");
+                    b.HasIndex("DateAction");
 
-                    b.HasIndex("ResidenceId");
+                    b.HasIndex("IncidentId");
 
-                    b.ToTable("Incidents");
+                    b.ToTable("IncidentsHistoriques", (string)null);
                 });
 
             modelBuilder.Entity("SyndicApp.Domain.Entities.Incidents.Intervention", b =>
@@ -699,26 +896,90 @@ namespace SyndicApp.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<decimal?>("CoutEstime")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal?>("CoutReel")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateIntervention")
+                    b.Property<DateTime?>("DatePrevue")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateRealisation")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("EmployeId")
+                    b.Property<Guid?>("DevisTravauxId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("EstEffectuee")
-                        .HasColumnType("bit");
+                    b.Property<Guid?>("EmployeId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("IncidentId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ResidenceId")
+                    b.Property<string>("PrestataireExterne")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("ResidenceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Statut")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DatePrevue");
+
+                    b.HasIndex("DateRealisation");
+
+                    b.HasIndex("DevisTravauxId");
+
+                    b.HasIndex("EmployeId");
+
+                    b.HasIndex("IncidentId");
+
+                    b.HasIndex("ResidenceId", "Statut");
+
+                    b.ToTable("Interventions", (string)null);
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Incidents.InterventionHistorique", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<Guid>("AuteurId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Commentaire")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateAction")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("InterventionId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -726,13 +987,13 @@ namespace SyndicApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeId");
+                    b.HasIndex("AuteurId");
 
-                    b.HasIndex("IncidentId");
+                    b.HasIndex("DateAction");
 
-                    b.HasIndex("ResidenceId");
+                    b.HasIndex("InterventionId");
 
-                    b.ToTable("Interventions");
+                    b.ToTable("InterventionsHistoriques", (string)null);
                 });
 
             modelBuilder.Entity("SyndicApp.Domain.Entities.LocauxCommerciaux.ActiviteCommerciale", b =>
@@ -783,6 +1044,9 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.Property<Guid>("LotId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("LotId1")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Nom")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -802,6 +1066,8 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.HasIndex("LocataireId");
 
                     b.HasIndex("LotId");
+
+                    b.HasIndex("LotId1");
 
                     b.HasIndex("ProprietaireId");
 
@@ -975,12 +1241,17 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.Property<Guid>("ResidenceId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("ResidenceId1")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ResidenceId");
+
+                    b.HasIndex("ResidenceId1");
 
                     b.ToTable("Batiment", (string)null);
                 });
@@ -1086,6 +1357,12 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("DateCreation")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("EmployeId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Nom")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -1100,6 +1377,8 @@ namespace SyndicApp.Infrastructure.Migrations
                         .HasColumnType("nvarchar(150)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EmployeId");
 
                     b.ToTable("Residences");
                 });
@@ -1198,17 +1477,47 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("EmployeResidence", b =>
+            modelBuilder.Entity("DevisDocuments", b =>
                 {
-                    b.HasOne("SyndicApp.Domain.Entities.Personnel.Employe", null)
+                    b.HasOne("SyndicApp.Domain.Entities.Incidents.DevisTravaux", null)
                         .WithMany()
-                        .HasForeignKey("EmployesAffectesId")
+                        .HasForeignKey("DevisTravauxId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SyndicApp.Domain.Entities.Residences.Residence", null)
+                    b.HasOne("SyndicApp.Domain.Entities.Documents.Document", null)
                         .WithMany()
-                        .HasForeignKey("ResidencesAffecteesId")
+                        .HasForeignKey("DocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("IncidentDocuments", b =>
+                {
+                    b.HasOne("SyndicApp.Domain.Entities.Documents.Document", null)
+                        .WithMany()
+                        .HasForeignKey("DocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SyndicApp.Domain.Entities.Incidents.Incident", null)
+                        .WithMany()
+                        .HasForeignKey("IncidentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("InterventionDocuments", b =>
+                {
+                    b.HasOne("SyndicApp.Domain.Entities.Documents.Document", null)
+                        .WithMany()
+                        .HasForeignKey("DocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SyndicApp.Domain.Entities.Incidents.Intervention", null)
+                        .WithMany()
+                        .HasForeignKey("InterventionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -1423,11 +1732,19 @@ namespace SyndicApp.Infrastructure.Migrations
                         .HasForeignKey("LotId")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("SyndicApp.Domain.Entities.Residences.Lot", null)
+                        .WithMany("Charges")
+                        .HasForeignKey("LotId1");
+
                     b.HasOne("SyndicApp.Domain.Entities.Residences.Residence", "Residence")
                         .WithMany()
                         .HasForeignKey("ResidenceId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("SyndicApp.Domain.Entities.Residences.Residence", null)
+                        .WithMany("Charges")
+                        .HasForeignKey("ResidenceId1");
 
                     b.Navigation("Lot");
 
@@ -1451,51 +1768,111 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.Navigation("AppelDeFonds");
                 });
 
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Incidents.DevisHistorique", b =>
+                {
+                    b.HasOne("SyndicApp.Domain.Entities.Incidents.DevisTravaux", "DevisTravaux")
+                        .WithMany("Historique")
+                        .HasForeignKey("DevisTravauxId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DevisTravaux");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Incidents.DevisTravaux", b =>
+                {
+                    b.HasOne("SyndicApp.Domain.Entities.Incidents.Incident", "Incident")
+                        .WithMany("Devis")
+                        .HasForeignKey("IncidentId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("SyndicApp.Domain.Entities.Residences.Residence", "Residence")
+                        .WithMany("DevisTravaux")
+                        .HasForeignKey("ResidenceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Incident");
+
+                    b.Navigation("Residence");
+                });
+
             modelBuilder.Entity("SyndicApp.Domain.Entities.Incidents.Incident", b =>
                 {
                     b.HasOne("SyndicApp.Infrastructure.Identity.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("DeclareParId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("SyndicApp.Domain.Entities.Residences.Lot", "Lot")
                         .WithMany("Incidents")
                         .HasForeignKey("LotId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("SyndicApp.Domain.Entities.Residences.Residence", "Residence")
                         .WithMany("Incidents")
                         .HasForeignKey("ResidenceId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("Lot");
 
                     b.Navigation("Residence");
                 });
 
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Incidents.IncidentHistorique", b =>
+                {
+                    b.HasOne("SyndicApp.Domain.Entities.Incidents.Incident", "Incident")
+                        .WithMany("Historique")
+                        .HasForeignKey("IncidentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Incident");
+                });
+
             modelBuilder.Entity("SyndicApp.Domain.Entities.Incidents.Intervention", b =>
                 {
+                    b.HasOne("SyndicApp.Domain.Entities.Incidents.DevisTravaux", "DevisTravaux")
+                        .WithMany("Interventions")
+                        .HasForeignKey("DevisTravauxId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
                     b.HasOne("SyndicApp.Domain.Entities.Personnel.Employe", "Employe")
                         .WithMany("Interventions")
                         .HasForeignKey("EmployeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("SyndicApp.Domain.Entities.Incidents.Incident", "Incident")
                         .WithMany("Interventions")
                         .HasForeignKey("IncidentId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("SyndicApp.Domain.Entities.Residences.Residence", "Residence")
-                        .WithMany()
-                        .HasForeignKey("ResidenceId");
+                        .WithMany("Interventions")
+                        .HasForeignKey("ResidenceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("DevisTravaux");
 
                     b.Navigation("Employe");
 
                     b.Navigation("Incident");
 
                     b.Navigation("Residence");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Incidents.InterventionHistorique", b =>
+                {
+                    b.HasOne("SyndicApp.Domain.Entities.Incidents.Intervention", "Intervention")
+                        .WithMany("Historique")
+                        .HasForeignKey("InterventionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Intervention");
                 });
 
             modelBuilder.Entity("SyndicApp.Domain.Entities.LocauxCommerciaux.LocalCommercial", b =>
@@ -1519,6 +1896,10 @@ namespace SyndicApp.Infrastructure.Migrations
                         .HasForeignKey("LotId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("SyndicApp.Domain.Entities.Residences.Lot", null)
+                        .WithMany("LocauxCommerciaux")
+                        .HasForeignKey("LotId1");
 
                     b.HasOne("SyndicApp.Infrastructure.Identity.ApplicationUser", null)
                         .WithMany()
@@ -1572,6 +1953,10 @@ namespace SyndicApp.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SyndicApp.Domain.Entities.Residences.Residence", null)
+                        .WithMany("Batiments")
+                        .HasForeignKey("ResidenceId1");
+
                     b.Navigation("Residence");
                 });
 
@@ -1599,6 +1984,13 @@ namespace SyndicApp.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Residence");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Residences.Residence", b =>
+                {
+                    b.HasOne("SyndicApp.Domain.Entities.Personnel.Employe", null)
+                        .WithMany("ResidencesAffectees")
+                        .HasForeignKey("EmployeId");
                 });
 
             modelBuilder.Entity("SyndicApp.Domain.Entities.Annonces.CategorieAnnonce", b =>
@@ -1634,9 +2026,25 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.Navigation("Paiements");
                 });
 
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Incidents.DevisTravaux", b =>
+                {
+                    b.Navigation("Historique");
+
+                    b.Navigation("Interventions");
+                });
+
             modelBuilder.Entity("SyndicApp.Domain.Entities.Incidents.Incident", b =>
                 {
+                    b.Navigation("Devis");
+
+                    b.Navigation("Historique");
+
                     b.Navigation("Interventions");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Incidents.Intervention", b =>
+                {
+                    b.Navigation("Historique");
                 });
 
             modelBuilder.Entity("SyndicApp.Domain.Entities.LocauxCommerciaux.ActiviteCommerciale", b =>
@@ -1647,6 +2055,8 @@ namespace SyndicApp.Infrastructure.Migrations
             modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.Employe", b =>
                 {
                     b.Navigation("Interventions");
+
+                    b.Navigation("ResidencesAffectees");
                 });
 
             modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.OffreEmploi", b =>
@@ -1663,18 +2073,30 @@ namespace SyndicApp.Infrastructure.Migrations
                 {
                     b.Navigation("Affectations");
 
+                    b.Navigation("Charges");
+
                     b.Navigation("Incidents");
 
                     b.Navigation("LocationsTemporaires");
+
+                    b.Navigation("LocauxCommerciaux");
                 });
 
             modelBuilder.Entity("SyndicApp.Domain.Entities.Residences.Residence", b =>
                 {
                     b.Navigation("Annonces");
 
+                    b.Navigation("Batiments");
+
+                    b.Navigation("Charges");
+
+                    b.Navigation("DevisTravaux");
+
                     b.Navigation("Documents");
 
                     b.Navigation("Incidents");
+
+                    b.Navigation("Interventions");
 
                     b.Navigation("Lots");
                 });

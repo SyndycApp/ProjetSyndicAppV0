@@ -32,7 +32,11 @@
         "frameworks": {
           "net9.0": {
             "targetAlias": "net9.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\elala\\Desktop\\SyndicAppV0\\ProjetSyndicAppV0\\SyndicApp.Domain\\SyndicApp.Domain.csproj": {
+                "projectPath": "C:\\Users\\elala\\Desktop\\SyndicAppV0\\ProjetSyndicAppV0\\SyndicApp.Domain\\SyndicApp.Domain.csproj"
+              }
+            }
           }
         },
         "warningProperties": {

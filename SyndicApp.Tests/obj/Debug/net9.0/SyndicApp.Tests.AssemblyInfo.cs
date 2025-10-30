@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SyndicApp.Tests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+57409d34c7d6244c6e9090de40d166685fc0f00b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cceb7eccb973554043751f4b79e1541f52c7cd89")]
 [assembly: System.Reflection.AssemblyProductAttribute("SyndicApp.Tests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SyndicApp.Tests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1094,6 +1094,9 @@
         }
       },
       "SyndicApp.Application/1.0.0": {
+        "dependencies": {
+          "SyndicApp.Domain": "1.0.0"
+        },
         "runtime": {
           "SyndicApp.Application.dll": {
             "assemblyVersion": "1.0.0.0",
