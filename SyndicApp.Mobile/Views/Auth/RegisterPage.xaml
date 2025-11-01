@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SyndicApp.Mobile.Views.Auth.RegisterPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:SyndicApp.Mobile.ViewModels.Auth"
+    x:DataType="viewmodels:RegisterViewModel"
+    Title="Créer un compte"
+    BackgroundColor="{DynamicResource PageBackgroundColor}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="12">
+            <!-- Brand -->
+            <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                <Image Source="appicon.png" HeightRequest="64" WidthRequest="64" Aspect="AspectFit"/>
+                <Label Text="Bienvenue ! Créez votre compte" FontSize="22" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                <Label Text="{Binding ServerMessage}" TextColor="Red" IsVisible="{Binding HasError}"/>
+            </VerticalStackLayout>
+
+            <!-- Champs requis selon le JSON fourni -->
+            <!-- fullName -->
+            <Entry Placeholder="Nom complet" Text="{Binding FullName}" />
+
+            <!-- adresse -->
+            <Editor Placeholder="Adresse" Text="{Binding Adresse}" AutoSize="TextChanges" />
+
+            <!-- dateNaissance -->
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                <Label Text="Date de naissance" VerticalTextAlignment="Center"/>
+                <DatePicker Date="{Binding DateNaissance}" Grid.Column="1"/>
+            </Grid>
+
+            <!-- role -->
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                <Label Text="Rôle" VerticalTextAlignment="Center"/>
+                <Picker Title="Choisir un rôle"
+                        Grid.Column="1"
+                        ItemsSource="{Binding Roles}"
+                        ItemDisplayBinding="{Binding .}"
+                        SelectedItem="{Binding Role}" />
+            </Grid>
+
+            <!-- email -->
+            <Entry Placeholder="Email" Text="{Binding Email}" Keyboard="Email"/>
+
+            <!-- password + confirmPassword -->
+            <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                <Entry Grid.Row="0" Grid.Column="0" Placeholder="Mot de passe"
+                       Text="{Binding Password}" IsPassword="{Binding !ShowPassword}"/>
+                <Button Grid.Row="0" Grid.Column="1" Text="{Binding ShowPassword, Converter={StaticResource BoolToShowHideTextConverter}}"
+                        Command="{Binding ToggleShowPasswordCommand}" />
+
+                <Entry Grid.Row="1" Grid.ColumnSpan="2" Placeholder="Confirmer le mot de passe"
+                       Text="{Binding ConfirmPassword}" IsPassword="{Binding !ShowPassword}" />
+            </Grid>
+
+            <!-- Indicateur de force du MDP (optionnel) -->
+            <ProgressBar Progress="{Binding PasswordStrength}" HeightRequest="4"/>
+            <Label Text="{Binding PasswordStrengthLabel}" FontSize="12" TextColor="Gray"/>
+
+            <!-- CTA -->
+            <Button Text="S'inscrire" Command="{Binding RegisterCommand}"/>
+
+            <HorizontalStackLayout HorizontalOptions="Center">
+                <Label Text="Déjà un compte ?" />
+                <Button Text="Se connecter" StyleClass="LinkButton" Command="{Binding GoLoginCommand}"/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

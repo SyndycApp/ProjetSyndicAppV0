@@ -44,6 +44,10 @@ public static class MauiProgram
         builder.Services.AddTransient<SyndicApp.Mobile.ViewModels.Auth.LoginViewModel>();
         builder.Services.AddTransient<SyndicApp.Mobile.ViewModels.Auth.PasswordViewModel>();
 
+        builder.Services.AddTransient<SyndicApp.Mobile.ViewModels.Auth.RegisterViewModel>();
+        builder.Services.AddTransient<SyndicApp.Mobile.Views.Auth.RegisterPage>();
+
+
         builder.Services.AddTransient<SyndicApp.Mobile.ViewModels.Residences.ResidencesListViewModel>();
         builder.Services.AddTransient<SyndicApp.Mobile.ViewModels.Residences.ResidenceDetailsViewModel>();
 

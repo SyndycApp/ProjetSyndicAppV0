@@ -106,6 +106,44 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Auth.PasswordViewModel.ResetCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Auth.PasswordViewModel.ResetAsync"/>.</summary>
         </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Auth.RegisterViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Auth.RegisterViewModel.FullName">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Auth.RegisterViewModel.fullName"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Auth.RegisterViewModel.Adresse">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Auth.RegisterViewModel.adresse"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Auth.RegisterViewModel.Email">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Auth.RegisterViewModel.email"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Auth.RegisterViewModel.Password">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Auth.RegisterViewModel.password"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Auth.RegisterViewModel.ConfirmPassword">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Auth.RegisterViewModel.confirmPassword"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Auth.RegisterViewModel.DateNaissance">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Auth.RegisterViewModel.dateNaissance"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Auth.RegisterViewModel.Role">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Auth.RegisterViewModel.role"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Auth.RegisterViewModel.registerCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Auth.RegisterViewModel.RegisterCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Auth.RegisterViewModel.RegisterCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Auth.RegisterViewModel.RegisterAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Auth.RegisterViewModel.goToLoginCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Auth.RegisterViewModel.GoToLoginCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Auth.RegisterViewModel.GoToLoginCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Auth.RegisterViewModel.GoToLogin"/>.</summary>
+        </member>
         <member name="T:SyndicApp.Mobile.ViewModels.BaseViewModel">
             <inheritdoc/>
         </member>
@@ -406,6 +444,21 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.NewPassword">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "NewPassword" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.FullName">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "FullName" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Adresse">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Adresse" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ConfirmPassword">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ConfirmPassword" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.DateNaissance">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "DateNaissance" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Role">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Role" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsBusy">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsBusy" generated properties.</summary>
         </member>
@@ -465,6 +518,21 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.NewPassword">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "NewPassword" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.FullName">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "FullName" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Adresse">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Adresse" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ConfirmPassword">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ConfirmPassword" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.DateNaissance">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "DateNaissance" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Role">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Role" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsBusy">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsBusy" generated properties.</summary>
@@ -643,7 +711,7 @@
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAuthApi.Login(SyndicApp.Mobile.Api.LoginRequest)">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAuthApi.Register(SyndicApp.Mobile.Api.RegisterRequest)">
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAuthApi.Register(SyndicApp.Mobile.Api.Models.RegisterDto)">
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAuthApi.Me">
@@ -658,7 +726,7 @@
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAuthApi.SyndicApp#Mobile#Api#IAuthApi#Login(SyndicApp.Mobile.Api.LoginRequest)">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAuthApi.SyndicApp#Mobile#Api#IAuthApi#Register(SyndicApp.Mobile.Api.RegisterRequest)">
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAuthApi.SyndicApp#Mobile#Api#IAuthApi#Register(SyndicApp.Mobile.Api.Models.RegisterDto)">
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAuthApi.SyndicApp#Mobile#Api#IAuthApi#Me">
