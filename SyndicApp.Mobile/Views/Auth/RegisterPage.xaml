@@ -1,70 +1,144 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
 <ContentPage
-    x:Class="SyndicApp.Mobile.Views.Auth.RegisterPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:viewmodels="clr-namespace:SyndicApp.Mobile.ViewModels.Auth"
-    x:DataType="viewmodels:RegisterViewModel"
-    Title="Créer un compte"
-    BackgroundColor="{DynamicResource PageBackgroundColor}">
+    xmlns:vm="clr-namespace:SyndicApp.Mobile.ViewModels.Auth"
+    x:Class="SyndicApp.Mobile.Views.Auth.RegisterPage"
+    x:DataType="vm:RegisterViewModel"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="#F4F6F8">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="24" Spacing="12">
-            <!-- Brand -->
-            <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
-                <Image Source="appicon.png" HeightRequest="64" WidthRequest="64" Aspect="AspectFit"/>
-                <Label Text="Bienvenue ! Créez votre compte" FontSize="22" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
-                <Label Text="{Binding ServerMessage}" TextColor="Red" IsVisible="{Binding HasError}"/>
-            </VerticalStackLayout>
+    <Grid Padding="20">
+        <Border HorizontalOptions="Center"
+                VerticalOptions="Center"
+                WidthRequest="420"
+                StrokeThickness="0"
+                BackgroundColor="White"
+                Padding="24"
+                StrokeShape="RoundRectangle 16">
+            <Border.Shadow>
+                <Shadow Brush="#40000000" Radius="12" />
+            </Border.Shadow>
 
-            <!-- Champs requis selon le JSON fourni -->
-            <!-- fullName -->
-            <Entry Placeholder="Nom complet" Text="{Binding FullName}" />
+            <ScrollView>
+                <VerticalStackLayout Spacing="14">
 
-            <!-- adresse -->
-            <Editor Placeholder="Adresse" Text="{Binding Adresse}" AutoSize="TextChanges" />
+                    <!-- Logo + Titre -->
+                    <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                        <Image Source="logo.png" WidthRequest="64" HeightRequest="64" Aspect="AspectFit"/>
+                        <Label Text="Créer un compte" FontSize="26" FontAttributes="Bold" TextColor="#1C1C1E" />
+                    </VerticalStackLayout>
 
-            <!-- dateNaissance -->
-            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                <Label Text="Date de naissance" VerticalTextAlignment="Center"/>
-                <DatePicker Date="{Binding DateNaissance}" Grid.Column="1"/>
-            </Grid>
+                    <!-- Erreur -->
+                    <Border BackgroundColor="#FDECEA"
+                            StrokeThickness="0"
+                            Padding="10"
+                            StrokeShape="RoundRectangle 8"
+                            IsVisible="{Binding HasError}">
+                        <Label Text="{Binding ErrorMessage}" TextColor="#B3261E" FontSize="13"/>
+                    </Border>
 
-            <!-- role -->
-            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
-                <Label Text="Rôle" VerticalTextAlignment="Center"/>
-                <Picker Title="Choisir un rôle"
-                        Grid.Column="1"
-                        ItemsSource="{Binding Roles}"
-                        ItemDisplayBinding="{Binding .}"
-                        SelectedItem="{Binding Role}" />
-            </Grid>
+                    <!-- Champs -->
+                    <VerticalStackLayout Spacing="10">
 
-            <!-- email -->
-            <Entry Placeholder="Email" Text="{Binding Email}" Keyboard="Email"/>
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Nom complet *" FontSize="12" TextColor="#6B7280"/>
+                            <Border StrokeShape="RoundRectangle 8" BackgroundColor="#FFFFFF" Padding="12">
+                                <Entry Text="{Binding FullName}"
+                                       Placeholder="Ex: Ali Amrani"
+                                       TextColor="Black"
+                                       BackgroundColor="Transparent"/>
+                            </Border>
+                        </VerticalStackLayout>
 
-            <!-- password + confirmPassword -->
-            <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto" ColumnSpacing="8">
-                <Entry Grid.Row="0" Grid.Column="0" Placeholder="Mot de passe"
-                       Text="{Binding Password}" IsPassword="{Binding !ShowPassword}"/>
-                <Button Grid.Row="0" Grid.Column="1" Text="{Binding ShowPassword, Converter={StaticResource BoolToShowHideTextConverter}}"
-                        Command="{Binding ToggleShowPasswordCommand}" />
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Email *" FontSize="12" TextColor="#6B7280"/>
+                            <Border StrokeShape="RoundRectangle 8" BackgroundColor="#FFFFFF" Padding="12">
+                                <Entry Text="{Binding Email}"
+                                       Keyboard="Email"
+                                       Placeholder="email@exemple.com"
+                                       TextColor="Black"
+                                       BackgroundColor="Transparent"/>
+                            </Border>
+                        </VerticalStackLayout>
 
-                <Entry Grid.Row="1" Grid.ColumnSpan="2" Placeholder="Confirmer le mot de passe"
-                       Text="{Binding ConfirmPassword}" IsPassword="{Binding !ShowPassword}" />
-            </Grid>
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Adresse" FontSize="12" TextColor="#6B7280"/>
+                            <Border StrokeShape="RoundRectangle 8" BackgroundColor="#FFFFFF" Padding="12">
+                                <Entry Text="{Binding Adresse}"
+                                       Placeholder="Adresse"
+                                       TextColor="Black"
+                                       BackgroundColor="Transparent"/>
+                            </Border>
+                        </VerticalStackLayout>
 
-            <!-- Indicateur de force du MDP (optionnel) -->
-            <ProgressBar Progress="{Binding PasswordStrength}" HeightRequest="4"/>
-            <Label Text="{Binding PasswordStrengthLabel}" FontSize="12" TextColor="Gray"/>
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Date de naissance *" FontSize="12" TextColor="#6B7280"/>
+                            <Border StrokeShape="RoundRectangle 8" BackgroundColor="#FFFFFF" Padding="8">
+                                <DatePicker Date="{Binding DateNaissance}"
+                                            TextColor="Black"/>
+                            </Border>
+                        </VerticalStackLayout>
 
-            <!-- CTA -->
-            <Button Text="S'inscrire" Command="{Binding RegisterCommand}"/>
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Rôle *" FontSize="12" TextColor="#6B7280"/>
+                            <Border StrokeShape="RoundRectangle 8" BackgroundColor="#FFFFFF" Padding="8">
+                                <Picker ItemsSource="{Binding Roles}"
+                                        SelectedItem="{Binding SelectedRole}"
+                                        Title="Choisis un rôle"
+                                        TextColor="Black"/>
+                            </Border>
+                        </VerticalStackLayout>
 
-            <HorizontalStackLayout HorizontalOptions="Center">
-                <Label Text="Déjà un compte ?" />
-                <Button Text="Se connecter" StyleClass="LinkButton" Command="{Binding GoLoginCommand}"/>
-            </HorizontalStackLayout>
-        </VerticalStackLayout>
-    </ScrollView>
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Mot de passe *" FontSize="12" TextColor="#6B7280"/>
+                            <Border StrokeShape="RoundRectangle 8" BackgroundColor="#FFFFFF" Padding="12">
+                                <Entry Text="{Binding Password}"
+                                       IsPassword="True"
+                                       Placeholder="••••••••"
+                                       TextColor="Black"
+                                       BackgroundColor="Transparent"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Confirmer le mot de passe *" FontSize="12" TextColor="#6B7280"/>
+                            <Border StrokeShape="RoundRectangle 8" BackgroundColor="#FFFFFF" Padding="12">
+                                <Entry Text="{Binding ConfirmPassword}"
+                                       IsPassword="True"
+                                       Placeholder="••••••••"
+                                       TextColor="Black"
+                                       BackgroundColor="Transparent"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                    </VerticalStackLayout>
+
+                    <!-- CTA -->
+                    <Button Text="Créer mon compte"
+                            Command="{Binding RegisterCommand}"
+                            HeightRequest="48"
+                            FontAttributes="Bold"
+                            TextColor="White"
+                            BackgroundColor="#1E63E9"
+                            CornerRadius="12"/>
+
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+
+                    <!-- Lien vers connexion -->
+                    <HorizontalStackLayout HorizontalOptions="Center"
+                                            Spacing="6"
+                                            Margin="0,4,0,0">
+                        <Label Text="Déjà un compte ?" TextColor="#6B7280" />
+                        <Label Text="Se connecter" TextColor="#1E63E9" FontAttributes="Bold">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding GoToLoginCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </HorizontalStackLayout>
+
+                </VerticalStackLayout>
+            </ScrollView>
+        </Border>
+    </Grid>
 </ContentPage>

@@ -1,6 +1,11 @@
 ﻿using Refit;
 using SyndicApp.Mobile.Api;
-using SyndicApp.Mobile;
+using SyndicApp.Mobile.Handlers;
+using SyndicApp.Mobile.Services;
+using System.Text.Json;
+
+namespace SyndicApp.Mobile;
+
 public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
@@ -8,70 +13,67 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder.UseMauiApp<App>();
 
+        // Choisis la bonne URL :
+        // - Emulateur Android (sans adb reverse) : "http://10.0.2.2:5041"
+        // - Appareil Android + adb reverse 5041:5041 : "http://127.0.0.1:5041"
+        // - Téléphone réel sur même Wi-Fi : "http://<IP_PC>:5041"
+        //const string BaseUrl = http:127.0.0.1:5041; //pastaepizza
+        const string BaseUrl = "http://192.168.0.104:5041"; //home
 
-        const string BaseUrl = "http://192.168.11.144:5041"; 
+        // Refit JSON insensible à la casse
+        var jsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+        var refitSettings = new RefitSettings
+        {
+            ContentSerializer = new SystemTextJsonContentSerializer(jsonOptions)
+        };
 
+        // Stores & handlers
         builder.Services.AddSingleton<TokenStore>();
         builder.Services.AddTransient<AuthHeaderHandler>();
 
-        // Policy de résilience (timeouts, retry basique)
-        var refitSettings = new RefitSettings();
-
-        // Auth (pas de handler sur login/register)
+        // --- Clients Refit ---
+        // Public (pas de bearer)
         builder.Services.AddRefitClient<IAuthApi>(refitSettings)
-            .ConfigureHttpClient(c => c.BaseAddress = new Uri(BaseUrl));
+               .ConfigureHttpClient(c =>
+               {
+                   c.BaseAddress = new Uri(BaseUrl);
+                   c.Timeout = TimeSpan.FromSeconds(15);
+               });
 
-        // Helper pour les clients sécurisés
+        // Forgot/reset password → généralement PUBLIC (pour lever ta régression)
+        builder.Services.AddRefitClient<IPasswordApi>(refitSettings)
+               .ConfigureHttpClient(c =>
+               {
+                   c.BaseAddress = new Uri(BaseUrl);
+                   c.Timeout = TimeSpan.FromSeconds(15);
+               });
+
+        // Helper protégés (Bearer auto via AuthHeaderHandler)
         void AddSecured<T>() where T : class =>
             builder.Services.AddRefitClient<T>(refitSettings)
-                .ConfigureHttpClient(c => c.BaseAddress = new Uri(BaseUrl))
-                .AddHttpMessageHandler<AuthHeaderHandler>();
+                   .ConfigureHttpClient(c =>
+                   {
+                       c.BaseAddress = new Uri(BaseUrl);
+                       c.Timeout = TimeSpan.FromSeconds(15);
+                   })
+                   .AddHttpMessageHandler<AuthHeaderHandler>();
 
-        AddSecured<IPasswordApi>();
-        AddSecured<IResidencesApi>();
-        AddSecured<ILotsApi>();
-        AddSecured<IAffectationsLotsApi>();
-        AddSecured<IIncidentsApi>();
-        AddSecured<IInterventionsApi>();
-        AddSecured<IChargesApi>();
-        AddSecured<IAppelsApi>();
-        AddSecured<IPaiementsApi>();
-        AddSecured<ISoldesApi>();
-        AddSecured<IBatimentsApi>();
-        AddSecured<IDevisTravauxApi>();
-        AddSecured<ILocatairesTemporairesApi>();
+        AddSecured<IAccountApi>();   // /me, /logout protégés
 
-        builder.Services.AddTransient<SyndicApp.Mobile.ViewModels.Auth.LoginViewModel>();
-        builder.Services.AddTransient<SyndicApp.Mobile.ViewModels.Auth.PasswordViewModel>();
+        // VMs
+        builder.Services.AddTransient<ViewModels.Auth.LoginViewModel>();
+        builder.Services.AddTransient<ViewModels.Auth.RegisterViewModel>();
+        builder.Services.AddTransient<ViewModels.Auth.ForgotPasswordViewModel>();
+        builder.Services.AddTransient<ViewModels.Dashboard.SyndicDashboardViewModel>();
 
-        builder.Services.AddTransient<SyndicApp.Mobile.ViewModels.Auth.RegisterViewModel>();
-        builder.Services.AddTransient<SyndicApp.Mobile.Views.Auth.RegisterPage>();
-
-
-        builder.Services.AddTransient<SyndicApp.Mobile.ViewModels.Residences.ResidencesListViewModel>();
-        builder.Services.AddTransient<SyndicApp.Mobile.ViewModels.Residences.ResidenceDetailsViewModel>();
-
-        builder.Services.AddTransient<SyndicApp.Mobile.ViewModels.Incidents.IncidentsListViewModel>();
-        builder.Services.AddTransient<SyndicApp.Mobile.ViewModels.Incidents.IncidentEditViewModel>();
-
-        builder.Services.AddTransient<SyndicApp.Mobile.ViewModels.Interventions.InterventionsListViewModel>();
-        builder.Services.AddTransient<SyndicApp.Mobile.ViewModels.Interventions.InterventionActionsViewModel>();
-
-        builder.Services.AddTransient<SyndicApp.Mobile.ViewModels.Finances.ChargesListViewModel>();
-        builder.Services.AddTransient<SyndicApp.Mobile.ViewModels.Finances.AppelsListViewModel>();
-        builder.Services.AddTransient<SyndicApp.Mobile.ViewModels.Finances.PaiementsListViewModel>();
-        builder.Services.AddTransient<SyndicApp.Mobile.ViewModels.Finances.SoldesViewModel>();
-
-        builder.Services.AddTransient<SyndicApp.Mobile.ViewModels.Lots.LotsListViewModel>();
-        builder.Services.AddTransient<SyndicApp.Mobile.ViewModels.Batiments.BatimentsListViewModel>();
-        builder.Services.AddTransient<SyndicApp.Mobile.ViewModels.Affectations.AffectationsListViewModel>();
-        builder.Services.AddTransient<SyndicApp.Mobile.ViewModels.LocatairesTemp.LocatairesTempListViewModel>();
-        builder.Services.AddTransient<SyndicApp.Mobile.ViewModels.Travaux.DevisListViewModel>();
+        // Pages
+        builder.Services.AddTransient<Views.Auth.LoginPage>();
+        builder.Services.AddTransient<Views.Auth.RegisterPage>();
+        builder.Services.AddTransient<Views.Auth.ForgotPasswordPage>();
+        builder.Services.AddTransient<Views.Dashboard.SyndicDashboardPage>();
 
         var app = builder.Build();
-
         ServiceHelper.Services = app.Services;
-
         return app;
     }
 }

@@ -42,8 +42,9 @@ builder.Services.AddCors(o =>
         .AllowAnyHeader().AllowAnyMethod());
 });
 
-// Swagger
+// ========== Swagger (avec bouton Authorize JWT) ==========
 builder.Services.AddEndpointsApiExplorer();
+// Swagger
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
@@ -52,11 +53,38 @@ builder.Services.AddSwaggerGen(c =>
         Version = "v1",
         Description = "API de gestion pour l'application SyndicApp"
     });
+
+    // >>> remplace l'ancienne définition ApiKey par celle-ci :
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "JWT auth avec le schéma Bearer.",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,   // << Http (pas ApiKey)
+        Scheme = "Bearer",                // << Swagger va préfixer automatiquement
+        BearerFormat = "JWT"
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
 });
 
+
 // ================== INFRASTRUCTURE ==================
-// En général, AddInfrastructure enregistre DbContext + Identity + autres.
-// Évite la double inscription de DbContext : NE PAS rajouter AddDbContext ici si AddInfrastructure le fait déjà.
+// ⚠️ AddInfrastructure configure déjà DbContext + Identity (+ potentiellement JWT).
+// Ne pas reconfigurer AddAuthentication ici pour éviter "Scheme already exists: Bearer".
 builder.Services.AddInfrastructure(builder.Configuration);
 
 // Identity (dev-friendly)
@@ -84,6 +112,7 @@ builder.Services.AddScoped<IAppelDeFondsService, AppelDeFondsService>();
 builder.Services.AddScoped<IPaiementService, PaiementService>();
 builder.Services.AddScoped<ISoldeService, SoldeService>();
 
+// ✅ correction de syntaxe ici :
 builder.Services.AddScoped<IIncidentService, IncidentService>();
 builder.Services.AddScoped<IDevisTravauxService, DevisTravauxService>();
 builder.Services.AddScoped<IInterventionService, InterventionService>();
@@ -133,9 +162,9 @@ else
     app.UseCors("LocalDev");
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
-app.UseAuthentication();
+app.UseAuthentication();   // ← gardé (configuré dans l’infrastructure)
 app.UseAuthorization();
 
 app.MapControllers();

@@ -1,61 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Shell
     x:Class="SyndicApp.Mobile.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:res="clr-namespace:SyndicApp.Mobile.Views.Residences"
-    xmlns:inc="clr-namespace:SyndicApp.Mobile.Views.Incidents"
-    xmlns:fin="clr-namespace:SyndicApp.Mobile.Views.Finances"
-    xmlns:lot="clr-namespace:SyndicApp.Mobile.Views.Lots"
-    xmlns:bat="clr-namespace:SyndicApp.Mobile.Views.Batiments"
-    xmlns:aff="clr-namespace:SyndicApp.Mobile.Views.Affectations"
-    xmlns:lt="clr-namespace:SyndicApp.Mobile.Views.LocatairesTemp"
-    xmlns:trav="clr-namespace:SyndicApp.Mobile.Views.Travaux"
     xmlns:auth="clr-namespace:SyndicApp.Mobile.Views.Auth"
-    FlyoutBehavior="Locked">
+    xmlns:dash="clr-namespace:SyndicApp.Mobile.Views.Dashboard"
+    Shell.NavBarIsVisible="False">
 
-    <!-- Menu vertical (flyout) -->
-    <FlyoutItem Title="Résidences" Route="home">
-        <ShellContent ContentTemplate="{DataTemplate res:ResidencesPage}" />
-    </FlyoutItem>
+    <ShellContent
+        Route="login"
+        Title="Connexion"
+        ContentTemplate="{DataTemplate auth:LoginPage}" />
 
-    <FlyoutItem Title="Incidents" Route="incidents">
-        <ShellContent ContentTemplate="{DataTemplate inc:IncidentsPage}" />
-    </FlyoutItem>
+    <ShellContent Route="register" Title="Créer un compte"
+        ContentTemplate="{DataTemplate auth:RegisterPage}" />
 
-    <FlyoutItem Title="Finances" Route="finances">
-        <ShellContent ContentTemplate="{DataTemplate fin:ChargesPage}" />
-    </FlyoutItem>
+    <ShellContent Route="forgot" Title="Mot de passe oublié"
+        ContentTemplate="{DataTemplate auth:ForgotPasswordPage}" />
 
-    <FlyoutItem Title="Lots" Route="lots">
-        <ShellContent ContentTemplate="{DataTemplate lot:LotsPage}" />
-    </FlyoutItem>
-
-    <FlyoutItem Title="Bâtiments" Route="batiments">
-        <ShellContent ContentTemplate="{DataTemplate bat:BatimentsPage}" />
-    </FlyoutItem>
-
-    <FlyoutItem Title="Affectations" Route="affectations">
-        <ShellContent ContentTemplate="{DataTemplate aff:AffectationsPage}" />
-    </FlyoutItem>
-
-    <FlyoutItem Title="Devis Travaux" Route="devis">
-        <ShellContent ContentTemplate="{DataTemplate trav:DevisPage}" />
-    </FlyoutItem>
-
-    <FlyoutItem Title="Locations Temp." Route="loctemp">
-        <ShellContent ContentTemplate="{DataTemplate lt:LocatairesTempPage}" />
-    </FlyoutItem>
-
-    <FlyoutItem Title="Soldes" Route="soldes">
-        <ShellContent ContentTemplate="{DataTemplate fin:SoldesPage}" />
-    </FlyoutItem>
-
-    <!-- Routes Auth (pas dans le menu) -->
-    <ShellContent Route="//login"
-                  ContentTemplate="{DataTemplate auth:LoginPage}"
-                  Shell.NavBarIsVisible="False" />
-    <ShellContent Route="register"
-                  ContentTemplate="{DataTemplate auth:RegisterPage}"
-                  Shell.NavBarIsVisible="False" />
+    <ShellContent Route="syndic-dashboard" Title="Tableau de bord"
+        ContentTemplate="{DataTemplate dash:SyndicDashboardPage}" />
 </Shell>

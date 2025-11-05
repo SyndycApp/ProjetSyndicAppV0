@@ -1,90 +1,124 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using SyndicApp.Mobile.Api;      // IAuthApi + LoginRequest déjà utilisés chez toi
 using Refit;
-using System.Collections.ObjectModel;
-using SyndicApp.Mobile.Api.Models;
+using SyndicApp.Mobile.Api;
+using SyndicApp.Mobile.Models;
+using SyndicApp.Mobile.Services;
 
 namespace SyndicApp.Mobile.ViewModels.Auth;
 
-public partial class RegisterViewModel : BaseViewModel
+public partial class RegisterViewModel : ViewModels.Common.BaseViewModel
 {
-    private readonly IAuthApi _auth;
+    private readonly IAuthApi _authApi;
+    private readonly IAccountApi _accountApi; // /me via AuthHeaderHandler (Bearer auto)
+    private readonly TokenStore _tokenStore;
 
-    // === champs du modèle API ===
-    [ObservableProperty] private string? fullName;
-    [ObservableProperty] private string? adresse;
     [ObservableProperty] private string? email;
     [ObservableProperty] private string? password;
     [ObservableProperty] private string? confirmPassword;
-    [ObservableProperty] private DateTime dateNaissance = DateTime.Today.AddYears(-18);
-    [ObservableProperty] private string? role = "Copropriétaire";
+    [ObservableProperty] private string? fullName;
+    [ObservableProperty] private string? adresse;
+    [ObservableProperty] private DateTime dateNaissance = DateTime.Today.AddYears(-20);
+    [ObservableProperty] private string? selectedRole = "Copropriétaire";
 
-    // === UI helpers ===
-    public ObservableCollection<string> Roles { get; } =
-        new(new[] { "Syndic", "Copropriétaire", "Gardien", "Locataire" });
+    [ObservableProperty] private string? errorMessage;
+    [ObservableProperty] private bool hasError;
 
-    public bool HasError => !string.IsNullOrWhiteSpace(Error);
+    public IReadOnlyList<string> Roles { get; } = new[] { "Syndic", "Copropriétaire", "Gardien", "Locataire" };
 
-    public bool CanRegister =>
-        !IsBusy &&
-        !string.IsNullOrWhiteSpace(Email) &&
-        !string.IsNullOrWhiteSpace(Password) &&
-        !string.IsNullOrWhiteSpace(ConfirmPassword) &&
-        Password == ConfirmPassword &&
-        !string.IsNullOrWhiteSpace(FullName) &&
-        !string.IsNullOrWhiteSpace(Role);
-
-    public RegisterViewModel(IAuthApi auth)
+    public RegisterViewModel(IAuthApi authApi, IAccountApi accountApi, TokenStore tokenStore)
     {
-        _auth = auth;
-        // pour rafraîchir CanRegister quand une propriété change
-        PropertyChanged += (_, __) => OnPropertyChanged(nameof(CanRegister));
+        _authApi = authApi;
+        _accountApi = accountApi;
+        _tokenStore = tokenStore;
+        Title = "Créer un compte";
     }
 
     [RelayCommand]
-    private async Task RegisterAsync()
+    public async Task RegisterAsync()
     {
-        if (!CanRegister)
-        {
-            Error = "Veuillez remplir tous les champs et vérifier les mots de passe.";
-            OnPropertyChanged(nameof(HasError));
-            return;
-        }
+        IsBusy = true;
+        HasError = false;
+        ErrorMessage = null;
 
         try
         {
-            IsBusy = true; Error = null;
-
-            // IMPORTANT : utilise la classe du namespace API
-            // using SyndicApp.Mobile.Api;
-
-            var payload = new RegisterDto
+            // validations basiques
+            if (string.IsNullOrWhiteSpace(Email) ||
+                string.IsNullOrWhiteSpace(Password) ||
+                string.IsNullOrWhiteSpace(ConfirmPassword) ||
+                string.IsNullOrWhiteSpace(FullName) ||
+                string.IsNullOrWhiteSpace(SelectedRole))
             {
-                Email = Email!.Trim(),
+                HasError = true;
+                ErrorMessage = "Tous les champs marqués * sont obligatoires.";
+                return;
+            }
+            if (Password!.Length < 6)
+            {
+                HasError = true;
+                ErrorMessage = "Mot de passe trop court (min. 6).";
+                return;
+            }
+            if (!string.Equals(Password, ConfirmPassword))
+            {
+                HasError = true;
+                ErrorMessage = "Les mots de passe ne correspondent pas.";
+                return;
+            }
+
+            var dto = new RegisterDto
+            {
+                Email = Email!,
                 Password = Password!,
                 ConfirmPassword = ConfirmPassword!,
-                FullName = FullName!.Trim(),
-                Adresse = string.IsNullOrWhiteSpace(Adresse) ? null : Adresse!.Trim(),
+                FullName = FullName!,
+                Adresse = Adresse,
                 DateNaissance = DateNaissance,
-                Role = Role!
+                Role = SelectedRole!
             };
 
-            await _auth.Register(payload);
+            // Appel register (pas d’auto-login derrière)
+            await _authApi.RegisterAsync(dto);
 
-            await Shell.Current.DisplayAlert("Succès", "Compte créé. Connectez-vous.", "OK");
-            await Shell.Current.GoToAsync("//login");
-        }
+            // Par sécurité, si un token traînait, on le nettoie
+            _tokenStore.ClearToken();
 
-        catch (ApiException ex)
-        {
-            Error = ex.Content ?? ex.Message;
-            OnPropertyChanged(nameof(HasError));
+            await Shell.Current.DisplayAlert("Compte créé", "Ton compte est créé. Tu peux te connecter maintenant.", "OK");
+            await Shell.Current.GoToAsync("//login");   // ⇐ navigation vers Login
+
+            // Optionnel : reset des champs du formulaire
+            Email = Password = ConfirmPassword = FullName = Adresse = null;
+            DateNaissance = DateTime.Today.AddYears(-20);
+            SelectedRole = "Copropriétaire";
         }
-        catch (Exception ex)
+        catch (ApiException ex) when ((int)ex.StatusCode >= 400 && (int)ex.StatusCode < 500)
         {
-            Error = ex.Message;
-            OnPropertyChanged(nameof(HasError));
+            try
+            {
+                var err = System.Text.Json.JsonSerializer.Deserialize<ApiError>(ex.Content,
+                    new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+                ErrorMessage = err?.Details?.FirstOrDefault()
+                               ?? err?.Message
+                               ?? ex.Content
+                               ?? "Inscription invalide. Vérifie les informations saisies.";
+            }
+            catch
+            {
+                ErrorMessage = ex.Content ?? "Inscription invalide. Vérifie les informations saisies.";
+            }
+            HasError = true;
+        }
+        catch (HttpRequestException)
+        {
+            HasError = true;
+            ErrorMessage = "Impossible de contacter l'API. Vérifie la connexion.";
+        }
+        catch (TaskCanceledException)
+        {
+            HasError = true;
+            ErrorMessage = "Temps d’attente dépassé. API injoignable.";
         }
         finally
         {
@@ -92,8 +126,7 @@ public partial class RegisterViewModel : BaseViewModel
         }
     }
 
+
     [RelayCommand]
-    private Task GoToLogin() => Shell.Current.GoToAsync("//login");
+    public Task GoToLoginAsync() => Shell.Current.GoToAsync("//login");
 }
-
-

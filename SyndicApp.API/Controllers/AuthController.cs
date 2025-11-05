@@ -2,11 +2,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SyndicApp.Application.DTOs.Auth;
 using SyndicApp.Application.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Linq;
-using Microsoft.Extensions.Logging;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace SyndicApp.API.Controllers
 {
@@ -99,13 +97,15 @@ namespace SyndicApp.API.Controllers
         [HttpGet("me")]
         public async Task<IActionResult> Me()
         {
-            var userId = User.Claims.FirstOrDefault(c => c.Type == "uid")?.Value;
+            var userId =
+                User.FindFirstValue("uid") ??
+                User.FindFirstValue(ClaimTypes.NameIdentifier) ??
+                User.FindFirstValue(JwtRegisteredClaimNames.Sub);
 
-            if (userId == null)
+            if (string.IsNullOrEmpty(userId))
                 return Unauthorized("Utilisateur non authentifié");
 
             var user = await _authService.GetByIdAsync(Guid.Parse(userId));
-
             if (user == null)
                 return NotFound("Utilisateur introuvable");
 
