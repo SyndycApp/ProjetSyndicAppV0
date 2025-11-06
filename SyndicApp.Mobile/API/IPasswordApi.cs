@@ -11,4 +11,13 @@ public interface IPasswordApi
 
     [Post("/api/Password/reset")]
     Task ResetPasswordAsync([Body] ResetPasswordDto dto);
+
+    [Post("/api/Password/forgot-code")]
+    Task ForgotCodeAsync([Body] ForgotPasswordDto dto);
+
+    [Post("/api/Password/verify-code")]
+    Task VerifyCodeAsync([Body] VerifyResetCodeDto dto);
+
+    [Post("/api/Password/reset-with-code")]
+    Task ResetWithCodeAsync([Body] ResetWithCodeDto dto);
 }

@@ -2,6 +2,7 @@
 using SyndicApp.Mobile.Api;
 using SyndicApp.Mobile.Handlers;
 using SyndicApp.Mobile.Services;
+using SyndicApp.Mobile.ViewModels.Auth;
 using System.Text.Json;
 
 namespace SyndicApp.Mobile;
@@ -14,8 +15,8 @@ public static class MauiProgram
         builder.UseMauiApp<App>();
 
         // Choisis la bonne URL :        
-        const string BaseUrl = "http://192.168.11.126:5041";//pastaepizza
-        //const string BaseUrl = "http://192.168.0.104:5041"; //home
+        const string BaseUrl = "http://192.168.0.103:5041";
+
 
         // Refit JSON insensible à la casse
         var jsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
@@ -62,12 +63,20 @@ public static class MauiProgram
         builder.Services.AddTransient<ViewModels.Auth.RegisterViewModel>();
         builder.Services.AddTransient<ViewModels.Auth.ForgotPasswordViewModel>();
         builder.Services.AddTransient<ViewModels.Dashboard.SyndicDashboardViewModel>();
+        builder.Services.AddTransient<ViewModels.Auth.ResetPasswordViewModel>();
+        builder.Services.AddTransient<VerifyCodeViewModel>();
+        builder.Services.AddTransient<ResetWithCodeViewModel>();
+
+       
 
         // Pages
         builder.Services.AddTransient<Views.Auth.LoginPage>();
         builder.Services.AddTransient<Views.Auth.RegisterPage>();
         builder.Services.AddTransient<Views.Auth.ForgotPasswordPage>();
-        builder.Services.AddTransient<Views.Dashboard.SyndicDashboardPage>();
+        builder.Services.AddTransient<Views.Dashboard.SyndicDashboardPage>();        
+        builder.Services.AddTransient<Views.Auth.ResetPasswordPage>();
+        builder.Services.AddTransient<Views.Auth.VerifyCodePage>();
+        builder.Services.AddTransient<Views.Auth.ResetWithCodePage>();
 
         var app = builder.Build();
         ServiceHelper.Services = app.Services;

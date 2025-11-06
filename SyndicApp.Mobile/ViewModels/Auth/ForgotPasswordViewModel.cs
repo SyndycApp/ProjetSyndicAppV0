@@ -1,7 +1,5 @@
-﻿using Android.Telephony;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Refit;
 using SyndicApp.Mobile.Api;
 using SyndicApp.Mobile.Models;
 
@@ -9,28 +7,27 @@ namespace SyndicApp.Mobile.ViewModels.Auth;
 
 public partial class ForgotPasswordViewModel : ViewModels.Common.BaseViewModel
 {
-    private readonly IPasswordApi _passwordApi;
+    private readonly IPasswordApi _api;
 
-    [ObservableProperty] string? email;
-    [ObservableProperty] bool hasError;
-    [ObservableProperty] string? errorMessage;
-    [ObservableProperty] bool isSent;
+    [ObservableProperty] private string? email;
+    [ObservableProperty] private bool hasError;
+    [ObservableProperty] private string? errorMessage;
 
-    public ForgotPasswordViewModel(IPasswordApi passwordApi)
+    public ForgotPasswordViewModel(IPasswordApi api)
     {
-        _passwordApi = passwordApi;
+        _api = api;
         Title = "Mot de passe oublié";
     }
 
+    // Génère SendResetCommand (comme dans ton XAML)
     [RelayCommand]
-    public async Task SendResetAsync()
+    private async Task SendResetAsync()
     {
         try
         {
             IsBusy = true;
             HasError = false;
             ErrorMessage = null;
-            IsSent = false;
 
             if (string.IsNullOrWhiteSpace(Email))
             {
@@ -39,30 +36,21 @@ public partial class ForgotPasswordViewModel : ViewModels.Common.BaseViewModel
                 return;
             }
 
-            await _passwordApi.ForgotPasswordAsync(new ForgotPasswordDto { Email = Email });
-            IsSent = true;
+            // 👉 Envoi du CODE OTP
+            await _api.ForgotCodeAsync(new ForgotPasswordDto { Email = Email! });
 
             await Shell.Current.DisplayAlert(
-              "Email envoyé",
-              $"Un lien de réinitialisation a été envoyé à l'adresse {Email.Trim()}.",
-              "OK");
+                "Code envoyé",
+                $"Nous avons envoyé un code à {Mask(Email!)}.",
+                "OK");
 
-
-            await Shell.Current.GoToAsync("//login");
+            // 👉 On passe à l’écran de saisie de code
+            await Shell.Current.GoToAsync($"/verifycode?email={Uri.EscapeDataString(Email!)}");
         }
-        catch (ApiException ex)
+        catch
         {
             HasError = true;
-            ErrorMessage = ex.StatusCode switch
-            {
-                System.Net.HttpStatusCode.NotFound => "Aucun compte trouvé avec cet email.",
-                _ => "Erreur lors de la demande de réinitialisation."
-            };
-        }
-        catch (HttpRequestException)
-        {
-            HasError = true;
-            ErrorMessage = "Impossible de contacter l’API.";
+            ErrorMessage = "Impossible d’envoyer le code. Vérifiez votre connexion.";
         }
         finally
         {
@@ -70,6 +58,17 @@ public partial class ForgotPasswordViewModel : ViewModels.Common.BaseViewModel
         }
     }
 
+    // Génère GoToLoginCommand (comme dans ton XAML)
     [RelayCommand]
-    public Task GoToLoginAsync() => Shell.Current.GoToAsync("//login");
+    private Task GoToLoginAsync() => Shell.Current.GoToAsync("//login");
+
+    private static string Mask(string email)
+    {
+        var at = email.IndexOf('@');
+        if (at <= 1) return email;
+        var local = email[..at];
+        var domain = email[(at + 1)..];
+        var head = local.Length <= 2 ? local[..1] : local[..2];
+        return $"{head}{new string('*', Math.Max(1, local.Length - head.Length))}@{domain}";
+    }
 }

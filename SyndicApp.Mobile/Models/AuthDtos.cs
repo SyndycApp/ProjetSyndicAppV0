@@ -17,12 +17,6 @@ public sealed class RegisterDto
     public string Role { get; set; } = "Copropriétaire"; // par défaut
 }
 
-public sealed class ResetPasswordDto
-{
-    public string Token { get; set; } = default!;
-    public string NewPassword { get; set; } = default!;
-    public string ConfirmPassword { get; set; } = default!;
-}
 
 public sealed class AuthResponseDto
 {

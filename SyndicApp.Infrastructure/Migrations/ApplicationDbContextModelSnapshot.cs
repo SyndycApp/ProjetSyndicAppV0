@@ -1436,6 +1436,16 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PasswordResetCode")
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
+
+                    b.Property<int>("PasswordResetCodeAttempts")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("PasswordResetCodeExpires")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("PasswordResetToken")
                         .HasColumnType("nvarchar(max)");
 

@@ -18,26 +18,30 @@ namespace SyndicApp.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            // 1. Ajout du DbContext
+            // 1️⃣ DbContext + MigrationsAssembly explicite
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(
+                    configuration.GetConnectionString("DefaultConnection"),
+                    b => b.MigrationsAssembly("SyndicApp.Infrastructure") // 👈 Corrige le problème EF
+                ));
 
-            
-            // 2. Ajout d'ASP.NET Identity avec GUID comme clé
+            // 2️⃣ Identity (GUID comme clé)
             services.AddIdentity<ApplicationUser, IdentityRole<Guid>>(options =>
             {
                 options.Password.RequireDigit = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequiredLength = 6;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
             })
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
-            // 3. Lecture de la section JwtSettings
+            // 3️⃣ JWT Settings
             var jwtSettings = configuration.GetSection("JwtSettings").Get<JwtSettings>()!;
             var key = Encoding.UTF8.GetBytes(jwtSettings.Secret);
 
-            // 4. Ajout de l’authentification JWT
+            // 4️⃣ Authentication JWT
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -45,7 +49,7 @@ namespace SyndicApp.Infrastructure
             })
             .AddJwtBearer(options =>
             {
-                options.RequireHttpsMetadata = false; // en prod → true
+                options.RequireHttpsMetadata = false; // (true en prod)
                 options.SaveToken = true;
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
@@ -57,18 +61,22 @@ namespace SyndicApp.Infrastructure
                     ValidIssuer = jwtSettings.Issuer,
                     ValidAudience = jwtSettings.Audience,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
-                    ClockSkew = TimeSpan.Zero // pas de délai de tolérance
+                    ClockSkew = TimeSpan.Zero
                 };
             });
 
-            // Injection de AuthService et JwtTokenGenerator
+            // 5️⃣ Services transverses et métiers
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
             services.AddScoped<IResidenceService, ResidenceService>();
-            services.AddScoped<IBatimentService, BatimentService>(); 
+            services.AddScoped<IBatimentService, BatimentService>();
             services.AddScoped<ILotService, LotService>();
-            services.AddScoped<IAffectationLotService, AffectationLotService>();    
+            services.AddScoped<IAffectationLotService, AffectationLotService>();
             services.AddScoped<ILocataireTemporaireService, LocataireTemporaireService>();
+
+            // Tu pourras aussi injecter ici tes services OTP / Email, si besoin.
+            services.AddTransient<IEmailSender, SmtpEmailSender>();
+            services.AddTransient<IPasswordService, PasswordService>();
 
             return services;
         }

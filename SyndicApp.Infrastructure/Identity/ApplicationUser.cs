@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
 using SyndicApp.Domain.Entities.Residences;
+using System.ComponentModel.DataAnnotations;
 
 namespace SyndicApp.Infrastructure.Identity
 {
@@ -21,5 +20,10 @@ namespace SyndicApp.Infrastructure.Identity
 
         public string? PasswordResetToken { get; set; }
         public DateTime? PasswordResetTokenExpires { get; set; }
+
+        [MaxLength(16)]
+        public string? PasswordResetCode { get; set; }
+        public DateTime? PasswordResetCodeExpires { get; set; }
+        public int PasswordResetCodeAttempts { get; set; }
     }
 }

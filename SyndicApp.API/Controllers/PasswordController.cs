@@ -1,14 +1,15 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using SyndicApp.Application.DTOs.Auth;
+using SyndicApp.Application.Interfaces;
+using SyndicApp.Infrastructure;
 using System;
 using System.Net;
 using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using SyndicApp.Application.DTOs.Auth;
-using SyndicApp.Infrastructure;
-using SyndicApp.Application.Interfaces;
 
 namespace SyndicApp.API.Controllers
 {
@@ -19,6 +20,31 @@ namespace SyndicApp.API.Controllers
         private readonly IPasswordService _svc;
 
         public PasswordController(IPasswordService svc) => _svc = svc;
+
+
+        [HttpPost("forgot-code")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ForgotCode([FromBody] ForgotPasswordDto dto)
+        {
+            _ = await _svc.SendResetCodeAsync(dto.Email);
+            return Ok(); // Toujours 200 pour éviter l’énumération d’emails
+        }
+
+        [HttpPost("verify-code")]
+        [AllowAnonymous]
+        public async Task<IActionResult> VerifyCode([FromBody] VerifyResetCodeDto dto)
+        {
+            var ok = await _svc.VerifyResetCodeAsync(dto.Email, dto.Code);
+            return ok ? Ok() : Unauthorized();
+        }
+
+        [HttpPost("reset-with-code")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResetWithCode([FromBody] ResetWithCodeDto dto)
+        {
+            var ok = await _svc.ResetWithCodeAsync(dto.Email, dto.Code, dto.NewPassword, dto.ConfirmPassword);
+            return ok ? Ok() : BadRequest();
+        }
 
 
         [HttpPost("forgot")]

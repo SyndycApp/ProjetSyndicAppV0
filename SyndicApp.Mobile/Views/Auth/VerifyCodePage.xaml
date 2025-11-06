@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:SyndicApp.Mobile.ViewModels.Auth"
+    x:Class="SyndicApp.Mobile.Views.Auth.VerifyCodePage"
+    x:DataType="vm:VerifyCodeViewModel"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="#F4F6F8">
+
+    <Grid Padding="20">
+        <Border HorizontalOptions="Center"
+                VerticalOptions="Center"
+                WidthRequest="360"
+                StrokeThickness="0"
+                BackgroundColor="White"
+                Padding="24"
+                StrokeShape="RoundRectangle 16">
+            <Border.Shadow>
+                <Shadow Brush="#40000000" Radius="12"/>
+            </Border.Shadow>
+
+            <VerticalStackLayout Spacing="16">
+                <!-- Header -->
+                <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                    <Image Source="logo.png" WidthRequest="64" HeightRequest="64" Aspect="AspectFit"/>
+                    <Label Text="Code de vérification" FontSize="22" FontAttributes="Bold" TextColor="#1C1C1E"/>
+                </VerticalStackLayout>
+
+                <Label Text="Saisissez le code à 6 chiffres que nous avons envoyé à votre email."
+                       FontSize="13" TextColor="#6B7280"
+                       HorizontalTextAlignment="Center" LineBreakMode="WordWrap"/>
+
+                <!-- Code -->
+                <Border StrokeShape="RoundRectangle 8" BackgroundColor="#FFFFFF" Padding="12">
+                    <Entry Placeholder="Code (6 chiffres)"
+                           Keyboard="Numeric"
+                           MaxLength="6"
+                           Text="{Binding Code}"
+                           TextColor="Black"
+                           BackgroundColor="Transparent"/>
+                </Border>
+
+                <!-- Actions -->
+                <Button Text="Continuer"
+                        Command="{Binding VerifyCommand}"
+                        HeightRequest="48"
+                        FontAttributes="Bold"
+                        TextColor="White"
+                        BackgroundColor="#1E63E9"
+                        CornerRadius="12"/>
+
+                <Button Text="Renvoyer le code"
+                        Command="{Binding ResendCommand}"
+                        HeightRequest="44"
+                        TextColor="#1E63E9"
+                        BackgroundColor="#E8F0FE"
+                        CornerRadius="12"/>
+
+                <!-- Erreur -->
+                <Border BackgroundColor="#FDECEA"
+                        StrokeThickness="0"
+                        Padding="10"
+                        StrokeShape="RoundRectangle 8"
+                        IsVisible="{Binding HasError}">
+                    <Label Text="{Binding ErrorMessage}" TextColor="#B3261E" FontSize="13"/>
+                </Border>
+
+                <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="#1E63E9"/>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentPage>

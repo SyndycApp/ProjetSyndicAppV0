@@ -18,9 +18,6 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Auth.ForgotPasswordViewModel.ErrorMessage">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Auth.ForgotPasswordViewModel.errorMessage"/>
         </member>
-        <member name="P:SyndicApp.Mobile.ViewModels.Auth.ForgotPasswordViewModel.IsSent">
-            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Auth.ForgotPasswordViewModel.isSent"/>
-        </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Auth.ForgotPasswordViewModel.sendResetCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Auth.ForgotPasswordViewModel.SendResetCommand"/>.</summary>
         </member>
@@ -113,6 +110,91 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Auth.RegisterViewModel.GoToLoginCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Auth.RegisterViewModel.GoToLoginAsync"/>.</summary>
         </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Auth.ResetPasswordViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Auth.ResetPasswordViewModel.Token">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Auth.ResetPasswordViewModel.token"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Auth.ResetPasswordViewModel.Email">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Auth.ResetPasswordViewModel.email"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Auth.ResetPasswordViewModel.NewPassword">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Auth.ResetPasswordViewModel.newPassword"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Auth.ResetPasswordViewModel.ConfirmPassword">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Auth.ResetPasswordViewModel.confirmPassword"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Auth.ResetPasswordViewModel.HasError">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Auth.ResetPasswordViewModel.hasError"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Auth.ResetPasswordViewModel.ErrorMessage">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Auth.ResetPasswordViewModel.errorMessage"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Auth.ResetPasswordViewModel.submitCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Auth.ResetPasswordViewModel.SubmitCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Auth.ResetPasswordViewModel.SubmitCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Auth.ResetPasswordViewModel.SubmitAsync"/>.</summary>
+        </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Auth.ResetWithCodeViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Auth.ResetWithCodeViewModel.Email">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Auth.ResetWithCodeViewModel.email"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Auth.ResetWithCodeViewModel.Code">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Auth.ResetWithCodeViewModel.code"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Auth.ResetWithCodeViewModel.NewPassword">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Auth.ResetWithCodeViewModel.newPassword"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Auth.ResetWithCodeViewModel.ConfirmPassword">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Auth.ResetWithCodeViewModel.confirmPassword"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Auth.ResetWithCodeViewModel.HasError">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Auth.ResetWithCodeViewModel.hasError"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Auth.ResetWithCodeViewModel.ErrorMessage">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Auth.ResetWithCodeViewModel.errorMessage"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Auth.ResetWithCodeViewModel.submitCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Auth.ResetWithCodeViewModel.SubmitCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Auth.ResetWithCodeViewModel.SubmitCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Auth.ResetWithCodeViewModel.SubmitAsync"/>.</summary>
+        </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Auth.VerifyCodeViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Auth.VerifyCodeViewModel.Email">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Auth.VerifyCodeViewModel.email"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Auth.VerifyCodeViewModel.Code">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Auth.VerifyCodeViewModel.code"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Auth.VerifyCodeViewModel.HasError">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Auth.VerifyCodeViewModel.hasError"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Auth.VerifyCodeViewModel.ErrorMessage">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Auth.VerifyCodeViewModel.errorMessage"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Auth.VerifyCodeViewModel.verifyCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Auth.VerifyCodeViewModel.VerifyCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Auth.VerifyCodeViewModel.VerifyCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Auth.VerifyCodeViewModel.VerifyAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Auth.VerifyCodeViewModel.resendCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Auth.VerifyCodeViewModel.ResendCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Auth.VerifyCodeViewModel.ResendCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Auth.VerifyCodeViewModel.ResendAsync"/>.</summary>
+        </member>
         <member name="T:SyndicApp.Mobile.ViewModels.Common.BaseViewModel">
             <inheritdoc/>
         </member>
@@ -181,9 +263,6 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ErrorMessage">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ErrorMessage" generated properties.</summary>
         </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsSent">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsSent" generated properties.</summary>
-        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Password">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Password" generated properties.</summary>
         </member>
@@ -201,6 +280,15 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.SelectedRole">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "SelectedRole" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Token">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Token" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.NewPassword">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "NewPassword" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Code">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Code" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsBusy">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsBusy" generated properties.</summary>
@@ -238,9 +326,6 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ErrorMessage">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ErrorMessage" generated properties.</summary>
         </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsSent">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsSent" generated properties.</summary>
-        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Password">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Password" generated properties.</summary>
         </member>
@@ -258,6 +343,15 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.SelectedRole">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "SelectedRole" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Token">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Token" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.NewPassword">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "NewPassword" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Code">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Code" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsBusy">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsBusy" generated properties.</summary>
@@ -340,10 +434,28 @@
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPasswordApi.ResetPasswordAsync(SyndicApp.Mobile.Models.ResetPasswordDto)">
             <inheritdoc />
         </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPasswordApi.ForgotCodeAsync(SyndicApp.Mobile.Models.ForgotPasswordDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPasswordApi.VerifyCodeAsync(SyndicApp.Mobile.Models.VerifyResetCodeDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPasswordApi.ResetWithCodeAsync(SyndicApp.Mobile.Models.ResetWithCodeDto)">
+            <inheritdoc />
+        </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPasswordApi.SyndicApp#Mobile#Api#IPasswordApi#ForgotPasswordAsync(SyndicApp.Mobile.Models.ForgotPasswordDto)">
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPasswordApi.SyndicApp#Mobile#Api#IPasswordApi#ResetPasswordAsync(SyndicApp.Mobile.Models.ResetPasswordDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPasswordApi.SyndicApp#Mobile#Api#IPasswordApi#ForgotCodeAsync(SyndicApp.Mobile.Models.ForgotPasswordDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPasswordApi.SyndicApp#Mobile#Api#IPasswordApi#VerifyCodeAsync(SyndicApp.Mobile.Models.VerifyResetCodeDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPasswordApi.SyndicApp#Mobile#Api#IPasswordApi#ResetWithCodeAsync(SyndicApp.Mobile.Models.ResetWithCodeDto)">
             <inheritdoc />
         </member>
         <member name="T:Refit.Implementation.Generated.SyndicAppMobileApiIResidencesApi">
