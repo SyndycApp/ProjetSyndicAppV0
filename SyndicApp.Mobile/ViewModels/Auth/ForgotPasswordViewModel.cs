@@ -43,9 +43,10 @@ public partial class ForgotPasswordViewModel : ViewModels.Common.BaseViewModel
             IsSent = true;
 
             await Shell.Current.DisplayAlert(
-                "Email envoyé",
-                "Un lien de réinitialisation a été envoyé à ton adresse email.",
-                "OK");
+              "Email envoyé",
+              $"Un lien de réinitialisation a été envoyé à l'adresse {Email.Trim()}.",
+              "OK");
+
 
             await Shell.Current.GoToAsync("//login");
         }

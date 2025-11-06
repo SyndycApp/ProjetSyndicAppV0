@@ -7,9 +7,8 @@ public interface IPasswordApi
 {
     // Envoi du mail de réinitialisation
     [Post("/api/Password/forgot")]
-    Task<ApiOkDto> ForgotPasswordAsync([Body] ForgotPasswordDto dto);
+    Task ForgotPasswordAsync([Body] ForgotPasswordDto dto);
 
-    // Réinitialisation via token
     [Post("/api/Password/reset")]
-    Task<ApiOkDto> ResetPasswordAsync([Body] ResetPasswordDto dto);
+    Task ResetPasswordAsync([Body] ResetPasswordDto dto);
 }

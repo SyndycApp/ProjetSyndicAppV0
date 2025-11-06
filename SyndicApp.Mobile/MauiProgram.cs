@@ -13,12 +13,9 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder.UseMauiApp<App>();
 
-        // Choisis la bonne URL :
-        // - Emulateur Android (sans adb reverse) : "http://10.0.2.2:5041"
-        // - Appareil Android + adb reverse 5041:5041 : "http://127.0.0.1:5041"
-        // - Téléphone réel sur même Wi-Fi : "http://<IP_PC>:5041"
-        //const string BaseUrl = http:127.0.0.1:5041; //pastaepizza
-        const string BaseUrl = "http://192.168.0.104:5041"; //home
+        // Choisis la bonne URL :        
+        const string BaseUrl = "http://192.168.11.126:5041";//pastaepizza
+        //const string BaseUrl = "http://192.168.0.104:5041"; //home
 
         // Refit JSON insensible à la casse
         var jsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
@@ -37,7 +34,7 @@ public static class MauiProgram
                .ConfigureHttpClient(c =>
                {
                    c.BaseAddress = new Uri(BaseUrl);
-                   c.Timeout = TimeSpan.FromSeconds(15);
+                   c.Timeout = TimeSpan.FromSeconds(60);
                });
 
         // Forgot/reset password → généralement PUBLIC (pour lever ta régression)
@@ -45,7 +42,7 @@ public static class MauiProgram
                .ConfigureHttpClient(c =>
                {
                    c.BaseAddress = new Uri(BaseUrl);
-                   c.Timeout = TimeSpan.FromSeconds(15);
+                   c.Timeout = TimeSpan.FromSeconds(60);
                });
 
         // Helper protégés (Bearer auto via AuthHeaderHandler)
@@ -54,7 +51,7 @@ public static class MauiProgram
                    .ConfigureHttpClient(c =>
                    {
                        c.BaseAddress = new Uri(BaseUrl);
-                       c.Timeout = TimeSpan.FromSeconds(15);
+                       c.Timeout = TimeSpan.FromSeconds(60);
                    })
                    .AddHttpMessageHandler<AuthHeaderHandler>();
 
