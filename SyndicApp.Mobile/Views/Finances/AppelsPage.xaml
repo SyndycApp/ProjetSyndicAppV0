@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SyndicApp.Mobile.Views.Finances.AppelsPage"
+             Title="Appels">
+
+    <ContentPage.ToolbarItems>
+        <!-- Retour vers Dashboard -->
+        <ToolbarItem Text="←"
+                     Priority="0"
+                     Order="Primary"
+                     Clicked="OnBackClicked" />
+
+        <!-- Créer un appel -->
+        <ToolbarItem Text="+"
+                     Priority="1"
+                     Order="Primary"
+                     Command="{Binding OpenCreateCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <Grid Padding="16">
+        <CollectionView ItemsSource="{Binding Appels}"
+                        SelectionMode="None"
+                        RemainingItemsThreshold="2">
+            <CollectionView.EmptyView>
+                <Label Text="Aucun appel pour le moment"
+                       HorizontalOptions="Center" VerticalOptions="Center"/>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="14" Margin="0,6" BorderColor="#1F4CA3"
+                           HasShadow="False" CornerRadius="12">
+                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto">
+                            <Label Grid.ColumnSpan="2" Text="{Binding Description}"
+                                   FontAttributes="Bold" FontSize="16"/>
+
+                            <StackLayout Grid.Row="1" Spacing="2">
+                                <Label Text="{Binding DateEmission,
+                                                      StringFormat='Date d’émission : {0:dd MMM yyyy}'}"
+                                       FontSize="12"/>
+                                <Label Text="{Binding ResidenceId, StringFormat='Résidence : {0}'}"
+                                       FontSize="12"/>
+                            </StackLayout>
+
+                            <Label Grid.RowSpan="2" Grid.Column="1" VerticalOptions="Center"
+                                   Text="{Binding MontantTotal, StringFormat='{0:N2} €'}"
+                                   FontAttributes="Bold"/>
+
+                            <Grid Grid.Row="2" Grid.ColumnSpan="2" Margin="0,8,0,0">
+                                <!-- si tu gardes le converter -->
+                                <ProgressBar Progress="{Binding MontantPaye,
+                                            Converter={StaticResource ProgressConverter},
+                                            ConverterParameter={Binding MontantTotal}}"/>
+                            </Grid>
+
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},
+                                                      Path=BindingContext.OpenDetailsCommand}"
+                                    CommandParameter="{Binding .}"/>
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+</ContentPage>

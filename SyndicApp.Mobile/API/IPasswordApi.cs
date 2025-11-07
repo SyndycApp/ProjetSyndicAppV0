@@ -20,4 +20,7 @@ public interface IPasswordApi
 
     [Post("/api/Password/reset-with-code")]
     Task ResetWithCodeAsync([Body] ResetWithCodeDto dto);
+
+    [Post("/api/Auth/logout")]
+    Task<ApiOkDto> LogoutAsync();
 }

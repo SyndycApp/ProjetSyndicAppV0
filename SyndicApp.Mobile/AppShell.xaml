@@ -5,19 +5,19 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:auth="clr-namespace:SyndicApp.Mobile.Views.Auth"
     xmlns:dash="clr-namespace:SyndicApp.Mobile.Views.Dashboard"
+    xmlns:views="clr-namespace:SyndicApp.Mobile.Views.Finances" 
     Shell.NavBarIsVisible="False">
 
     <ShellContent
         Route="login"
         Title="Connexion"
         ContentTemplate="{DataTemplate auth:LoginPage}" />
-
     <ShellContent Route="register" Title="Créer un compte"
         ContentTemplate="{DataTemplate auth:RegisterPage}" />
-
     <ShellContent Route="forgot" Title="Mot de passe oublié"
         ContentTemplate="{DataTemplate auth:ForgotPasswordPage}" />
-
     <ShellContent Route="syndic-dashboard" Title="Tableau de bord"
         ContentTemplate="{DataTemplate dash:SyndicDashboardPage}" />
+    <ShellContent Route="appels" ContentTemplate="{DataTemplate views:AppelsPage}" />
+    
 </Shell>

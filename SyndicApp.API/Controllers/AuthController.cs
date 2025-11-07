@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SyndicApp.Application.DTOs.Auth;
 using SyndicApp.Application.Interfaces;
-using System.Security.Claims;
+using SyndicApp.Infrastructure.Identity;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Claims;
 
 namespace SyndicApp.API.Controllers
@@ -14,17 +16,39 @@ namespace SyndicApp.API.Controllers
     {
         private readonly IAuthService _authService;
         private readonly ILogger<AuthController> _logger = null!;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public AuthController(IAuthService authService, ILogger<AuthController> logger)
+        public AuthController(IAuthService authService, ILogger<AuthController> logger, UserManager<ApplicationUser> userManager)
         {
             _authService = authService;
             _logger = logger;
+            _userManager = userManager;
         }
 
         [Authorize]
         [HttpPost("logout")]
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
+            // uid (custom), sub (JWT standard) ou nameidentifier
+            var id = User.FindFirst("uid")?.Value
+                     ?? User.FindFirst("sub")?.Value
+                     ?? User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrWhiteSpace(id) || !Guid.TryParse(id, out var userId))
+                return Unauthorized();
+
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            if (user is null) return Unauthorized();
+
+            // Invalider tout mécanisme de refresh côté serveur
+            user.RefreshToken = null;
+            user.RefreshTokenExpiryTime = null;
+
+            // Bonus : invalider d’éventuelles sessions persistantes
+            await _userManager.UpdateSecurityStampAsync(user);
+
+            await _userManager.UpdateAsync(user);
+
             return Ok(new { message = "Déconnexion réussie" });
         }
 

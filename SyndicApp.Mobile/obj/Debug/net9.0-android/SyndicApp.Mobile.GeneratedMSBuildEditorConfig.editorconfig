@@ -96,6 +96,30 @@ build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Das
 build_metadata.AdditionalFiles.TargetPath = Views\Dashboard\SyndicDashboardPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Dashboard\SyndicDashboardPage.xaml
 
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Finances/AppelCreatePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Finances.AppelCreatePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Finances\AppelCreatePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Finances\AppelCreatePage.xaml
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Finances/AppelDetailsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Finances.AppelDetailsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Finances\AppelDetailsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Finances\AppelDetailsPage.xaml
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Finances/AppelEditPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Finances.AppelEditPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Finances\AppelEditPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Finances\AppelEditPage.xaml
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Finances/AppelsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Finances.AppelsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Finances\AppelsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Finances\AppelsPage.xaml
+
 [C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Residences/AddResidencePage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Residences.AddResidencePage.xaml

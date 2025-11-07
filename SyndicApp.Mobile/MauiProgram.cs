@@ -1,8 +1,11 @@
 ﻿using Refit;
 using SyndicApp.Mobile.Api;
+using SyndicApp.Mobile.Converters;
 using SyndicApp.Mobile.Handlers;
 using SyndicApp.Mobile.Services;
 using SyndicApp.Mobile.ViewModels.Auth;
+using SyndicApp.Mobile.ViewModels.Finances;
+using SyndicApp.Mobile.Views.Finances;
 using System.Text.Json;
 
 namespace SyndicApp.Mobile;
@@ -15,7 +18,7 @@ public static class MauiProgram
         builder.UseMauiApp<App>();
 
         // Choisis la bonne URL :        
-        const string BaseUrl = "http://192.168.0.103:5041";
+        const string BaseUrl = "http://192.168.11.122:5041";
 
 
         // Refit JSON insensible à la casse
@@ -57,6 +60,7 @@ public static class MauiProgram
                    .AddHttpMessageHandler<AuthHeaderHandler>();
 
         AddSecured<IAccountApi>();   // /me, /logout protégés
+        AddSecured<IAppelsApi>();
 
         // VMs
         builder.Services.AddTransient<ViewModels.Auth.LoginViewModel>();
@@ -65,9 +69,15 @@ public static class MauiProgram
         builder.Services.AddTransient<ViewModels.Dashboard.SyndicDashboardViewModel>();
         builder.Services.AddTransient<ViewModels.Auth.ResetPasswordViewModel>();
         builder.Services.AddTransient<VerifyCodeViewModel>();
-        builder.Services.AddTransient<ResetWithCodeViewModel>();
+        builder.Services.AddTransient<AppelsListViewModel>();
+        builder.Services.AddTransient<AppelCreateViewModel>();
+        builder.Services.AddTransient<AppelDetailsViewModel>();
+        builder.Services.AddTransient<AppelEditViewModel>();
 
-       
+
+        // Converters (si DI utilisé)
+        builder.Services.AddSingleton<ProgressConverter>(); builder.Services.AddTransient<ResetWithCodeViewModel>();
+
 
         // Pages
         builder.Services.AddTransient<Views.Auth.LoginPage>();
@@ -77,6 +87,10 @@ public static class MauiProgram
         builder.Services.AddTransient<Views.Auth.ResetPasswordPage>();
         builder.Services.AddTransient<Views.Auth.VerifyCodePage>();
         builder.Services.AddTransient<Views.Auth.ResetWithCodePage>();
+        builder.Services.AddTransient<AppelsPage>();
+        builder.Services.AddTransient<AppelCreatePage>();
+        builder.Services.AddTransient<AppelDetailsPage>();
+        builder.Services.AddTransient<AppelEditPage>();
 
         var app = builder.Build();
         ServiceHelper.Services = app.Services;

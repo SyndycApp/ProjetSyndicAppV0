@@ -15,4 +15,10 @@ public class TokenStore
     public void SaveRole(string role) => Preferences.Set(RoleKey, role);
     public string? GetRole() => Preferences.Get(RoleKey, null);
     public bool IsSyndic() => string.Equals(GetRole(), "Syndic", StringComparison.OrdinalIgnoreCase);
+
+    public void Clear()
+    {
+        SecureStorage.Remove(TokenKey);
+        Preferences.Remove(RoleKey);
+    }
 }
