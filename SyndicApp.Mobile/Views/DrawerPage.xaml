@@ -157,12 +157,6 @@
 								CommandParameter="//appels"
 								Clicked="OnMenuItemClicked"/>
 
-						<!-- Sous-routes enregistrées via Routing.RegisterRoute(...) -->
-						<Button Text="Créer un appel"
-								Style="{StaticResource MenuButtonStyle}"
-								CommandParameter="appel-create"
-								Clicked="OnMenuItemClicked"/>
-
 						<!-- (optionnel) Aller explicitement à la liste via la route dédiée -->
 						<Button Text="Liste (route directe)"
 								Style="{StaticResource MenuButtonStyle}"
