@@ -1,5 +1,4 @@
-﻿using Org.Xmlpull.V1.Sax2;
-using SyndicApp.Mobile.ViewModels.Finances;
+﻿using SyndicApp.Mobile.ViewModels.Finances;
 
 namespace SyndicApp.Mobile.Views.Finances;
 
@@ -12,8 +11,6 @@ public partial class AppelCreatePage : ContentPage
         InitializeComponent();
         BindingContext = vm;
     }
-
-    private async void OnBackClicked(object? sender, EventArgs e) => await Shell.Current.GoToAsync("..");
 
     protected override void OnAppearing()
     {
@@ -46,6 +43,7 @@ public partial class AppelCreatePage : ContentPage
     }
 
     private async void CloseDrawer_Clicked(object sender, EventArgs e) => await CloseDrawerAsync();
+
     private async void Backdrop_Tapped(object sender, TappedEventArgs e) => await CloseDrawerAsync();
 
     private async Task CloseDrawerAsync()
@@ -57,12 +55,18 @@ public partial class AppelCreatePage : ContentPage
         Backdrop.InputTransparent = true;
     }
 
-    private async void OnMenuItemClicked(object sender, EventArgs e)
+    private async void OnCancelClicked(object sender, EventArgs e)
+        => await Shell.Current.GoToAsync("//appels");
+
+    private async void OnGoDashboard(object sender, EventArgs e)
     {
-        if (sender is Button b && b.CommandParameter is string route && !string.IsNullOrWhiteSpace(route))
-        {
-            await CloseDrawerAsync();
-            await Shell.Current.GoToAsync(route);
-        }
+        await CloseDrawerAsync();
+        await Shell.Current.GoToAsync("//syndic-dashboard");
+    }
+
+    private async void OnGoAppels(object sender, EventArgs e)
+    {
+        await CloseDrawerAsync();
+        await Shell.Current.GoToAsync("//appels");
     }
 }

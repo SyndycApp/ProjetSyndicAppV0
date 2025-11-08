@@ -24,9 +24,11 @@
 
     <!-- Finances -->
     <ShellContent Route="appels"
+                  Title="Appels"
                   ContentTemplate="{DataTemplate views:AppelsPage}" />
 
     <!-- Drawer principal -->
     <ShellContent Route="drawer" Title="SyndicApp"
                   ContentTemplate="{DataTemplate layout:DrawerPage}" />
+
 </Shell>

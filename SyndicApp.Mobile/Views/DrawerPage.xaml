@@ -151,28 +151,30 @@
 						<BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
 						<Label Text="Finances" FontAttributes="Bold"/>
 
-						<!-- Liste Appels (ShellContent Route='appels') -->
+						<!-- Liste principale des appels -->
 						<Button Text="Appels de fonds"
 								Style="{StaticResource MenuButtonStyle}"
 								CommandParameter="//appels"
 								Clicked="OnMenuItemClicked"/>
 
-						<!-- (optionnel) Aller explicitement à la liste via la route dédiée -->
-						<Button Text="Liste (route directe)"
+						<!-- Création d’un nouvel appel -->
+						<Button Text="Créer un appel"
 								Style="{StaticResource MenuButtonStyle}"
-								CommandParameter="appels/list"
+								CommandParameter="appel-create"
 								Clicked="OnMenuItemClicked"/>
 
-						<!-- (optionnel) Edit / Details nécessitent un paramètre id à passer en query -->
-						<!-- Exemple : await Shell.Current.GoToAsync("appel-edit?id=42") -->
-						<Button Text="Éditer (exemple id=42)"
+						<!-- Modification d’un appel -->
+						<Button Text="Modifier un appel"
 								Style="{StaticResource MenuButtonStyle}"
-								CommandParameter="appel-edit?id=42"
+								CommandParameter="appel-edit"
 								Clicked="OnMenuItemClicked"/>
-						<Button Text="Détails (exemple id=42)"
+
+						<!-- Détails d’un appel -->
+						<Button Text="Détails d’un appel"
 								Style="{StaticResource MenuButtonStyle}"
-								CommandParameter="appel-details?id=42"
+								CommandParameter="appel-details"
 								Clicked="OnMenuItemClicked"/>
+
 
 						<!-- INCIDENTS / INTERVENTIONS / DEVIS -->
 						<BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />

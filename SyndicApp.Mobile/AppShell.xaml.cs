@@ -17,7 +17,6 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("appel-create", typeof(AppelCreatePage));
         Routing.RegisterRoute("appel-details", typeof(AppelDetailsPage));
         Routing.RegisterRoute("appel-edit", typeof(AppelEditPage));
-        Routing.RegisterRoute("appels/list", typeof(AppelsPage));
         Routing.RegisterRoute("drawer", typeof(DrawerPage));
 
     }

@@ -3,32 +3,41 @@
     x:Class="SyndicApp.Mobile.Views.Finances.AppelCreatePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:conv="clr-namespace:SyndicApp.Mobile.Converters"
-    Shell.NavBarIsVisible="False"
+    Title="Créer Appels De Fonds"
     BackgroundColor="White"
-    Title="Nouvel appel">
+    Shell.NavBarIsVisible="False">
 
-    <!-- Converters (au cas où) -->
+    <!-- PALETTE LOCALE -->
     <ContentPage.Resources>
         <Color x:Key="TopbarColor">#2563EB</Color>
         <Color x:Key="HeaderTextOnDark">#FFFFFF</Color>
         <Color x:Key="BodyText">#111827</Color>
         <Color x:Key="Divider">#E5E7EB</Color>
         <Style TargetType="Label">
-            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
+            <Setter Property="TextColor" Value="{StaticResource BodyText}"/>
         </Style>
-        <Style x:Key="MenuButtonStyle" TargetType="Button">
-            <Setter Property="BackgroundColor" Value="Transparent" />
-            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
-            <Setter Property="CornerRadius" Value="8" />
-            <Setter Property="Padding" Value="12,8" />
-            <Setter Property="HorizontalOptions" Value="Start" />
+        <Style x:Key="EntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="{StaticResource BodyText}"/>
+            <Setter Property="PlaceholderColor" Value="#9CA3AF"/>
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="ClearButtonVisibility" Value="WhileEditing"/>
         </Style>
-
-        <conv:ProgressConverter x:Key="ProgressConverter" />
+        <Style x:Key="PrimaryButton" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#4F46E5"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="CornerRadius" Value="14"/>
+            <Setter Property="HeightRequest" Value="48"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+        </Style>
+        <Style x:Key="SecondaryButton" TargetType="Button" BasedOn="{StaticResource PrimaryButton}">
+            <Setter Property="BackgroundColor" Value="#E5E7EB"/>
+            <Setter Property="TextColor" Value="#111827"/>
+        </Style>
     </ContentPage.Resources>
 
-    <Grid x:Name="Root" RowDefinitions="Auto,*">
+    <!-- LAYERS -->
+    <Grid x:Name="Root" RowDefinitions="Auto,*" BackgroundColor="White">
+
         <!-- TOPBAR -->
         <Grid BackgroundColor="{StaticResource TopbarColor}" Padding="12,8">
             <Grid.ColumnDefinitions>
@@ -51,29 +60,62 @@
                    VerticalOptions="Center"
                    FontAttributes="Bold"
                    TextColor="{StaticResource HeaderTextOnDark}"/>
+
+            <Label Grid.Column="2"
+                   Text="• • •"
+                   TextColor="{StaticResource HeaderTextOnDark}"
+                   VerticalOptions="Center"/>
         </Grid>
 
         <!-- CONTENU -->
-        <ScrollView Grid.Row="1">
-            <VerticalStackLayout Padding="16" Spacing="14">
-                <Label Text="Titre / Description" FontAttributes="Bold"/>
-                <Entry Text="{Binding Titre}" Placeholder="Charges trimestrielles"/>
+        <Grid Grid.Row="1" BackgroundColor="White">
+            <ScrollView>
+                <VerticalStackLayout Padding="20" Spacing="16">
 
-                <Label Text="Date d’émission" FontAttributes="Bold"/>
-                <DatePicker Date="{Binding DateEmission}" />
+                    <Label Text="Description" FontAttributes="Bold"/>
+                    <Entry Style="{StaticResource EntryStyle}"
+                           Placeholder="Charges trimestrielles"
+                           Text="{Binding Description, Mode=TwoWay}"/>
 
-                <Label Text="Résidence" FontAttributes="Bold"/>
-                <Entry Text="{Binding ResidenceId}" Placeholder="GUID résidence (temporaire)"/>
+                    <Label Text="Date d’émission" FontAttributes="Bold"/>
+<DatePicker
+    Date="{Binding DateEmission, Mode=TwoWay}"
+    Format="dd/MM/yyyy"
+    TextColor="{StaticResource BodyText}"
+    BackgroundColor="Transparent" />
 
-                <Label Text="Montant total" FontAttributes="Bold"/>
-                <Entry Keyboard="Numeric" Text="{Binding MontantTotal, StringFormat='{}{0:F2}'}" />
+<!-- Affichage lisible juste en dessous (optionnel) -->
+<Label
+    Text="{Binding DateEmission, StringFormat='Sélectionnée : {0:dd/MM/yyyy}'}"
+    FontSize="12"
+    TextColor="#6B7280" />
 
-                <Grid ColumnDefinitions="*,*" Margin="0,10,0,0">
-                    <Button Text="Annuler" Grid.Column="0" Clicked="OnBackClicked"/>
-                    <Button Text="Créer"   Grid.Column="1" Command="{Binding CreateCommand}" />
-                </Grid>
-            </VerticalStackLayout>
-        </ScrollView>
+
+                    <Label Text="Résidence" FontAttributes="Bold"/>
+                    <Entry Style="{StaticResource EntryStyle}"
+                           Placeholder="GUID résidence (temporaire)"
+                           Text="{Binding ResidenceId, Mode=TwoWay}"/>
+
+                   <Label Text="Montant total" FontAttributes="Bold"/>
+<Entry Style="{StaticResource EntryStyle}"
+       Keyboard="Numeric"
+       MaxLength="12"
+       IsTextPredictionEnabled="False"
+       Text="{Binding MontantTotalText, Mode=TwoWay}" />
+
+
+                    <Grid ColumnDefinitions="*,*" Margin="0,16,0,0" ColumnSpacing="12">
+                        <Button Text="Annuler"
+                                Style="{StaticResource SecondaryButton}"
+                                Clicked="OnCancelClicked"/>
+                        <Button Grid.Column="1"
+                                Text="Créer"
+                                Style="{StaticResource PrimaryButton}"
+                                Command="{Binding CreateCommand}"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
 
         <!-- OVERLAY -->
         <BoxView x:Name="Backdrop"
@@ -86,7 +128,7 @@
             </BoxView.GestureRecognizers>
         </BoxView>
 
-        <!-- DRAWER -->
+        <!-- DRAWER (raccourci) -->
         <Border x:Name="Drawer"
                 Grid.RowSpan="2"
                 BackgroundColor="White"
@@ -101,8 +143,11 @@
                     </Grid.ColumnDefinitions>
                     <Label Text="Navigation"
                            TextColor="{StaticResource HeaderTextOnDark}"
-                           FontAttributes="Bold"/>
-                    <Button Grid.Column="1" Text="→" FontSize="22"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center"/>
+                    <Button Grid.Column="1"
+                            Text="→"
+                            FontSize="22"
                             BackgroundColor="Transparent"
                             TextColor="{StaticResource HeaderTextOnDark}"
                             Clicked="CloseDrawer_Clicked"/>
@@ -111,15 +156,14 @@
                 <ScrollView Grid.Row="1">
                     <VerticalStackLayout Padding="16" Spacing="10">
                         <Label Text="Tableau de bord" FontAttributes="Bold"/>
-                        <Button Text="Dashboard" Style="{StaticResource MenuButtonStyle}"
-                                CommandParameter="//syndic-dashboard" Clicked="OnMenuItemClicked"/>
-
-                        <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
+                        <Button Text="Dashboard"
+                                BackgroundColor="Transparent"
+                                Clicked="OnGoDashboard"/>
+                        <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}"/>
                         <Label Text="Finances" FontAttributes="Bold"/>
-                        <Button Text="Appels de fonds" Style="{StaticResource MenuButtonStyle}"
-                                CommandParameter="//appels" Clicked="OnMenuItemClicked"/>
-                        <Button Text="Créer un appel" Style="{StaticResource MenuButtonStyle}"
-                                CommandParameter="appel-create" Clicked="OnMenuItemClicked"/>
+                        <Button Text="Appels de fonds"
+                                BackgroundColor="Transparent"
+                                Clicked="OnGoAppels"/>
                     </VerticalStackLayout>
                 </ScrollView>
             </Grid>
