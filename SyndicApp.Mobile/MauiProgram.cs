@@ -6,7 +6,12 @@ using SyndicApp.Mobile.Services;
 using SyndicApp.Mobile.ViewModels.Auth;
 using SyndicApp.Mobile.ViewModels.Finances;
 using SyndicApp.Mobile.Views.Finances;
+using SyndicApp.Mobile.Views;
+using SyndicApp.Mobile.Views.Auth;
+using SyndicApp.Mobile.Views.Dashboard;
+using SyndicApp.Mobile.ViewModels.Auth;
 using System.Text.Json;
+using SyndicApp.Mobile.ViewModels.Dashboard;
 
 namespace SyndicApp.Mobile;
 
@@ -18,7 +23,7 @@ public static class MauiProgram
         builder.UseMauiApp<App>();
 
         // Choisis la bonne URL :        
-        const string BaseUrl = "http://192.168.11.122:5041";
+        const string BaseUrl = "http://192.168.0.104:5041";
 
 
         // Refit JSON insensible à la casse
@@ -63,11 +68,11 @@ public static class MauiProgram
         AddSecured<IAppelsApi>();
 
         // VMs
-        builder.Services.AddTransient<ViewModels.Auth.LoginViewModel>();
-        builder.Services.AddTransient<ViewModels.Auth.RegisterViewModel>();
-        builder.Services.AddTransient<ViewModels.Auth.ForgotPasswordViewModel>();
-        builder.Services.AddTransient<ViewModels.Dashboard.SyndicDashboardViewModel>();
-        builder.Services.AddTransient<ViewModels.Auth.ResetPasswordViewModel>();
+        builder.Services.AddTransient<LoginViewModel>();
+        builder.Services.AddTransient<RegisterViewModel>();
+        builder.Services.AddTransient<ForgotPasswordViewModel>();
+        builder.Services.AddTransient<SyndicDashboardViewModel>();
+        builder.Services.AddTransient<ResetPasswordViewModel>();
         builder.Services.AddTransient<VerifyCodeViewModel>();
         builder.Services.AddTransient<AppelsListViewModel>();
         builder.Services.AddTransient<AppelCreateViewModel>();
@@ -80,17 +85,19 @@ public static class MauiProgram
 
 
         // Pages
-        builder.Services.AddTransient<Views.Auth.LoginPage>();
-        builder.Services.AddTransient<Views.Auth.RegisterPage>();
-        builder.Services.AddTransient<Views.Auth.ForgotPasswordPage>();
-        builder.Services.AddTransient<Views.Dashboard.SyndicDashboardPage>();        
-        builder.Services.AddTransient<Views.Auth.ResetPasswordPage>();
-        builder.Services.AddTransient<Views.Auth.VerifyCodePage>();
-        builder.Services.AddTransient<Views.Auth.ResetWithCodePage>();
+        builder.Services.AddTransient<LoginPage>();
+        builder.Services.AddTransient<RegisterPage>();
+        builder.Services.AddTransient<ForgotPasswordPage>();
+        builder.Services.AddTransient<SyndicDashboardPage>();        
+        builder.Services.AddTransient<ResetPasswordPage>();
+        builder.Services.AddTransient<VerifyCodePage>();
+        builder.Services.AddTransient<ResetWithCodePage>();
         builder.Services.AddTransient<AppelsPage>();
         builder.Services.AddTransient<AppelCreatePage>();
         builder.Services.AddTransient<AppelDetailsPage>();
         builder.Services.AddTransient<AppelEditPage>();
+        builder.Services.AddTransient<DrawerPage>();
+
 
         var app = builder.Build();
         ServiceHelper.Services = app.Services;

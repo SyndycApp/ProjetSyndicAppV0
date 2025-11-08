@@ -76,7 +76,7 @@ public partial class LoginViewModel : ViewModels.Common.BaseViewModel
                 _tokenStore.SaveRole(role);
 
             // Navigation (ajuste si tu as plusieurs dashboards)
-            await Shell.Current.GoToAsync("//syndic-dashboard");
+            await Shell.Current.GoToAsync("//drawer");
         }
         catch (ApiException ex)
         {

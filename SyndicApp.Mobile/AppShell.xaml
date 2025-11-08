@@ -5,19 +5,28 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:auth="clr-namespace:SyndicApp.Mobile.Views.Auth"
     xmlns:dash="clr-namespace:SyndicApp.Mobile.Views.Dashboard"
-    xmlns:views="clr-namespace:SyndicApp.Mobile.Views.Finances" 
-    Shell.NavBarIsVisible="False">
+    xmlns:views="clr-namespace:SyndicApp.Mobile.Views.Finances"
+    xmlns:layout="clr-namespace:SyndicApp.Mobile.Views"
+    Shell.NavBarIsVisible="False"
+    Shell.FlyoutBehavior="Disabled">
 
-    <ShellContent
-        Route="login"
-        Title="Connexion"
-        ContentTemplate="{DataTemplate auth:LoginPage}" />
+    <!-- Auth -->
+    <ShellContent Route="login" Title="Connexion"
+                  ContentTemplate="{DataTemplate auth:LoginPage}" />
     <ShellContent Route="register" Title="Créer un compte"
-        ContentTemplate="{DataTemplate auth:RegisterPage}" />
+                  ContentTemplate="{DataTemplate auth:RegisterPage}" />
     <ShellContent Route="forgot" Title="Mot de passe oublié"
-        ContentTemplate="{DataTemplate auth:ForgotPasswordPage}" />
+                  ContentTemplate="{DataTemplate auth:ForgotPasswordPage}" />
+
+    <!-- Dashboard (si tu le gardes) -->
     <ShellContent Route="syndic-dashboard" Title="Tableau de bord"
-        ContentTemplate="{DataTemplate dash:SyndicDashboardPage}" />
-    <ShellContent Route="appels" ContentTemplate="{DataTemplate views:AppelsPage}" />
-    
+                  ContentTemplate="{DataTemplate dash:SyndicDashboardPage}" />
+
+    <!-- Finances -->
+    <ShellContent Route="appels"
+                  ContentTemplate="{DataTemplate views:AppelsPage}" />
+
+    <!-- Drawer principal -->
+    <ShellContent Route="drawer" Title="SyndicApp"
+                  ContentTemplate="{DataTemplate layout:DrawerPage}" />
 </Shell>

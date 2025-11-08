@@ -1,6 +1,7 @@
 ﻿namespace SyndicApp.Mobile;
 using SyndicApp.Mobile.Views.Finances;
 using SyndicApp.Mobile.Views.Auth;
+using SyndicApp.Mobile.Views;    
 
 public partial class AppShell : Shell
 {
@@ -17,5 +18,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("appel-details", typeof(AppelDetailsPage));
         Routing.RegisterRoute("appel-edit", typeof(AppelEditPage));
         Routing.RegisterRoute("appels/list", typeof(AppelsPage));
+        Routing.RegisterRoute("drawer", typeof(DrawerPage));
+
     }
 }
