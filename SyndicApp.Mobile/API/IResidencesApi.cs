@@ -8,4 +8,6 @@ public interface IResidencesApi
     [Get("/api/Residences/{id}")] Task<ResidenceDto> GetByIdAsync(string id);
     [Put("/api/Residences/{id}")] Task UpdateAsync(string id, [Body] ResidenceDto dto);
     [Delete("/api/Residences/{id}")] Task DeleteAsync(Guid id);
+
+    [Get("/api/Residences/lookup-id")] Task<Guid> LookupIdAsync([Query] string name);
 }

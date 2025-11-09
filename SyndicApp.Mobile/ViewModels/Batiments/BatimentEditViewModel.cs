@@ -1,23 +1,29 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
 using Refit;
 using SyndicApp.Mobile.Api;
-using SyndicApp.Mobile.Common.Messages;
 using SyndicApp.Mobile.Models;
+using System.Collections.ObjectModel;
 
 namespace SyndicApp.Mobile.ViewModels.Batiments;
 
 [QueryProperty(nameof(Id), "id")]
 public partial class BatimentEditViewModel : ObservableObject
 {
-    private readonly IBatimentsApi _api;
+    private readonly IBatimentsApi _batimentsApi;
+    private readonly IResidencesApi _residencesApi;
 
     [ObservableProperty] string id = string.Empty;
     [ObservableProperty] string nom = string.Empty;
-    [ObservableProperty] string residenceId = string.Empty;
 
-    public BatimentEditViewModel(IBatimentsApi api) => _api = api;
+    [ObservableProperty] ObservableCollection<ResidenceDto> residences = new();
+    [ObservableProperty] ResidenceDto? selectedResidence;
+
+    public BatimentEditViewModel(IBatimentsApi batimentsApi, IResidencesApi residencesApi)
+    {
+        _batimentsApi = batimentsApi;
+        _residencesApi = residencesApi;
+    }
 
     [RelayCommand]
     public async Task LoadAsync()
@@ -25,17 +31,14 @@ public partial class BatimentEditViewModel : ObservableObject
         if (!Guid.TryParse(Id, out var guid))
             return;
 
-        try
-        {
-            var dto = await _api.GetByIdAsync(guid);
-            Nom = dto.Nom ?? string.Empty;
-            ResidenceId = dto.ResidenceId.ToString();
-        }
-        catch (ApiException ex)
-        {
-            await Shell.Current.DisplayAlert("Erreur API",
-                string.IsNullOrWhiteSpace(ex.Content) ? ex.Message : ex.Content, "OK");
-        }
+        var res = await _residencesApi.GetAllAsync();
+        Residences = new ObservableCollection<ResidenceDto>(res);
+
+        var dto = await _batimentsApi.GetByIdAsync(guid);
+        Nom = dto.Nom ?? string.Empty;
+
+        // Sélectionne l'item correspondant pour affichage
+        SelectedResidence = Residences.FirstOrDefault(r => r.Id == dto.ResidenceId);
     }
 
     [RelayCommand]
@@ -46,25 +49,25 @@ public partial class BatimentEditViewModel : ObservableObject
 
         if (string.IsNullOrWhiteSpace(Nom))
         {
-            await Shell.Current.DisplayAlert("Validation", "Le nom est obligatoire.", "OK");
+            await Shell.Current.DisplayAlert("Validation", "Le nom du bâtiment est obligatoire.", "OK");
             return;
         }
-        if (!Guid.TryParse(ResidenceId, out var residenceGuid))
+        if (SelectedResidence is null)
         {
-            await Shell.Current.DisplayAlert("Validation", "ResidenceId doit être un GUID valide.", "OK");
+            await Shell.Current.DisplayAlert("Validation", "Choisis une résidence.", "OK");
             return;
         }
 
         try
         {
-            await _api.UpdateAsync(guid, new BatimentUpdateDto
+            // Résoudre l'Id par le nom
+            var residenceId = await _residencesApi.LookupIdAsync(SelectedResidence.Nom!);
+
+            await _batimentsApi.UpdateAsync(guid, new BatimentUpdateDto
             {
                 Nom = Nom.Trim(),
-                ResidenceId = residenceGuid
+                ResidenceId = residenceId
             });
-
-            // 🔔 prévenir la liste sans changer ton flow
-            WeakReferenceMessenger.Default.Send(new BatimentChangedMessage(true));
 
             await Shell.Current.DisplayAlert("Succès", "Bâtiment modifié.", "OK");
             await Shell.Current.GoToAsync($"batiment-details?id={guid:D}");

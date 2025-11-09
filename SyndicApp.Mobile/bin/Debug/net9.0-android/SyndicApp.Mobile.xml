@@ -199,12 +199,25 @@
             <inheritdoc/>
             <inheritdoc/>
             <inheritdoc/>
+            <inheritdoc/>
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.Nom">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.nom"/>
         </member>
-        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.ResidenceId">
-            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.residenceId"/>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.Residences">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.residences"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.SelectedResidence">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.selectedResidence"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.IsBusy">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.isBusy"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.loadResidencesCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.LoadResidencesCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.LoadResidencesCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.LoadResidencesAsync"/>.</summary>
         </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.createCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.CreateCommand"/>.</summary>
@@ -260,8 +273,11 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.Nom">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.nom"/>
         </member>
-        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.ResidenceId">
-            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.residenceId"/>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.Residences">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.residences"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.SelectedResidence">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.selectedResidence"/>
         </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.loadCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.LoadCommand"/>.</summary>
@@ -666,17 +682,20 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Nom">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Nom" generated properties.</summary>
         </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ResidenceId">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ResidenceId" generated properties.</summary>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Residences">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Residences" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.SelectedResidence">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "SelectedResidence" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsBusy">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsBusy" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Id">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Id" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Batiment">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Batiment" generated properties.</summary>
-        </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsBusy">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsBusy" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Items">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Items" generated properties.</summary>
@@ -698,6 +717,9 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.DateEmission">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "DateEmission" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ResidenceId">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ResidenceId" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.MontantTotalText">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "MontantTotalText" generated properties.</summary>
@@ -728,9 +750,6 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Residence">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Residence" generated properties.</summary>
-        </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Residences">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Residences" generated properties.</summary>
         </member>
         <member name="T:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs">
             <summary>
@@ -777,17 +796,20 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Nom">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Nom" generated properties.</summary>
         </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ResidenceId">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ResidenceId" generated properties.</summary>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Residences">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Residences" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.SelectedResidence">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "SelectedResidence" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsBusy">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsBusy" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Id">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Id" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Batiment">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Batiment" generated properties.</summary>
-        </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsBusy">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsBusy" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Items">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Items" generated properties.</summary>
@@ -809,6 +831,9 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.DateEmission">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "DateEmission" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ResidenceId">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ResidenceId" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.MontantTotalText">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "MontantTotalText" generated properties.</summary>
@@ -839,9 +864,6 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Residence">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Residence" generated properties.</summary>
-        </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Residences">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Residences" generated properties.</summary>
         </member>
         <member name="T:Refit.Implementation.Generated">
             <inheritdoc />
@@ -1041,6 +1063,9 @@
         <member name="M:Refit.Implementation.Generated.IResidencesApi.DeleteAsync(System.Guid)">
             <inheritdoc />
         </member>
+        <member name="M:Refit.Implementation.Generated.IResidencesApi.LookupIdAsync(System.String)">
+            <inheritdoc />
+        </member>
         <member name="M:Refit.Implementation.Generated.IResidencesApi.IResidencesApi#GetAllAsync">
             <inheritdoc />
         </member>
@@ -1054,6 +1079,9 @@
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.IResidencesApi.IResidencesApi#DeleteAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.IResidencesApi.IResidencesApi#LookupIdAsync(System.String)">
             <inheritdoc />
         </member>
     </members>

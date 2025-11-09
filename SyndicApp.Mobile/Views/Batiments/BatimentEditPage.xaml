@@ -32,18 +32,19 @@
 
         <!-- FORM -->
         <Grid Grid.Row="1" BackgroundColor="White">
-            <ScrollView>
+             <ScrollView>
                 <VerticalStackLayout Padding="16" Spacing="14">
                     <Label Text="Nom" FontAttributes="Bold"/>
                     <Entry Text="{Binding Nom}" Placeholder="Bloc A / Tour 1"
                            TextColor="#111827" PlaceholderColor="#9CA3AF"/>
 
-                    <Label Text="ResidenceId (GUID)" FontAttributes="Bold"/>
-                    <Entry Text="{Binding ResidenceId}" Placeholder="9ae8f7c9-0e9c-4498-8840-07c361e2438a"
-                           TextColor="#111827" PlaceholderColor="#9CA3AF"/>
+                    <Label Text="Résidence" FontAttributes="Bold"/>
+                    <Picker ItemsSource="{Binding Residences}"
+                            TextColor="#111827"
+                            ItemDisplayBinding="{Binding Nom}"
+                            SelectedItem="{Binding SelectedResidence}" />
 
                     <Grid ColumnDefinitions="*,*,*" ColumnSpacing="12" Margin="0,10,0,0">
-                        <!-- ⬇️ commandes corrigées -->
                         <Button Text="Enregistrer" Command="{Binding SaveCommand}"/>
                         <Button Grid.Column="1" Text="Annuler" Command="{Binding CancelCommand}"/>
                         <Button Grid.Column="2" Text="Retour" Clicked="Back_Clicked"/>

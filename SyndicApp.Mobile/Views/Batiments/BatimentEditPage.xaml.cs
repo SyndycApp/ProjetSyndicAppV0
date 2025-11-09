@@ -13,12 +13,12 @@ namespace SyndicApp.Mobile.Views.Batiments
         {
             InitializeComponent();
             BindingContext = vm;
-            Loaded += async (_, __) => await vm.LoadAsync();
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
+
             var width = this.Width > 0 ? this.Width : Application.Current?.Windows[0]?.Page?.Width ?? 360;
 
             Drawer.IsVisible = false;
@@ -28,6 +28,10 @@ namespace SyndicApp.Mobile.Views.Batiments
             Backdrop.InputTransparent = true;
             Backdrop.Opacity = 0;
             _isOpen = false;
+
+            // ✅ Charge les données du bâtiment + la liste des résidences
+            if (BindingContext is BatimentEditViewModel vm)
+                await vm.LoadAsync();
         }
 
         protected override void OnSizeAllocated(double width, double height)
@@ -62,6 +66,7 @@ namespace SyndicApp.Mobile.Views.Batiments
 
         private async void CloseDrawer_Clicked(object sender, EventArgs e) => await CloseDrawerAsync();
         private async void Backdrop_Tapped(object sender, TappedEventArgs e) => await CloseDrawerAsync();
+
         private async void Back_Clicked(object sender, EventArgs e)
         {
             await Shell.Current.Navigation.PopAsync();

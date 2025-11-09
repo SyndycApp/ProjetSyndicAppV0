@@ -16,7 +16,7 @@ namespace SyndicApp.Mobile.Views.Batiments
             BindingContext = vm;
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
 
@@ -31,6 +31,10 @@ namespace SyndicApp.Mobile.Views.Batiments
             Backdrop.InputTransparent = true;
             Backdrop.Opacity = 0;
             _isOpen = false;
+
+            // ✅ Charge la liste des résidences pour le Picker
+            if (BindingContext is BatimentCreateViewModel vm)
+                await vm.LoadResidencesAsync();
         }
 
         protected override void OnSizeAllocated(double width, double height)
