@@ -39,6 +39,14 @@ namespace SyndicApp.API.Controllers
             return Ok(items);
         }
 
+        [HttpGet("resolve-id")]
+        public async Task<ActionResult<object>> ResolveId([FromQuery] string nom, CancellationToken ct)
+        {
+            var id = await _svc.ResolveIdByNameAsync(nom, ct);
+            if (id is null) return NotFound();
+            return Ok(new { id });
+        }
+
         [HttpPut("{id:guid}")]
         public async Task<ActionResult> Update(Guid id, UpdateBatimentDto dto)
             => await _svc.UpdateAsync(id, dto) ? NoContent() : NotFound();

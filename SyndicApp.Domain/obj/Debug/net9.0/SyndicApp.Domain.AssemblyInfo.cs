@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SyndicApp.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+84569218a126d95ac3121f89fe53eaeca2b8837c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e2574fc5fc4058a2a3de5bfd4d48e8a4bbe3d0f8")]
 [assembly: System.Reflection.AssemblyProductAttribute("SyndicApp.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SyndicApp.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

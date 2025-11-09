@@ -1,12 +1,13 @@
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SyndicApp.Application.DTOs.Residences;
+using SyndicApp.Application.Interfaces.Residences;
+using SyndicApp.Domain.Entities.Residences;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using SyndicApp.Application.DTOs.Residences;
-using SyndicApp.Application.Interfaces.Residences;
-using SyndicApp.Domain.Entities.Residences;
 
 namespace SyndicApp.Infrastructure.Services.Residences
 {
@@ -82,6 +83,26 @@ namespace SyndicApp.Infrastructure.Services.Residences
             return true;
         }
 
+        public async Task<Guid?> ResolveIdByNameAsync(string nom, CancellationToken ct = default)
+        {
+            if (string.IsNullOrWhiteSpace(nom)) return null;
+
+            var normalized = nom.Trim();
+
+            // Base query
+            var query = _db.Batiments.AsNoTracking().Where(b => b.Nom != null && b.Nom.Trim() == normalized);
+
+            // Optionnel : restreindre à une résidence pour éviter les ambiguïtés
+            //if (residenceId is Guid rid && rid != Guid.Empty)
+            //    query = query.Where(b => b.ResidenceId == rid);
+
+            // Gestion d'ambiguïté : s’il y a plusieurs, on ne renvoie rien (ou on pourrait lever une exception)
+            var matches = await query.Select(b => b.Id).Take(2).ToListAsync(ct);
+            if (matches.Count == 1) return matches[0];
+            if (matches.Count > 1) return null; // Ambigu : même nom (et même résidence si filtrée)
+
+            return null; // Aucun résultat
+        }
         public async Task<bool> DeleteAsync(Guid id, CancellationToken ct = default)
         {
             var entity = await _db.Batiments.FirstOrDefaultAsync(x => x.Id == id, ct);
