@@ -67,6 +67,21 @@ namespace SyndicApp.Infrastructure.Services.Residences
             return dto; // null => NotFound dans le controller
         }
 
+        public async Task<Guid?> LookupIdByNameAsync(string name, CancellationToken ct = default)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                return null;
+
+            var normalized = name.Trim().ToLower();
+
+            var id = await _db.Residences
+                .AsNoTracking()
+                .Where(r => r.Nom.ToLower() == normalized)
+                .Select(r => (Guid?)r.Id)
+                .FirstOrDefaultAsync(ct);
+
+            return id; // null si introuvable
+        }
         public async Task<Guid> CreateAsync(CreateResidenceDto dto, CancellationToken ct = default)
         {
             var entity = new Residence

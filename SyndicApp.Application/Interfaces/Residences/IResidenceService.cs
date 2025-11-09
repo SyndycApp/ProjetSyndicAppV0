@@ -19,5 +19,7 @@ namespace SyndicApp.Application.Interfaces.Residences
         Task<IReadOnlyList<ResidenceOccupantDto>> GetOccupantsAsync(Guid residenceId, CancellationToken ct = default);
 
         Task<ResidenceDetailsDto?> GetResidenceDetailsAsync(Guid residenceId, CancellationToken ct = default);
+
+        Task<Guid?> LookupIdByNameAsync(string name, CancellationToken ct = default);
     }
 }

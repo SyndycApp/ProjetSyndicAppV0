@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SyndicApp.Application.DTOs.Residences;
 using SyndicApp.Application.Interfaces.Residences;
 using System;
@@ -25,6 +26,17 @@ namespace SyndicApp.API.Controllers
             var data = await _svc.GetAllAsync();
             return Ok(data);
         }
+        [HttpGet("lookup-id")]
+        public async Task<ActionResult<Guid>> LookupId([FromQuery] string name, CancellationToken ct = default)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                return BadRequest("Le nom est obligatoire.");
+
+            var id = await _svc.LookupIdByNameAsync(name, ct);
+            if (id is null) return NotFound($"Aucune résidence trouvée avec le nom '{name}'.");
+
+            return Ok(id.Value);
+        }
 
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<ResidenceDto>> Get(Guid id)
@@ -33,6 +45,7 @@ namespace SyndicApp.API.Controllers
             if (dto is null) return NotFound();
             return Ok(dto);
         }
+
 
         [HttpPost]
         public async Task<ActionResult> Create(CreateResidenceDto dto)
