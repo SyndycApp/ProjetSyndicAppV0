@@ -57,11 +57,9 @@ public partial class AppelCreateViewModel : ObservableObject
             // ⚠️ Adapte ce DTO aux propriétés exactes attendues par ton API Create
             var payload = new AppelDeFondsDto
             {
-                // Si ton API a un DTO distinct de création, utilise-le.
-                // Ici on envoie les champs essentiels :
                 Description = Description,
                 DateEmission = DateEmission,
-                ResidenceId = ResidenceId,  // string GUID
+                ResidenceId = ResidenceId,  
                 MontantTotal = montant
             };
 

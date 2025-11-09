@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SyndicApp.Mobile.Views.Batiments.BatimentCreatePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Créer Bâtiment"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="White">
+
+    <ContentPage.Resources>
+        <Color x:Key="TopbarColor">#2563EB</Color>
+        <Color x:Key="HeaderTextOnDark">#FFFFFF</Color>
+        <Color x:Key="BodyText">#111827</Color>
+        <Color x:Key="Divider">#E5E7EB</Color>
+        <Color x:Key="Chip">#F3F4F6</Color>
+
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
+        </Style>
+
+        <Style x:Key="MenuButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Padding" Value="12,8" />
+            <Setter Property="HorizontalOptions" Value="Start" />
+        </Style>
+
+        <Style x:Key="LogoutButtonStyle" TargetType="Button" BasedOn="{StaticResource MenuButtonStyle}">
+            <Setter Property="BackgroundColor" Value="{StaticResource Chip}" />
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid x:Name="Root" RowDefinitions="Auto,*" BackgroundColor="White">
+
+        <!-- TOPBAR -->
+        <Grid BackgroundColor="{StaticResource TopbarColor}" Padding="12,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Text="☰" FontSize="22" BackgroundColor="Transparent"
+                    TextColor="{StaticResource HeaderTextOnDark}" Clicked="OpenDrawer_Clicked"/>
+
+            <Label Grid.Column="1" Text="Créer Bâtiment" HorizontalTextAlignment="Center"
+                   VerticalOptions="Center" FontAttributes="Bold" TextColor="{StaticResource HeaderTextOnDark}"/>
+
+            <Label Grid.Column="2" Text="• • •" TextColor="{StaticResource HeaderTextOnDark}" VerticalOptions="Center"/>
+        </Grid>
+
+        <!-- FORM -->
+        <Grid Grid.Row="1" BackgroundColor="White">
+            <ScrollView>
+                <VerticalStackLayout Padding="16" Spacing="14">
+
+                    <Label Text="Nom" FontAttributes="Bold"/>
+                    <Entry Text="{Binding Nom}" Placeholder="Bloc A / Tour 1"
+                           TextColor="#111827" PlaceholderColor="#9CA3AF"/>
+
+                    <Label Text="ResidenceId (GUID)" FontAttributes="Bold"/>
+                    <Entry Text="{Binding ResidenceId}" Placeholder="9ae8f7c9-0e9c-4498-8840-07c361e2438a"
+                           TextColor="#111827" PlaceholderColor="#9CA3AF"/>
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,16,0,0">
+                        <!-- ⬇️ commandes corrigées -->
+                        <Button Text="Annuler" Command="{Binding CancelCommand}"/>
+                        <Button Grid.Column="1" Text="Créer" BackgroundColor="#2563EB" TextColor="White"
+                                Command="{Binding CreateCommand}"/>
+                    </Grid>
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
+
+        <!-- OVERLAY -->
+        <BoxView x:Name="Backdrop"
+                 Grid.RowSpan="2"
+                 BackgroundColor="#66000000"
+                 Opacity="0"
+                 InputTransparent="True">
+            <BoxView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Backdrop_Tapped"/>
+            </BoxView.GestureRecognizers>
+        </BoxView>
+
+        <!-- DRAWER -->
+        <Border x:Name="Drawer"
+                Grid.RowSpan="2"
+                BackgroundColor="White"
+                StrokeThickness="0"
+                TranslationX="-1000"
+                Padding="0"
+                IsVisible="False">
+            <Grid RowDefinitions="Auto,*">
+                <Grid BackgroundColor="{StaticResource TopbarColor}" Padding="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Navigation" TextColor="{StaticResource HeaderTextOnDark}" FontAttributes="Bold" VerticalOptions="Center"/>
+                    <Button Grid.Column="1" Text="→" FontSize="22" BackgroundColor="Transparent"
+                            TextColor="{StaticResource HeaderTextOnDark}" Clicked="CloseDrawer_Clicked"/>
+                </Grid>
+
+                <ScrollView Grid.Row="1" BackgroundColor="White">
+                    <VerticalStackLayout Padding="16" Spacing="10">
+                        <Label Text="Tableau de bord" FontAttributes="Bold"/>
+                        <Button Text="Dashboard" Style="{StaticResource MenuButtonStyle}"
+                                CommandParameter="//syndic-dashboard" Clicked="OnMenuItemClicked"/>
+
+                        <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
+                        <Label Text="Résidences &amp; Lots" FontAttributes="Bold"/>
+                        <Button Text="Résidences" Style="{StaticResource MenuButtonStyle}" CommandParameter="//residences" Clicked="OnMenuItemClicked"/>
+                        <Button Text="Bâtiments"  Style="{StaticResource MenuButtonStyle}" CommandParameter="//batiments"  Clicked="OnMenuItemClicked"/>
+
+                        <BoxView HeightRequest="16" Opacity="0"/>
+                        <Button Text="Déconnexion" Style="{StaticResource LogoutButtonStyle}"
+                                CommandParameter="//login" Clicked="OnMenuItemClicked"/>
+                    </VerticalStackLayout>
+                </ScrollView>
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>

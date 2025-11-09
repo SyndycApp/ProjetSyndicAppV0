@@ -195,6 +195,108 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Auth.VerifyCodeViewModel.ResendCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Auth.VerifyCodeViewModel.ResendAsync"/>.</summary>
         </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.Nom">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.nom"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.ResidenceId">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.residenceId"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.createCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.CreateCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.CreateCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.CreateAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.cancelCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.CancelCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.CancelCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.CancelAsync"/>.</summary>
+        </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Batiments.BatimentDetailsViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentDetailsViewModel.Id">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentDetailsViewModel.id"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentDetailsViewModel.Batiment">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentDetailsViewModel.batiment"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentDetailsViewModel.loadCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentDetailsViewModel.LoadCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentDetailsViewModel.LoadCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Batiments.BatimentDetailsViewModel.LoadAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentDetailsViewModel.editCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentDetailsViewModel.EditCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentDetailsViewModel.EditCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Batiments.BatimentDetailsViewModel.EditAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentDetailsViewModel.deleteCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentDetailsViewModel.DeleteCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentDetailsViewModel.DeleteCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Batiments.BatimentDetailsViewModel.DeleteAsync"/>.</summary>
+        </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.Id">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.id"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.Nom">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.nom"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.ResidenceId">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.residenceId"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.loadCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.LoadCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.LoadCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.LoadAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.saveCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.SaveCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.SaveCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.SaveAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.cancelCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.CancelCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.CancelCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.CancelAsync"/>.</summary>
+        </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Batiments.BatimentsListViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentsListViewModel.IsBusy">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentsListViewModel.isBusy"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentsListViewModel.Items">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentsListViewModel.items"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentsListViewModel.loadCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentsListViewModel.LoadCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentsListViewModel.LoadCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Batiments.BatimentsListViewModel.LoadAsync"/>.</summary>
+        </member>
         <member name="T:SyndicApp.Mobile.ViewModels.Common.BaseViewModel">
             <inheritdoc/>
         </member>
@@ -209,6 +311,12 @@
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.SyndicDashboardViewModel.CanAddResidence">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Dashboard.SyndicDashboardViewModel.canAddResidence"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.SyndicDashboardViewModel.BatimentsCount">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Dashboard.SyndicDashboardViewModel.batimentsCount"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.SyndicDashboardViewModel.ResidencesCount">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Dashboard.SyndicDashboardViewModel.residencesCount"/>
         </member>
         <member name="T:SyndicApp.Mobile.ViewModels.Finances.AppelCreateViewModel">
             <inheritdoc/>
@@ -363,36 +471,155 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Finances.AppelsListViewModel.OpenDetailsCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Finances.AppelsListViewModel.OpenDetailsAsync(SyndicApp.Mobile.Models.AppelDeFondsDto)"/>.</summary>
         </member>
-        <member name="T:SyndicApp.Mobile.ViewModels.Residences.AddResidenceViewModel">
+        <member name="T:SyndicApp.Mobile.ViewModels.Residences.ResidenceCreateViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Residences.ResidenceCreateViewModel.Nom">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Residences.ResidenceCreateViewModel.nom"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Residences.ResidenceCreateViewModel.Adresse">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Residences.ResidenceCreateViewModel.adresse"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Residences.ResidenceCreateViewModel.Ville">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Residences.ResidenceCreateViewModel.ville"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Residences.ResidenceCreateViewModel.CodePostal">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Residences.ResidenceCreateViewModel.codePostal"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Residences.ResidenceCreateViewModel.createCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Residences.ResidenceCreateViewModel.CreateCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Residences.ResidenceCreateViewModel.CreateCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Residences.ResidenceCreateViewModel.CreateAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Residences.ResidenceCreateViewModel.cancelCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Residences.ResidenceCreateViewModel.CancelCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Residences.ResidenceCreateViewModel.CancelCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Residences.ResidenceCreateViewModel.CancelAsync"/>.</summary>
+        </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Residences.ResidenceDetailsViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
             <inheritdoc/>
             <inheritdoc/>
         </member>
-        <member name="P:SyndicApp.Mobile.ViewModels.Residences.AddResidenceViewModel.Nom">
-            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Residences.AddResidenceViewModel.nom"/>
+        <member name="P:SyndicApp.Mobile.ViewModels.Residences.ResidenceDetailsViewModel.Id">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Residences.ResidenceDetailsViewModel.id"/>
         </member>
-        <member name="P:SyndicApp.Mobile.ViewModels.Residences.AddResidenceViewModel.Adresse">
-            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Residences.AddResidenceViewModel.adresse"/>
+        <member name="P:SyndicApp.Mobile.ViewModels.Residences.ResidenceDetailsViewModel.Residence">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Residences.ResidenceDetailsViewModel.residence"/>
         </member>
-        <member name="P:SyndicApp.Mobile.ViewModels.Residences.AddResidenceViewModel.Ville">
-            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Residences.AddResidenceViewModel.ville"/>
+        <member name="F:SyndicApp.Mobile.ViewModels.Residences.ResidenceDetailsViewModel.loadCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Residences.ResidenceDetailsViewModel.LoadCommand"/>.</summary>
         </member>
-        <member name="P:SyndicApp.Mobile.ViewModels.Residences.AddResidenceViewModel.CodePostal">
-            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Residences.AddResidenceViewModel.codePostal"/>
+        <member name="P:SyndicApp.Mobile.ViewModels.Residences.ResidenceDetailsViewModel.LoadCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Residences.ResidenceDetailsViewModel.LoadAsync"/>.</summary>
         </member>
-        <member name="P:SyndicApp.Mobile.ViewModels.Residences.AddResidenceViewModel.Message">
-            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Residences.AddResidenceViewModel.message"/>
+        <member name="F:SyndicApp.Mobile.ViewModels.Residences.ResidenceDetailsViewModel.editCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Residences.ResidenceDetailsViewModel.EditCommand"/>.</summary>
         </member>
-        <member name="F:SyndicApp.Mobile.ViewModels.Residences.AddResidenceViewModel.saveCommand">
-            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Residences.AddResidenceViewModel.SaveCommand"/>.</summary>
+        <member name="P:SyndicApp.Mobile.ViewModels.Residences.ResidenceDetailsViewModel.EditCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Residences.ResidenceDetailsViewModel.EditAsync"/>.</summary>
         </member>
-        <member name="P:SyndicApp.Mobile.ViewModels.Residences.AddResidenceViewModel.SaveCommand">
-            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Residences.AddResidenceViewModel.SaveAsync"/>.</summary>
+        <member name="F:SyndicApp.Mobile.ViewModels.Residences.ResidenceDetailsViewModel.deleteCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Residences.ResidenceDetailsViewModel.DeleteCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Residences.ResidenceDetailsViewModel.DeleteCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Residences.ResidenceDetailsViewModel.DeleteAsync"/>.</summary>
+        </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Residences.ResidenceEditViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Residences.ResidenceEditViewModel.Id">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Residences.ResidenceEditViewModel.id"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Residences.ResidenceEditViewModel.Nom">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Residences.ResidenceEditViewModel.nom"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Residences.ResidenceEditViewModel.Adresse">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Residences.ResidenceEditViewModel.adresse"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Residences.ResidenceEditViewModel.Ville">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Residences.ResidenceEditViewModel.ville"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Residences.ResidenceEditViewModel.CodePostal">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Residences.ResidenceEditViewModel.codePostal"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Residences.ResidenceEditViewModel.loadCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Residences.ResidenceEditViewModel.LoadCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Residences.ResidenceEditViewModel.LoadCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Residences.ResidenceEditViewModel.LoadAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Residences.ResidenceEditViewModel.saveCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Residences.ResidenceEditViewModel.SaveCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Residences.ResidenceEditViewModel.SaveCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Residences.ResidenceEditViewModel.SaveAsync"/>.</summary>
+        </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Residences.ResidencesListViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Residences.ResidencesListViewModel.IsBusy">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Residences.ResidencesListViewModel.isBusy"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Residences.ResidencesListViewModel.Residences">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Residences.ResidencesListViewModel.residences"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Residences.ResidencesListViewModel.loadCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Residences.ResidencesListViewModel.LoadCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Residences.ResidencesListViewModel.LoadCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Residences.ResidencesListViewModel.LoadAsync"/>.</summary>
         </member>
         <member name="T:SyndicApp.Mobile.Resource">
             <summary>
             Android Resource Designer class.
             Exposes the Android Resource designer assembly into the project Namespace.
             </summary>
+        </member>
+        <member name="T:CommunityToolkit.Mvvm.Messaging.__Internals.__IMessengerExtensions">
+            <summary>
+            A helper type with generated registration stubs for types implementing <see cref="T:CommunityToolkit.Mvvm.Messaging.IRecipient`1"/>.
+            </summary>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.Messaging.__Internals.__IMessengerExtensions.CreateAllMessagesRegistrator(SyndicApp.Mobile.ViewModels.Batiments.BatimentsListViewModel)">
+            <summary>
+            Creates a message registration stub for <see cref="T:SyndicApp.Mobile.ViewModels.Batiments.BatimentsListViewModel"/> objects.
+            </summary>
+            <param name="_">Dummy parameter, only used to disambiguate the method signature.</param>
+            <returns>A message registration stub for <see cref="T:SyndicApp.Mobile.ViewModels.Batiments.BatimentsListViewModel"/> objects.</returns>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.Messaging.__Internals.__IMessengerExtensions.CreateAllMessagesRegistratorWithToken``1(SyndicApp.Mobile.ViewModels.Batiments.BatimentsListViewModel)">
+            <summary>
+            Creates a message registration stub for <see cref="T:SyndicApp.Mobile.ViewModels.Batiments.BatimentsListViewModel"/> objects.
+            </summary>
+            <typeparam name="TToken">The type of tokens that will be used to register messages.</typeparam>
+            <param name="_">Dummy parameter, only used to disambiguate the method signature.</param>
+            <returns>A message registration stub for <see cref="T:SyndicApp.Mobile.ViewModels.Batiments.BatimentsListViewModel"/> objects.</returns>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.Messaging.__Internals.__IMessengerExtensions.CreateAllMessagesRegistrator(SyndicApp.Mobile.ViewModels.Residences.ResidencesListViewModel)">
+            <summary>
+            Creates a message registration stub for <see cref="T:SyndicApp.Mobile.ViewModels.Residences.ResidencesListViewModel"/> objects.
+            </summary>
+            <param name="_">Dummy parameter, only used to disambiguate the method signature.</param>
+            <returns>A message registration stub for <see cref="T:SyndicApp.Mobile.ViewModels.Residences.ResidencesListViewModel"/> objects.</returns>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.Messaging.__Internals.__IMessengerExtensions.CreateAllMessagesRegistratorWithToken``1(SyndicApp.Mobile.ViewModels.Residences.ResidencesListViewModel)">
+            <summary>
+            Creates a message registration stub for <see cref="T:SyndicApp.Mobile.ViewModels.Residences.ResidencesListViewModel"/> objects.
+            </summary>
+            <typeparam name="TToken">The type of tokens that will be used to register messages.</typeparam>
+            <param name="_">Dummy parameter, only used to disambiguate the method signature.</param>
+            <returns>A message registration stub for <see cref="T:SyndicApp.Mobile.ViewModels.Residences.ResidencesListViewModel"/> objects.</returns>
         </member>
         <member name="T:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs">
             <summary>
@@ -436,8 +663,23 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Code">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Code" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Nom">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Nom" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ResidenceId">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ResidenceId" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Id">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Id" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Batiment">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Batiment" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsBusy">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsBusy" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Items">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Items" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Title">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Title" generated properties.</summary>
@@ -445,20 +687,20 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CanAddResidence">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CanAddResidence" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.BatimentsCount">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "BatimentsCount" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ResidencesCount">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ResidencesCount" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Description">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Description" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.DateEmission">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "DateEmission" generated properties.</summary>
         </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ResidenceId">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ResidenceId" generated properties.</summary>
-        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.MontantTotalText">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "MontantTotalText" generated properties.</summary>
-        </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Id">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Id" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Appel">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Appel" generated properties.</summary>
@@ -478,17 +720,17 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Appels">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Appels" generated properties.</summary>
         </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Nom">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Nom" generated properties.</summary>
-        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Ville">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Ville" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CodePostal">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CodePostal" generated properties.</summary>
         </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Message">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Message" generated properties.</summary>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Residence">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Residence" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Residences">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Residences" generated properties.</summary>
         </member>
         <member name="T:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs">
             <summary>
@@ -532,8 +774,23 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Code">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Code" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Nom">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Nom" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ResidenceId">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ResidenceId" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Id">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Id" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Batiment">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Batiment" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsBusy">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsBusy" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Items">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Items" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Title">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Title" generated properties.</summary>
@@ -541,20 +798,20 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CanAddResidence">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CanAddResidence" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.BatimentsCount">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "BatimentsCount" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ResidencesCount">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ResidencesCount" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Description">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Description" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.DateEmission">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "DateEmission" generated properties.</summary>
         </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ResidenceId">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ResidenceId" generated properties.</summary>
-        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.MontantTotalText">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "MontantTotalText" generated properties.</summary>
-        </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Id">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Id" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Appel">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Appel" generated properties.</summary>
@@ -574,17 +831,17 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Appels">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Appels" generated properties.</summary>
         </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Nom">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Nom" generated properties.</summary>
-        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Ville">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Ville" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CodePostal">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CodePostal" generated properties.</summary>
         </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Message">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Message" generated properties.</summary>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Residence">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Residence" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Residences">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Residences" generated properties.</summary>
         </member>
         <member name="T:Refit.Implementation.Generated">
             <inheritdoc />
@@ -676,6 +933,45 @@
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAccountApi.SyndicApp#Mobile#Api#IAccountApi#LogoutAsync">
             <inheritdoc />
         </member>
+        <member name="T:Refit.Implementation.Generated.IBatimentsApi">
+            <inheritdoc />
+        </member>
+        <member name="P:Refit.Implementation.Generated.IBatimentsApi.Client">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.IBatimentsApi.#ctor(System.Net.Http.HttpClient,Refit.IRequestBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.IBatimentsApi.GetAllAsync">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.IBatimentsApi.CreateAsync(SyndicApp.Mobile.Models.BatimentCreateDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.IBatimentsApi.GetByIdAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.IBatimentsApi.UpdateAsync(System.Guid,SyndicApp.Mobile.Models.BatimentUpdateDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.IBatimentsApi.DeleteAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.IBatimentsApi.IBatimentsApi#GetAllAsync">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.IBatimentsApi.IBatimentsApi#CreateAsync(SyndicApp.Mobile.Models.BatimentCreateDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.IBatimentsApi.IBatimentsApi#GetByIdAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.IBatimentsApi.IBatimentsApi#UpdateAsync(System.Guid,SyndicApp.Mobile.Models.BatimentUpdateDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.IBatimentsApi.IBatimentsApi#DeleteAsync(System.Guid)">
+            <inheritdoc />
+        </member>
         <member name="T:Refit.Implementation.Generated.SyndicAppMobileApiIPasswordApi">
             <inheritdoc />
         </member>
@@ -721,49 +1017,43 @@
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPasswordApi.SyndicApp#Mobile#Api#IPasswordApi#LogoutAsync">
             <inheritdoc />
         </member>
-        <member name="T:Refit.Implementation.Generated.SyndicAppMobileApiIResidencesApi">
+        <member name="T:Refit.Implementation.Generated.IResidencesApi">
             <inheritdoc />
         </member>
-        <member name="P:Refit.Implementation.Generated.SyndicAppMobileApiIResidencesApi.Client">
+        <member name="P:Refit.Implementation.Generated.IResidencesApi.Client">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIResidencesApi.#ctor(System.Net.Http.HttpClient,Refit.IRequestBuilder)">
+        <member name="M:Refit.Implementation.Generated.IResidencesApi.#ctor(System.Net.Http.HttpClient,Refit.IRequestBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIResidencesApi.GetAllAsync">
+        <member name="M:Refit.Implementation.Generated.IResidencesApi.GetAllAsync">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIResidencesApi.CreateAsync(SyndicApp.Mobile.Models.ResidenceCreateDto)">
+        <member name="M:Refit.Implementation.Generated.IResidencesApi.CreateAsync(SyndicApp.Mobile.Models.ResidenceDto)">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIResidencesApi.GetByIdAsync(System.Guid)">
+        <member name="M:Refit.Implementation.Generated.IResidencesApi.GetByIdAsync(System.String)">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIResidencesApi.UpdateAsync(System.Guid,SyndicApp.Mobile.Models.ResidenceUpdateDto)">
+        <member name="M:Refit.Implementation.Generated.IResidencesApi.UpdateAsync(System.String,SyndicApp.Mobile.Models.ResidenceDto)">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIResidencesApi.DeleteAsync(System.Guid)">
+        <member name="M:Refit.Implementation.Generated.IResidencesApi.DeleteAsync(System.Guid)">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIResidencesApi.GetDetailsAsync(System.Guid)">
+        <member name="M:Refit.Implementation.Generated.IResidencesApi.IResidencesApi#GetAllAsync">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIResidencesApi.SyndicApp#Mobile#Api#IResidencesApi#GetAllAsync">
+        <member name="M:Refit.Implementation.Generated.IResidencesApi.IResidencesApi#CreateAsync(SyndicApp.Mobile.Models.ResidenceDto)">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIResidencesApi.SyndicApp#Mobile#Api#IResidencesApi#CreateAsync(SyndicApp.Mobile.Models.ResidenceCreateDto)">
+        <member name="M:Refit.Implementation.Generated.IResidencesApi.IResidencesApi#GetByIdAsync(System.String)">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIResidencesApi.SyndicApp#Mobile#Api#IResidencesApi#GetByIdAsync(System.Guid)">
+        <member name="M:Refit.Implementation.Generated.IResidencesApi.IResidencesApi#UpdateAsync(System.String,SyndicApp.Mobile.Models.ResidenceDto)">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIResidencesApi.SyndicApp#Mobile#Api#IResidencesApi#UpdateAsync(System.Guid,SyndicApp.Mobile.Models.ResidenceUpdateDto)">
-            <inheritdoc />
-        </member>
-        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIResidencesApi.SyndicApp#Mobile#Api#IResidencesApi#DeleteAsync(System.Guid)">
-            <inheritdoc />
-        </member>
-        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIResidencesApi.SyndicApp#Mobile#Api#IResidencesApi#GetDetailsAsync(System.Guid)">
+        <member name="M:Refit.Implementation.Generated.IResidencesApi.IResidencesApi#DeleteAsync(System.Guid)">
             <inheritdoc />
         </member>
     </members>

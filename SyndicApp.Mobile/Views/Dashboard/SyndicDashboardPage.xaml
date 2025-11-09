@@ -31,7 +31,7 @@
             <Setter Property="BackgroundColor" Value="{StaticResource Chip}" />
         </Style>
 
-        <!-- ===== Styles KPI (déplacés ici) ===== -->
+        <!-- Styles KPI -->
         <Style x:Key="KpiCardStyle" TargetType="Frame">
             <Setter Property="HasShadow" Value="False"/>
             <Setter Property="CornerRadius" Value="18"/>
@@ -39,11 +39,13 @@
             <Setter Property="BackgroundColor" Value="White"/>
             <Setter Property="BorderColor" Value="#E5E7EB"/>
         </Style>
+
         <Style x:Key="KpiValueStyle" TargetType="Label">
             <Setter Property="FontSize" Value="28"/>
             <Setter Property="FontAttributes" Value="Bold"/>
             <Setter Property="TextColor" Value="#111827"/>
         </Style>
+
         <Style x:Key="KpiLabelStyle" TargetType="Label">
             <Setter Property="FontSize" Value="12"/>
             <Setter Property="TextColor" Value="#6B7280"/>
@@ -90,8 +92,12 @@
                     <Label Text="Bienvenue" FontSize="22" FontAttributes="Bold" />
 
                     <!-- KPIs principaux -->
-                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="12" RowSpacing="12">
+                    <Grid ColumnDefinitions="*,*"
+                          RowDefinitions="Auto,Auto,Auto,Auto"
+                          ColumnSpacing="12"
+                          RowSpacing="12">
 
+                        <!-- Ligne 0 -->
                         <Frame Style="{StaticResource KpiCardStyle}" Grid.Row="0" Grid.Column="0">
                             <VerticalStackLayout Spacing="2">
                                 <Label Text="{Binding ResidencesCount}" Style="{StaticResource KpiValueStyle}"/>
@@ -99,21 +105,24 @@
                             </VerticalStackLayout>
                         </Frame>
 
-                        <Frame Style="{StaticResource KpiCardStyle}" Grid.Row="0" Grid.Column="1">
+                        <Frame Style="{StaticResource KpiCardStyle}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1">
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="{Binding BatimentsCount}" Style="{StaticResource KpiValueStyle}"/>
+                                <Label Text="Bâtiments" Style="{StaticResource KpiLabelStyle}"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                        
+
+                        <!-- Ligne 1 -->
+                        <Frame Style="{StaticResource KpiCardStyle}" Grid.Row="0" Grid.Column="2">
                             <VerticalStackLayout Spacing="2">
                                 <Label Text="{Binding LotsCount}" Style="{StaticResource KpiValueStyle}"/>
                                 <Label Text="Lots" Style="{StaticResource KpiLabelStyle}"/>
                             </VerticalStackLayout>
                         </Frame>
 
-                        <Frame Style="{StaticResource KpiCardStyle}" Grid.Row="1" Grid.Column="0">
-                            <VerticalStackLayout Spacing="2">
-                                <Label Text="{Binding OccupantsCount}" Style="{StaticResource KpiValueStyle}"/>
-                                <Label Text="Occupants" Style="{StaticResource KpiLabelStyle}"/>
-                            </VerticalStackLayout>
-                        </Frame>
-
-                        <Frame Style="{StaticResource KpiCardStyle}" Grid.Row="1" Grid.Column="1">
+                        <!-- Ligne 2 -->
+                        <Frame Style="{StaticResource KpiCardStyle}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
                             <VerticalStackLayout Spacing="2">
                                 <HorizontalStackLayout Spacing="8">
                                     <Label Text="{Binding IncidentsOuverts}" Style="{StaticResource KpiValueStyle}"/>
@@ -123,14 +132,15 @@
                             </VerticalStackLayout>
                         </Frame>
 
-                        <Frame Style="{StaticResource KpiCardStyle}" Grid.Row="2" Grid.Column="0">
+                        <!-- Ligne 3 -->
+                        <Frame Style="{StaticResource KpiCardStyle}" Grid.Row="3" Grid.Column="0">
                             <VerticalStackLayout Spacing="2">
                                 <Label Text="{Binding InterventionsEnCours}" Style="{StaticResource KpiValueStyle}"/>
                                 <Label Text="Interventions en cours" Style="{StaticResource KpiLabelStyle}"/>
                             </VerticalStackLayout>
                         </Frame>
 
-                        <Frame Style="{StaticResource KpiCardStyle}" Grid.Row="2" Grid.Column="1">
+                        <Frame Style="{StaticResource KpiCardStyle}" Grid.Row="3" Grid.Column="1">
                             <VerticalStackLayout Spacing="2">
                                 <Label Text="{Binding AppelsOuverts}" Style="{StaticResource KpiValueStyle}"/>
                                 <Label Text="Appels de fonds ouverts" Style="{StaticResource KpiLabelStyle}"/>
@@ -227,30 +237,28 @@
                             Clicked="CloseDrawer_Clicked"/>
                 </Grid>
 
+                <!-- Drawer : corps du menu -->
                 <ScrollView Grid.Row="1" BackgroundColor="White">
                     <VerticalStackLayout Padding="16" Spacing="10">
+
                         <Label Text="Tableau de bord" FontAttributes="Bold"/>
-                        <Button Text="Dashboard"
-                                Style="{StaticResource MenuButtonStyle}"
-                                CommandParameter="//syndic-dashboard"
-                                Clicked="OnMenuItemClicked"/>
+                        <Button Text="Dashboard" Style="{StaticResource MenuButtonStyle}" CommandParameter="//syndic-dashboard" Clicked="OnMenuItemClicked"/>
+
+                        <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
+                        <Label Text="Résidences &amp; Lots" FontAttributes="Bold"/>
+                        <Button Text="Résidences" Style="{StaticResource MenuButtonStyle}" CommandParameter="//residences" Clicked="OnMenuItemClicked"/>
+                        <Button Text="Bâtiments" Style="{StaticResource MenuButtonStyle}" CommandParameter="//batiments" Clicked="OnMenuItemClicked"/>
+                        <Button Text="Lots" Style="{StaticResource MenuButtonStyle}" CommandParameter="//lots" Clicked="OnMenuItemClicked"/>
+                        <Button Text="Affectations des lots" Style="{StaticResource MenuButtonStyle}" CommandParameter="//affectations-lots" Clicked="OnMenuItemClicked"/>
 
                         <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
                         <Label Text="Finances" FontAttributes="Bold"/>
-                        <Button Text="Appels de fonds"
-                                Style="{StaticResource MenuButtonStyle}"
-                                CommandParameter="//appels"
-                                Clicked="OnMenuItemClicked"/>
-                        <Button Text="Créer un appel"
-                                Style="{StaticResource MenuButtonStyle}"
-                                CommandParameter="appel-create"
-                                Clicked="OnMenuItemClicked"/>
+                        <Button Text="Appels de fonds" Style="{StaticResource MenuButtonStyle}" CommandParameter="//appels" Clicked="OnMenuItemClicked"/>
+                        <Button Text="Créer un appel" Style="{StaticResource MenuButtonStyle}" CommandParameter="appel-create" Clicked="OnMenuItemClicked"/>
 
                         <BoxView HeightRequest="16" Opacity="0"/>
-                        <Button Text="Déconnexion"
-                                Style="{StaticResource LogoutButtonStyle}"
-                                CommandParameter="//login"
-                                Clicked="OnMenuItemClicked"/>
+                        <Button Text="Déconnexion" Style="{StaticResource LogoutButtonStyle}" CommandParameter="//login" Clicked="OnMenuItemClicked"/>
+
                     </VerticalStackLayout>
                 </ScrollView>
             </Grid>

@@ -4,14 +4,17 @@ using SyndicApp.Mobile.Converters;
 using SyndicApp.Mobile.Handlers;
 using SyndicApp.Mobile.Services;
 using SyndicApp.Mobile.ViewModels.Auth;
+using SyndicApp.Mobile.ViewModels.Batiments;
+using SyndicApp.Mobile.ViewModels.Dashboard;
 using SyndicApp.Mobile.ViewModels.Finances;
-using SyndicApp.Mobile.Views.Finances;
+using SyndicApp.Mobile.ViewModels.Residences;
 using SyndicApp.Mobile.Views;
 using SyndicApp.Mobile.Views.Auth;
+using SyndicApp.Mobile.Views.Batiments;
 using SyndicApp.Mobile.Views.Dashboard;
-using SyndicApp.Mobile.ViewModels.Auth;
+using SyndicApp.Mobile.Views.Finances;
+using SyndicApp.Mobile.Views.Residences;
 using System.Text.Json;
-using SyndicApp.Mobile.ViewModels.Dashboard;
 
 namespace SyndicApp.Mobile;
 
@@ -46,6 +49,10 @@ public static class MauiProgram
                    c.Timeout = TimeSpan.FromSeconds(60);
                });
 
+        builder.Services.AddRefitClient<IResidencesApi>()
+    .ConfigureHttpClient(c => c.BaseAddress = new Uri(BaseUrl))
+    .AddHttpMessageHandler<AuthHeaderHandler>();
+
         // Forgot/reset password → généralement PUBLIC (pour lever ta régression)
         builder.Services.AddRefitClient<IPasswordApi>(refitSettings)
                .ConfigureHttpClient(c =>
@@ -64,8 +71,14 @@ public static class MauiProgram
                    })
                    .AddHttpMessageHandler<AuthHeaderHandler>();
 
+        builder.Services.AddRefitClient<IBatimentsApi>()
+         .ConfigureHttpClient(c => c.BaseAddress = new Uri(BaseUrl))
+         .AddHttpMessageHandler<AuthHeaderHandler>();
+
         AddSecured<IAccountApi>();   // /me, /logout protégés
         AddSecured<IAppelsApi>();
+        AddSecured<IResidencesApi>();
+        AddSecured<IBatimentsApi>();
 
         // VMs
         builder.Services.AddTransient<LoginViewModel>();
@@ -78,6 +91,14 @@ public static class MauiProgram
         builder.Services.AddTransient<AppelCreateViewModel>();
         builder.Services.AddTransient<AppelDetailsViewModel>();
         builder.Services.AddTransient<AppelEditViewModel>();
+        builder.Services.AddTransient<ResidencesListViewModel>();
+        builder.Services.AddTransient<ResidenceCreateViewModel>();
+        builder.Services.AddTransient<ResidenceDetailsViewModel>();
+        builder.Services.AddTransient<ResidenceEditViewModel>();
+        builder.Services.AddTransient<BatimentsListViewModel>();
+        builder.Services.AddTransient<BatimentCreateViewModel>();
+        builder.Services.AddTransient<BatimentDetailsViewModel>();
+        builder.Services.AddTransient<BatimentEditViewModel>();
 
 
         // Converters (si DI utilisé)
@@ -97,7 +118,14 @@ public static class MauiProgram
         builder.Services.AddTransient<AppelDetailsPage>();
         builder.Services.AddTransient<AppelEditPage>();
         builder.Services.AddTransient<DrawerPage>();
-
+        builder.Services.AddTransient<ResidencesPage>();
+        builder.Services.AddTransient<ResidenceCreatePage>();
+        builder.Services.AddTransient<ResidenceDetailsPage>();
+        builder.Services.AddTransient<ResidenceEditPage>();
+        builder.Services.AddTransient<BatimentsPage>();
+        builder.Services.AddTransient<BatimentCreatePage>();
+        builder.Services.AddTransient<BatimentDetailsPage>();
+        builder.Services.AddTransient<BatimentEditPage>();
 
         var app = builder.Build();
         ServiceHelper.Services = app.Services;
