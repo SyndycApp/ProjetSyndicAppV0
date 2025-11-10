@@ -9,6 +9,7 @@
     xmlns:viewsRes="clr-namespace:SyndicApp.Mobile.Views.Residences"
     xmlns:layout="clr-namespace:SyndicApp.Mobile.Views"
     xmlns:viewsBat="clr-namespace:SyndicApp.Mobile.Views.Batiments"
+    xmlns:viewsLot="clr-namespace:SyndicApp.Mobile.Views.Lots"
     Shell.NavBarIsVisible="False"
     Shell.FlyoutBehavior="Disabled">
 
@@ -37,6 +38,11 @@
     <ShellContent Route="batiments"
                   Title="Bâtiments"
                   ContentTemplate="{DataTemplate viewsBat:BatimentsPage}" />
+
+    <!-- ======= Lots (racine) ======= -->
+    <ShellContent Route="lots"
+                  Title="Lots"
+                  ContentTemplate="{DataTemplate viewsLot:LotsPage}" />
 
     <!-- ======= Drawer (racine) ======= -->
     <ShellContent Route="drawer" Title="SyndicApp"

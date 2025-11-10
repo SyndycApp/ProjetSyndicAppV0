@@ -10,4 +10,5 @@ public interface IResidencesApi
     [Delete("/api/Residences/{id}")] Task DeleteAsync(Guid id);
 
     [Get("/api/Residences/lookup-id")] Task<Guid> LookupIdAsync([Query] string name);
+
 }

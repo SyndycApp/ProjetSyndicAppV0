@@ -32,6 +32,16 @@ namespace SyndicApp.API.Controllers
             return CreatedAtAction(nameof(Get), new { id }, new { id });
         }
 
+        [HttpGet("resolve-id")]
+        public async Task<ActionResult<IReadOnlyList<LotDto>>> Search(
+                [FromQuery] string? numeroLot,
+                [FromQuery] string? type,
+                CancellationToken ct)
+        {
+            var items = await _svc.SearchAsync(numeroLot, type, ct);
+            return Ok(items);
+        }
+
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<LotDto>>> GetAll()
         {

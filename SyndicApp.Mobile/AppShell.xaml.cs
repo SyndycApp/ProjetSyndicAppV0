@@ -2,9 +2,10 @@
 
 using SyndicApp.Mobile.Views;
 using SyndicApp.Mobile.Views.Auth;
-using SyndicApp.Mobile.Views.Finances;
-using SyndicApp.Mobile.Views.Residences;
 using SyndicApp.Mobile.Views.Batiments;
+using SyndicApp.Mobile.Views.Finances;
+using SyndicApp.Mobile.Views.Lots;
+using SyndicApp.Mobile.Views.Residences;
 
 public partial class AppShell : Shell
 {
@@ -35,5 +36,10 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("batiment-create", typeof(BatimentCreatePage));
         Routing.RegisterRoute("batiment-details", typeof(BatimentDetailsPage));
         Routing.RegisterRoute("batiment-edit", typeof(BatimentEditPage));
+
+        // ===== Lots secondaires =====
+        Routing.RegisterRoute("lot-create", typeof(LotCreatePage));
+        Routing.RegisterRoute("lot-details", typeof(LotDetailsPage));
+        Routing.RegisterRoute("lot-edit", typeof(LotEditPage));
     }
 }

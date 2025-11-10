@@ -14,17 +14,16 @@ public partial class SyndicDashboardViewModel : ViewModels.Common.BaseViewModel
     private readonly IResidencesApi _residencesApi;
     private readonly TokenStore _tokenStore;
     private readonly IBatimentsApi _batimentsApi;
+    private readonly ILotsApi _lotsApi;
 
-    
+
 
     [ObservableProperty] bool canAddResidence;
     [ObservableProperty] int batimentsCount;
-
-    // ➜ KPI dynamiques
-    [ObservableProperty] int residencesCount;   // ← lié dans le XAML
+    [ObservableProperty] int residencesCount;
+    [ObservableProperty] int lotsCount;
 
     // KPIs statiques (tu peux les brancher plus tard)
-    public int LotsCount { get; } = 120;
     public int IncidentsOuverts { get; } = 3;
     public int InterventionsEnCours { get; } = 2;
     public int AppelsOuverts { get; } = 4;
@@ -46,12 +45,13 @@ public partial class SyndicDashboardViewModel : ViewModels.Common.BaseViewModel
     public IAsyncRelayCommand LogoutCommand { get; }
     public IAsyncRelayCommand LoadKpisAsyncCommand { get; }   // ← nouvelle
 
-    public SyndicDashboardViewModel(IAccountApi accountApi, IResidencesApi residencesApi, IBatimentsApi batimentsApi, TokenStore tokenStore)
+    public SyndicDashboardViewModel(IAccountApi accountApi, IResidencesApi residencesApi, IBatimentsApi batimentsApi, ILotsApi lotsApi, TokenStore tokenStore)
     {
         _accountApi = accountApi;
         _residencesApi = residencesApi;
         _tokenStore = tokenStore;
         _batimentsApi = batimentsApi;
+        _lotsApi = lotsApi;
 
         Title = "Dashboard";
         CanAddResidence = _tokenStore.IsSyndic();
@@ -63,9 +63,10 @@ public partial class SyndicDashboardViewModel : ViewModels.Common.BaseViewModel
         LogoutCommand = new AsyncRelayCommand(LogoutAsync);
         LoadKpisAsyncCommand = new AsyncRelayCommand(LoadKpisAsync);
 
-       
-        WeakReferenceMessenger.Default.Register<ResidenceChangedMessage>(this,
-            async (_, __) => await RefreshResidencesCountAsync());
+
+        WeakReferenceMessenger.Default.Register<ResidenceChangedMessage>(this, async (_, __) => await RefreshResidencesCountAsync());
+        WeakReferenceMessenger.Default.Register<BatimentChangedMessage>(this, async (_, __) => await RefreshBatimentsCountAsync());
+        WeakReferenceMessenger.Default.Register<LotChangedMessage>(this, async (_, __) => await RefreshLotsCountAsync());
     }
 
     //private async Task LoadKpisAsync() => await RefreshResidencesCountAsync();
@@ -76,6 +77,7 @@ public partial class SyndicDashboardViewModel : ViewModels.Common.BaseViewModel
         {
             await RefreshResidencesCountAsync();
             await RefreshBatimentsCountAsync();
+            await RefreshLotsCountAsync();
         }
         finally
         {
@@ -83,6 +85,11 @@ public partial class SyndicDashboardViewModel : ViewModels.Common.BaseViewModel
         }
     }
 
+    private async Task RefreshLotsCountAsync()
+    {
+        try { var lots = await _lotsApi.GetAllAsync(); LotsCount = lots?.Count ?? 0; }
+        catch { LotsCount = 0; }
+    }
     private async Task RefreshResidencesCountAsync()
     {
         try

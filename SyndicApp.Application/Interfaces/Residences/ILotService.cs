@@ -14,5 +14,10 @@ namespace SyndicApp.Application.Interfaces.Residences
         Task<Guid> CreateAsync(CreateLotDto dto, CancellationToken ct = default);
         Task<bool> UpdateAsync(Guid id, UpdateLotDto dto, CancellationToken ct = default);
         Task<bool> DeleteAsync(Guid id, CancellationToken ct = default);
+
+        Task<IReadOnlyList<LotDto>> SearchAsync(
+            string? numeroLot = null,
+            string? type = null,
+            CancellationToken ct = default);
     }
 }

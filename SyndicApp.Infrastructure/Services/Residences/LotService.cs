@@ -127,6 +127,43 @@ namespace SyndicApp.Infrastructure.Services.Residences
             return true;
         }
 
+        public async Task<IReadOnlyList<LotDto>> SearchAsync(string? numeroLot = null, string? type = null, CancellationToken ct = default)
+        {
+            var q = _db.Lots.AsNoTracking().AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(numeroLot))
+            {
+                var n = numeroLot.Trim();
+                q = q.Where(l => l.NumeroLot != null && EF.Functions.Like(l.NumeroLot, $"%{n}%"));
+            }
+
+            if (!string.IsNullOrWhiteSpace(type))
+            {
+                var t = type.Trim();
+                q = q.Where(l => l.Type != null && EF.Functions.Like(l.Type, $"%{t}%"));
+            }
+
+            var result =
+                await (from l in q
+                       join b in _db.Batiments.AsNoTracking()
+                         on EF.Property<Guid?>(l, "BatimentId") equals b.Id into jb
+                       from b in jb.DefaultIfEmpty()
+                       select new LotDto
+                       {
+                           Id = l.Id,
+                           NumeroLot = l.NumeroLot,
+                           Type = l.Type,
+                           Surface = l.Surface,
+                           ResidenceId = l.ResidenceId,
+                           BatimentId = b != null ? b.Id : (Guid?)null,
+                           BatimentNom = b != null ? b.Nom : null
+                       })
+                .OrderBy(x => x.NumeroLot)
+                .ToListAsync(ct);
+
+            return result;
+        }
+
         public async Task<bool> DeleteAsync(Guid id, CancellationToken ct = default)
         {
             var l = await _db.Lots.FirstOrDefaultAsync(x => x.Id == id, ct);

@@ -334,6 +334,9 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.SyndicDashboardViewModel.ResidencesCount">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Dashboard.SyndicDashboardViewModel.residencesCount"/>
         </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.SyndicDashboardViewModel.LotsCount">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Dashboard.SyndicDashboardViewModel.lotsCount"/>
+        </member>
         <member name="T:SyndicApp.Mobile.ViewModels.Finances.AppelCreateViewModel">
             <inheritdoc/>
             <inheritdoc/>
@@ -487,6 +490,155 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Finances.AppelsListViewModel.OpenDetailsCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Finances.AppelsListViewModel.OpenDetailsAsync(SyndicApp.Mobile.Models.AppelDeFondsDto)"/>.</summary>
         </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.NumeroLot">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.numeroLot"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.Type">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.type"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.Surface">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.surface"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.Residences">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.residences"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.SelectedResidence">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.selectedResidence"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.Batiments">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.batiments"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.SelectedBatiment">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.selectedBatiment"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.IsBusy">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.isBusy"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.loadCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.LoadCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.LoadCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.LoadAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.residenceChangedCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.ResidenceChangedCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.ResidenceChangedCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.ResidenceChangedAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.createCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.CreateCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.CreateCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.CreateAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.cancelCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.CancelCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.CancelCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel.CancelAsync"/>.</summary>
+        </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Lots.LotDetailsViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotDetailsViewModel.Id">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Lots.LotDetailsViewModel.id"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotDetailsViewModel.Lot">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Lots.LotDetailsViewModel.lot"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Lots.LotDetailsViewModel.loadCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Lots.LotDetailsViewModel.LoadCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotDetailsViewModel.LoadCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Lots.LotDetailsViewModel.LoadAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Lots.LotDetailsViewModel.editCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Lots.LotDetailsViewModel.EditCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotDetailsViewModel.EditCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Lots.LotDetailsViewModel.EditAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Lots.LotDetailsViewModel.deleteCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Lots.LotDetailsViewModel.DeleteCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotDetailsViewModel.DeleteCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Lots.LotDetailsViewModel.DeleteAsync"/>.</summary>
+        </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.Id">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.id"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.NumeroLot">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.numeroLot"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.Type">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.type"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.Surface">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.surface"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.Residences">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.residences"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.SelectedResidence">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.selectedResidence"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.Batiments">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.batiments"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.SelectedBatiment">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.selectedBatiment"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.loadCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.LoadCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.LoadCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.LoadAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.residenceChangedCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.ResidenceChangedCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.ResidenceChangedCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.ResidenceChangedAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.saveCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.SaveCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.SaveCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.SaveAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.cancelCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.CancelCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.CancelCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Lots.LotEditViewModel.CancelAsync"/>.</summary>
+        </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Lots.LotsListViewModel">
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotsListViewModel.IsBusy">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Lots.LotsListViewModel.isBusy"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotsListViewModel.Items">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Lots.LotsListViewModel.items"/>
+        </member>
         <member name="T:SyndicApp.Mobile.ViewModels.Residences.ResidenceCreateViewModel">
             <inheritdoc/>
             <inheritdoc/>
@@ -606,6 +758,7 @@
             </summary>
             <inheritdoc/>
             <inheritdoc/>
+            <inheritdoc/>
         </member>
         <member name="M:CommunityToolkit.Mvvm.Messaging.__Internals.__IMessengerExtensions.CreateAllMessagesRegistrator(SyndicApp.Mobile.ViewModels.Batiments.BatimentsListViewModel)">
             <summary>
@@ -621,6 +774,21 @@
             <typeparam name="TToken">The type of tokens that will be used to register messages.</typeparam>
             <param name="_">Dummy parameter, only used to disambiguate the method signature.</param>
             <returns>A message registration stub for <see cref="T:SyndicApp.Mobile.ViewModels.Batiments.BatimentsListViewModel"/> objects.</returns>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.Messaging.__Internals.__IMessengerExtensions.CreateAllMessagesRegistrator(SyndicApp.Mobile.ViewModels.Lots.LotsListViewModel)">
+            <summary>
+            Creates a message registration stub for <see cref="T:SyndicApp.Mobile.ViewModels.Lots.LotsListViewModel"/> objects.
+            </summary>
+            <param name="_">Dummy parameter, only used to disambiguate the method signature.</param>
+            <returns>A message registration stub for <see cref="T:SyndicApp.Mobile.ViewModels.Lots.LotsListViewModel"/> objects.</returns>
+        </member>
+        <member name="M:CommunityToolkit.Mvvm.Messaging.__Internals.__IMessengerExtensions.CreateAllMessagesRegistratorWithToken``1(SyndicApp.Mobile.ViewModels.Lots.LotsListViewModel)">
+            <summary>
+            Creates a message registration stub for <see cref="T:SyndicApp.Mobile.ViewModels.Lots.LotsListViewModel"/> objects.
+            </summary>
+            <typeparam name="TToken">The type of tokens that will be used to register messages.</typeparam>
+            <param name="_">Dummy parameter, only used to disambiguate the method signature.</param>
+            <returns>A message registration stub for <see cref="T:SyndicApp.Mobile.ViewModels.Lots.LotsListViewModel"/> objects.</returns>
         </member>
         <member name="M:CommunityToolkit.Mvvm.Messaging.__Internals.__IMessengerExtensions.CreateAllMessagesRegistrator(SyndicApp.Mobile.ViewModels.Residences.ResidencesListViewModel)">
             <summary>
@@ -712,6 +880,9 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ResidencesCount">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ResidencesCount" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.LotsCount">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "LotsCount" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Description">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Description" generated properties.</summary>
         </member>
@@ -741,6 +912,24 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Appels">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Appels" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.NumeroLot">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "NumeroLot" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Type">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Type" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Surface">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Surface" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Batiments">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Batiments" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.SelectedBatiment">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "SelectedBatiment" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Lot">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Lot" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Ville">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Ville" generated properties.</summary>
@@ -826,6 +1015,9 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ResidencesCount">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ResidencesCount" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.LotsCount">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "LotsCount" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Description">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Description" generated properties.</summary>
         </member>
@@ -855,6 +1047,24 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Appels">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Appels" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.NumeroLot">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "NumeroLot" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Type">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Type" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Surface">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Surface" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Batiments">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Batiments" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.SelectedBatiment">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "SelectedBatiment" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Lot">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Lot" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Ville">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Ville" generated properties.</summary>
@@ -979,6 +1189,9 @@
         <member name="M:Refit.Implementation.Generated.IBatimentsApi.DeleteAsync(System.Guid)">
             <inheritdoc />
         </member>
+        <member name="M:Refit.Implementation.Generated.IBatimentsApi.ResolveIdAsync(System.String)">
+            <inheritdoc />
+        </member>
         <member name="M:Refit.Implementation.Generated.IBatimentsApi.IBatimentsApi#GetAllAsync">
             <inheritdoc />
         </member>
@@ -992,6 +1205,60 @@
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.IBatimentsApi.IBatimentsApi#DeleteAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.IBatimentsApi.IBatimentsApi#ResolveIdAsync(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:Refit.Implementation.Generated.SyndicAppMobileApiILotsApi">
+            <inheritdoc />
+        </member>
+        <member name="P:Refit.Implementation.Generated.SyndicAppMobileApiILotsApi.Client">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiILotsApi.#ctor(System.Net.Http.HttpClient,Refit.IRequestBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiILotsApi.GetAllAsync">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiILotsApi.GetByResidenceAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiILotsApi.GetByIdAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiILotsApi.CreateAsync(SyndicApp.Mobile.Models.CreateLotDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiILotsApi.UpdateAsync(System.Guid,SyndicApp.Mobile.Models.UpdateLotDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiILotsApi.DeleteAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiILotsApi.ResolveIdAsync(System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiILotsApi.SyndicApp#Mobile#Api#ILotsApi#GetAllAsync">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiILotsApi.SyndicApp#Mobile#Api#ILotsApi#GetByResidenceAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiILotsApi.SyndicApp#Mobile#Api#ILotsApi#GetByIdAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiILotsApi.SyndicApp#Mobile#Api#ILotsApi#CreateAsync(SyndicApp.Mobile.Models.CreateLotDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiILotsApi.SyndicApp#Mobile#Api#ILotsApi#UpdateAsync(System.Guid,SyndicApp.Mobile.Models.UpdateLotDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiILotsApi.SyndicApp#Mobile#Api#ILotsApi#DeleteAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiILotsApi.SyndicApp#Mobile#Api#ILotsApi#ResolveIdAsync(System.String,System.String)">
             <inheritdoc />
         </member>
         <member name="T:Refit.Implementation.Generated.SyndicAppMobileApiIPasswordApi">

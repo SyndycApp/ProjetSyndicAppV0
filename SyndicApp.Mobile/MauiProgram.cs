@@ -14,6 +14,8 @@ using SyndicApp.Mobile.Views.Batiments;
 using SyndicApp.Mobile.Views.Dashboard;
 using SyndicApp.Mobile.Views.Finances;
 using SyndicApp.Mobile.Views.Residences;
+using SyndicApp.Mobile.ViewModels.Lots;
+using SyndicApp.Mobile.Views.Lots;
 using System.Text.Json;
 
 namespace SyndicApp.Mobile;
@@ -26,7 +28,7 @@ public static class MauiProgram
         builder.UseMauiApp<App>();
 
         // Choisis la bonne URL :        
-        const string BaseUrl = "http://192.168.0.106:5041";
+        const string BaseUrl = "http://192.168.31.157:5041";
 
 
         // Refit JSON insensible à la casse
@@ -79,6 +81,7 @@ public static class MauiProgram
         AddSecured<IAppelsApi>();
         AddSecured<IResidencesApi>();
         AddSecured<IBatimentsApi>();
+        AddSecured<ILotsApi>();
 
         // VMs
         builder.Services.AddTransient<LoginViewModel>();
@@ -99,6 +102,11 @@ public static class MauiProgram
         builder.Services.AddTransient<BatimentCreateViewModel>();
         builder.Services.AddTransient<BatimentDetailsViewModel>();
         builder.Services.AddTransient<BatimentEditViewModel>();
+        builder.Services.AddTransient<LotDetailsViewModel>();
+        builder.Services.AddTransient<LotEditViewModel>();
+        builder.Services.AddTransient<LotCreateViewModel>();
+        builder.Services.AddTransient<LotsListViewModel>();
+
 
 
         // Converters (si DI utilisé)
@@ -126,6 +134,10 @@ public static class MauiProgram
         builder.Services.AddTransient<BatimentCreatePage>();
         builder.Services.AddTransient<BatimentDetailsPage>();
         builder.Services.AddTransient<BatimentEditPage>();
+        builder.Services.AddTransient<LotDetailsPage>();
+        builder.Services.AddTransient<LotEditPage>();
+        builder.Services.AddTransient<LotCreatePage>();
+        builder.Services.AddTransient<LotsPage>();
 
         var app = builder.Build();
         ServiceHelper.Services = app.Services;

@@ -150,6 +150,30 @@ build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Fin
 build_metadata.AdditionalFiles.TargetPath = Views\Finances\AppelsPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Finances\AppelsPage.xaml
 
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Lots/LotCreatePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Lots.LotCreatePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Lots\LotCreatePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Lots\LotCreatePage.xaml
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Lots/LotDetailsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Lots.LotDetailsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Lots\LotDetailsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Lots\LotDetailsPage.xaml
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Lots/LotEditPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Lots.LotEditPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Lots\LotEditPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Lots\LotEditPage.xaml
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Lots/LotsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Lots.LotsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Lots\LotsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Lots\LotsPage.xaml
+
 [C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Residences/ResidenceCreatePage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Residences.ResidenceCreatePage.xaml

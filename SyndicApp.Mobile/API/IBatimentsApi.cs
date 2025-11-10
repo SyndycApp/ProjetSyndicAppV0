@@ -18,5 +18,8 @@ public interface IBatimentsApi
 
     [Delete("/api/Batiments/{id}")]
     Task DeleteAsync(Guid id);
+
+    [Get("/api/Batiments/resolve-id")]
+    Task<Guid?> ResolveIdAsync([Query] string name);
 }
 
