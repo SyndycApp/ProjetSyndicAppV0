@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿// using nécessaires
+using System.Linq;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SyndicApp.Mobile.Api;
 using SyndicApp.Mobile.Models;
@@ -13,6 +15,8 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
         {
             _api = api;
             Items = new();
+            Users = new();   // ← on initialise
+            Lots = new();   // ← on initialise
         }
 
         // Liste
@@ -29,11 +33,52 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
         [RelayCommand]
         public async Task LoadAsync()
         {
+            // 1) Charger les affectations
             var data = await _api.GetAllAsync();
             Items = data?.ToList() ?? new List<AffectationLotDto>();
+
+            // 2) Remplir la liste des utilisateurs via /api/Auth (mêmes méthodes déjà ajoutées dans IAffectationsLotsApi)
+            try
+            {
+                var allUsers = await _api.GetAllUsersAsync(); // -> ApiResult<List<AuthListItemDto>>
+                if (allUsers?.Success == true && allUsers.Data != null)
+                {
+                    Users = allUsers.Data
+                        .Select(u => new UserDto
+                        {
+                            Id = u.Id,
+                            Email = u.Email ?? string.Empty,
+                            FullName = !string.IsNullOrWhiteSpace(u.FullName) ? u.FullName! : (u.Email ?? u.Id.ToString()),
+                            Roles = u.Roles ?? new List<string>()
+                        })
+                        .OrderBy(u => u.FullName)
+                        .ToList();
+                }
+                else
+                {
+                    Users = new List<UserDto>(); // liste vide si rien
+                }
+            }
+            catch
+            {
+                Users = new List<UserDto>(); // pas de régression si API non joignable
+            }
+
+            // 3) Remplir la liste des lots à partir des items chargés (évite d’injecter ILotsApi ici)
+            //    -> ça remplit le Picker "Lot" avec ceux présents dans les affectations
+            Lots = Items
+                .Where(i => i.LotId != Guid.Empty)
+                .GroupBy(i => i.LotId)
+                .Select(g => new LotDto
+                {
+                    Id = g.Key,
+                    NumeroLot = g.Select(x => x.LotNumero).FirstOrDefault(s => !string.IsNullOrWhiteSpace(s)) ?? g.Key.ToString()
+                })
+                .OrderBy(l => l.NumeroLot)
+                .ToList();
         }
 
-        // --- Filtre (utilisé par ton bouton "Filtrer") ---
+        // --- Filtre (inchangé) ---
         [RelayCommand]
         public async Task FilterAsync()
         {
@@ -50,13 +95,10 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
             Items = filtered;
         }
 
-        // --- Navigation : noms/params EXACTEMENT comme dans ton XAML ---
         [RelayCommand]
-        public Task GoToCreate()
-            => Shell.Current.GoToAsync("affectation-create");
+        public Task GoToCreate() => Shell.Current.GoToAsync("affectation-create");
 
         [RelayCommand]
-        public Task GoToDetails(Guid id)
-            => Shell.Current.GoToAsync($"affectation-details?id={id}");
+        public Task GoToDetails(Guid id) => Shell.Current.GoToAsync($"affectation-details?id={id}");
     }
 }
