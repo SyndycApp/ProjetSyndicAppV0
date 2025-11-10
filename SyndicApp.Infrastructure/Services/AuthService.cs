@@ -166,7 +166,63 @@ namespace SyndicApp.Infrastructure.Services
                 return Result<List<UserDto>>.Fail("Erreur interne du serveur");
             }
         }
+        public async Task<Result<List<UserLookupDto>>> SearchAsync(string? q, string? role, int take = 35)
+        {
+            try
+            {
+                // Base: tous les users
+                var queryable = _userManager.Users.AsNoTracking();
 
+                // Filtre texte (FullName ou Email)
+                if (!string.IsNullOrWhiteSpace(q))
+                {
+                    var term = q.Trim().ToLower();
+                    queryable = queryable.Where(u =>
+                        (u.FullName != null && u.FullName.ToLower().Contains(term)) ||
+                        (u.Email != null && u.Email.ToLower().Contains(term)));
+                }
+
+                // Tri par nom puis email
+                queryable = queryable
+                    .OrderBy(u => u.FullName ?? u.Email)
+                    .ThenBy(u => u.Email);
+
+                // On limite ici (évite de charger trop)
+                var users = await queryable.Take(Math.Max(1, take)).ToListAsync();
+
+                // Filtre par rôle si demandé (GetUsersInRoleAsync est simple et suffisant ici)
+                if (!string.IsNullOrWhiteSpace(role))
+                {
+                    var inRole = await _userManager.GetUsersInRoleAsync(role);
+                    var inRoleIds = inRole.Select(x => x.Id).ToHashSet();
+                    users = users.Where(u => inRoleIds.Contains(u.Id)).ToList();
+                }
+
+                // Projection en lookup (Label = FullName si dispo, sinon Email)
+                var lookups = new List<UserLookupDto>(users.Count);
+                foreach (var u in users)
+                {
+                    var roles = await _userManager.GetRolesAsync(u);
+                    lookups.Add(new UserLookupDto
+                    {
+                        Id = u.Id,
+                        Label = !string.IsNullOrWhiteSpace(u.FullName) ? u.FullName! : (u.Email ?? u.Id.ToString()),
+                        Email = u.Email,
+                        Roles = roles.ToList()
+                    });
+                }
+
+                if (lookups.Count == 0)
+                    return Result<List<UserLookupDto>>.Ok(new List<UserLookupDto>()); // Liste vide OK
+
+                return Result<List<UserLookupDto>>.Ok(lookups);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erreur lors du lookup utilisateurs");
+                return Result<List<UserLookupDto>>.Fail("Erreur interne du serveur");
+            }
+        }
 
         public async Task<Result<UserDto>> GetByIdAsync(Guid userId)
         {

@@ -117,6 +117,16 @@ namespace SyndicApp.API.Controllers
             return Ok(result.Data);
         }
 
+        [HttpGet("lookup")]
+        public async Task<ActionResult<List<UserLookupDto>>> Lookup([FromQuery] string? q, [FromQuery] string? role, [FromQuery] int take = 20)
+        {
+            var res = await _authService.SearchAsync(q, role, take);
+            if (!res.Success) return BadRequest(new { message = "Lookup échoué", errors = res.Errors });
+
+            // Retour direct de la liste (plus simple côté front)
+            return Ok(res.Data);
+        }
+
         [Authorize]
         [HttpGet("me")]
         public async Task<IActionResult> Me()

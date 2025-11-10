@@ -10,5 +10,7 @@ namespace SyndicApp.Application.Interfaces
         Task<Result<UserDto>> LoginAsync(LoginDto dto);
         Task<Result<UserDto>> GetByIdAsync(Guid userId);
         Task<Result<List<UserDto>>> GetAllAsync();
+
+        Task<Result<List<UserLookupDto>>> SearchAsync(string? q, string? role, int take = 35 );
     }
 }
