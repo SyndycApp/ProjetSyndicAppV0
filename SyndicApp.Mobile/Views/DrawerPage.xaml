@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -35,7 +35,7 @@
 			<Setter Property="HorizontalOptions" Value="Start" />
 		</Style>
 
-		<!-- Bouton “Déconnexion” -->
+		<!-- Bouton "Déconnexion" -->
 		<Style x:Key="LogoutButtonStyle" TargetType="Button" BasedOn="{StaticResource MenuButtonStyle}">
 			<Setter Property="BackgroundColor" Value="{StaticResource Chip}" />
 		</Style>
@@ -157,20 +157,20 @@
 								CommandParameter="//appels"
 								Clicked="OnMenuItemClicked"/>
 
-						<!-- Création d’un nouvel appel -->
+						<!-- Création d'un nouvel appel -->
 						<Button Text="Créer un appel"
 								Style="{StaticResource MenuButtonStyle}"
 								CommandParameter="appel-create"
 								Clicked="OnMenuItemClicked"/>
 
-						<!-- Modification d’un appel -->
+						<!-- Modification d'un appel -->
 						<Button Text="Modifier un appel"
 								Style="{StaticResource MenuButtonStyle}"
 								CommandParameter="appel-edit"
 								Clicked="OnMenuItemClicked"/>
 
-						<!-- Détails d’un appel -->
-						<Button Text="Détails d’un appel"
+						<!-- Détails d'un appel -->
+						<Button Text="Détails d'un appel"
 								Style="{StaticResource MenuButtonStyle}"
 								CommandParameter="appel-details"
 								Clicked="OnMenuItemClicked"/>

@@ -28,7 +28,7 @@ public static class MauiProgram
         builder.UseMauiApp<App>();
 
         // Choisis la bonne URL :        
-        const string BaseUrl = "http://192.168.31.157:5041";
+        const string BaseUrl = "http://192.168.2.67:5041";
 
 
         // Refit JSON insensible à la casse

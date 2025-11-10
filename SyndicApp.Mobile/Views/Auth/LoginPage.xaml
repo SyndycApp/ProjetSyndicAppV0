@@ -68,14 +68,14 @@
                                     Padding="12">
                                 <Entry Text="{Binding Password}"
                                        IsPassword="True"
-                                       Placeholder="••••••••"
+                                       Placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
                                        TextColor="Black"
                                        BackgroundColor="Transparent"/>
                             </Border>
                         </VerticalStackLayout>
 
-                        <!-- Lien mot de passe oublié -->
-                        <Label Text="Mot de passe oublié ?"
+                        <!-- Lien mot de passe oubliÃ© -->
+                        <Label Text="Mot de passe oubliÃ© ?"
                                TextColor="#1E63E9"
                                HorizontalOptions="End"
                                FontSize="13">
@@ -104,7 +104,7 @@
                                             Spacing="6"
                                             Margin="0,4,0,0">
                         <Label Text="Pas de compte ?" TextColor="#6B7280" />
-                        <Label Text="Créer un compte"
+                        <Label Text="CrÃ©er un compte"
                                TextColor="#1E63E9"
                                FontAttributes="Bold">
                             <Label.GestureRecognizers>

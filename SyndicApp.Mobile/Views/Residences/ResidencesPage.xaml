@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -171,7 +171,7 @@
     <Button Text="Appels de fonds" Style="{StaticResource MenuButtonStyle}" CommandParameter="//appels"         Clicked="OnMenuItemClicked"/>
     <Button Text="Créer un appel"  Style="{StaticResource MenuButtonStyle}" CommandParameter="appel-create"     Clicked="OnMenuItemClicked"/>
     <Button Text="Modifier un appel" Style="{StaticResource MenuButtonStyle}" CommandParameter="appel-edit"     Clicked="OnMenuItemClicked"/>
-    <Button Text="Détails d’un appel"  Style="{StaticResource MenuButtonStyle}" CommandParameter="appel-details" Clicked="OnMenuItemClicked"/>
+    <Button Text="Détails d'un appel"  Style="{StaticResource MenuButtonStyle}" CommandParameter="appel-details" Clicked="OnMenuItemClicked"/>
 
     <!-- INCIDENTS / INTERVENTIONS / DEVIS -->
     <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />

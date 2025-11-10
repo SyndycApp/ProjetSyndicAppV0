@@ -3,7 +3,7 @@
     x:Class="SyndicApp.Mobile.Views.Finances.AppelCreatePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Créer Appels De Fonds"
+    Title="CrÃ©er Appels De Fonds"
     BackgroundColor="White"
     Shell.NavBarIsVisible="False">
 
@@ -38,7 +38,7 @@
             <Setter Property="TextColor" Value="#111827"/>
         </Style>
 
-        <!-- ✅ Styles utilisés par le drawer (manquants avant) -->
+        <!-- âœ… Styles utilisÃ©s par le drawer (manquants avant) -->
         <Style x:Key="MenuButtonStyle" TargetType="Button">
             <Setter Property="BackgroundColor" Value="Transparent" />
             <Setter Property="TextColor" Value="{StaticResource BodyText}" />
@@ -64,21 +64,21 @@
 
             <Button x:Name="BtnOpen"
                     Grid.Column="0"
-                    Text="☰"
+                    Text="â˜°"
                     FontSize="22"
                     BackgroundColor="Transparent"
                     TextColor="{StaticResource HeaderTextOnDark}"
                     Clicked="OpenDrawer_Clicked"/>
 
             <Label Grid.Column="1"
-                   Text="Créer Appels De Fonds"
+                   Text="CrÃ©er Appels De Fonds"
                    HorizontalTextAlignment="Center"
                    VerticalOptions="Center"
                    FontAttributes="Bold"
                    TextColor="{StaticResource HeaderTextOnDark}"/>
 
             <Label Grid.Column="2"
-                   Text="• • •"
+                   Text="â€¢ â€¢ â€¢"
                    TextColor="{StaticResource HeaderTextOnDark}"
                    VerticalOptions="Center"/>
         </Grid>
@@ -93,7 +93,7 @@
                            Placeholder="Charges trimestrielles"
                            Text="{Binding Description, Mode=TwoWay}"/>
 
-                    <Label Text="Date d’émission" FontAttributes="Bold"/>
+                    <Label Text="Date dâ€™Ã©mission" FontAttributes="Bold"/>
                     <DatePicker
                         Date="{Binding DateEmission, Mode=TwoWay}"
                         Format="dd/MM/yyyy"
@@ -102,13 +102,13 @@
 
                     <!-- Affichage lisible juste en dessous (optionnel) -->
                     <Label
-                        Text="{Binding DateEmission, StringFormat='Sélectionnée : {0:dd/MM/yyyy}'}"
+                        Text="{Binding DateEmission, StringFormat='SÃ©lectionnÃ©e : {0:dd/MM/yyyy}'}"
                         FontSize="12"
                         TextColor="#6B7280" />
 
-                    <Label Text="Résidence" FontAttributes="Bold"/>
+                    <Label Text="RÃ©sidence" FontAttributes="Bold"/>
                     <Entry Style="{StaticResource EntryStyle}"
-                           Placeholder="GUID résidence (temporaire)"
+                           Placeholder="GUID rÃ©sidence (temporaire)"
                            Text="{Binding ResidenceId, Mode=TwoWay}"/>
 
                     <Label Text="Montant total" FontAttributes="Bold"/>
@@ -123,7 +123,7 @@
                                 Style="{StaticResource SecondaryButton}"
                                 Clicked="OnCancelClicked"/>
                         <Button Grid.Column="1"
-                                Text="Créer"
+                                Text="CrÃ©er"
                                 Style="{StaticResource PrimaryButton}"
                                 Command="{Binding CreateCommand}"/>
                     </Grid>
@@ -160,7 +160,7 @@
                            FontAttributes="Bold"
                            VerticalOptions="Center"/>
                     <Button Grid.Column="1"
-                            Text="→"
+                            Text="â†'"
                             FontSize="22"
                             BackgroundColor="Transparent"
                             TextColor="{StaticResource HeaderTextOnDark}"
@@ -178,11 +178,11 @@
                             CommandParameter="//syndic-dashboard"
                             Clicked="OnMenuItemClicked"/>
 
-                    <!-- RÉSIDENCES / LOTS -->
+                    <!-- RÃ‰SIDENCES / LOTS -->
                     <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
-                    <Label Text="Résidences &amp; Lots" FontAttributes="Bold"/>
-                    <Button Text="Résidences"            Style="{StaticResource MenuButtonStyle}" CommandParameter="//residences"                    Clicked="OnMenuItemClicked"/>
-                    <Button Text="Bâtiments"              Style="{StaticResource MenuButtonStyle}" CommandParameter="//batiments"                     Clicked="OnMenuItemClicked"/>
+                    <Label Text="RÃ©sidences &amp; Lots" FontAttributes="Bold"/>
+                    <Button Text="RÃ©sidences"            Style="{StaticResource MenuButtonStyle}" CommandParameter="//residences"                    Clicked="OnMenuItemClicked"/>
+                    <Button Text="BÃ¢timents"              Style="{StaticResource MenuButtonStyle}" CommandParameter="//batiments"                     Clicked="OnMenuItemClicked"/>
                     <Button Text="Lots"                   Style="{StaticResource MenuButtonStyle}" CommandParameter="//lots"                          Clicked="OnMenuItemClicked"/>
                     <Button Text="Affectations des lots"  Style="{StaticResource MenuButtonStyle}" CommandParameter="//affectations-lots"            Clicked="OnMenuItemClicked"/>
                     <Button Text="Occupant actuel"        Style="{StaticResource MenuButtonStyle}" CommandParameter="//lots/occupant-actuel"         Clicked="OnMenuItemClicked"/>
@@ -192,9 +192,9 @@
                     <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
                     <Label Text="Finances" FontAttributes="Bold"/>
                     <Button Text="Appels de fonds" Style="{StaticResource MenuButtonStyle}" CommandParameter="//appels"         Clicked="OnMenuItemClicked"/>
-                    <Button Text="Créer un appel"  Style="{StaticResource MenuButtonStyle}" CommandParameter="appel-create"     Clicked="OnMenuItemClicked"/>
+                    <Button Text="CrÃ©er un appel"  Style="{StaticResource MenuButtonStyle}" CommandParameter="appel-create"     Clicked="OnMenuItemClicked"/>
                     <Button Text="Modifier un appel" Style="{StaticResource MenuButtonStyle}" CommandParameter="appel-edit"     Clicked="OnMenuItemClicked"/>
-                    <Button Text="Détails d’un appel"  Style="{StaticResource MenuButtonStyle}" CommandParameter="appel-details" Clicked="OnMenuItemClicked"/>
+                    <Button Text="DÃ©tails dâ€™un appel"  Style="{StaticResource MenuButtonStyle}" CommandParameter="appel-details" Clicked="OnMenuItemClicked"/>
 
                     <!-- INCIDENTS / INTERVENTIONS / DEVIS -->
                     <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
@@ -204,22 +204,22 @@
                     <Button Text="Devis de travaux" Style="{StaticResource MenuButtonStyle}" CommandParameter="//devis-travaux"  Clicked="OnMenuItemClicked"/>
                     <Button Text="Prestataires"     Style="{StaticResource MenuButtonStyle}" CommandParameter="//prestataires"   Clicked="OnMenuItemClicked"/>
 
-                    <!-- ASSEMBLÉES GÉNÉRALES -->
+                    <!-- ASSEMBLÃ‰ES GÃ‰NÃ‰RALES -->
                     <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
-                    <Label Text="Assemblées Générales" FontAttributes="Bold"/>
+                    <Label Text="AssemblÃ©es GÃ©nÃ©rales" FontAttributes="Bold"/>
                     <Button Text="Convocations"   Style="{StaticResource MenuButtonStyle}" CommandParameter="//ag/convocations"  Clicked="OnMenuItemClicked"/>
                     <Button Text="Ordre du jour"  Style="{StaticResource MenuButtonStyle}" CommandParameter="//ag/ordre-du-jour" Clicked="OnMenuItemClicked"/>
                     <Button Text="Votes"          Style="{StaticResource MenuButtonStyle}" CommandParameter="//ag/votes"         Clicked="OnMenuItemClicked"/>
-                    <Button Text="Décisions"      Style="{StaticResource MenuButtonStyle}" CommandParameter="//ag/decisions"     Clicked="OnMenuItemClicked"/>
-                    <Button Text="Procès-verbal (PV)" Style="{StaticResource MenuButtonStyle}" CommandParameter="//ag/pv"        Clicked="OnMenuItemClicked"/>
+                    <Button Text="DÃ©cisions"      Style="{StaticResource MenuButtonStyle}" CommandParameter="//ag/decisions"     Clicked="OnMenuItemClicked"/>
+                    <Button Text="ProcÃ¨s-verbal (PV)" Style="{StaticResource MenuButtonStyle}" CommandParameter="//ag/pv"        Clicked="OnMenuItemClicked"/>
 
                     <!-- DOCUMENTS / ANNONCES -->
                     <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
                     <Label Text="Documents &amp; Annonces" FontAttributes="Bold"/>
                     <Button Text="Documents"               Style="{StaticResource MenuButtonStyle}" CommandParameter="//documents"             Clicked="OnMenuItemClicked"/>
-                    <Button Text="Catégories de documents" Style="{StaticResource MenuButtonStyle}" CommandParameter="//documents/categories" Clicked="OnMenuItemClicked"/>
+                    <Button Text="CatÃ©gories de documents" Style="{StaticResource MenuButtonStyle}" CommandParameter="//documents/categories" Clicked="OnMenuItemClicked"/>
                     <Button Text="Annonces"                Style="{StaticResource MenuButtonStyle}" CommandParameter="//annonces"             Clicked="OnMenuItemClicked"/>
-                    <Button Text="Catégories d'annonces"   Style="{StaticResource MenuButtonStyle}" CommandParameter="//annonces/categories"  Clicked="OnMenuItemClicked"/>
+                    <Button Text="CatÃ©gories d'annonces"   Style="{StaticResource MenuButtonStyle}" CommandParameter="//annonces/categories"  Clicked="OnMenuItemClicked"/>
 
                     <!-- MESSAGERIE -->
                     <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
@@ -230,8 +230,8 @@
                     <!-- PERSONNEL -->
                     <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
                     <Label Text="Personnel" FontAttributes="Bold"/>
-                    <Button Text="Employés"                 Style="{StaticResource MenuButtonStyle}" CommandParameter="//personnel/employes"   Clicked="OnMenuItemClicked"/>
-                    <Button Text="Plannings &amp; Présences" Style="{StaticResource MenuButtonStyle}" CommandParameter="//personnel/plannings" Clicked="OnMenuItemClicked"/>
+                    <Button Text="EmployÃ©s"                 Style="{StaticResource MenuButtonStyle}" CommandParameter="//personnel/employes"   Clicked="OnMenuItemClicked"/>
+                    <Button Text="Plannings &amp; PrÃ©sences" Style="{StaticResource MenuButtonStyle}" CommandParameter="//personnel/plannings" Clicked="OnMenuItemClicked"/>
 
                     <!-- RECRUTEMENT -->
                     <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
@@ -250,22 +250,22 @@
                     <Label Text="Notifications" FontAttributes="Bold"/>
                     <Button Text="Centre de notifications" Style="{StaticResource MenuButtonStyle}" CommandParameter="//notifications" Clicked="OnMenuItemClicked"/>
 
-                    <!-- UTILISATEURS & RÔLES -->
+                    <!-- UTILISATEURS & RÃ"LES -->
                     <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
-                    <Label Text="Utilisateurs &amp; Rôles" FontAttributes="Bold"/>
+                    <Label Text="Utilisateurs &amp; RÃ´les" FontAttributes="Bold"/>
                     <Button Text="Utilisateurs"            Style="{StaticResource MenuButtonStyle}" CommandParameter="//admin/utilisateurs" Clicked="OnMenuItemClicked"/>
-                    <Button Text="Rôles &amp; Permissions" Style="{StaticResource MenuButtonStyle}" CommandParameter="//admin/roles"        Clicked="OnMenuItemClicked"/>
+                    <Button Text="RÃ´les &amp; Permissions" Style="{StaticResource MenuButtonStyle}" CommandParameter="//admin/roles"        Clicked="OnMenuItemClicked"/>
 
-                    <!-- PARAMÈTRES / AIDE -->
+                    <!-- PARAMÃˆTRES / AIDE -->
                     <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
-                    <Label Text="Paramètres" FontAttributes="Bold"/>
+                    <Label Text="ParamÃ¨tres" FontAttributes="Bold"/>
                     <Button Text="Profil"         Style="{StaticResource MenuButtonStyle}" CommandParameter="//settings/profil"      Clicked="OnMenuItemClicked"/>
-                    <Button Text="Préférences"    Style="{StaticResource MenuButtonStyle}" CommandParameter="//settings/preferences" Clicked="OnMenuItemClicked"/>
-                    <Button Text="À propos &amp; Support" Style="{StaticResource MenuButtonStyle}" CommandParameter="//settings/a-propos"    Clicked="OnMenuItemClicked"/>
+                    <Button Text="PrÃ©fÃ©rences"    Style="{StaticResource MenuButtonStyle}" CommandParameter="//settings/preferences" Clicked="OnMenuItemClicked"/>
+                    <Button Text="Ã€ propos &amp; Support" Style="{StaticResource MenuButtonStyle}" CommandParameter="//settings/a-propos"    Clicked="OnMenuItemClicked"/>
 
-                    <!-- DÉCONNEXION -->
+                    <!-- DÃ‰CONNEXION -->
                     <BoxView HeightRequest="16" Opacity="0"/>
-                    <Button Text="Déconnexion"
+                    <Button Text="DÃ©connexion"
                             Style="{StaticResource LogoutButtonStyle}"
                             CommandParameter="//login"
                             Clicked="OnMenuItemClicked"/>

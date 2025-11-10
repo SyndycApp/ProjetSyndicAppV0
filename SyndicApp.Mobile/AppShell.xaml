@@ -16,9 +16,9 @@
     <!-- ======= Auth (pages racines) ======= -->
     <ShellContent Route="login" Title="Connexion"
                   ContentTemplate="{DataTemplate auth:LoginPage}" />
-    <ShellContent Route="register" Title="Créer un compte"
+    <ShellContent Route="register" Title="CrÃ©er un compte"
                   ContentTemplate="{DataTemplate auth:RegisterPage}" />
-    <ShellContent Route="forgot" Title="Mot de passe oublié"
+    <ShellContent Route="forgot" Title="Mot de passe oubliÃ©"
                   ContentTemplate="{DataTemplate auth:ForgotPasswordPage}" />
 
     <!-- ======= Dashboard (racine) ======= -->
@@ -29,14 +29,14 @@
     <ShellContent Route="appels" Title="Appels"
                   ContentTemplate="{DataTemplate views:AppelsPage}" />
 
-    <!-- ======= Résidences (racine) ======= -->
+    <!-- ======= RÃ©sidences (racine) ======= -->
     <ShellContent Route="residences"
-                  Title="Résidences"
+                  Title="RÃ©sidences"
                   ContentTemplate="{DataTemplate viewsRes:ResidencesPage}" />
 
-    <!-- ======= Bâtiments (racine) ======= -->
+    <!-- ======= BÃ¢timents (racine) ======= -->
     <ShellContent Route="batiments"
-                  Title="Bâtiments"
+                  Title="BÃ¢timents"
                   ContentTemplate="{DataTemplate viewsBat:BatimentsPage}" />
 
     <!-- ======= Lots (racine) ======= -->

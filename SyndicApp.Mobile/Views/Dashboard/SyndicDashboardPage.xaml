@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ContentPage
     x:Class="SyndicApp.Mobile.Views.Dashboard.SyndicDashboardPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -63,6 +63,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
+            <!-- Hamburger -->
             <Button x:Name="BtnOpen"
                     Grid.Column="0"
                     Text="☰"
@@ -105,28 +106,29 @@
                             </VerticalStackLayout>
                         </Frame>
 
-                        <Frame Style="{StaticResource KpiCardStyle}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1">
-                            <VerticalStackLayout Spacing="2">
-                                <Label Text="{Binding BatimentsCount}" Style="{StaticResource KpiValueStyle}"/>
-                                <Label Text="Bâtiments" Style="{StaticResource KpiLabelStyle}"/>
-                            </VerticalStackLayout>
-                        </Frame>
-                        
-
-                        <!-- Ligne 1 -->
-                        <Frame Style="{StaticResource KpiCardStyle}" Grid.Row="0" Grid.Column="2">
+                        <Frame Style="{StaticResource KpiCardStyle}" Grid.Row="0" Grid.Column="1">
                             <VerticalStackLayout Spacing="2">
                                 <Label Text="{Binding LotsCount}" Style="{StaticResource KpiValueStyle}"/>
                                 <Label Text="Lots" Style="{StaticResource KpiLabelStyle}"/>
                             </VerticalStackLayout>
                         </Frame>
 
+                        <!-- Ligne 1 -->
+                        <Frame Style="{StaticResource KpiCardStyle}" Grid.Row="1" Grid.Column="0">
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="{Binding BatimentsCount}" Style="{StaticResource KpiValueStyle}"/>
+                                <Label Text="Bâtiments" Style="{StaticResource KpiLabelStyle}"/>
+                            </VerticalStackLayout>
+                        </Frame>
+
+                        <!-- laisser la case (1,1) libre si tu veux -->
+
                         <!-- Ligne 2 -->
                         <Frame Style="{StaticResource KpiCardStyle}" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
                             <VerticalStackLayout Spacing="2">
                                 <HorizontalStackLayout Spacing="8">
                                     <Label Text="{Binding IncidentsOuverts}" Style="{StaticResource KpiValueStyle}"/>
-                                    <Label Text="▲" TextColor="#16A34A" VerticalTextAlignment="Center" />
+                                    <Label Text="↑" TextColor="#16A34A" VerticalTextAlignment="Center" />
                                 </HorizontalStackLayout>
                                 <Label Text="Incidents ouverts" Style="{StaticResource KpiLabelStyle}"/>
                             </VerticalStackLayout>
@@ -173,7 +175,7 @@
                         <Frame Style="{StaticResource KpiCardStyle}">
                             <VerticalStackLayout Spacing="8">
                                 <Grid ColumnDefinitions="*,Auto">
-                                    <Label Text="Taux d’occupation lots" />
+                                    <Label Text="Taux d’occupation des lots" />
                                     <Label Grid.Column="1" Text="{Binding TauxOccupationPct}" FontAttributes="Bold"/>
                                 </Grid>
                                 <ProgressBar Progress="{Binding TauxOccupation}" HeightRequest="8"/>
@@ -230,7 +232,7 @@
                            FontAttributes="Bold"
                            VerticalOptions="Center"/>
                     <Button Grid.Column="1"
-                            Text="→"
+                            Text="×"
                             FontSize="22"
                             BackgroundColor="Transparent"
                             TextColor="{StaticResource HeaderTextOnDark}"

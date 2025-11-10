@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Palette -->
+    <Color x:Key="TopbarColor">#2563EB</Color>
+    <Color x:Key="HeaderTextOnDark">#FFFFFF</Color>
+    <Color x:Key="BodyText">#111827</Color>
+    <Color x:Key="Divider">#E5E7EB</Color>
+    <Color x:Key="Chip">#F3F4F6</Color>
+
+    <!-- Labels par défaut -->
+    <Style TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource BodyText}" />
+    </Style>
+
+    <!-- Style neutre pour les boutons du drawer (évite le style implicite violet) -->
+    <Style x:Key="MenuButtonStyle" TargetType="Button" BasedOn="{x:Null}">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource BodyText}" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="Padding" Value="12,8" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+    </Style>
+
+    <Style x:Key="LogoutButtonStyle" TargetType="Button" BasedOn="{StaticResource MenuButtonStyle}">
+        <Setter Property="BackgroundColor" Value="{StaticResource Chip}" />
+    </Style>
+</ResourceDictionary>
