@@ -43,5 +43,16 @@ namespace SyndicApp.Mobile.Api
 
         [Post("/api/AffectationsLots/assigner-locataire")]
         Task<AffectationLotDto> AssignerLocataireAsync([Body] AssignerLocataireDto dto);
+
+
+        [Get("/api/Auth")]
+        Task<ApiResult<List<AuthListItemDto>>> GetAllUsersAsync();
+
+        // Lookup par q/role/take (pour résoudre un Id à partir du nom/label)
+        [Get("/api/Auth/lookup")]
+        Task<List<UserSelectItem>> LookupUsersAsync(
+            [Query] string? q = null,
+            [Query] string? role = null,
+            [Query] int take = 35);
     }
 }

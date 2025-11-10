@@ -60,7 +60,7 @@
                 <Label Text="Utilisateur" Opacity="0.9" />
                 <Frame Style="{StaticResource FieldContainer}">
                     <Picker ItemsSource="{Binding Users}"
-                            ItemDisplayBinding="{Binding FullName}"
+                            ItemDisplayBinding="{Binding Label}"
                             SelectedItem="{Binding SelectedUser}" />
                 </Frame>
             </VerticalStackLayout>

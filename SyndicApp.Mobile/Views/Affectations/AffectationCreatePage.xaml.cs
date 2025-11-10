@@ -9,6 +9,14 @@ namespace SyndicApp.Mobile.Views.Affectations
         {
             InitializeComponent();
             BindingContext ??= ServiceHelper.Get<AffectationCreateViewModel>();
+
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            if (BindingContext is AffectationCreateViewModel vm)
+                await vm.LoadAsync();
         }
     }
 }
