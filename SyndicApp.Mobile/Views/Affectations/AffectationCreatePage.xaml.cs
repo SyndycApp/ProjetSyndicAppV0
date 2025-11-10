@@ -18,5 +18,21 @@ namespace SyndicApp.Mobile.Views.Affectations
             if (BindingContext is AffectationCreateViewModel vm)
                 await vm.LoadAsync();
         }
+
+        private async void OnSaveClicked(object? sender, EventArgs e)
+        {
+            
+            if (BindingContext is AffectationCreateViewModel vm)
+            {
+                try
+                {
+                    await vm.CreateAsync(); // appelle la méthode marquée [RelayCommand]
+                }
+                catch (Exception ex)
+                {
+                    await DisplayAlert("Erreur", ex.Message, "OK");
+                }
+            }
+        }
     }
 }

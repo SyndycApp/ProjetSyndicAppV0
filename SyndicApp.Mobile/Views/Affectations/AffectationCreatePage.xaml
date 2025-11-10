@@ -91,7 +91,8 @@
 
             <Button Text="Enregistrer"
                     Style="{StaticResource PrimaryButton}"
-                    Command="{Binding CreateAsyncCommand}" />
+                    Command="{Binding CreateAsyncCommand}" 
+                    Clicked="OnSaveClicked"/>
 
         </VerticalStackLayout>
     </ScrollView>
