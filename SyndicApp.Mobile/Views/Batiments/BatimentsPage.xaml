@@ -111,7 +111,12 @@
                         <Label Text="Résidences &amp; Lots" FontAttributes="Bold"/>
                         <Button Text="Résidences" Style="{StaticResource MenuButtonStyle}" CommandParameter="//residences" Clicked="OnMenuItemClicked"/>
                         <Button Text="Bâtiments"  Style="{StaticResource MenuButtonStyle}" CommandParameter="//batiments"  Clicked="OnMenuItemClicked"/>
-                        <Button Text="Lots"       Style="{StaticResource MenuButtonStyle}" CommandParameter="//lots"       Clicked="OnMenuItemClicked"/>
+                        <Button Text="Lots" Style="{StaticResource MenuButtonStyle}" CommandParameter="//lots" Clicked="OnMenuItemClicked"/>
+                        <Button Text="Affectations des lots"  Style="{StaticResource MenuButtonStyle}" CommandParameter="//affectation-lots"			  Clicked="OnMenuItemClicked" />
+
+                        <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
+                        <Label Text="Finances" FontAttributes="Bold"/>
+                        <Button Text="Appels de fonds" Style="{StaticResource MenuButtonStyle}" CommandParameter="//appels" Clicked="OnMenuItemClicked"/>
 
                         <BoxView HeightRequest="16" Opacity="0"/>
                         <Button Text="Déconnexion" Style="{StaticResource LogoutButtonStyle}"

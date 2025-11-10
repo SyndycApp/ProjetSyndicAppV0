@@ -140,12 +140,12 @@
 						<!-- RÉSIDENCES / LOTS -->
 						<BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
 						<Label Text="Résidences &amp; Lots" FontAttributes="Bold"/>
-						<Button Text="Résidences"            Style="{StaticResource MenuButtonStyle}" CommandParameter="//residences"                    Clicked="OnMenuItemClicked"/>
+						<Button Text="Résidences"            Style="{StaticResource MenuButtonStyle}"  CommandParameter="//residences"                     Clicked="OnMenuItemClicked"/>
 						<Button Text="Bâtiments"              Style="{StaticResource MenuButtonStyle}" CommandParameter="//batiments"                     Clicked="OnMenuItemClicked"/>
 						<Button Text="Lots"                   Style="{StaticResource MenuButtonStyle}" CommandParameter="//lots"                          Clicked="OnMenuItemClicked"/>
-						<Button Text="Affectations des lots"  Style="{StaticResource MenuButtonStyle}" CommandParameter="//affectations-lots"            Clicked="OnMenuItemClicked"/>
-						<Button Text="Occupant actuel"        Style="{StaticResource MenuButtonStyle}" CommandParameter="//lots/occupant-actuel"         Clicked="OnMenuItemClicked"/>
-						<Button Text="Historique affectations" Style="{StaticResource MenuButtonStyle}" CommandParameter="//lots/affectations/historique" Clicked="OnMenuItemClicked"/>
+						<Button Text="Affectations des lots"  Style="{StaticResource MenuButtonStyle}" CommandParameter="//affectation-lots"			  Clicked="OnMenuItemClicked" />
+						<Button Text="Occupant actuel"        Style="{StaticResource MenuButtonStyle}" CommandParameter="//lots/occupant-actuel"          Clicked="OnMenuItemClicked"/>
+						<Button Text="Historique affectations" Style="{StaticResource MenuButtonStyle}" CommandParameter="//affectation-historique" Clicked="OnMenuItemClicked"/>
 
 						<!-- FINANCES -->
 						<BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />

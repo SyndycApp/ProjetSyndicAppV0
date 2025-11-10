@@ -28,6 +28,7 @@ namespace SyndicApp.Mobile.Api
 
         [Get("/api/Lots/resolve-id")]
         Task<IdResponse> ResolveIdAsync([Query] string numeroLot, [Query] string type);
+
     }
 
     public class IdResponse { public Guid Id { get; set; } }

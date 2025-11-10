@@ -1,6 +1,7 @@
 ﻿namespace SyndicApp.Mobile;
 
 using SyndicApp.Mobile.Views;
+using SyndicApp.Mobile.Views.Affectations;
 using SyndicApp.Mobile.Views.Auth;
 using SyndicApp.Mobile.Views.Batiments;
 using SyndicApp.Mobile.Views.Finances;
@@ -41,5 +42,10 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("lot-create", typeof(LotCreatePage));
         Routing.RegisterRoute("lot-details", typeof(LotDetailsPage));
         Routing.RegisterRoute("lot-edit", typeof(LotEditPage));
+
+        // ===== Affectations secondaires =====
+        Routing.RegisterRoute("affectation-create", typeof(AffectationCreatePage));
+        Routing.RegisterRoute("affectation-details", typeof(AffectationDetailsPage));
+        Routing.RegisterRoute("affectation-historique", typeof(AffectationHistoriquePage));
     }
 }

@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SyndicApp.Mobile.Views.Affectations.AffectationCreatePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Nouvelle affectation"
+    BackgroundColor="White"
+    Shell.NavBarIsVisible="True">
+
+    <!-- === Styles: seulement couleurs/texte === -->
+    <ContentPage.Resources>
+        <Color x:Key="BrandBlue">#2563EB</Color>
+        <Color x:Key="TextDark">#111827</Color>
+        <Color x:Key="FieldBorder">#E5E7EB</Color>
+        <Color x:Key="Hint">#6B7280</Color>
+
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="{StaticResource TextDark}" />
+        </Style>
+
+        <Style TargetType="Picker">
+            <Setter Property="TextColor" Value="{StaticResource TextDark}" />
+            <Setter Property="BackgroundColor" Value="White" />
+        </Style>
+
+        <Style TargetType="DatePicker">
+            <Setter Property="TextColor" Value="{StaticResource TextDark}" />
+            <Setter Property="BackgroundColor" Value="White" />
+        </Style>
+
+        <Style TargetType="Switch">
+            <Setter Property="OnColor" Value="{StaticResource BrandBlue}" />
+            <Setter Property="ThumbColor" Value="White" />
+        </Style>
+
+        <Style x:Key="PrimaryButton" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="{StaticResource BrandBlue}" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="CornerRadius" Value="24" />
+            <Setter Property="Padding" Value="14,12" />
+        </Style>
+
+        <!-- juste pour encadrer visuellement les champs, sans toucher au binding -->
+        <Style x:Key="FieldContainer" TargetType="Frame">
+            <Setter Property="Padding" Value="12" />
+            <Setter Property="HasShadow" Value="False" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="BackgroundColor" Value="White" />
+            <Setter Property="BorderColor" Value="{StaticResource FieldBorder}" />
+        </Style>
+    </ContentPage.Resources>
+
+    <ScrollView Padding="16">
+        <VerticalStackLayout Spacing="16">
+
+            <Label Text="Créer une affectation" FontSize="28" FontAttributes="Bold" />
+
+            <!-- Utilisateur -->
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Utilisateur" Opacity="0.9" />
+                <Frame Style="{StaticResource FieldContainer}">
+                    <Picker ItemsSource="{Binding Users}"
+                            ItemDisplayBinding="{Binding FullName}"
+                            SelectedItem="{Binding SelectedUser}" />
+                </Frame>
+            </VerticalStackLayout>
+
+            <!-- Lot -->
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Lot" Opacity="0.9" />
+                <Frame Style="{StaticResource FieldContainer}">
+                    <Picker ItemsSource="{Binding Lots}"
+                            ItemDisplayBinding="{Binding NumeroLot}"
+                            SelectedItem="{Binding SelectedLot}" />
+                </Frame>
+            </VerticalStackLayout>
+
+            <!-- Date début -->
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Date début" Opacity="0.9" />
+                <Frame Style="{StaticResource FieldContainer}">
+                    <DatePicker Date="{Binding DateDebut}" />
+                </Frame>
+            </VerticalStackLayout>
+
+            <!-- Est propriétaire -->
+            <Grid ColumnDefinitions="*,Auto" Padding="0,8,0,0">
+                <Label Text="Est propriétaire ?" Grid.Column="0" VerticalOptions="Center" />
+                <Switch IsToggled="{Binding EstProprietaire}" Grid.Column="1" />
+            </Grid>
+
+            <Button Text="Enregistrer"
+                    Style="{StaticResource PrimaryButton}"
+                    Command="{Binding CreateAsyncCommand}" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

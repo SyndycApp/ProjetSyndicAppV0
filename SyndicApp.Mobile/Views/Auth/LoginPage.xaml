@@ -25,7 +25,7 @@
 
                     <!-- Logo + Titre -->
                     <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
-                        <Image Source="logo.png" WidthRequest="64" HeightRequest="64" Aspect="AspectFit"/>
+                        <Image Source="logo.png" WidthRequest="94" HeightRequest="94" Aspect="AspectFit"/>
                         <Label Text="Connexion"
                                FontSize="26"
                                FontAttributes="Bold"
@@ -75,7 +75,7 @@
                         </VerticalStackLayout>
 
                         <!-- Lien mot de passe oubliÃ© -->
-                        <Label Text="Mot de passe oubliÃ© ?"
+                        <Label Text="Mot de passe oublié ?"
                                TextColor="#1E63E9"
                                HorizontalOptions="End"
                                FontSize="13">
@@ -104,7 +104,7 @@
                                             Spacing="6"
                                             Margin="0,4,0,0">
                         <Label Text="Pas de compte ?" TextColor="#6B7280" />
-                        <Label Text="CrÃ©er un compte"
+                        <Label Text="Créer un compte"
                                TextColor="#1E63E9"
                                FontAttributes="Bold">
                             <Label.GestureRecognizers>

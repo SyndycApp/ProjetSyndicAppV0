@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SyndicApp.Mobile.Views.Affectations.AffectationDetailsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Détails affectation"
+    BackgroundColor="White"
+    Shell.NavBarIsVisible="True">
+
+    <ScrollView Padding="16">
+        <VerticalStackLayout Spacing="12">
+            <Label Text="Détails de l'affectation" FontSize="22" FontAttributes="Bold"/>
+
+            <Frame BorderColor="#E5E7EB" CornerRadius="12" HasShadow="False" Padding="14">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="{Binding Item.LotNumero, StringFormat='Lot : {0}'}" />
+                    <Label Text="{Binding Item.UserNom, StringFormat='Utilisateur : {0}'}" />
+                    <Label Text="{Binding Item.Statut, StringFormat='Statut : {0}'}" />
+                    <Label Text="{Binding Item.EstProprietaire, StringFormat='Propriétaire : {0}'}" />
+                    <Label Text="{Binding Item.DateDebut, StringFormat='Début : {0:dd/MM/yyyy}'}" />
+                    <Label Text="{Binding Item.DateFin, StringFormat='Fin : {0:dd/MM/yyyy}'}" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <HorizontalStackLayout Spacing="10">
+                <Button Text="Clôturer" Command="{Binding CloturerAsyncCommand}" />
+                <Button Text="Changer statut" Command="{Binding ToggleStatutAsyncCommand}" />
+                <Button Text="Historique" Command="{Binding OpenHistoriqueAsyncCommand}" />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

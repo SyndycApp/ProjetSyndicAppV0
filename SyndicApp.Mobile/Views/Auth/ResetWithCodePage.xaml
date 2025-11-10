@@ -23,7 +23,7 @@
             <VerticalStackLayout Spacing="16">
                 <!-- Header -->
                 <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
-                    <Image Source="logo.png" WidthRequest="64" HeightRequest="64" Aspect="AspectFit"/>
+                    <Image Source="logo.png" WidthRequest="120" HeightRequest="120" Aspect="AspectFit"/>
                     <Label Text="Nouveau mot de passe" FontSize="22" FontAttributes="Bold" TextColor="#1C1C1E"/>
                 </VerticalStackLayout>
 

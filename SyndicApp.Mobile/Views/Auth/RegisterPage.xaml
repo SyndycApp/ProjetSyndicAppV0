@@ -25,8 +25,8 @@
 
                     <!-- Logo + Titre -->
                     <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
-                        <Image Source="logo.png" WidthRequest="64" HeightRequest="64" Aspect="AspectFit"/>
-                        <Label Text="CrÃ©er un compte" FontSize="26" FontAttributes="Bold" TextColor="#1C1C1E" />
+                        <Image Source="logo.png" WidthRequest="120" HeightRequest="120" Aspect="AspectFit"/>
+                        <Label Text="Créer un compte" FontSize="26" FontAttributes="Bold" TextColor="#1C1C1E" />
                     </VerticalStackLayout>
 
                     <!-- Erreur -->
@@ -81,11 +81,11 @@
                         </VerticalStackLayout>
 
                         <VerticalStackLayout Spacing="6">
-                            <Label Text="RÃ´le *" FontSize="12" TextColor="#6B7280"/>
+                            <Label Text="ROle *" FontSize="12" TextColor="#6B7280"/>
                             <Border StrokeShape="RoundRectangle 8" BackgroundColor="#FFFFFF" Padding="8">
                                 <Picker ItemsSource="{Binding Roles}"
                                         SelectedItem="{Binding SelectedRole}"
-                                        Title="Choisis un rÃ´le"
+                                        Title="Choisis un rOle"
                                         TextColor="Black"/>
                             </Border>
                         </VerticalStackLayout>
@@ -115,7 +115,7 @@
                     </VerticalStackLayout>
 
                     <!-- CTA -->
-                    <Button Text="CrÃ©er mon compte"
+                    <Button Text="Créer mon compte"
                             Command="{Binding RegisterCommand}"
                             HeightRequest="48"
                             FontAttributes="Bold"
@@ -129,7 +129,7 @@
                     <HorizontalStackLayout HorizontalOptions="Center"
                                             Spacing="6"
                                             Margin="0,4,0,0">
-                        <Label Text="DÃ©jÃ  un compte ?" TextColor="#6B7280" />
+                        <Label Text="Déjà  un compte ?" TextColor="#6B7280" />
                         <Label Text="Se connecter" TextColor="#1E63E9" FontAttributes="Bold">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding GoToLoginCommand}" />

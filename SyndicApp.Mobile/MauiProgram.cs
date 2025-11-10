@@ -3,19 +3,22 @@ using SyndicApp.Mobile.Api;
 using SyndicApp.Mobile.Converters;
 using SyndicApp.Mobile.Handlers;
 using SyndicApp.Mobile.Services;
+using SyndicApp.Mobile.ViewModels.Affectations;
 using SyndicApp.Mobile.ViewModels.Auth;
 using SyndicApp.Mobile.ViewModels.Batiments;
 using SyndicApp.Mobile.ViewModels.Dashboard;
 using SyndicApp.Mobile.ViewModels.Finances;
+using SyndicApp.Mobile.ViewModels.Lots;
 using SyndicApp.Mobile.ViewModels.Residences;
 using SyndicApp.Mobile.Views;
 using SyndicApp.Mobile.Views.Auth;
 using SyndicApp.Mobile.Views.Batiments;
 using SyndicApp.Mobile.Views.Dashboard;
 using SyndicApp.Mobile.Views.Finances;
-using SyndicApp.Mobile.Views.Residences;
-using SyndicApp.Mobile.ViewModels.Lots;
 using SyndicApp.Mobile.Views.Lots;
+using SyndicApp.Mobile.Views.Residences;
+using SyndicApp.Mobile.Views.Affectations;
+
 using System.Text.Json;
 
 namespace SyndicApp.Mobile;
@@ -28,7 +31,7 @@ public static class MauiProgram
         builder.UseMauiApp<App>();
 
         // Choisis la bonne URL :        
-        const string BaseUrl = "http://192.168.2.67:5041";
+        const string BaseUrl = "http://192.168.0.103:5041";
 
 
         // Refit JSON insensible à la casse
@@ -82,6 +85,9 @@ public static class MauiProgram
         AddSecured<IResidencesApi>();
         AddSecured<IBatimentsApi>();
         AddSecured<ILotsApi>();
+        AddSecured<IUsersApi>();
+        AddSecured<IAffectationsLotsApi>();
+        AddSecured<IAffectationLotsApiAlt>();
 
         // VMs
         builder.Services.AddTransient<LoginViewModel>();
@@ -106,7 +112,10 @@ public static class MauiProgram
         builder.Services.AddTransient<LotEditViewModel>();
         builder.Services.AddTransient<LotCreateViewModel>();
         builder.Services.AddTransient<LotsListViewModel>();
-
+        builder.Services.AddTransient<AffectationsListViewModel>();
+        builder.Services.AddTransient<AffectationCreateViewModel>();
+        builder.Services.AddTransient<AffectationDetailsViewModel>();
+        builder.Services.AddTransient<AffectationHistoriqueViewModel>();
 
 
         // Converters (si DI utilisé)
@@ -138,6 +147,10 @@ public static class MauiProgram
         builder.Services.AddTransient<LotEditPage>();
         builder.Services.AddTransient<LotCreatePage>();
         builder.Services.AddTransient<LotsPage>();
+        builder.Services.AddTransient<AffectationsPage>();
+        builder.Services.AddTransient<AffectationCreatePage>();
+        builder.Services.AddTransient<AffectationDetailsPage>();
+        builder.Services.AddTransient<AffectationHistoriquePage>();
 
         var app = builder.Build();
         ServiceHelper.Services = app.Services;

@@ -10,6 +10,7 @@
     xmlns:layout="clr-namespace:SyndicApp.Mobile.Views"
     xmlns:viewsBat="clr-namespace:SyndicApp.Mobile.Views.Batiments"
     xmlns:viewsLot="clr-namespace:SyndicApp.Mobile.Views.Lots"
+    xmlns:viewsALot="clr-namespace:SyndicApp.Mobile.Views.Affectations"
     Shell.NavBarIsVisible="False"
     Shell.FlyoutBehavior="Disabled">
 
@@ -44,7 +45,14 @@
                   Title="Lots"
                   ContentTemplate="{DataTemplate viewsLot:LotsPage}" />
 
+    <!-- ======= Affectation Lots (racine) ======= -->
+    <ShellContent Route="affectation-lots"
+                  Title="Affectation des lots"
+                  ContentTemplate="{DataTemplate viewsALot:AffectationsPage}" />
+
     <!-- ======= Drawer (racine) ======= -->
     <ShellContent Route="drawer" Title="SyndicApp"
                   ContentTemplate="{DataTemplate layout:DrawerPage}" />
+    
+    
 </Shell>
