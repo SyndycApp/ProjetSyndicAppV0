@@ -1626,6 +1626,9 @@
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiILotsApi.ResolveIdAsync(System.String,System.String)">
             <inheritdoc />
         </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiILotsApi.ResolveManyAsync(System.String,System.String)">
+            <inheritdoc />
+        </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiILotsApi.SyndicApp#Mobile#Api#ILotsApi#GetAllAsync">
             <inheritdoc />
         </member>
@@ -1645,6 +1648,9 @@
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiILotsApi.SyndicApp#Mobile#Api#ILotsApi#ResolveIdAsync(System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiILotsApi.SyndicApp#Mobile#Api#ILotsApi#ResolveManyAsync(System.String,System.String)">
             <inheritdoc />
         </member>
         <member name="T:Refit.Implementation.Generated.SyndicAppMobileApiIPasswordApi">

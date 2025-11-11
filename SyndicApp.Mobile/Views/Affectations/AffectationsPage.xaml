@@ -3,6 +3,7 @@
     x:Class="SyndicApp.Mobile.Views.Affectations.AffectationsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:SyndicApp.Mobile.Converters"
     x:Name="RootPage"
     Title="Affectations"
     BackgroundColor="White"
@@ -14,9 +15,16 @@
         <Color x:Key="BodyText">#111827</Color>
         <Color x:Key="Divider">#E5E7EB</Color>
         <Color x:Key="Chip">#F3F4F6</Color>
+        <converters:BoolToOuiNonConverter x:Key="BoolToOuiNonConverter" />
 
         <Style TargetType="Label">
             <Setter Property="TextColor" Value="{StaticResource BodyText}" />
+        </Style>
+
+        <Style TargetType="Picker">
+             <Setter Property="TextColor" Value="Black" />
+             <Setter Property="TitleColor" Value="#6B7280" />
+             <Setter Property="BackgroundColor" Value="White" />
         </Style>
 
         <Style x:Key="MenuButtonStyle" TargetType="Button">
@@ -107,24 +115,23 @@
                 </Grid>
 
                 <!-- Filtres -->
-                <Grid Row="1" ColumnDefinitions="*,Auto,Auto" RowDefinitions="Auto,Auto">
-                    <SearchBar Grid.Row="0" Grid.ColumnSpan="3"
-                               Placeholder="Rechercher (nom / n° lot)"
-                               Text="{Binding SearchText}"
-                               SearchCommand="{Binding FilterCommand}" />
-
+                <Grid Row="1" ColumnDefinitions="*,*,Auto" RowDefinitions="Auto,Auto">
                     <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="4">
                         <Label Text="Utilisateur" Style="{StaticResource FieldLabelStyle}" />
                         <Picker ItemsSource="{Binding Users}"
                                 ItemDisplayBinding="{Binding FullName}"
-                                SelectedItem="{Binding SelectedUser}" />
+                                SelectedItem="{Binding SelectedUser}"
+                                TextColor="Black" BackgroundColor="White" />
                     </VerticalStackLayout>
 
                     <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="4">
                         <Label Text="Lot" Style="{StaticResource FieldLabelStyle}" />
                         <Picker ItemsSource="{Binding Lots}"
                                 ItemDisplayBinding="{Binding NumeroLot}"
-                                SelectedItem="{Binding SelectedLot}" />
+                                SelectedItem="{Binding SelectedLot}"
+                                Title="Tous"
+                                HorizontalOptions="FillAndExpand"
+                                TextColor="Black" BackgroundColor="White" />
                     </VerticalStackLayout>
 
                     <VerticalStackLayout Grid.Row="1" Grid.Column="2" Spacing="4" HorizontalOptions="End">
@@ -171,9 +178,10 @@
 
                                     <Grid Grid.Row="1" Grid.ColumnSpan="2" ColumnDefinitions="Auto,Auto,*,Auto"
                                           Margin="0,40,0,0">
-                                        <Label Grid.Column="0" Text="Propriétaire :" Opacity="0.7"/>
-                                        <Label Grid.Column="1" Text="{Binding EstProprietaire}" />
-                                        <Label Grid.Column="2" />
+                                         <Label Grid.Column="0" Text="Propriétaire :" Opacity="0.7"/>
+                                         <Label Grid.Column="1"
+                                                Text="{Binding EstProprietaire, Converter={StaticResource BoolToOuiNonConverter}}" />
+                                         <Label Grid.Column="2" />
                                         <Button Grid.Column="3"
                                                 Text="Détails"
                                                 Style="{StaticResource OutlineButtonStyle}"
