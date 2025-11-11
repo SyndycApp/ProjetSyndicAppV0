@@ -3,30 +3,113 @@
     x:Class="SyndicApp.Mobile.Views.Affectations.AffectationDetailsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:SyndicApp.Mobile.Converters"
     Title="Détails affectation"
     BackgroundColor="White"
-    Shell.NavBarIsVisible="True">
+    Shell.NavBarIsVisible="True"
+    Shell.BackgroundColor="#2563EB"
+    Shell.TitleColor="White"
+    Shell.ForegroundColor="White">
 
-    <ScrollView Padding="16">
-        <VerticalStackLayout Spacing="12">
-            <Label Text="Détails de l'affectation" FontSize="22" FontAttributes="Bold"/>
+    <ContentPage.Resources>
+        <Color x:Key="TopbarColor">#2563EB</Color>
+        <Color x:Key="HeaderTextOnDark">#FFFFFF</Color>
+        <Color x:Key="BodyText">#111827</Color>
+        <Color x:Key="Divider">#E5E7EB</Color>
+        <Color x:Key="Danger">#DC2626</Color>
 
-            <Frame BorderColor="#E5E7EB" CornerRadius="12" HasShadow="False" Padding="14">
+        <converters:BoolToOuiNonConverter x:Key="BoolToOuiNonConverter" />
+
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
+        </Style>
+
+        <Style x:Key="TitleLabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
+        </Style>
+
+        <Style x:Key="CardStyle" TargetType="Frame">
+            <Setter Property="HasShadow" Value="False"/>
+            <Setter Property="CornerRadius" Value="14"/>
+            <Setter Property="Padding" Value="14"/>
+            <Setter Property="BackgroundColor" Value="White"/>
+            <Setter Property="BorderColor" Value="{StaticResource Divider}"/>
+        </Style>
+
+        <!-- bouton contour bleu -->
+        <Style x:Key="OutlineButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="TextColor" Value="#2563EB"/>
+            <Setter Property="BorderColor" Value="#2563EB"/>
+            <Setter Property="BorderWidth" Value="1"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Padding" Value="14,10"/>
+        </Style>
+
+        <!-- bouton contour rouge -->
+        <Style x:Key="DangerOutlineButtonStyle" TargetType="Button" BasedOn="{StaticResource OutlineButtonStyle}">
+            <Setter Property="TextColor" Value="{StaticResource Danger}"/>
+            <Setter Property="BorderColor" Value="{StaticResource Danger}"/>
+        </Style>
+    </ContentPage.Resources>
+
+    <ScrollView Padding="16,16,16,32">
+        <VerticalStackLayout Spacing="16">
+
+            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8" Margin="0,0,0,4">
+    <Label
+        Grid.Column="0"
+        Text="Détails de l'affectation"
+        Style="{StaticResource TitleLabelStyle}"
+        VerticalOptions="Center"
+        LineBreakMode="TailTruncation" 
+        MaxLines="1" />
+    
+    <Button
+        Grid.Column="1"
+        Text="🗑"
+        Style="{StaticResource DangerOutlineButtonStyle}"
+        WidthRequest="44"
+        HeightRequest="40"
+        Padding="0"
+        HorizontalOptions="End"
+        VerticalOptions="Center"
+        Command="{Binding DeleteCommand}" />
+</Grid>
+
+            <!-- Carte détails -->
+            <Frame Style="{StaticResource CardStyle}">
                 <VerticalStackLayout Spacing="6">
                     <Label Text="{Binding Item.LotNumero, StringFormat='Lot : {0}'}" />
-                    <Label Text="{Binding Item.UserNom, StringFormat='Utilisateur : {0}'}" />
-                    <Label Text="{Binding Item.Statut, StringFormat='Statut : {0}'}" />
-                    <Label Text="{Binding Item.EstProprietaire, StringFormat='Propriétaire : {0}'}" />
+                    <Label Text="{Binding Item.UserNom,   StringFormat='Utilisateur : {0}'}" />
+                    <Label Text="{Binding Item.Statut,    StringFormat='Statut : {0}'}" />
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6">
+                        <Label Grid.Column="0" Text="Propriétaire :" />
+                        <Label Grid.Column="1"
+                               Text="{Binding Item.EstProprietaire, Converter={StaticResource BoolToOuiNonConverter}}" />
+                    </Grid>
                     <Label Text="{Binding Item.DateDebut, StringFormat='Début : {0:dd/MM/yyyy}'}" />
-                    <Label Text="{Binding Item.DateFin, StringFormat='Fin : {0:dd/MM/yyyy}'}" />
+                    <Label Text="{Binding Item.DateFin,   StringFormat='Fin : {0:dd/MM/yyyy}'}" />
                 </VerticalStackLayout>
             </Frame>
 
-            <HorizontalStackLayout Spacing="10">
-                <Button Text="Clôturer" Command="{Binding CloturerCommand}" />
-                <Button Text="Changer statut" Command="{Binding ToggleStatutCommand}" />
-                <Button Text="Historique" Command="{Binding OpenHistoriqueCommand}" />
+            <!-- Boutons secondaires -->
+            <HorizontalStackLayout Spacing="12" Padding="0,0,0,8">
+                <Button Text="Clôturer"
+                        Style="{StaticResource OutlineButtonStyle}"
+                        Command="{Binding CloturerCommand}" />
+
+                <Button Text="Changer statut"
+                        Style="{StaticResource OutlineButtonStyle}"
+                        Command="{Binding ToggleStatutCommand}" />
+
+                <Button Text="Historique"
+                        Style="{StaticResource OutlineButtonStyle}"
+                        Command="{Binding OpenHistoriqueCommand}" />
             </HorizontalStackLayout>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

@@ -11,10 +11,12 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
     public partial class AffectationDetailsViewModel : ObservableObject
     {
         private readonly IAffectationsLotsApi _api;
+        private readonly ILotsApi _lotsApi;
 
-        public AffectationDetailsViewModel(IAffectationsLotsApi api)
+        public AffectationDetailsViewModel(IAffectationsLotsApi api, ILotsApi lotsApi)
         {
             _api = api;
+            _lotsApi = lotsApi;
         }
 
         // Route param brut
@@ -30,18 +32,61 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
         [RelayCommand]
         public async Task LoadAsync()
         {
-            // Parse sûr
+            // ✅ Validation du paramètre de navigation
             if (!Guid.TryParse(IdParam, out var guid))
             {
                 await Shell.Current.DisplayAlert("Navigation", "Identifiant invalide.", "OK");
                 return;
             }
+
             Id = guid;
 
             try
             {
                 IsBusy = true;
+
+                // 1️⃣ Charger les données principales
                 Item = await _api.GetByIdAsync(guid);
+
+                // 2️⃣ Compléter les champs manquants (Lot / User)
+                if (Item != null)
+                {
+                    // 🔹 Compléter LotNumero si absent
+                    if (string.IsNullOrWhiteSpace(Item.LotNumero) && Item.LotId != Guid.Empty)
+                    {
+                        try
+                        {
+                            var lot = await _lotsApi.GetByIdAsync(Item.LotId);
+                            if (lot != null)
+                                Item.LotNumero = lot.NumeroLot;
+                        }
+                        catch
+                        {
+                            // On ignore toute erreur, ne casse pas le flux
+                        }
+                    }
+
+                    // 🔹 Compléter UserNom si absent
+                    if (string.IsNullOrWhiteSpace(Item.UserNom) && Item.UserId != Guid.Empty)
+                    {
+                        try
+                        {
+                            var usersRes = await _api.GetAllUsersAsync(); // ApiResult<List<AuthListItemDto>>
+                            var u = usersRes?.Data?.FirstOrDefault(x => x.Id == Item.UserId);
+                            if (u != null)
+                                Item.UserNom = !string.IsNullOrWhiteSpace(u.FullName)
+                                    ? u.FullName!
+                                    : (u.Email ?? u.Id.ToString());
+                        }
+                        catch
+                        {
+                            // idem, silencieux
+                        }
+                    }
+
+                    // 🔄 Notifie la vue que Item a été mis à jour
+                    OnPropertyChanged(nameof(Item));
+                }
             }
             catch (ApiException apiEx)
             {
@@ -56,6 +101,45 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
                 IsBusy = false;
             }
         }
+
+        [RelayCommand]
+        public async Task DeleteAsync()
+        {
+            if (Item is null) return;
+
+            var confirm = await Shell.Current.DisplayAlert(
+                "Supprimer",
+                "Confirmer la suppression de cette affectation ?",
+                "Supprimer", "Annuler");
+            if (!confirm) return;
+
+            try
+            {
+                // 🔹 Appel à l'API
+                await _api.DeleteAsync(Item.Id);
+
+                // 🔹 Si tout va bien → message + retour
+                await Shell.Current.DisplayAlert("OK", "Affectation supprimée avec succès.", "OK");
+                await Shell.Current.GoToAsync("//affectation-lots"); // ✅ retour vers la liste complète
+            }
+            catch (ApiException apiEx) when ((int)apiEx.StatusCode == 204)
+            {
+                // ✅ Cas NoContent (succès silencieux)
+                await Shell.Current.DisplayAlert("OK", "Affectation supprimée avec succès.", "OK");
+                await Shell.Current.GoToAsync("//affectation-lots");
+            }
+            catch (ApiException apiEx)
+            {
+                await Shell.Current.DisplayAlert("API",
+                    $"{(int)apiEx.StatusCode} - {apiEx.StatusCode}\n{apiEx.Content}", "OK");
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Erreur", ex.Message, "OK");
+            }
+        }
+
+
 
         [RelayCommand]
         public async Task CloturerAsync()

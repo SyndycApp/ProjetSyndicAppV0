@@ -45,6 +45,7 @@
             <inheritdoc/>
             <inheritdoc/>
             <inheritdoc/>
+            <inheritdoc/>
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.IdParam">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.idParam"/>
@@ -63,6 +64,12 @@
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.LoadCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.LoadAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.deleteCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.DeleteCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.DeleteCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.DeleteAsync"/>.</summary>
         </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.cloturerCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.CloturerCommand"/>.</summary>
