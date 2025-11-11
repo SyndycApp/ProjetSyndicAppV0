@@ -23,9 +23,9 @@
             </Frame>
 
             <HorizontalStackLayout Spacing="10">
-                <Button Text="Clôturer" Command="{Binding CloturerAsyncCommand}" />
-                <Button Text="Changer statut" Command="{Binding ToggleStatutAsyncCommand}" />
-                <Button Text="Historique" Command="{Binding OpenHistoriqueAsyncCommand}" />
+                <Button Text="Clôturer" Command="{Binding CloturerCommand}" />
+                <Button Text="Changer statut" Command="{Binding ToggleStatutCommand}" />
+                <Button Text="Historique" Command="{Binding OpenHistoriqueCommand}" />
             </HorizontalStackLayout>
         </VerticalStackLayout>
     </ScrollView>

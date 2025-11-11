@@ -5,7 +5,8 @@ using SyndicApp.Mobile.Models;
 
 namespace SyndicApp.Mobile.ViewModels.Affectations
 {
-    [QueryProperty(nameof(LotId), "lotId")]
+    // ⬇️ Recevoir le paramètre de route "lotId" en string
+    [QueryProperty(nameof(LotIdParam), "lotId")]
     public partial class AffectationHistoriqueViewModel : ObservableObject
     {
         private readonly IAffectationsLotsApi _api;
@@ -16,15 +17,25 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
             Items = new();
         }
 
+        // Param brut reçu via Shell
+        [ObservableProperty] private string? lotIdParam;
+
+        // Optionnel: garder le Guid parsé si tu veux l’exposer
         [ObservableProperty] private Guid lotId;
+
         // On reste sur ton modèle unique
         [ObservableProperty] private List<AffectationLotDto> items;
 
         [RelayCommand]
         public async Task LoadAsync()
         {
-            if (LotId == Guid.Empty) return;
-            var data = await _api.GetHistoriqueByLotAsync(LotId);
+            // ✅ Parse sécurisé
+            if (!Guid.TryParse(LotIdParam, out var gid))
+                return;
+
+            LotId = gid;
+
+            var data = await _api.GetHistoriqueByLotAsync(gid);
             Items = data?.ToList() ?? new List<AffectationLotDto>();
         }
     }
