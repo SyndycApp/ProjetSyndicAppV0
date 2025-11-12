@@ -7,6 +7,7 @@ using SyndicApp.Mobile.Views.Batiments;
 using SyndicApp.Mobile.Views.Finances;
 using SyndicApp.Mobile.Views.Lots;
 using SyndicApp.Mobile.Views.Residences;
+using SyndicApp.Mobile.Views.Dashboard;
 
 public partial class AppShell : Shell
 {
@@ -47,5 +48,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("affectation-create", typeof(AffectationCreatePage));
         Routing.RegisterRoute("affectation-details", typeof(AffectationDetailsPage));
         Routing.RegisterRoute("affectation-historique", typeof(AffectationHistoriquePage));
+
+
     }
 }

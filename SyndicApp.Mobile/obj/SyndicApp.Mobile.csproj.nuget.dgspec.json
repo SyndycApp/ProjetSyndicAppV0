@@ -56,6 +56,10 @@
               "target": "Package",
               "version": "[8.4.0, )"
             },
+            "Microcharts.Maui": {
+              "target": "Package",
+              "version": "[1.0.1, )"
+            },
             "Microsoft.Extensions.Logging.Debug": {
               "target": "Package",
               "version": "[9.0.10, )"

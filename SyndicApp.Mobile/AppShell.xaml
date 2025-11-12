@@ -17,9 +17,9 @@
     <!-- ======= Auth (pages racines) ======= -->
     <ShellContent Route="login" Title="Connexion"
                   ContentTemplate="{DataTemplate auth:LoginPage}" />
-    <ShellContent Route="register" Title="CrÃ©er un compte"
+    <ShellContent Route="register" Title="Créer un compte"
                   ContentTemplate="{DataTemplate auth:RegisterPage}" />
-    <ShellContent Route="forgot" Title="Mot de passe oubliÃ©"
+    <ShellContent Route="forgot" Title="Mot de passe oublié"
                   ContentTemplate="{DataTemplate auth:ForgotPasswordPage}" />
 
     <!-- ======= Dashboard (racine) ======= -->
@@ -32,12 +32,12 @@
 
     <!-- ======= RÃ©sidences (racine) ======= -->
     <ShellContent Route="residences"
-                  Title="RÃ©sidences"
+                  Title="Résidences"
                   ContentTemplate="{DataTemplate viewsRes:ResidencesPage}" />
 
     <!-- ======= BÃ¢timents (racine) ======= -->
     <ShellContent Route="batiments"
-                  Title="BÃ¢timents"
+                  Title="Batiments"
                   ContentTemplate="{DataTemplate viewsBat:BatimentsPage}" />
 
     <!-- ======= Lots (racine) ======= -->
@@ -53,6 +53,11 @@
     <!-- ======= Drawer (racine) ======= -->
     <ShellContent Route="drawer" Title="SyndicApp"
                   ContentTemplate="{DataTemplate layout:DrawerPage}" />
+
+    <ShellContent
+        Route="affectation-dashboard"
+        ContentTemplate="{DataTemplate dash:AffectationDashboardPage}"
+        Title="Dashboard affectations" />              
     
     
 </Shell>

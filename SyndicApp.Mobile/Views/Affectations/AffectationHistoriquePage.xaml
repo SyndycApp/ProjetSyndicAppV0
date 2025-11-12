@@ -151,6 +151,10 @@
                 <ScrollView Grid.Row="1" BackgroundColor="White">
                     <VerticalStackLayout Padding="16" Spacing="10">
                         <Button Text="Dashboard" Style="{StaticResource MenuButtonStyle}" CommandParameter="//syndic-dashboard" Clicked="OnMenuItemClicked"/>
+                            <Button Text="Dashboard Affectations"
+            Style="{StaticResource MenuButtonStyle}"
+            CommandParameter="//affectation-dashboard"
+            Clicked="OnMenuItemClicked"/>
                         <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
                         <Button Text="Résidences"            Style="{StaticResource MenuButtonStyle}"  CommandParameter="//residences"                     Clicked="OnMenuItemClicked"/>
                         <Button Text="Bâtiments"              Style="{StaticResource MenuButtonStyle}" CommandParameter="//batiments"                     Clicked="OnMenuItemClicked"/>

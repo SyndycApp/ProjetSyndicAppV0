@@ -475,6 +475,40 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Common.BaseViewModel.Title">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Common.BaseViewModel.title"/>
         </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Dashboard.AffectationDashboardViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.AffectationDashboardViewModel.IsBusy">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Dashboard.AffectationDashboardViewModel.isBusy"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.AffectationDashboardViewModel.TotalLots">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Dashboard.AffectationDashboardViewModel.totalLots"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.AffectationDashboardViewModel.Actives">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Dashboard.AffectationDashboardViewModel.actives"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.AffectationDashboardViewModel.Closed">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Dashboard.AffectationDashboardViewModel.closed"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.AffectationDashboardViewModel.OccupancyRateText">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Dashboard.AffectationDashboardViewModel.occupancyRateText"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.AffectationDashboardViewModel.LastItems">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Dashboard.AffectationDashboardViewModel.lastItems"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.AffectationDashboardViewModel.OwnersVsTenantsChart">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Dashboard.AffectationDashboardViewModel.ownersVsTenantsChart"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.AffectationDashboardViewModel.StatusChart">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Dashboard.AffectationDashboardViewModel.statusChart"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Dashboard.AffectationDashboardViewModel.loadCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Dashboard.AffectationDashboardViewModel.LoadCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.AffectationDashboardViewModel.LoadCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Dashboard.AffectationDashboardViewModel.Load"/>.</summary>
+        </member>
         <member name="T:SyndicApp.Mobile.ViewModels.Dashboard.SyndicDashboardViewModel">
             <inheritdoc/>
         </member>
@@ -1057,6 +1091,27 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Title">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Title" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.TotalLots">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "TotalLots" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Actives">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Actives" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Closed">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Closed" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.OccupancyRateText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "OccupancyRateText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.LastItems">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "LastItems" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.OwnersVsTenantsChart">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "OwnersVsTenantsChart" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.StatusChart">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "StatusChart" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CanAddResidence">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CanAddResidence" generated properties.</summary>
         </member>
@@ -1224,6 +1279,27 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Title">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Title" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.TotalLots">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "TotalLots" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Actives">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Actives" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Closed">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Closed" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.OccupancyRateText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "OccupancyRateText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.LastItems">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "LastItems" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.OwnersVsTenantsChart">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "OwnersVsTenantsChart" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.StatusChart">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "StatusChart" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CanAddResidence">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CanAddResidence" generated properties.</summary>

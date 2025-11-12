@@ -137,6 +137,11 @@
 								CommandParameter="//syndic-dashboard"
 								Clicked="OnMenuItemClicked"/>
 
+						<Button Text="Dashboard Affectations"
+      			 	 			Style="{StaticResource MenuButtonStyle}"
+        						CommandParameter="//affectation-dashboard"
+        						Clicked="OnMenuItemClicked"/>		
+
 						<!-- RÉSIDENCES / LOTS -->
 						<BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
 						<Label Text="Résidences &amp; Lots" FontAttributes="Bold"/>

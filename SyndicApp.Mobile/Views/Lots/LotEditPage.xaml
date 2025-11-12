@@ -63,6 +63,10 @@
           <VerticalStackLayout Padding="16" Spacing="10">
             <Label Text="Tableau de bord" FontAttributes="Bold"/>
             <Button Text="Dashboard" Style="{StaticResource MenuButtonStyle}" CommandParameter="//syndic-dashboard" Clicked="OnMenuItemClicked"/>
+                <Button Text="Dashboard Affectations"
+            Style="{StaticResource MenuButtonStyle}"
+            CommandParameter="//affectation-dashboard"
+            Clicked="OnMenuItemClicked"/>
             <BoxView HeightRequest="16" Opacity="0"/>
             <Button Text="Deconnexion" Style="{StaticResource LogoutButtonStyle}" CommandParameter="//login" Clicked="OnMenuItemClicked"/>
           </VerticalStackLayout>

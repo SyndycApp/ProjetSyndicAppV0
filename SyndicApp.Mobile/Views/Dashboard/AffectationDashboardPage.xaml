@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SyndicApp.Mobile.Views.Dashboard.AffectationDashboardPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mc="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
+    Shell.NavBarIsVisible="False"
+    Title="Dashboard affectations"
+    BackgroundColor="White"
+    Shell.BackgroundColor="#2563EB"
+    Shell.TitleColor="White"
+    Shell.ForegroundColor="White">
+
+    <!-- ====== RESSOURCES ====== -->
+    <ContentPage.Resources>
+        <Color x:Key="TopbarColor">#2563EB</Color>
+        <Color x:Key="HeaderTextOnDark">#FFFFFF</Color>
+        <Color x:Key="Divider">#E5E7EB</Color>
+        <Color x:Key="Brand">#2563EB</Color>
+        <Color x:Key="Text">#111827</Color>
+
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="{StaticResource Text}"/>
+        </Style>
+
+        <Style x:Key="MenuButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="TextColor" Value="{StaticResource Text}" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Padding" Value="12,8" />
+            <Setter Property="HorizontalOptions" Value="Start" />
+        </Style>
+
+        <Style x:Key="Card" TargetType="Frame">
+            <Setter Property="CornerRadius" Value="14"/>
+            <Setter Property="HasShadow" Value="False"/>
+            <Setter Property="Padding" Value="14"/>
+            <Setter Property="BorderColor" Value="#E5E7EB"/>
+            <Setter Property="BackgroundColor" Value="White"/>
+        </Style>
+
+        <Style x:Key="KpiNumber" TargetType="Label">
+            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+        </Style>
+
+        <Style x:Key="OutlineButton" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="TextColor" Value="{StaticResource Brand}"/>
+            <Setter Property="BorderColor" Value="{StaticResource Brand}"/>
+            <Setter Property="BorderWidth" Value="1"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="Padding" Value="12,10"/>
+        </Style>
+    </ContentPage.Resources>
+
+    <!-- ====== LAYOUT AVEC NAV ====== -->
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- TOPBAR -->
+        <Grid BackgroundColor="{StaticResource TopbarColor}" Padding="12,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="BtnOpen"
+                    Grid.Column="0"
+                    Text="☰"
+                    FontSize="22"
+                    BackgroundColor="Transparent"
+                    TextColor="{StaticResource HeaderTextOnDark}"
+                    Clicked="OpenDrawer_Clicked"/>
+
+            <Label Grid.Column="1"
+                   Text="Dashboard affectations"
+                   HorizontalTextAlignment="Center"
+                   VerticalOptions="Center"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource HeaderTextOnDark}"/>
+
+            <Label Grid.Column="2"
+                   Text="• • •"
+                   TextColor="{StaticResource HeaderTextOnDark}"
+                   VerticalOptions="Center"/>
+        </Grid>
+
+        <!-- CONTENU KPI/GRAPHS -->
+        <ScrollView Grid.Row="1" Padding="16">
+            <VerticalStackLayout Spacing="12">
+
+                <!-- KPIs -->
+                <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto"
+                      ColumnSpacing="12" RowSpacing="12">
+
+                    <Frame Grid.Column="0" Style="{StaticResource Card}">
+                        <VerticalStackLayout>
+                            <Label Text="Lots total"/>
+                            <Label Text="{Binding TotalLots}" Style="{StaticResource KpiNumber}"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <Frame Grid.Column="1" Style="{StaticResource Card}">
+                        <VerticalStackLayout>
+                            <Label Text="Affectations actives"/>
+                            <Label Text="{Binding Actives}" Style="{StaticResource KpiNumber}"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <Frame Grid.Row="1" Grid.Column="0" Style="{StaticResource Card}">
+                        <VerticalStackLayout>
+                            <Label Text="Clôturées"/>
+                            <Label Text="{Binding Closed}" Style="{StaticResource KpiNumber}"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <Frame Grid.Row="1" Grid.Column="1" Style="{StaticResource Card}">
+                        <VerticalStackLayout>
+                            <Label Text="Taux d’occupation"/>
+                            <Label Text="{Binding OccupancyRateText}" Style="{StaticResource KpiNumber}"/>
+                        </VerticalStackLayout>
+                    </Frame>
+                </Grid>
+
+                <!-- Répartition Propriétaire / Locataire -->
+                <Frame Style="{StaticResource Card}">
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                        <VerticalStackLayout>
+                            <Label Text="Répartition" FontAttributes="Bold"/>
+                            <Label Text="Propriétaires vs Locataires" Opacity="0.6"/>
+                        </VerticalStackLayout>
+                        <mc:ChartView Grid.Column="1" HeightRequest="140"
+                                      Chart="{Binding OwnersVsTenantsChart}"/>
+                    </Grid>
+                </Frame>
+
+                <!-- Statuts -->
+                <Frame Style="{StaticResource Card}">
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                        <VerticalStackLayout>
+                            <Label Text="Statuts" FontAttributes="Bold"/>
+                            <Label Text="Actives / Clôturées" Opacity="0.6"/>
+                        </VerticalStackLayout>
+                        <mc:ChartView Grid.Column="1" HeightRequest="140"
+                                      Chart="{Binding StatusChart}"/>
+                    </Grid>
+                </Frame>
+
+                <!-- Dernières affectations -->
+                <Frame Style="{StaticResource Card}">
+                    <VerticalStackLayout>
+                        <Label Text="Dernières affectations" FontAttributes="Bold"/>
+                        <CollectionView ItemsSource="{Binding LastItems}" SelectionMode="None">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="*,Auto" Padding="0,6">
+                                        <Label Text="{Binding LotNumero}" FontAttributes="Bold"/>
+                                        <Label Grid.Column="1" Text="{Binding Statut}" Opacity="0.7"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                        <Button Text="Actualiser"
+                                Style="{StaticResource OutlineButton}"
+                                Command="{Binding LoadCommand}"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- OVERLAY -->
+        <BoxView x:Name="Backdrop"
+                 Grid.RowSpan="2"
+                 BackgroundColor="#66000000"
+                 Opacity="0"
+                 InputTransparent="True">
+            <BoxView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Backdrop_Tapped"/>
+            </BoxView.GestureRecognizers>
+        </BoxView>
+
+        <!-- DRAWER -->
+        <Border x:Name="Drawer"
+                Grid.RowSpan="2"
+                BackgroundColor="White"
+                StrokeThickness="0"
+                TranslationX="-1000"
+                Padding="0">
+
+            <Grid RowDefinitions="Auto,*">
+                <!-- Header -->
+                <Grid BackgroundColor="{StaticResource TopbarColor}" Padding="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Navigation"
+                           TextColor="{StaticResource HeaderTextOnDark}"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center"/>
+                    <Button Grid.Column="1"
+                            Text="→"
+                            FontSize="22"
+                            BackgroundColor="Transparent"
+                            TextColor="{StaticResource HeaderTextOnDark}"
+                            Clicked="CloseDrawer_Clicked"/>
+                </Grid>
+
+                <!-- Corps -->
+                <ScrollView Grid.Row="1" BackgroundColor="White">
+                    <VerticalStackLayout Padding="16" Spacing="10">
+
+                        <!-- DASHBOARD -->
+                        <Label Text="Tableau de bord" FontAttributes="Bold"/>
+                        <Button Text="Dashboard"
+                                Style="{StaticResource MenuButtonStyle}"
+                                CommandParameter="//syndic-dashboard"
+                                Clicked="OnMenuItemClicked"/>
+
+                        <Button Text="Dashboard Affectations"
+                                Style="{StaticResource MenuButtonStyle}"
+                                CommandParameter="//affectation-dashboard"
+                                Clicked="OnMenuItemClicked"/>
+
+                        <!-- RÉSIDENCES / LOTS -->
+                        <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
+                        <Label Text="Résidences &amp; Lots" FontAttributes="Bold"/>
+                        <Button Text="Résidences"            Style="{StaticResource MenuButtonStyle}"  CommandParameter="//residences"                     Clicked="OnMenuItemClicked"/>
+                        <Button Text="Bâtiments"              Style="{StaticResource MenuButtonStyle}" CommandParameter="//batiments"                     Clicked="OnMenuItemClicked"/>
+                        <Button Text="Lots"                   Style="{StaticResource MenuButtonStyle}" CommandParameter="//lots"                          Clicked="OnMenuItemClicked"/>
+                        <Button Text="Affectations des lots"  Style="{StaticResource MenuButtonStyle}" CommandParameter="//affectation-lots"			  Clicked="OnMenuItemClicked" />
+                        <Button Text="Historique affectations" Style="{StaticResource MenuButtonStyle}" CommandParameter="affectation-historique" Clicked="OnMenuItemClicked"/>
+
+                        <!-- FINANCES -->
+                        <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
+                        <Label Text="Finances" FontAttributes="Bold"/>
+                        <Button Text="Appels de fonds" Style="{StaticResource MenuButtonStyle}" CommandParameter="//appels" Clicked="OnMenuItemClicked"/>
+
+                        <BoxView HeightRequest="16" Opacity="0"/>
+                        <Button Text="Déconnexion"
+                                Style="{StaticResource MenuButtonStyle}"
+                                CommandParameter="//login"
+                                Clicked="OnMenuItemClicked"/>
+                    </VerticalStackLayout>
+                </ScrollView>
+            </Grid>
+        </Border>
+
+    </Grid>
+</ContentPage>

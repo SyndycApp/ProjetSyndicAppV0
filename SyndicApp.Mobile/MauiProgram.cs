@@ -20,6 +20,7 @@ using SyndicApp.Mobile.Views.Residences;
 using SyndicApp.Mobile.Views.Affectations;
 
 using System.Text.Json;
+using Microcharts.Maui;
 
 namespace SyndicApp.Mobile;
 
@@ -29,9 +30,10 @@ public static class MauiProgram
     {
         var builder = MauiApp.CreateBuilder();
         builder.UseMauiApp<App>();
+        builder.UseMicrocharts();
 
         // Choisis la bonne URL :        
-        const string BaseUrl = "http://192.168.2.65:5041";
+        const string BaseUrl = "http://192.168.0.102:5041";
 
 
         // Refit JSON insensible à la casse
@@ -116,6 +118,7 @@ public static class MauiProgram
         builder.Services.AddTransient<AffectationCreateViewModel>();
         builder.Services.AddTransient<AffectationDetailsViewModel>();
         builder.Services.AddTransient<AffectationHistoriqueViewModel>();
+        builder.Services.AddTransient<AffectationDashboardViewModel>();
 
 
         // Converters (si DI utilisé)
@@ -151,6 +154,7 @@ public static class MauiProgram
         builder.Services.AddTransient<AffectationCreatePage>();
         builder.Services.AddTransient<AffectationDetailsPage>();
         builder.Services.AddTransient<AffectationHistoriquePage>();
+        builder.Services.AddTransient<AffectationDashboardPage>();
 
         var app = builder.Build();
         ServiceHelper.Services = app.Services;
