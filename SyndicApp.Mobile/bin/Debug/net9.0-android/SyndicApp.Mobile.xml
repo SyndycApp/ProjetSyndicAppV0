@@ -4,6 +4,13 @@
         <name>SyndicApp.Mobile</name>
     </assembly>
     <members>
+        <member name="M:SyndicApp.Mobile.Services.TokenStore.GetUserId">
+            <summary>
+            Retourne l'UserId :
+            1) depuis les préférences si déjà sauvegardé
+            2) sinon, tente de le lire depuis le JWT (claims: sub, nameid, uid)
+            </summary>
+        </member>
         <member name="T:SyndicApp.Mobile.ViewModels.Affectations.AffectationCreateViewModel">
             <inheritdoc/>
             <inheritdoc/>
@@ -475,6 +482,25 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Common.BaseViewModel.Title">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Common.BaseViewModel.title"/>
         </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Dashboard.AffectationAnalyticsViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.AffectationAnalyticsViewModel.CreatedPerMonthChart">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Dashboard.AffectationAnalyticsViewModel.createdPerMonthChart"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.AffectationAnalyticsViewModel.LotRotationChart">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Dashboard.AffectationAnalyticsViewModel.lotRotationChart"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.AffectationAnalyticsViewModel.AvgDurationDays">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Dashboard.AffectationAnalyticsViewModel.avgDurationDays"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Dashboard.AffectationAnalyticsViewModel.loadCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Dashboard.AffectationAnalyticsViewModel.LoadCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.AffectationAnalyticsViewModel.LoadCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Dashboard.AffectationAnalyticsViewModel.Load"/>.</summary>
+        </member>
         <member name="T:SyndicApp.Mobile.ViewModels.Dashboard.AffectationDashboardViewModel">
             <inheritdoc/>
             <inheritdoc/>
@@ -508,6 +534,47 @@
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.AffectationDashboardViewModel.LoadCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Dashboard.AffectationDashboardViewModel.Load"/>.</summary>
+        </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Dashboard.AffectationMaintenanceDashboardViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.AffectationMaintenanceDashboardViewModel.CurrentOccupants">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Dashboard.AffectationMaintenanceDashboardViewModel.currentOccupants"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.AffectationMaintenanceDashboardViewModel.EndingSoon">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Dashboard.AffectationMaintenanceDashboardViewModel.endingSoon"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.AffectationMaintenanceDashboardViewModel.RecentlyClosed">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Dashboard.AffectationMaintenanceDashboardViewModel.recentlyClosed"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Dashboard.AffectationMaintenanceDashboardViewModel.loadCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Dashboard.AffectationMaintenanceDashboardViewModel.LoadCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.AffectationMaintenanceDashboardViewModel.LoadCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Dashboard.AffectationMaintenanceDashboardViewModel.Load"/>.</summary>
+        </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Dashboard.AffectationUserDashboardViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.AffectationUserDashboardViewModel.MyLotsCount">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Dashboard.AffectationUserDashboardViewModel.myLotsCount"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.AffectationUserDashboardViewModel.MyActives">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Dashboard.AffectationUserDashboardViewModel.myActives"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.AffectationUserDashboardViewModel.NextEndingText">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Dashboard.AffectationUserDashboardViewModel.nextEndingText"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.AffectationUserDashboardViewModel.MyItems">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Dashboard.AffectationUserDashboardViewModel.myItems"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Dashboard.AffectationUserDashboardViewModel.loadCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Dashboard.AffectationUserDashboardViewModel.LoadCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.AffectationUserDashboardViewModel.LoadCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Dashboard.AffectationUserDashboardViewModel.Load"/>.</summary>
         </member>
         <member name="T:SyndicApp.Mobile.ViewModels.Dashboard.SyndicDashboardViewModel">
             <inheritdoc/>
@@ -1091,6 +1158,15 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Title">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Title" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CreatedPerMonthChart">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CreatedPerMonthChart" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.LotRotationChart">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "LotRotationChart" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.AvgDurationDays">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "AvgDurationDays" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.TotalLots">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "TotalLots" generated properties.</summary>
         </member>
@@ -1111,6 +1187,27 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.StatusChart">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "StatusChart" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CurrentOccupants">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CurrentOccupants" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.EndingSoon">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "EndingSoon" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.RecentlyClosed">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "RecentlyClosed" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.MyLotsCount">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "MyLotsCount" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.MyActives">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "MyActives" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.NextEndingText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "NextEndingText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.MyItems">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "MyItems" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CanAddResidence">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CanAddResidence" generated properties.</summary>
@@ -1280,6 +1377,15 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Title">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Title" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CreatedPerMonthChart">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CreatedPerMonthChart" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.LotRotationChart">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "LotRotationChart" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.AvgDurationDays">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "AvgDurationDays" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.TotalLots">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "TotalLots" generated properties.</summary>
         </member>
@@ -1300,6 +1406,27 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.StatusChart">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "StatusChart" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CurrentOccupants">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CurrentOccupants" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.EndingSoon">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "EndingSoon" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.RecentlyClosed">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "RecentlyClosed" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.MyLotsCount">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "MyLotsCount" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.MyActives">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "MyActives" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.NextEndingText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "NextEndingText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.MyItems">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "MyItems" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CanAddResidence">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CanAddResidence" generated properties.</summary>

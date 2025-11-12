@@ -144,11 +144,29 @@ build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Bat
 build_metadata.AdditionalFiles.TargetPath = Views\Batiments\BatimentsPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Batiments\BatimentsPage.xaml
 
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Dashboard/AffectationAnalyticsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Dashboard.AffectationAnalyticsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Dashboard\AffectationAnalyticsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Dashboard\AffectationAnalyticsPage.xaml
+
 [C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Dashboard/AffectationDashboardPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Dashboard.AffectationDashboardPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Dashboard\AffectationDashboardPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Dashboard\AffectationDashboardPage.xaml
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Dashboard/AffectationMaintenanceDashboardPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Dashboard.AffectationMaintenanceDashboardPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Dashboard\AffectationMaintenanceDashboardPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Dashboard\AffectationMaintenanceDashboardPage.xaml
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Dashboard/AffectationUserDashboardPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Dashboard.AffectationUserDashboardPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Dashboard\AffectationUserDashboardPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Dashboard\AffectationUserDashboardPage.xaml
 
 [C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Dashboard/SyndicDashboardPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml

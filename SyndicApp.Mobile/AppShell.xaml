@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:auth="clr-namespace:SyndicApp.Mobile.Views.Auth"
     xmlns:dash="clr-namespace:SyndicApp.Mobile.Views.Dashboard"
+    xmlns:dashAff="clr-namespace:SyndicApp.Mobile.Views.Dashboard"
     xmlns:views="clr-namespace:SyndicApp.Mobile.Views.Finances"
     xmlns:viewsRes="clr-namespace:SyndicApp.Mobile.Views.Residences"
     xmlns:layout="clr-namespace:SyndicApp.Mobile.Views"
@@ -30,34 +31,45 @@
     <ShellContent Route="appels" Title="Appels"
                   ContentTemplate="{DataTemplate views:AppelsPage}" />
 
-    <!-- ======= RÃ©sidences (racine) ======= -->
-    <ShellContent Route="residences"
-                  Title="Résidences"
+    <!-- ======= Résidences (racine) ======= -->
+    <ShellContent Route="residences" Title="Résidences"
                   ContentTemplate="{DataTemplate viewsRes:ResidencesPage}" />
 
-    <!-- ======= BÃ¢timents (racine) ======= -->
-    <ShellContent Route="batiments"
-                  Title="Batiments"
+    <!-- ======= Bâtiments (racine) ======= -->
+    <ShellContent Route="batiments" Title="Batiments"
                   ContentTemplate="{DataTemplate viewsBat:BatimentsPage}" />
 
     <!-- ======= Lots (racine) ======= -->
-    <ShellContent Route="lots"
-                  Title="Lots"
+    <ShellContent Route="lots" Title="Lots"
                   ContentTemplate="{DataTemplate viewsLot:LotsPage}" />
 
     <!-- ======= Affectation Lots (racine) ======= -->
-    <ShellContent Route="affectation-lots"
-                  Title="Affectation des lots"
+    <ShellContent Route="affectation-lots" Title="Affectation des lots"
                   ContentTemplate="{DataTemplate viewsALot:AffectationsPage}" />
 
     <!-- ======= Drawer (racine) ======= -->
     <ShellContent Route="drawer" Title="SyndicApp"
                   ContentTemplate="{DataTemplate layout:DrawerPage}" />
 
+    <!-- ======= Dashboards Affectations (racine) ======= -->
     <ShellContent
         Route="affectation-dashboard"
-        ContentTemplate="{DataTemplate dash:AffectationDashboardPage}"
-        Title="Dashboard affectations" />              
-    
-    
+        Title="Dashboard affectations"
+        ContentTemplate="{DataTemplate dash:AffectationDashboardPage}" />
+
+    <ShellContent
+        Route="affectation-user-dashboard"
+        Title="Mon espace"
+        ContentTemplate="{DataTemplate dashAff:AffectationUserDashboardPage}" />
+
+    <ShellContent
+        Route="affectation-maintenance-dashboard"
+        Title="Gardien"
+        ContentTemplate="{DataTemplate dashAff:AffectationMaintenanceDashboardPage}" />
+
+    <ShellContent
+        Route="affectation-analytics"
+        Title="Statistiques"
+        ContentTemplate="{DataTemplate dash:AffectationAnalyticsPage}" />
+
 </Shell>

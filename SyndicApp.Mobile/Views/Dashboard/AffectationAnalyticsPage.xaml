@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SyndicApp.Mobile.Views.Dashboard.AffectationAnalyticsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mc="clr-namespace:Microcharts.Maui;assembly=Microcharts.Maui"
+    Title="Statistiques affectations"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="White">
+
+    <!-- ====== RESSOURCES LOCALES ====== -->
+    <ContentPage.Resources>
+        <Color x:Key="TopbarColor">#2563EB</Color>
+        <Color x:Key="HeaderTextOnDark">#FFFFFF</Color>
+        <Color x:Key="BodyText">#111827</Color>
+        <Color x:Key="Divider">#E5E7EB</Color>
+
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
+        </Style>
+
+        <Style x:Key="Card" TargetType="Frame">
+            <Setter Property="CornerRadius" Value="14"/>
+            <Setter Property="HasShadow" Value="False"/>
+            <Setter Property="Padding" Value="14"/>
+            <Setter Property="BorderColor" Value="#E5E7EB"/>
+            <Setter Property="BackgroundColor" Value="White"/>
+        </Style>
+    </ContentPage.Resources>
+
+    <!-- ========= L A Y O U T ========= -->
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- Topbar -->
+        <Grid BackgroundColor="{StaticResource TopbarColor}" Padding="12,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="BtnOpen"
+                    Grid.Column="0"
+                    Text="☰"
+                    FontSize="22"
+                    BackgroundColor="Transparent"
+                    TextColor="{StaticResource HeaderTextOnDark}"
+                    Clicked="OpenDrawer_Clicked"/>
+
+            <Label Grid.Column="1"
+                   Text="Statistiques affectations"
+                   HorizontalTextAlignment="Center"
+                   VerticalOptions="Center"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource HeaderTextOnDark}"/>
+
+            <Label Grid.Column="2"
+                   Text="• • •"
+                   TextColor="{StaticResource HeaderTextOnDark}"
+                   VerticalOptions="Center"/>
+        </Grid>
+
+        <!-- Contenu principal -->
+        <Grid Grid.Row="1" BackgroundColor="White">
+            <ScrollView Padding="16">
+                <VerticalStackLayout Spacing="12">
+
+                    <Frame Style="{StaticResource Card}">
+                        <VerticalStackLayout>
+                            <Label Text="Créations par mois" FontAttributes="Bold"/>
+                            <mc:ChartView HeightRequest="180" Chart="{Binding CreatedPerMonthChart}"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <Frame Style="{StaticResource Card}">
+                        <VerticalStackLayout>
+                            <Label Text="Durée moyenne (jours)" FontAttributes="Bold"/>
+                            <Label Text="{Binding AvgDurationDays}" FontSize="22" FontAttributes="Bold"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <Frame Style="{StaticResource Card}">
+                        <VerticalStackLayout>
+                            <Label Text="Rotation des lots (par an)" FontAttributes="Bold"/>
+                            <mc:ChartView HeightRequest="180" Chart="{Binding LotRotationChart}"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
+
+        <!-- Overlay -->
+        <BoxView x:Name="Backdrop"
+                 Grid.RowSpan="2"
+                 BackgroundColor="#66000000"
+                 Opacity="0"
+                 InputTransparent="True">
+            <BoxView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Backdrop_Tapped"/>
+            </BoxView.GestureRecognizers>
+        </BoxView>
+
+        <!-- Drawer -->
+        <Border x:Name="Drawer"
+                Grid.RowSpan="2"
+                BackgroundColor="White"
+                StrokeThickness="0"
+                TranslationX="-1000"
+                Padding="0">
+
+            <Grid RowDefinitions="Auto,*">
+
+                <Grid BackgroundColor="{StaticResource TopbarColor}" Padding="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Navigation"
+                           TextColor="{StaticResource HeaderTextOnDark}"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center"/>
+                    <Button Grid.Column="1"
+                            Text="→"
+                            FontSize="22"
+                            BackgroundColor="Transparent"
+                            TextColor="{StaticResource HeaderTextOnDark}"
+                            Clicked="CloseDrawer_Clicked"/>
+                </Grid>
+
+                <!-- Liens identiques à DrawerPage -->
+                <ScrollView Grid.Row="1" BackgroundColor="White">
+                    <VerticalStackLayout Padding="16" Spacing="10">
+
+                        <Label Text="Tableau de bord" FontAttributes="Bold"/>
+                        <Button Text="Dashboard"
+                                CommandParameter="//syndic-dashboard"
+                                Clicked="OnMenuItemClicked"/>
+                        <Button Text="Dashboard Affectations"
+                                CommandParameter="//affectation-dashboard"
+                                Clicked="OnMenuItemClicked"/>
+                                <Button Text="Mon espace (copro)"
+        CommandParameter="//affectation-user-dashboard"
+        Clicked="OnMenuItemClicked"/>
+
+<Button Text="Gardien / Maintenance"
+        CommandParameter="//affectation-maintenance-dashboard"
+        Clicked="OnMenuItemClicked"/>
+
+<Button Text="Statistiques affectations"
+        CommandParameter="//affectation-analytics"
+        Clicked="OnMenuItemClicked"/>
+
+                        <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
+                        <Label Text="Résidences &amp; Lots" FontAttributes="Bold"/>
+                        <Button Text="Résidences"            CommandParameter="//residences"                     Clicked="OnMenuItemClicked"/>
+                        <Button Text="Bâtiments"              CommandParameter="//batiments"                     Clicked="OnMenuItemClicked"/>
+                        <Button Text="Lots"                   CommandParameter="//lots"                          Clicked="OnMenuItemClicked"/>
+                        <Button Text="Affectations des lots"  CommandParameter="//affectation-lots"              Clicked="OnMenuItemClicked"/>
+
+                        <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
+                        <Label Text="Finances" FontAttributes="Bold"/>
+                        <Button Text="Appels de fonds"        CommandParameter="//appels"                        Clicked="OnMenuItemClicked"/>
+
+                        <BoxView HeightRequest="16" Opacity="0"/>
+                        <Button Text="Déconnexion"
+                                CommandParameter="//login"
+                                Clicked="OnMenuItemClicked"/>
+                    </VerticalStackLayout>
+                </ScrollView>
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>

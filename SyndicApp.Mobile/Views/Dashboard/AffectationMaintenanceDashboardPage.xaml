@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SyndicApp.Mobile.Views.Dashboard.AffectationMaintenanceDashboardPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Shell.NavBarIsVisible="False"
+    Title="Affectations (gardien)"
+    BackgroundColor="White"
+    Shell.BackgroundColor="#2563EB"
+    Shell.TitleColor="White"
+    Shell.ForegroundColor="White">
+
+    <ContentPage.Resources>
+        <Color x:Key="TopbarColor">#2563EB</Color>
+        <Color x:Key="HeaderTextOnDark">#FFFFFF</Color>
+        <Color x:Key="BodyText">#111827</Color>
+        <Color x:Key="Divider">#E5E7EB</Color>
+
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
+        </Style>
+
+        <Style x:Key="MenuButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Padding" Value="12,8" />
+            <Setter Property="HorizontalOptions" Value="Start" />
+        </Style>
+
+        <Style x:Key="Card" TargetType="Frame">
+            <Setter Property="CornerRadius" Value="14"/>
+            <Setter Property="HasShadow" Value="False"/>
+            <Setter Property="Padding" Value="14"/>
+            <Setter Property="BorderColor" Value="#E5E7EB"/>
+            <Setter Property="BackgroundColor" Value="White"/>
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*">
+        <!-- Topbar -->
+        <Grid BackgroundColor="{StaticResource TopbarColor}" Padding="12,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="BtnOpen"
+                    Grid.Column="0"
+                    Text="☰"
+                    FontSize="22"
+                    BackgroundColor="Transparent"
+                    TextColor="{StaticResource HeaderTextOnDark}"
+                    Clicked="OpenDrawer_Clicked"/>
+
+            <Label Grid.Column="1"
+                   Text="Affectations (gardien)"
+                   HorizontalTextAlignment="Center"
+                   VerticalOptions="Center"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource HeaderTextOnDark}"/>
+
+            <Label Grid.Column="2"
+                   Text="• • •"
+                   TextColor="{StaticResource HeaderTextOnDark}"
+                   VerticalOptions="Center"/>
+        </Grid>
+
+        <!-- Contenu -->
+        <ScrollView Grid.Row="1" Padding="16">
+            <VerticalStackLayout Spacing="12">
+
+                <Frame Style="{StaticResource Card}">
+                    <VerticalStackLayout>
+                        <Label Text="Occupants actuels" FontAttributes="Bold"/>
+                        <CollectionView ItemsSource="{Binding CurrentOccupants}" SelectionMode="None">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="*,Auto" Padding="0,6">
+                                        <Label Text="{Binding LotNumero}" FontAttributes="Bold"/>
+                                        <Label Grid.Column="1" Text="{Binding UserNom}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <Frame Style="{StaticResource Card}">
+                    <VerticalStackLayout>
+                        <Label Text="Fin dans 30 jours" FontAttributes="Bold"/>
+                        <CollectionView ItemsSource="{Binding EndingSoon}" SelectionMode="None">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="*,Auto" Padding="0,6">
+                                        <Label Text="{Binding LotNumero}" />
+                                        <Label Grid.Column="1" Text="{Binding DateFin, StringFormat='{0:dd/MM/yyyy}'}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <Frame Style="{StaticResource Card}">
+                    <VerticalStackLayout>
+                        <Label Text="Clôturées récemment" FontAttributes="Bold"/>
+                        <CollectionView ItemsSource="{Binding RecentlyClosed}" SelectionMode="None">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnDefinitions="*,Auto" Padding="0,6">
+                                        <Label Text="{Binding LotNumero}" />
+                                        <Label Grid.Column="1" Text="{Binding DateFin, StringFormat='{0:dd/MM/yyyy}'}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </Frame>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Overlay + Drawer identiques -->
+        <BoxView x:Name="Backdrop"
+                 Grid.RowSpan="2"
+                 BackgroundColor="#66000000"
+                 Opacity="0"
+                 InputTransparent="True">
+            <BoxView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Backdrop_Tapped"/>
+            </BoxView.GestureRecognizers>
+        </BoxView>
+
+        <Border x:Name="Drawer"
+                Grid.RowSpan="2"
+                BackgroundColor="White"
+                StrokeThickness="0"
+                TranslationX="-1000"
+                Padding="0">
+            <Grid RowDefinitions="Auto,*">
+                <Grid BackgroundColor="{StaticResource TopbarColor}" Padding="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Navigation"
+                           TextColor="{StaticResource HeaderTextOnDark}"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center"/>
+                    <Button Grid.Column="1"
+                            Text="→"
+                            FontSize="22"
+                            BackgroundColor="Transparent"
+                            TextColor="{StaticResource HeaderTextOnDark}"
+                            Clicked="CloseDrawer_Clicked"/>
+                </Grid>
+
+                <ScrollView Grid.Row="1" BackgroundColor="White">
+                    <VerticalStackLayout Padding="16" Spacing="10">
+                        <Label Text="Tableau de bord" FontAttributes="Bold"/>
+                        <Button Text="Dashboard (Syndic)" Style="{StaticResource MenuButtonStyle}"
+                                CommandParameter="//syndic-dashboard" Clicked="OnMenuItemClicked"/>
+                        <Button Text="Dashboard Affectations" Style="{StaticResource MenuButtonStyle}"
+                                CommandParameter="//affectation-dashboard" Clicked="OnMenuItemClicked"/>
+                        <Button Text="Mon tableau (copro)" Style="{StaticResource MenuButtonStyle}"
+                                CommandParameter="//affectation-user-dashboard" Clicked="OnMenuItemClicked"/>
+                        <Button Text="Maintenance (gardien)" Style="{StaticResource MenuButtonStyle}"
+                                CommandParameter="//affectation-maintenance-dashboard" Clicked="OnMenuItemClicked"/>
+                        <Button Text="Statistiques" Style="{StaticResource MenuButtonStyle}"
+                                CommandParameter="//affectation-analytics" Clicked="OnMenuItemClicked"/>
+
+                        <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
+                        <Button Text="Affectations des lots" Style="{StaticResource MenuButtonStyle}"
+                                CommandParameter="//affectation-lots" Clicked="OnMenuItemClicked"/>
+                        <BoxView HeightRequest="16" Opacity="0"/>
+                        <Button Text="Déconnexion" Style="{StaticResource MenuButtonStyle}"
+                                CommandParameter="//login" Clicked="OnMenuItemClicked"/>
+                    </VerticalStackLayout>
+                </ScrollView>
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>

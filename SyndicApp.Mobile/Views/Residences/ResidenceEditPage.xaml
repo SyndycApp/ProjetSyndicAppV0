@@ -94,6 +94,17 @@
             Style="{StaticResource MenuButtonStyle}"
             CommandParameter="//affectation-dashboard"
             Clicked="OnMenuItemClicked"/>
+            <Button Text="Mon espace (copro)"
+        CommandParameter="//affectation-user-dashboard"
+        Clicked="OnMenuItemClicked"/>
+
+<Button Text="Gardien / Maintenance"
+        CommandParameter="//affectation-maintenance-dashboard"
+        Clicked="OnMenuItemClicked"/>
+
+<Button Text="Statistiques affectations"
+        CommandParameter="//affectation-analytics"
+        Clicked="OnMenuItemClicked"/>
                         <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
                         <Label Text="Finances" FontAttributes="Bold"/>
                         <Button Text="Appels de fonds" Style="{StaticResource MenuButtonStyle}" CommandParameter="//appels" Clicked="OnMenuItemClicked"/>

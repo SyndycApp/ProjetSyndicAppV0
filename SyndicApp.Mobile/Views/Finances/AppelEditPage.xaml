@@ -154,6 +154,17 @@
             Style="{StaticResource MenuButtonStyle}"
             CommandParameter="//affectation-dashboard"
             Clicked="OnMenuItemClicked"/>
+            <Button Text="Mon espace (copro)"
+        CommandParameter="//affectation-user-dashboard"
+        Clicked="OnMenuItemClicked"/>
+
+<Button Text="Gardien / Maintenance"
+        CommandParameter="//affectation-maintenance-dashboard"
+        Clicked="OnMenuItemClicked"/>
+
+<Button Text="Statistiques affectations"
+        CommandParameter="//affectation-analytics"
+        Clicked="OnMenuItemClicked"/>
 
     <!-- RÃ‰SIDENCES / LOTS -->
     <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />

@@ -54,6 +54,17 @@
             Style="{StaticResource MenuButtonStyle}"
             CommandParameter="//affectation-dashboard"
             Clicked="OnMenuItemClicked"/>
+            <Button Text="Mon espace (copro)"
+        CommandParameter="//affectation-user-dashboard"
+        Clicked="OnMenuItemClicked"/>
+
+<Button Text="Gardien / Maintenance"
+        CommandParameter="//affectation-maintenance-dashboard"
+        Clicked="OnMenuItemClicked"/>
+
+<Button Text="Statistiques affectations"
+        CommandParameter="//affectation-analytics"
+        Clicked="OnMenuItemClicked"/>
             <BoxView HeightRequest="16" Opacity="0"/>
             <Button Text="Deconnexion" Style="{StaticResource LogoutButtonStyle}" CommandParameter="//login" Clicked="OnMenuItemClicked"/>
           </VerticalStackLayout>
