@@ -2,6 +2,9 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
+using SyndicApp.Mobile.ViewModels.Finances;
+using SyndicApp.Mobile;
+
 
 namespace SyndicApp.Mobile.Views.Finances
 {
@@ -11,7 +14,8 @@ namespace SyndicApp.Mobile.Views.Finances
 
         public AppelCreatePage()
         {
-            InitializeComponent();
+            InitializeComponent(); 
+            BindingContext = ServiceHelper.Get<AppelCreateViewModel>();
         }
 
         protected override void OnAppearing()
@@ -24,7 +28,13 @@ namespace SyndicApp.Mobile.Views.Finances
             Backdrop.InputTransparent = true;
             Backdrop.Opacity = 0;
             _isOpen = false;
+
+            if (BindingContext is AppelCreateViewModel vm && !vm.IsBusy)
+            {
+                vm.LoadResidencesCommand.Execute(null);
+            }
         }
+
 
         protected override void OnSizeAllocated(double width, double height)
         {

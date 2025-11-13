@@ -1,106 +1,143 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Maui.Controls;
 using Refit;
 using SyndicApp.Mobile.Api;
 using SyndicApp.Mobile.Models;
 
-namespace SyndicApp.Mobile.ViewModels.Finances;
-
-public partial class AppelCreateViewModel : ObservableObject
+namespace SyndicApp.Mobile.ViewModels.Finances
 {
-    private readonly IAppelsApi _api;
-
-    // ⚠️ Utilise bien les noms attendus par ton API/DTO
-    [ObservableProperty] private string? description;
-    [ObservableProperty] private DateTime dateEmission = DateTime.Today;
-    [ObservableProperty] private string residenceId = string.Empty;
-
-    // Saisie utilisateur côté UI (string -> on parse nous-mêmes)
-    [ObservableProperty] private string montantTotalText = string.Empty;
-
-    [ObservableProperty] private bool isBusy;
-
-    public AppelCreateViewModel(IAppelsApi api)
+    public partial class AppelCreateViewModel : ObservableObject
     {
-        _api = api;
-    }
+        private readonly IAppelsApi _api;
+        private readonly IResidencesApi _residencesApi;
 
-    [RelayCommand]
-    private async Task CreateAsync()
-    {
-        if (IsBusy) return;
+        [ObservableProperty] private string? description;
+        [ObservableProperty] private DateTime dateEmission = DateTime.Today;
+        [ObservableProperty] private string residenceId = string.Empty;
+        [ObservableProperty] private string montantTotalText = string.Empty;
+        [ObservableProperty] private bool isBusy;
 
-        // Validation minimale côté client
-        if (string.IsNullOrWhiteSpace(Description))
-        {
-            await Shell.Current.DisplayAlert("Champs requis", "La description est obligatoire.", "OK");
-            return;
-        }
-        if (string.IsNullOrWhiteSpace(ResidenceId))
-        {
-            await Shell.Current.DisplayAlert("Champs requis", "La résidence est obligatoire.", "OK");
-            return;
-        }
+        [ObservableProperty] private List<ResidenceDto> residences = new();
+        [ObservableProperty] private ResidenceDto? selectedResidence;
 
-        // Parse du montant (accepte , et .)
-        if (!TryParseDecimal(MontantTotalText, out var montant))
+        public AppelCreateViewModel(IAppelsApi api, IResidencesApi residencesApi)
         {
-            await Shell.Current.DisplayAlert("Montant invalide", "Saisis un montant valide (ex: 1234,56).", "OK");
-            return;
+            _api = api;
+            _residencesApi = residencesApi;
+            _ = LoadResidencesAsync();
         }
 
-        try
+        // Chargement de la liste des résidences
+        [RelayCommand]
+        public async Task LoadResidencesAsync()
         {
-            IsBusy = true;
+            if (IsBusy) return;
 
-            // ⚠️ Adapte ce DTO aux propriétés exactes attendues par ton API Create
-            var payload = new AppelDeFondsDto
+            try
             {
-                Description = Description,
-                DateEmission = DateEmission,
-                ResidenceId = ResidenceId,  
-                MontantTotal = montant
-            };
-
-            // POST
-            var created = await _api.CreateAsync(payload);
-
-            // Navigation : vers la liste ou les détails si l’API renvoie l’Id
-            if (!string.IsNullOrWhiteSpace(created?.Id))
-                await Shell.Current.GoToAsync($"appel-details?id={created.Id}");
-            else
-                await Shell.Current.GoToAsync("//appels");
+                IsBusy = true;
+                // ton API renvoie List<ResidenceDto>
+                Residences = await _residencesApi.GetAllAsync();
+                await Shell.Current.DisplayAlert(
+                    "DEBUG",
+                    $"Résidences chargées : {Residences?.Count ?? 0}",
+                    "OK");
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert(
+                    "Erreur",
+                    "Impossible de charger les résidences : " + ex.Message,
+                    "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
-        catch (ApiException ex)
+
+        [RelayCommand]
+        private async Task CreateAsync()
         {
-            // Affiche le détail de la validation serveur
-            var message = string.IsNullOrWhiteSpace(ex.Content) ? ex.Message : ex.Content;
-            await Shell.Current.DisplayAlert("Erreur API (400)", message, "OK");
+            if (IsBusy) return;
+
+            if (string.IsNullOrWhiteSpace(Description))
+            {
+                await Shell.Current.DisplayAlert("Champs requis", "La description est obligatoire.", "OK");
+                return;
+            }
+
+            if (SelectedResidence is null)
+            {
+                await Shell.Current.DisplayAlert("Champs requis", "La résidence est obligatoire.", "OK");
+                return;
+            }
+
+            if (!TryParseDecimal(MontantTotalText, out var montant))
+            {
+                await Shell.Current.DisplayAlert(
+                    "Montant invalide",
+                    "Saisis un montant valide (ex: 1234,56).",
+                    "OK");
+                return;
+            }
+
+            try
+            {
+                IsBusy = true;
+
+                // 🔥 Lookup par nom
+                var nom = SelectedResidence.Nom ?? string.Empty;
+                var residenceGuid = await _residencesApi.LookupIdAsync(nom);
+                ResidenceId = residenceGuid.ToString();
+
+                var payload = new AppelDeFondsDto
+                {
+                    Description = Description,
+                    DateEmission = DateEmission,
+                    ResidenceId = ResidenceId,
+                    MontantTotal = montant
+                };
+
+                var created = await _api.CreateAsync(payload);
+
+                if (!string.IsNullOrWhiteSpace(created?.Id))
+                    await Shell.Current.GoToAsync($"appel-details?id={created.Id}");
+                else
+                    await Shell.Current.GoToAsync("//appels");
+            }
+            catch (ApiException ex)
+            {
+                var message = string.IsNullOrWhiteSpace(ex.Content) ? ex.Message : ex.Content;
+                await Shell.Current.DisplayAlert("Erreur API", message, "OK");
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Erreur", ex.Message, "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
-        catch (Exception ex)
+
+        private static bool TryParseDecimal(string? input, out decimal value)
         {
-            await Shell.Current.DisplayAlert("Erreur", ex.Message, "OK");
+            input = (input ?? string.Empty).Trim();
+            input = input.Replace(' ', '\0');
+
+            if (decimal.TryParse(input, NumberStyles.Number, CultureInfo.CurrentCulture, out value))
+                return true;
+            if (decimal.TryParse(input, NumberStyles.Number, CultureInfo.InvariantCulture, out value))
+                return true;
+
+            var swapped = input.Replace(',', '.');
+            return decimal.TryParse(swapped, NumberStyles.Number, CultureInfo.InvariantCulture, out value);
         }
-        finally
-        {
-            IsBusy = false;
-        }
-    }
-
-    private static bool TryParseDecimal(string? input, out decimal value)
-    {
-        // Essaye culture courante puis invariant, et remplace ,/. au besoin
-        input = (input ?? string.Empty).Trim();
-        input = input.Replace(' ', '\0');
-
-        if (decimal.TryParse(input, NumberStyles.Number, CultureInfo.CurrentCulture, out value))
-            return true;
-        if (decimal.TryParse(input, NumberStyles.Number, CultureInfo.InvariantCulture, out value))
-            return true;
-
-        // petite tolérance : remplacer virgule par point
-        var swapped = input.Replace(',', '.');
-        return decimal.TryParse(swapped, NumberStyles.Number, CultureInfo.InvariantCulture, out value);
     }
 }
