@@ -13,6 +13,7 @@
         public decimal MontantPaye { get; set; }
         public decimal MontantReste { get; set; }
 
+        public string ResidenceNom { get; set; } = string.Empty;
         // détails
         public List<PaiementDto> Paiements { get; set; } = new();
     }

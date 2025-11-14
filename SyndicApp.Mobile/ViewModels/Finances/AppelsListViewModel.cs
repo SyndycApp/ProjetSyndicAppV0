@@ -6,11 +6,17 @@ namespace SyndicApp.Mobile.ViewModels.Finances;
 public partial class AppelsListViewModel : ObservableObject
 {
     private readonly IAppelsApi _api;
+    private readonly IResidencesApi _residencesApi;
 
     [ObservableProperty] private bool isBusy;
     [ObservableProperty] private List<AppelDeFondsDto> appels = new();
 
-    public AppelsListViewModel(IAppelsApi api) => _api = api;
+
+    public AppelsListViewModel(IAppelsApi api, IResidencesApi residencesApi)
+    {
+        _api = api;
+        _residencesApi = residencesApi;
+    }
 
     [RelayCommand]
     public async Task LoadAsync()
@@ -20,6 +26,21 @@ public partial class AppelsListViewModel : ObservableObject
         {
             IsBusy = true;
             Appels = await _api.GetAllAsync();
+            var residences = await _residencesApi.GetAllAsync();
+            var lookup = residences.ToDictionary(
+                r => r.Id.ToString(),
+                r => r.Nom ?? string.Empty);
+
+            foreach (var a in appels)
+            {
+                if (!string.IsNullOrWhiteSpace(a.ResidenceId)
+                    && lookup.TryGetValue(a.ResidenceId, out var nom))
+                {
+                    a.ResidenceNom = nom;
+                }
+            }
+
+            Appels = appels;
         }
         finally { IsBusy = false; }
     }

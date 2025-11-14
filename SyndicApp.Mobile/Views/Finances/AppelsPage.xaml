@@ -86,9 +86,9 @@
                                        FontAttributes="Bold" FontSize="16"/>
 
                                 <StackLayout Grid.Row="1" Spacing="2">
-                                    <Label Text="{Binding DateEmission, StringFormat='Date dâ€™Ã©mission : {0:dd MMM yyyy}'}"
+                                    <Label Text="{Binding DateEmission, StringFormat='Date d'émission : {0:dd MMM yyyy}'}"
                                            FontSize="12"/>
-                                    <Label Text="{Binding ResidenceId, StringFormat='RÃ©sidence : {0}'}"
+                                    <Label Text="{Binding ResidenceNom, StringFormat='Résidence : {0}'}"
                                            FontSize="12"/>
                                 </StackLayout>
 

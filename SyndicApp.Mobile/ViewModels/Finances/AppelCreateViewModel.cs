@@ -43,10 +43,6 @@ namespace SyndicApp.Mobile.ViewModels.Finances
                 IsBusy = true;
                 // ton API renvoie List<ResidenceDto>
                 Residences = await _residencesApi.GetAllAsync();
-                await Shell.Current.DisplayAlert(
-                    "DEBUG",
-                    $"Résidences chargées : {Residences?.Count ?? 0}",
-                    "OK");
             }
             catch (Exception ex)
             {
