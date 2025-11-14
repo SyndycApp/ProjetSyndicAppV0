@@ -4,12 +4,16 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:converters="clr-namespace:SyndicApp.Mobile.Converters"
+    xmlns:vm="clr-namespace:SyndicApp.Mobile.ViewModels.Affectations"
+    xmlns:models="clr-namespace:SyndicApp.Mobile.Models"
+    x:DataType="vm:AffectationsListViewModel"
     x:Name="RootPage"
     Title="Affectations"
     BackgroundColor="White"
     Shell.NavBarIsVisible="False">
 
-    <ContentPage.Resources>
+
+	<ContentPage.Resources>
         <Color x:Key="TopbarColor">#2563EB</Color>
         <Color x:Key="HeaderTextOnDark">#FFFFFF</Color>
         <Color x:Key="BodyText">#111827</Color>

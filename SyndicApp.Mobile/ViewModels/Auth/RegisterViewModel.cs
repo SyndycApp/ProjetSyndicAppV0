@@ -10,7 +10,6 @@ namespace SyndicApp.Mobile.ViewModels.Auth;
 public partial class RegisterViewModel : ViewModels.Common.BaseViewModel
 {
     private readonly IAuthApi _authApi;
-    private readonly IAccountApi _accountApi; // /me via AuthHeaderHandler (Bearer auto)
     private readonly TokenStore _tokenStore;
 
     [ObservableProperty] private string? email;
@@ -24,12 +23,12 @@ public partial class RegisterViewModel : ViewModels.Common.BaseViewModel
     [ObservableProperty] private string? errorMessage;
     [ObservableProperty] private bool hasError;
 
-    public IReadOnlyList<string> Roles { get; } = new[] { "Syndic", "Copropriétaire", "Gardien", "Locataire" };
+    public IReadOnlyList<string> Roles { get; } =
+        new[] { "Syndic", "Copropriétaire", "Gardien", "Locataire" };
 
-    public RegisterViewModel(IAuthApi authApi, IAccountApi accountApi, TokenStore tokenStore)
+    public RegisterViewModel(IAuthApi authApi, TokenStore tokenStore)
     {
         _authApi = authApi;
-        _accountApi = accountApi;
         _tokenStore = tokenStore;
         Title = "Créer un compte";
     }
@@ -54,12 +53,14 @@ public partial class RegisterViewModel : ViewModels.Common.BaseViewModel
                 ErrorMessage = "Tous les champs marqués * sont obligatoires.";
                 return;
             }
+
             if (Password!.Length < 6)
             {
                 HasError = true;
                 ErrorMessage = "Mot de passe trop court (min. 6).";
                 return;
             }
+
             if (!string.Equals(Password, ConfirmPassword))
             {
                 HasError = true;
@@ -78,16 +79,19 @@ public partial class RegisterViewModel : ViewModels.Common.BaseViewModel
                 Role = SelectedRole!
             };
 
-            // Appel register (pas d’auto-login derrière)
             await _authApi.RegisterAsync(dto);
 
-            // Par sécurité, si un token traînait, on le nettoie
+            // On nettoie tout token éventuel
             _tokenStore.ClearToken();
 
-            await Shell.Current.DisplayAlert("Compte créé", "Ton compte est créé. Tu peux te connecter maintenant.", "OK");
-            await Shell.Current.GoToAsync("//login");   // ⇐ navigation vers Login
+            await Shell.Current.DisplayAlert(
+                "Compte créé",
+                "Ton compte est créé. Tu peux te connecter maintenant.",
+                "OK");
 
-            // Optionnel : reset des champs du formulaire
+            await Shell.Current.GoToAsync("//login");
+
+           
             Email = Password = ConfirmPassword = FullName = Adresse = null;
             DateNaissance = DateTime.Today.AddYears(-20);
             SelectedRole = "Copropriétaire";
@@ -96,8 +100,8 @@ public partial class RegisterViewModel : ViewModels.Common.BaseViewModel
         {
             try
             {
-                // 🔧 Correction warning : on vérifie que le JSON n’est pas null/empty
                 ApiError? err = null;
+
                 if (!string.IsNullOrWhiteSpace(ex.Content))
                 {
                     err = System.Text.Json.JsonSerializer.Deserialize<ApiError>(
@@ -117,6 +121,7 @@ public partial class RegisterViewModel : ViewModels.Common.BaseViewModel
             {
                 ErrorMessage = ex.Content ?? "Inscription invalide. Vérifie les informations saisies.";
             }
+
             HasError = true;
         }
         catch (HttpRequestException)

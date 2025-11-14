@@ -10,8 +10,8 @@ namespace SyndicApp.Mobile.ViewModels.Auth;
 
 public partial class LoginViewModel : ViewModels.Common.BaseViewModel
 {
-    private readonly IAuthApi _authApi;       // public (login/register)
-    private readonly IAccountApi _accountApi; // protégé (Bearer via AuthHeaderHandler)
+    private readonly IAuthApi _authApi;
+    private readonly IAccountApi _accountApi;
     private readonly TokenStore _tokenStore;
 
     [ObservableProperty] private string? email;
@@ -37,7 +37,6 @@ public partial class LoginViewModel : ViewModels.Common.BaseViewModel
             HasError = false;
             ErrorMessage = null;
 
-            // 0) Validation basique
             if (string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(Password))
             {
                 HasError = true;
@@ -45,10 +44,12 @@ public partial class LoginViewModel : ViewModels.Common.BaseViewModel
                 return;
             }
 
-            // 1) Login (public) → récup token
-            var resp = await _authApi.LoginAsync(new LoginDto { Email = Email, Password = Password });
+            var resp = await _authApi.LoginAsync(new LoginDto
+            {
+                Email = Email,
+                Password = Password
+            });
 
-            // 🔧 Correction warning : on garantit un string non-null
             _tokenStore.SaveToken(resp.Token ?? string.Empty);
 
             var token = _tokenStore.GetToken();
@@ -59,7 +60,6 @@ public partial class LoginViewModel : ViewModels.Common.BaseViewModel
                 return;
             }
 
-            // 2) /api/Auth/me via handler (pas d’argument)
             UserDto me;
             try
             {
@@ -72,25 +72,27 @@ public partial class LoginViewModel : ViewModels.Common.BaseViewModel
                 return;
             }
 
-            // 3) Persister le rôle (1er élément de la liste) et router
-            var role = me.Roles?.FirstOrDefault()?.Trim(); // ex: "Syndic"
+            var role = me.Roles?.FirstOrDefault()?.Trim();
             if (!string.IsNullOrEmpty(role))
+            {
                 _tokenStore.SaveRole(role);
+            }
 
-            // Navigation (ajuste si tu as plusieurs dashboards)
             await Shell.Current.GoToAsync("//drawer");
         }
         catch (ApiException ex)
         {
-            // 4xx → message bandeau ; 5xx / autres → alerte
-            if ((int)ex.StatusCode >= 400 && (int)ex.StatusCode < 500)
+            if ((int)ex.StatusCode is >= 400 and < 500)
             {
                 HasError = true;
                 ErrorMessage = "Email ou mot de passe incorrect.";
             }
             else
             {
-                await Shell.Current.DisplayAlert($"Erreur {(int)ex.StatusCode}", ex.Content ?? "Erreur serveur", "OK");
+                await Shell.Current.DisplayAlert(
+                    $"Erreur {(int)ex.StatusCode}",
+                    ex.Content ?? "Erreur serveur",
+                    "OK");
             }
         }
         catch (HttpRequestException httpEx)

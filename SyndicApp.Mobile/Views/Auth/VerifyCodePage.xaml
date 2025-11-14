@@ -7,7 +7,6 @@
     x:DataType="vm:VerifyCodeViewModel"
     Shell.NavBarIsVisible="False"
     BackgroundColor="#F4F6F8">
-
     <Grid Padding="20">
         <Border HorizontalOptions="Center"
                 VerticalOptions="Center"
@@ -27,7 +26,7 @@
                     <Label Text="Code de v2rification" FontSize="22" FontAttributes="Bold" TextColor="#1C1C1E"/>
                 </VerticalStackLayout>
 
-                <Label Text="Saisissez le code 0  6 chiffres que nous avons envoy2 0  votre email."
+                <Label Text="Saisissez le code à 6 chiffres que nous avons envoyé à votre email."
                        FontSize="13" TextColor="#6B7280"
                        HorizontalTextAlignment="Center" LineBreakMode="WordWrap"/>
 

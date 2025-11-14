@@ -8,137 +8,178 @@
     Shell.NavBarIsVisible="False"
     BackgroundColor="#F4F6F8">
 
-    <Grid Padding="20">
-        <Border HorizontalOptions="Center"
+	<Grid Padding="20">
+		<Border HorizontalOptions="Center"
                 VerticalOptions="Center"
                 WidthRequest="420"
                 StrokeThickness="0"
                 BackgroundColor="White"
                 Padding="24"
                 StrokeShape="RoundRectangle 16">
-            <Border.Shadow>
-                <Shadow Brush="#40000000" Radius="12" />
-            </Border.Shadow>
+			<Border.Shadow>
+				<Shadow Brush="#40000000" Radius="12" />
+			</Border.Shadow>
 
-            <ScrollView>
-                <VerticalStackLayout Spacing="14">
+			<ScrollView>
+				<VerticalStackLayout Spacing="14">
 
-                    <!-- Logo + Titre -->
-                    <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
-                        <Image Source="logo.png" WidthRequest="120" HeightRequest="120" Aspect="AspectFit"/>
-                        <Label Text="Créer un compte" FontSize="26" FontAttributes="Bold" TextColor="#1C1C1E" />
-                    </VerticalStackLayout>
+					
+					<VerticalStackLayout Spacing="8"
+                                         HorizontalOptions="Center">
+						<Image Source="logo.png"
+                               WidthRequest="120"
+                               HeightRequest="120"
+                               Aspect="AspectFit" />
+						<Label Text="Créer un compte"
+                               FontSize="26"
+                               FontAttributes="Bold"
+                               TextColor="#1C1C1E" />
+					</VerticalStackLayout>
 
-                    <!-- Erreur -->
-                    <Border BackgroundColor="#FDECEA"
+					
+					<Border BackgroundColor="#FDECEA"
                             StrokeThickness="0"
                             Padding="10"
                             StrokeShape="RoundRectangle 8"
                             IsVisible="{Binding HasError}">
-                        <Label Text="{Binding ErrorMessage}" TextColor="#B3261E" FontSize="13"/>
-                    </Border>
+						<Label Text="{Binding ErrorMessage}"
+                               TextColor="#B3261E"
+                               FontSize="13" />
+					</Border>
 
-                    <!-- Champs -->
-                    <VerticalStackLayout Spacing="10">
+					
+					<VerticalStackLayout Spacing="10">
 
-                        <VerticalStackLayout Spacing="6">
-                            <Label Text="Nom complet *" FontSize="12" TextColor="#6B7280"/>
-                            <Border StrokeShape="RoundRectangle 8" BackgroundColor="#FFFFFF" Padding="12">
-                                <Entry Text="{Binding FullName}"
+						<VerticalStackLayout Spacing="6">
+							<Label Text="Nom complet *"
+                                   FontSize="12"
+                                   TextColor="#6B7280" />
+							<Border StrokeShape="RoundRectangle 8"
+                                    BackgroundColor="#FFFFFF"
+                                    Padding="12">
+								<Entry Text="{Binding FullName}"
                                        Placeholder="Ex: Ali Amrani"
                                        TextColor="Black"
-                                       BackgroundColor="Transparent"/>
-                            </Border>
-                        </VerticalStackLayout>
+                                       BackgroundColor="Transparent" />
+							</Border>
+						</VerticalStackLayout>
 
-                        <VerticalStackLayout Spacing="6">
-                            <Label Text="Email *" FontSize="12" TextColor="#6B7280"/>
-                            <Border StrokeShape="RoundRectangle 8" BackgroundColor="#FFFFFF" Padding="12">
-                                <Entry Text="{Binding Email}"
+						<VerticalStackLayout Spacing="6">
+							<Label Text="Email *"
+                                   FontSize="12"
+                                   TextColor="#6B7280" />
+							<Border StrokeShape="RoundRectangle 8"
+                                    BackgroundColor="#FFFFFF"
+                                    Padding="12">
+								<Entry Text="{Binding Email}"
                                        Keyboard="Email"
                                        Placeholder="email@exemple.com"
                                        TextColor="Black"
-                                       BackgroundColor="Transparent"/>
-                            </Border>
-                        </VerticalStackLayout>
+                                       BackgroundColor="Transparent" />
+							</Border>
+						</VerticalStackLayout>
 
-                        <VerticalStackLayout Spacing="6">
-                            <Label Text="Adresse" FontSize="12" TextColor="#6B7280"/>
-                            <Border StrokeShape="RoundRectangle 8" BackgroundColor="#FFFFFF" Padding="12">
-                                <Entry Text="{Binding Adresse}"
+						<VerticalStackLayout Spacing="6">
+							<Label Text="Adresse"
+                                   FontSize="12"
+                                   TextColor="#6B7280" />
+							<Border StrokeShape="RoundRectangle 8"
+                                    BackgroundColor="#FFFFFF"
+                                    Padding="12">
+								<Entry Text="{Binding Adresse}"
                                        Placeholder="Adresse"
                                        TextColor="Black"
-                                       BackgroundColor="Transparent"/>
-                            </Border>
-                        </VerticalStackLayout>
+                                       BackgroundColor="Transparent" />
+							</Border>
+						</VerticalStackLayout>
 
-                        <VerticalStackLayout Spacing="6">
-                            <Label Text="Date de naissance *" FontSize="12" TextColor="#6B7280"/>
-                            <Border StrokeShape="RoundRectangle 8" BackgroundColor="#FFFFFF" Padding="8">
-                                <DatePicker Date="{Binding DateNaissance}"
-                                            TextColor="Black"/>
-                            </Border>
-                        </VerticalStackLayout>
+						<VerticalStackLayout Spacing="6">
+							<Label Text="Date de naissance *"
+                                   FontSize="12"
+                                   TextColor="#6B7280" />
+							<Border StrokeShape="RoundRectangle 8"
+                                    BackgroundColor="#FFFFFF"
+                                    Padding="8">
+								<DatePicker Date="{Binding DateNaissance}"
+                                            TextColor="Black" />
+							</Border>
+						</VerticalStackLayout>
 
-                        <VerticalStackLayout Spacing="6">
-                            <Label Text="ROle *" FontSize="12" TextColor="#6B7280"/>
-                            <Border StrokeShape="RoundRectangle 8" BackgroundColor="#FFFFFF" Padding="8">
-                                <Picker ItemsSource="{Binding Roles}"
+						<VerticalStackLayout Spacing="6">
+							<Label Text="Rôle *"
+                                   FontSize="12"
+                                   TextColor="#6B7280" />
+							<Border StrokeShape="RoundRectangle 8"
+                                    BackgroundColor="#FFFFFF"
+                                    Padding="8">
+								<Picker ItemsSource="{Binding Roles}"
                                         SelectedItem="{Binding SelectedRole}"
-                                        Title="Choisis un rOle"
-                                        TextColor="Black"/>
-                            </Border>
-                        </VerticalStackLayout>
+                                        Title="Choisis un rôle"
+                                        TextColor="Black" />
+							</Border>
+						</VerticalStackLayout>
 
-                        <VerticalStackLayout Spacing="6">
-                            <Label Text="Mot de passe *" FontSize="12" TextColor="#6B7280"/>
-                            <Border StrokeShape="RoundRectangle 8" BackgroundColor="#FFFFFF" Padding="12">
-                                <Entry Text="{Binding Password}"
+						<VerticalStackLayout Spacing="6">
+							<Label Text="Mot de passe *"
+                                   FontSize="12"
+                                   TextColor="#6B7280" />
+							<Border StrokeShape="RoundRectangle 8"
+                                    BackgroundColor="#FFFFFF"
+                                    Padding="12">
+								<Entry Text="{Binding Password}"
                                        IsPassword="True"
-                                       Placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
+                                       Placeholder="••••••••"
                                        TextColor="Black"
-                                       BackgroundColor="Transparent"/>
-                            </Border>
-                        </VerticalStackLayout>
+                                       BackgroundColor="Transparent" />
+							</Border>
+						</VerticalStackLayout>
 
-                        <VerticalStackLayout Spacing="6">
-                            <Label Text="Confirmer le mot de passe *" FontSize="12" TextColor="#6B7280"/>
-                            <Border StrokeShape="RoundRectangle 8" BackgroundColor="#FFFFFF" Padding="12">
-                                <Entry Text="{Binding ConfirmPassword}"
+						<VerticalStackLayout Spacing="6">
+							<Label Text="Confirmer le mot de passe *"
+                                   FontSize="12"
+                                   TextColor="#6B7280" />
+							<Border StrokeShape="RoundRectangle 8"
+                                    BackgroundColor="#FFFFFF"
+                                    Padding="12">
+								<Entry Text="{Binding ConfirmPassword}"
                                        IsPassword="True"
-                                       Placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢"
+                                       Placeholder="••••••••"
                                        TextColor="Black"
-                                       BackgroundColor="Transparent"/>
-                            </Border>
-                        </VerticalStackLayout>
+                                       BackgroundColor="Transparent" />
+							</Border>
+						</VerticalStackLayout>
 
-                    </VerticalStackLayout>
+					</VerticalStackLayout>
 
-                    <!-- CTA -->
-                    <Button Text="Créer mon compte"
+					
+					<Button Text="Créer mon compte"
                             Command="{Binding RegisterCommand}"
                             HeightRequest="48"
                             FontAttributes="Bold"
                             TextColor="White"
                             BackgroundColor="#1E63E9"
-                            CornerRadius="12"/>
+                            CornerRadius="12" />
 
-                    <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+					<ActivityIndicator IsRunning="{Binding IsBusy}"
+                                       IsVisible="{Binding IsBusy}" />
 
-                    <!-- Lien vers connexion -->
-                    <HorizontalStackLayout HorizontalOptions="Center"
-                                            Spacing="6"
-                                            Margin="0,4,0,0">
-                        <Label Text="Déjà  un compte ?" TextColor="#6B7280" />
-                        <Label Text="Se connecter" TextColor="#1E63E9" FontAttributes="Bold">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding GoToLoginCommand}" />
-                            </Label.GestureRecognizers>
-                        </Label>
-                    </HorizontalStackLayout>
+					
+					<HorizontalStackLayout HorizontalOptions="Center"
+                                           Spacing="6"
+                                           Margin="0,4,0,0">
+						<Label Text="Déjà un compte ?"
+                               TextColor="#6B7280" />
+						<Label Text="Se connecter"
+                               TextColor="#1E63E9"
+                               FontAttributes="Bold">
+							<Label.GestureRecognizers>
+								<TapGestureRecognizer Command="{Binding GoToLoginCommand}" />
+							</Label.GestureRecognizers>
+						</Label>
+					</HorizontalStackLayout>
 
-                </VerticalStackLayout>
-            </ScrollView>
-        </Border>
-    </Grid>
+				</VerticalStackLayout>
+			</ScrollView>
+		</Border>
+	</Grid>
 </ContentPage>
