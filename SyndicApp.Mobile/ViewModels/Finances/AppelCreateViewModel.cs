@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using IntelliJ.Lang.Annotations;
 using Microsoft.Maui.Controls;
 using Refit;
 using SyndicApp.Mobile.Api;
 using SyndicApp.Mobile.Models;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Threading.Tasks;
+using static Android.Util.EventLogTags;
 
 namespace SyndicApp.Mobile.ViewModels.Finances
 {
@@ -32,7 +34,6 @@ namespace SyndicApp.Mobile.ViewModels.Finances
             _ = LoadResidencesAsync();
         }
 
-        // Chargement de la liste des résidences
         [RelayCommand]
         public async Task LoadResidencesAsync()
         {
@@ -41,7 +42,6 @@ namespace SyndicApp.Mobile.ViewModels.Finances
             try
             {
                 IsBusy = true;
-                // ton API renvoie List<ResidenceDto>
                 Residences = await _residencesApi.GetAllAsync();
             }
             catch (Exception ex)
@@ -87,7 +87,6 @@ namespace SyndicApp.Mobile.ViewModels.Finances
             {
                 IsBusy = true;
 
-                // 🔥 Lookup par nom
                 var nom = SelectedResidence.Nom ?? string.Empty;
                 var residenceGuid = await _residencesApi.LookupIdAsync(nom);
                 ResidenceId = residenceGuid.ToString();

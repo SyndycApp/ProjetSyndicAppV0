@@ -1,10 +1,4 @@
-﻿// Views/Finances/AppelCreatePage.xaml.cs
-using System;
-using System.Threading.Tasks;
-using Microsoft.Maui.Controls;
-using SyndicApp.Mobile.ViewModels.Finances;
-using SyndicApp.Mobile;
-
+﻿using SyndicApp.Mobile.ViewModels.Finances;
 
 namespace SyndicApp.Mobile.Views.Finances
 {
@@ -14,7 +8,7 @@ namespace SyndicApp.Mobile.Views.Finances
 
         public AppelCreatePage()
         {
-            InitializeComponent(); 
+            InitializeComponent();
             BindingContext = ServiceHelper.Get<AppelCreateViewModel>();
         }
 
@@ -35,7 +29,6 @@ namespace SyndicApp.Mobile.Views.Finances
             }
         }
 
-
         protected override void OnSizeAllocated(double width, double height)
         {
             base.OnSizeAllocated(width, height);
@@ -46,7 +39,6 @@ namespace SyndicApp.Mobile.Views.Finances
             }
         }
 
-        // ===== Drawer handlers =====
         private async void OpenDrawer_Clicked(object sender, EventArgs e)
         {
             if (_isOpen) return;
@@ -70,7 +62,6 @@ namespace SyndicApp.Mobile.Views.Finances
             Backdrop.InputTransparent = true;
         }
 
-        // ===== Menu navigation (signature exigée par XAML) =====
         private async void OnMenuItemClicked(object sender, EventArgs e)
         {
             if (sender is Button b && b.CommandParameter is string route && !string.IsNullOrWhiteSpace(route))
@@ -80,7 +71,6 @@ namespace SyndicApp.Mobile.Views.Finances
             }
         }
 
-        // ===== Bouton Annuler =====
         private async void OnCancelClicked(object sender, EventArgs e)
         {
             await CloseDrawerAsync();

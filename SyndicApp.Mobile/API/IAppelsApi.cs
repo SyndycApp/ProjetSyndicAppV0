@@ -15,12 +15,13 @@ namespace SyndicApp.Mobile.Api
         Task<AppelDeFondsDto> CreateAsync([Body] AppelDeFondsDto body);
 
         [Put("/api/Appels/{id}")]
-        Task<AppelDeFondsDto> UpdateAsync(string id, [Body] AppelDeFondsDto body); // ← string
+        Task UpdateAsync(string id, [Body] AppelDeFondsDto body);
+
+        // 204 → pas de body
+        [Put("/api/Appels/{id}/cloturer")]
+        Task CloturerAsync(string id);
 
         [Delete("/api/Appels/{id}")]
-        Task DeleteAsync(string id);                                    // ← string
-
-        [Put("/api/Appels/{id}/cloturer")]
-        Task<AppelDeFondsDto> CloturerAsync(string id);                 // ← string
+        Task DeleteAsync(string id);                             
     }
 }

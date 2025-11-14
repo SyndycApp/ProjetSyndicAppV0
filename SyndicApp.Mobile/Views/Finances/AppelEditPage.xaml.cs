@@ -1,5 +1,4 @@
-﻿using Org.Xmlpull.V1.Sax2;
-using SyndicApp.Mobile.ViewModels.Finances;
+﻿using SyndicApp.Mobile.ViewModels.Finances;
 
 namespace SyndicApp.Mobile.Views.Finances;
 
@@ -17,13 +16,6 @@ public partial class AppelEditPage : ContentPage
     }
 
     private async void OnBackClicked(object? sender, EventArgs e) => await Shell.Current.GoToAsync("..");
-
-    private async void OnDeleteClicked(object sender, EventArgs e)
-    {
-        bool ok = await DisplayAlert("Suppression", "Supprimer cet appel ?", "Oui", "Non");
-        if (!ok) return;
-        await VM.DeleteAsync(); // suppose une méthode DeleteAsync(); sinon garde ton ancienne navigation
-    }
 
     protected override void OnAppearing()
     {

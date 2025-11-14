@@ -1,5 +1,4 @@
-﻿using Org.Xmlpull.V1.Sax2;
-using SyndicApp.Mobile.ViewModels.Finances;
+﻿using SyndicApp.Mobile.ViewModels.Finances;
 
 namespace SyndicApp.Mobile.Views.Finances;
 

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Maui.Controls;
 using SyndicApp.Mobile.Api;
 using SyndicApp.Mobile.Models;
 
@@ -15,7 +16,6 @@ namespace SyndicApp.Mobile.ViewModels.Finances
 
         [ObservableProperty] private bool isBusy;
         [ObservableProperty] private List<AppelDeFondsDto> appels = new();
-
 
         public AppelsListViewModel(IAppelsApi api, IResidencesApi residencesApi)
         {
@@ -48,7 +48,6 @@ namespace SyndicApp.Mobile.ViewModels.Finances
                         a.ResidenceNom = nom;
                     }
                 }
-
             }
             finally
             {

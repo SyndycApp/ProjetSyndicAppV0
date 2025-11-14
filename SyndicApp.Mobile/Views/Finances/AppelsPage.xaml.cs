@@ -1,5 +1,4 @@
-﻿using Org.Xmlpull.V1.Sax2;
-using SyndicApp.Mobile.ViewModels.Finances;
+﻿using SyndicApp.Mobile.ViewModels.Finances;
 
 namespace SyndicApp.Mobile.Views.Finances;
 
@@ -13,18 +12,21 @@ public partial class AppelsPage : ContentPage
     {
         InitializeComponent();
         BindingContext = vm;
-        Loaded += async (_, __) => await vm.LoadAsync();
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
+
         var width = this.Width > 0 ? this.Width : Application.Current?.Windows[0]?.Page?.Width ?? 360;
         Drawer.WidthRequest = width;
         Drawer.TranslationX = -width;
         Backdrop.InputTransparent = true;
         Backdrop.Opacity = 0;
         _isOpen = false;
+
+        if (BindingContext is AppelsListViewModel vm && !vm.IsBusy)
+            _ = vm.LoadAsync(); // recharge liste après retour / suppression / ajout
     }
 
     protected override void OnSizeAllocated(double width, double height)

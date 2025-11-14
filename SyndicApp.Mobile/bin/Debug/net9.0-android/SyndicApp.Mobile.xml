@@ -675,6 +675,7 @@
             <inheritdoc/>
             <inheritdoc/>
             <inheritdoc/>
+            <inheritdoc/>
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Finances.AppelEditViewModel.Id">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.AppelEditViewModel.id"/>
@@ -702,6 +703,18 @@
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Finances.AppelEditViewModel.IsBusy">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.AppelEditViewModel.isBusy"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Finances.AppelEditViewModel.Residences">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.AppelEditViewModel.residences"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Finances.AppelEditViewModel.SelectedResidence">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.AppelEditViewModel.selectedResidence"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Finances.AppelEditViewModel.loadResidencesCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Finances.AppelEditViewModel.LoadResidencesCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Finances.AppelEditViewModel.LoadResidencesCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Finances.AppelEditViewModel.LoadResidencesAsync"/>.</summary>
         </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Finances.AppelEditViewModel.loadCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Finances.AppelEditViewModel.LoadCommand"/>.</summary>
@@ -1708,10 +1721,10 @@
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAppelsApi.UpdateAsync(System.String,SyndicApp.Mobile.Models.AppelDeFondsDto)">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAppelsApi.DeleteAsync(System.String)">
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAppelsApi.CloturerAsync(System.String)">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAppelsApi.CloturerAsync(System.String)">
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAppelsApi.DeleteAsync(System.String)">
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAppelsApi.SyndicApp#Mobile#Api#IAppelsApi#GetAllAsync">
@@ -1726,10 +1739,10 @@
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAppelsApi.SyndicApp#Mobile#Api#IAppelsApi#UpdateAsync(System.String,SyndicApp.Mobile.Models.AppelDeFondsDto)">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAppelsApi.SyndicApp#Mobile#Api#IAppelsApi#DeleteAsync(System.String)">
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAppelsApi.SyndicApp#Mobile#Api#IAppelsApi#CloturerAsync(System.String)">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAppelsApi.SyndicApp#Mobile#Api#IAppelsApi#CloturerAsync(System.String)">
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAppelsApi.SyndicApp#Mobile#Api#IAppelsApi#DeleteAsync(System.String)">
             <inheritdoc />
         </member>
         <member name="T:Refit.Implementation.Generated.SyndicAppMobileApiIAuthApi">

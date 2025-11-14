@@ -1,55 +1,75 @@
-﻿using SyndicApp.Mobile.Api;
+﻿using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.Maui.Controls;
+using SyndicApp.Mobile.Api;
 using SyndicApp.Mobile.Models;
 
-namespace SyndicApp.Mobile.ViewModels.Finances;
-
-// l’URI passe ?id=... (toujours string côté Shell)
-[QueryProperty(nameof(Id), "id")]
-public partial class AppelDetailsViewModel : ObservableObject
+namespace SyndicApp.Mobile.ViewModels.Finances
 {
-    private readonly IAppelsApi _api;
-
-    [ObservableProperty] private string id = string.Empty;     // ← Guid → string
-    [ObservableProperty] private AppelDeFondsDto? appel;
-    [ObservableProperty] private bool isBusy;
-
-    public AppelDetailsViewModel(IAppelsApi api) => _api = api;
-
-    [RelayCommand]
-    public async Task LoadAsync()
+    [QueryProperty(nameof(Id), "id")]
+    public partial class AppelDetailsViewModel : ObservableObject
     {
-        if (IsBusy || string.IsNullOrWhiteSpace(Id)) return;   // ← check string
-        try
+        private readonly IAppelsApi _api;
+
+        [ObservableProperty] private string id = string.Empty;
+        [ObservableProperty] private AppelDeFondsDto? appel;
+        [ObservableProperty] private bool isBusy;
+
+        public AppelDetailsViewModel(IAppelsApi api)
         {
-            IsBusy = true;
-            Appel = await _api.GetByIdAsync(Id);
+            _api = api;
         }
-        finally { IsBusy = false; }
-    }
 
-    [RelayCommand]
-    public async Task EditAsync() => await Shell.Current.GoToAsync($"appel-edit?id={Id}");
-
-    [RelayCommand]
-    public async Task CloturerAsync()
-    {
-        if (IsBusy || string.IsNullOrWhiteSpace(Id)) return;
-        try
+        [RelayCommand]
+        public async Task LoadAsync()
         {
-            IsBusy = true;
-            Appel = await _api.CloturerAsync(Id);
+            if (IsBusy || string.IsNullOrWhiteSpace(Id)) return;
+
+            try
+            {
+                IsBusy = true;
+                Appel = await _api.GetByIdAsync(Id);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
-        finally { IsBusy = false; }
-    }
 
-    [RelayCommand]
-    public async Task DeleteAsync()
-    {
-        if (string.IsNullOrWhiteSpace(Id)) return;
-        var ok = await Shell.Current.DisplayAlert("Suppression", "Supprimer cet appel ?", "Oui", "Non");
-        if (!ok) return;
+        [RelayCommand]
+        public async Task EditAsync()
+        {
+            await Shell.Current.GoToAsync($"appel-edit?id={Id}");
+        }
 
-        await _api.DeleteAsync(Id);
-        await Shell.Current.GoToAsync("..");
+        [RelayCommand]
+        public async Task CloturerAsync()
+        {
+            if (IsBusy || string.IsNullOrWhiteSpace(Id)) return;
+
+            try
+            {
+                IsBusy = true;
+                await _api.CloturerAsync(Id);
+                Appel = await _api.GetByIdAsync(Id);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        [RelayCommand]
+        public async Task DeleteAsync()
+        {
+            if (string.IsNullOrWhiteSpace(Id)) return;
+
+            var ok = await Shell.Current.DisplayAlert("Suppression", "Supprimer cet appel ?", "Oui", "Non");
+            if (!ok) return;
+
+            await _api.DeleteAsync(Id);
+            await Shell.Current.GoToAsync("//appels");
+        }
     }
 }
