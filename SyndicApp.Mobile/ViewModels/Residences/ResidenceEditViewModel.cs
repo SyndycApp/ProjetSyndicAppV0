@@ -25,10 +25,11 @@ public partial class ResidenceEditViewModel : ObservableObject
     {
         if (string.IsNullOrWhiteSpace(Id)) return;
         var dto = await _api.GetByIdAsync(Id);
-        Nom = dto.Nom;
-        Adresse = dto.Adresse;
-        Ville = dto.Ville;
-        CodePostal = dto.CodePostal;
+
+        Nom = dto.Nom ?? string.Empty;
+        Adresse = dto.Adresse ?? string.Empty;
+        Ville = dto.Ville ?? string.Empty;
+        CodePostal = dto.CodePostal ?? string.Empty;
     }
 
     [RelayCommand]

@@ -24,28 +24,24 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
             Lots = new();
         }
 
-        // Liste
         [ObservableProperty] private List<AffectationLotDto> items;
 
-        // Recherche + filtres
         [ObservableProperty] private string? searchText;
         [ObservableProperty] private List<UserDto>? users;
         [ObservableProperty] private List<LotDto>? lots;
         [ObservableProperty] private UserDto? selectedUser;
         [ObservableProperty] private LotDto? selectedLot;
 
-        // --- Chargement initial ---
         [RelayCommand]
         public async Task LoadAsync()
         {
-            // 1) Affectations
+
             var data = await _api.GetAllAsync();
             Items = data?.ToList() ?? new List<AffectationLotDto>();
 
-            // 2) Utilisateurs (comme avant)
             try
             {
-                var allUsers = await _api.GetAllUsersAsync(); // ApiResult<List<AuthListItemDto>>
+                var allUsers = await _api.GetAllUsersAsync(); 
                 if (allUsers?.Success == true && allUsers.Data != null)
                 {
                     Users = allUsers.Data
@@ -69,7 +65,6 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
                 Users = new List<UserDto>();
             }
 
-            // 3) Lots via API (affichage du NumeroLot dans le Picker)
             try
             {
                 var allLots = await _lotsApi.GetAllAsync();
@@ -79,7 +74,6 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
             }
             catch
             {
-                // Fallback : à partir des Items s’il y a une panne réseau côté Lots
                 Lots = Items
                     .Where(i => i.LotId != Guid.Empty)
                     .GroupBy(i => i.LotId)
@@ -93,7 +87,6 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
             }
         }
 
-        // --- Filtre ---
         [RelayCommand]
         public async Task FilterAsync()
         {
@@ -101,7 +94,6 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
 
             Guid? lotIdFilter = null;
 
-            // a) Si un lot est choisi dans le Picker : on résout par numeroLot -> Id
             if (SelectedLot != null)
             {
                 try
@@ -115,13 +107,11 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
                             lotIdFilter = first.Id;
                     }
                 }
-                catch { /* non bloquant */ }
+                catch {  }
 
-                // fallback si resolve-id ne renvoie rien
                 if (lotIdFilter == null || lotIdFilter == Guid.Empty)
                     lotIdFilter = SelectedLot.Id;
             }
-            // b) Si pas de lot sélectionné mais du texte saisi : tentative de resolve avec le texte
             else if (!string.IsNullOrWhiteSpace(SearchText))
             {
                 try
@@ -136,7 +126,6 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
                     {
                         lotIdFilter = first.Id;
 
-                        // Optionnel : sélectionner le lot résolu dans le Picker
                         var lot = Lots?.FirstOrDefault(l => l.Id == first.Id)
                                   ?? new LotDto { Id = first.Id, NumeroLot = first.NumeroLot ?? txt };
 
@@ -149,10 +138,9 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
                         SelectedLot = lot;
                     }
                 }
-                catch { /* non bloquant */ }
+                catch {  }
             }
 
-            // c) Filtre final (on garde tes règles existantes)
             var filtered = data.Where(x =>
                     (string.IsNullOrWhiteSpace(SearchText) ||
                      (x.UserNom?.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ?? false) ||

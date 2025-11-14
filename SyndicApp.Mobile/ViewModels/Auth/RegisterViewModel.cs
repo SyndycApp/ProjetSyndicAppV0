@@ -96,8 +96,17 @@ public partial class RegisterViewModel : ViewModels.Common.BaseViewModel
         {
             try
             {
-                var err = System.Text.Json.JsonSerializer.Deserialize<ApiError>(ex.Content,
-                    new System.Text.Json.JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                // 🔧 Correction warning : on vérifie que le JSON n’est pas null/empty
+                ApiError? err = null;
+                if (!string.IsNullOrWhiteSpace(ex.Content))
+                {
+                    err = System.Text.Json.JsonSerializer.Deserialize<ApiError>(
+                        ex.Content,
+                        new System.Text.Json.JsonSerializerOptions
+                        {
+                            PropertyNameCaseInsensitive = true
+                        });
+                }
 
                 ErrorMessage = err?.Details?.FirstOrDefault()
                                ?? err?.Message
@@ -125,7 +134,6 @@ public partial class RegisterViewModel : ViewModels.Common.BaseViewModel
             IsBusy = false;
         }
     }
-
 
     [RelayCommand]
     public Task GoToLoginAsync() => Shell.Current.GoToAsync("//login");

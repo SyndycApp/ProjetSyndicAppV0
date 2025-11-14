@@ -21,7 +21,6 @@ public partial class ResidenceCreateViewModel : ObservableObject
     [RelayCommand]
     public async Task CreateAsync()
     {
-        // ⚠️ utiliser le DTO de création
         var dto = new ResidenceDto
         {
             Nom = Nom,
@@ -37,7 +36,7 @@ public partial class ResidenceCreateViewModel : ObservableObject
         await Shell.Current.GoToAsync("//residences");
     }
 
-    // Optionnel mais pratique pour le XAML ("Annuler")
+    
     [RelayCommand]
     public async Task CancelAsync() => await Shell.Current.GoToAsync("//residences");
 }

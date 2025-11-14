@@ -24,7 +24,6 @@ public partial class ResidenceDetailsViewModel : ObservableObject
         Residence = await _api.GetByIdAsync(Id);
     }
 
-    // Bouton "Modifier"
     [RelayCommand]
     public async Task EditAsync()
     {
@@ -32,7 +31,6 @@ public partial class ResidenceDetailsViewModel : ObservableObject
         await Shell.Current.GoToAsync($"residence-edit?id={Id}");
     }
 
-    // Bouton "Supprimer"
     [RelayCommand]
     public async Task DeleteAsync()
     {
@@ -49,12 +47,12 @@ public partial class ResidenceDetailsViewModel : ObservableObject
 
             WeakReferenceMessenger.Default.Send(new ResidenceChangedMessage(true));
 
-            // Revenir vers la liste
+           
             await Shell.Current.GoToAsync("//residences");
         }
         catch (ApiException ex)
         {
-            // 409/400 : message lisible s’il est renvoyé par l’API
+           
             var msg = string.IsNullOrWhiteSpace(ex.Content)
                 ? ex.Message
                 : ex.Content;

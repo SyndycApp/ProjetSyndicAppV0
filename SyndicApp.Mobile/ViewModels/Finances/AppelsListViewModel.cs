@@ -1,54 +1,67 @@
-﻿using SyndicApp.Mobile.Api;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using SyndicApp.Mobile.Api;
 using SyndicApp.Mobile.Models;
 
-namespace SyndicApp.Mobile.ViewModels.Finances;
-
-public partial class AppelsListViewModel : ObservableObject
+namespace SyndicApp.Mobile.ViewModels.Finances
 {
-    private readonly IAppelsApi _api;
-    private readonly IResidencesApi _residencesApi;
-
-    [ObservableProperty] private bool isBusy;
-    [ObservableProperty] private List<AppelDeFondsDto> appels = new();
-
-
-    public AppelsListViewModel(IAppelsApi api, IResidencesApi residencesApi)
+    public partial class AppelsListViewModel : ObservableObject
     {
-        _api = api;
-        _residencesApi = residencesApi;
-    }
+        private readonly IAppelsApi _api;
+        private readonly IResidencesApi _residencesApi;
 
-    [RelayCommand]
-    public async Task LoadAsync()
-    {
-        if (IsBusy) return;
-        try
+        [ObservableProperty] private bool isBusy;
+        [ObservableProperty] private List<AppelDeFondsDto> appels = new();
+
+
+        public AppelsListViewModel(IAppelsApi api, IResidencesApi residencesApi)
         {
-            IsBusy = true;
-            Appels = await _api.GetAllAsync();
-            var residences = await _residencesApi.GetAllAsync();
-            var lookup = residences.ToDictionary(
-                r => r.Id.ToString(),
-                r => r.Nom ?? string.Empty);
-
-            foreach (var a in appels)
-            {
-                if (!string.IsNullOrWhiteSpace(a.ResidenceId)
-                    && lookup.TryGetValue(a.ResidenceId, out var nom))
-                {
-                    a.ResidenceNom = nom;
-                }
-            }
-
-            Appels = appels;
+            _api = api;
+            _residencesApi = residencesApi;
         }
-        finally { IsBusy = false; }
+
+        [RelayCommand]
+        public async Task LoadAsync()
+        {
+            if (IsBusy) return;
+
+            try
+            {
+                IsBusy = true;
+
+                var list = await _api.GetAllAsync() ?? new List<AppelDeFondsDto>();
+                Appels = list;
+
+                var residences = await _residencesApi.GetAllAsync() ?? new List<ResidenceDto>();
+                var lookup = residences.ToDictionary(
+                    r => r.Id.ToString(),
+                    r => r.Nom ?? string.Empty);
+
+                foreach (var a in list)
+                {
+                    if (!string.IsNullOrWhiteSpace(a.ResidenceId)
+                        && lookup.TryGetValue(a.ResidenceId, out var nom))
+                    {
+                        a.ResidenceNom = nom;
+                    }
+                }
+
+            }
+            finally
+            {
+                IsBusy = false;
+            }
+        }
+
+        [RelayCommand]
+        public async Task OpenCreateAsync()
+            => await Shell.Current.GoToAsync("appel-create");
+
+        [RelayCommand]
+        public async Task OpenDetailsAsync(AppelDeFondsDto a)
+            => await Shell.Current.GoToAsync($"appel-details?id={a.Id}");
     }
-
-    [RelayCommand]
-    public async Task OpenCreateAsync() => await Shell.Current.GoToAsync("appel-create");
-
-    [RelayCommand]
-    public async Task OpenDetailsAsync(AppelDeFondsDto a) =>
-        await Shell.Current.GoToAsync($"appel-details?id={a.Id}");
 }

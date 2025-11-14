@@ -28,7 +28,8 @@ public class MainActivity : MauiAppCompatActivity
         HandleDeepLink(Intent);
     }
 
-    protected override void OnNewIntent(Intent intent)
+    // 🔧 IMPORTANT : Intent? pour matcher la signature base (corrige CS8765)
+    protected override void OnNewIntent(Intent? intent)
     {
         base.OnNewIntent(intent);
         HandleDeepLink(intent);
@@ -36,9 +37,12 @@ public class MainActivity : MauiAppCompatActivity
 
     private void HandleDeepLink(Intent? intent)
     {
-        if (intent?.Data == null) return;
+        // On récupère la string de l’URI de façon sûre (corrige CS8604)
+        var dataString = intent?.Data?.ToString();
+        if (string.IsNullOrWhiteSpace(dataString))
+            return;
 
-        var uri = new Uri(intent.Data.ToString());
+        var uri = new Uri(dataString);
 
         if (uri.Scheme == "syndicapp" && uri.Host == "app" && uri.AbsolutePath == "/resetpassword")
         {
@@ -47,7 +51,8 @@ public class MainActivity : MauiAppCompatActivity
 
             Microsoft.Maui.ApplicationModel.MainThread.BeginInvokeOnMainThread(async () =>
             {
-                await Shell.Current.GoToAsync($"/resetpassword?token={Uri.EscapeDataString(token ?? "")}&email={Uri.EscapeDataString(email ?? "")}");
+                await Shell.Current.GoToAsync(
+                    $"/resetpassword?token={Uri.EscapeDataString(token ?? "")}&email={Uri.EscapeDataString(email ?? "")}");
             });
         }
     }
@@ -56,12 +61,14 @@ public class MainActivity : MauiAppCompatActivity
     {
         var q = uri.Query; // ?a=1&b=2
         if (string.IsNullOrEmpty(q) || q.Length < 2) return null;
+
         foreach (var p in q[1..].Split('&', StringSplitOptions.RemoveEmptyEntries))
         {
             var kv = p.Split('=', 2);
             if (kv.Length == 2 && string.Equals(kv[0], key, StringComparison.OrdinalIgnoreCase))
                 return Uri.UnescapeDataString(kv[1]);
         }
+
         return null;
     }
 }

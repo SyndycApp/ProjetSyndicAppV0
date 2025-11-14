@@ -13,13 +13,12 @@ public partial class ResidencesListViewModel : ObservableObject, IRecipient<Resi
 
     [ObservableProperty] private bool isBusy;
 
-    // Le XAML attend "Residences"
     [ObservableProperty] private List<ResidenceDto> residences = new();
 
 
     public IAsyncRelayCommand LoadAsyncCommand { get; }
-    public IAsyncRelayCommand OpenCreateAsyncCommand { get; }                 // demandé par le XAML
-    public IAsyncRelayCommand<Guid> OpenDetailsAsyncCommand { get; }       // tap carte
+    public IAsyncRelayCommand OpenCreateAsyncCommand { get; }                
+    public IAsyncRelayCommand<Guid> OpenDetailsAsyncCommand { get; }       
 
     public ResidencesListViewModel(IResidencesApi api)
     {
@@ -29,7 +28,6 @@ public partial class ResidencesListViewModel : ObservableObject, IRecipient<Resi
         OpenCreateAsyncCommand = new AsyncRelayCommand(OpenCreateAsync);
         OpenDetailsAsyncCommand = new AsyncRelayCommand<Guid>(OpenDetailsAsync);
 
-        // écouter les changements (création/edition/suppression)
         WeakReferenceMessenger.Default.Register<BatimentChangedMessage>(this,
               async (_, __) => await LoadAsync());
     }
@@ -53,6 +51,6 @@ public partial class ResidencesListViewModel : ObservableObject, IRecipient<Resi
     private Task OpenDetailsAsync(Guid id)
         => Shell.Current.GoToAsync($"residence-details?id={id:D}");
 
-    // Réception du message => recharger la liste
+
     public async void Receive(ResidenceChangedMessage message) => await LoadAsync();
 }

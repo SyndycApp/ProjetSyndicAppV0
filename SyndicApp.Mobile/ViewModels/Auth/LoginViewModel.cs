@@ -47,7 +47,9 @@ public partial class LoginViewModel : ViewModels.Common.BaseViewModel
 
             // 1) Login (public) → récup token
             var resp = await _authApi.LoginAsync(new LoginDto { Email = Email, Password = Password });
-            _tokenStore.SaveToken(resp.Token);
+
+            // 🔧 Correction warning : on garantit un string non-null
+            _tokenStore.SaveToken(resp.Token ?? string.Empty);
 
             var token = _tokenStore.GetToken();
             if (string.IsNullOrWhiteSpace(token))
