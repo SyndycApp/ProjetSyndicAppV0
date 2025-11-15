@@ -591,6 +591,26 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.SyndicDashboardViewModel.LotsCount">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Dashboard.SyndicDashboardViewModel.lotsCount"/>
         </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.SyndicDashboardViewModel.AppelsOuverts">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Dashboard.SyndicDashboardViewModel.appelsOuverts"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.SyndicDashboardViewModel.ChargesCount">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Dashboard.SyndicDashboardViewModel.chargesCount"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.SyndicDashboardViewModel.ChargesMontantTotal">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Dashboard.SyndicDashboardViewModel.chargesMontantTotal"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.SyndicDashboardViewModel.TauxRecouvrement">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Dashboard.SyndicDashboardViewModel.tauxRecouvrement"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Dashboard.SyndicDashboardViewModel.TauxRecouvrementPct">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Dashboard.SyndicDashboardViewModel.tauxRecouvrementPct"/>
+        </member>
+        <member name="M:SyndicApp.Mobile.ViewModels.Dashboard.SyndicDashboardViewModel.OnTauxRecouvrementChanged(System.Double)">
+            <summary>Executes the logic for when <see cref="P:SyndicApp.Mobile.ViewModels.Dashboard.SyndicDashboardViewModel.TauxRecouvrement"/> just changed.</summary>
+            <param name="value">The new property value that was set.</param>
+            <remarks>This method is invoked right after the value of <see cref="P:SyndicApp.Mobile.ViewModels.Dashboard.SyndicDashboardViewModel.TauxRecouvrement"/> is changed.</remarks>
+        </member>
         <member name="T:SyndicApp.Mobile.ViewModels.Finances.AppelCreateViewModel">
             <inheritdoc/>
             <inheritdoc/>
@@ -1380,6 +1400,21 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.LotsCount">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "LotsCount" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.AppelsOuverts">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "AppelsOuverts" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ChargesCount">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ChargesCount" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ChargesMontantTotal">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ChargesMontantTotal" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.TauxRecouvrement">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "TauxRecouvrement" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.TauxRecouvrementPct">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "TauxRecouvrementPct" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Description">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Description" generated properties.</summary>
         </member>
@@ -1610,6 +1645,21 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.LotsCount">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "LotsCount" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.AppelsOuverts">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "AppelsOuverts" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ChargesCount">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ChargesCount" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ChargesMontantTotal">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ChargesMontantTotal" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.TauxRecouvrement">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "TauxRecouvrement" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.TauxRecouvrementPct">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "TauxRecouvrementPct" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Description">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Description" generated properties.</summary>

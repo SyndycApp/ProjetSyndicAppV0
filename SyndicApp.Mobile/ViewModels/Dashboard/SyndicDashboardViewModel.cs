@@ -1,9 +1,13 @@
 ﻿// ViewModels/Dashboard/SyndicDashboardViewModel.cs
+using System.Linq;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Maui.Controls;
 using SyndicApp.Mobile.Api;
 using SyndicApp.Mobile.Common.Messages;
+using SyndicApp.Mobile.Models;
 using SyndicApp.Mobile.Services;
 
 namespace SyndicApp.Mobile.ViewModels.Dashboard;
@@ -12,46 +16,62 @@ public partial class SyndicDashboardViewModel : ViewModels.Common.BaseViewModel
 {
     private readonly IAccountApi _accountApi;
     private readonly IResidencesApi _residencesApi;
-    private readonly TokenStore _tokenStore;
     private readonly IBatimentsApi _batimentsApi;
     private readonly ILotsApi _lotsApi;
-
-
+    private readonly IAppelsApi _appelsApi;
+    private readonly IChargesApi _chargesApi;
+    private readonly TokenStore _tokenStore;
 
     [ObservableProperty] bool canAddResidence;
     [ObservableProperty] int batimentsCount;
     [ObservableProperty] int residencesCount;
     [ObservableProperty] int lotsCount;
 
-    // KPIs statiques (tu peux les brancher plus tard)
+    // appels / charges dynamiques
+    [ObservableProperty] int appelsOuverts;
+    [ObservableProperty] int chargesCount;
+    [ObservableProperty] decimal chargesMontantTotal;
+
+    // autres KPI (toujours statiques pour l’instant)
     public int IncidentsOuverts { get; } = 3;
     public int InterventionsEnCours { get; } = 2;
-    public int AppelsOuverts { get; } = 4;
     public int DocumentsCount { get; } = 56;
     public int NotificationsNonLues { get; } = 7;
 
-    public double TauxRecouvrement { get; } = 0.72;
-    public string TauxRecouvrementPct => $"{(int)(TauxRecouvrement * 100)} %";
+    [ObservableProperty] double tauxRecouvrement;
+    [ObservableProperty] string tauxRecouvrementPct = "0 %";
+
+    partial void OnTauxRecouvrementChanged(double value)
+        => TauxRecouvrementPct = $"{(int)(value * 100)} %";
+
     public double TauxResolutionIncidents { get; } = 0.86;
     public string TauxResolutionIncidentsPct => $"{(int)(TauxResolutionIncidents * 100)} %";
     public double TauxOccupation { get; } = 0.80;
     public string TauxOccupationPct => $"{(int)(TauxOccupation * 100)} %";
 
-    // Commandes exposées (déjà utilisées par le XAML)
     public IAsyncRelayCommand GoToAppelsAsyncCommand { get; }
     public IAsyncRelayCommand GoToAppelCreateAsyncCommand { get; }
     public IAsyncRelayCommand GoToAddResidenceAsyncCommand { get; }
     public IAsyncRelayCommand GoToIncidentsAsyncCommand { get; }
     public IAsyncRelayCommand LogoutCommand { get; }
-    public IAsyncRelayCommand LoadKpisAsyncCommand { get; }   // ← nouvelle
+    public IAsyncRelayCommand LoadKpisAsyncCommand { get; }
 
-    public SyndicDashboardViewModel(IAccountApi accountApi, IResidencesApi residencesApi, IBatimentsApi batimentsApi, ILotsApi lotsApi, TokenStore tokenStore)
+    public SyndicDashboardViewModel(
+        IAccountApi accountApi,
+        IResidencesApi residencesApi,
+        IBatimentsApi batimentsApi,
+        ILotsApi lotsApi,
+        IAppelsApi appelsApi,
+        IChargesApi chargesApi,
+        TokenStore tokenStore)
     {
         _accountApi = accountApi;
         _residencesApi = residencesApi;
-        _tokenStore = tokenStore;
         _batimentsApi = batimentsApi;
         _lotsApi = lotsApi;
+        _appelsApi = appelsApi;
+        _chargesApi = chargesApi;
+        _tokenStore = tokenStore;
 
         Title = "Dashboard";
         CanAddResidence = _tokenStore.IsSyndic();
@@ -63,21 +83,22 @@ public partial class SyndicDashboardViewModel : ViewModels.Common.BaseViewModel
         LogoutCommand = new AsyncRelayCommand(LogoutAsync);
         LoadKpisAsyncCommand = new AsyncRelayCommand(LoadKpisAsync);
 
-
         WeakReferenceMessenger.Default.Register<ResidenceChangedMessage>(this, async (_, __) => await RefreshResidencesCountAsync());
         WeakReferenceMessenger.Default.Register<BatimentChangedMessage>(this, async (_, __) => await RefreshBatimentsCountAsync());
         WeakReferenceMessenger.Default.Register<LotChangedMessage>(this, async (_, __) => await RefreshLotsCountAsync());
     }
 
-    //private async Task LoadKpisAsync() => await RefreshResidencesCountAsync();
     private async Task LoadKpisAsync()
     {
+        if (IsBusy) return;
+
         IsBusy = true;
         try
         {
             await RefreshResidencesCountAsync();
             await RefreshBatimentsCountAsync();
             await RefreshLotsCountAsync();
+            await RefreshFinancesAsync();
         }
         finally
         {
@@ -90,6 +111,7 @@ public partial class SyndicDashboardViewModel : ViewModels.Common.BaseViewModel
         try { var lots = await _lotsApi.GetAllAsync(); LotsCount = lots?.Count ?? 0; }
         catch { LotsCount = 0; }
     }
+
     private async Task RefreshResidencesCountAsync()
     {
         try
@@ -116,6 +138,32 @@ public partial class SyndicDashboardViewModel : ViewModels.Common.BaseViewModel
         }
     }
 
+    private async Task RefreshFinancesAsync()
+    {
+        try
+        {
+            // Appels
+            var appels = await _appelsApi.GetAllAsync() ?? new System.Collections.Generic.List<AppelDeFondsDto>();
+            AppelsOuverts = appels.Count;
+
+            var totalAppels = appels.Sum(a => a.MontantTotal);
+            var totalPaye = appels.Sum(a => a.MontantPaye);
+            TauxRecouvrement = totalAppels > 0 ? (double)(totalPaye / totalAppels) : 0.0;
+
+            // Charges
+            var charges = await _chargesApi.GetAllAsync() ?? new System.Collections.Generic.List<ChargeDto>();
+            ChargesCount = charges.Count;
+            ChargesMontantTotal = charges.Sum(c => c.Montant);
+        }
+        catch
+        {
+            AppelsOuverts = 0;
+            TauxRecouvrement = 0.0;
+            ChargesCount = 0;
+            ChargesMontantTotal = 0m;
+        }
+    }
+
     private async Task LogoutAsync()
     {
         var ok = await Shell.Current.DisplayAlert("Déconnexion", "Voulez-vous vous déconnecter ?", "Oui", "Non");
@@ -131,13 +179,10 @@ public partial class SyndicDashboardViewModel : ViewModels.Common.BaseViewModel
 
     private async Task GoToAppelsAsync()
     {
-        try { await Shell.Current.GoToAsync("///appels/list", true); }
-        catch
-        {
-            try { await Shell.Current.GoToAsync("//appels", true); } catch { }
-        }
+        try { await Shell.Current.GoToAsync("//appels", true); }
+        catch { }
     }
 
-    private Task GoToAppelCreateAsync() => Shell.Current.GoToAsync("///appel-create");
+    private Task GoToAppelCreateAsync() => Shell.Current.GoToAsync("appel-create");
     private Task GoToIncidentsAsync() => Shell.Current.DisplayAlert("Incidents", "Page Incidents à venir.", "OK");
 }
