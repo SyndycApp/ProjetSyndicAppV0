@@ -13,11 +13,14 @@ namespace SyndicApp.Infrastructure.Services.Finances
     public class AppelDeFondsService : IAppelDeFondsService
     {
         private readonly ApplicationDbContext _db;
+
         public AppelDeFondsService(ApplicationDbContext db) => _db = db;
 
         public async Task<IReadOnlyList<AppelDeFondsDto>> GetAllAsync(CancellationToken ct = default)
         {
-            return await _db.AppelsDeFonds.AsNoTracking()
+            // ⚠️ On garde la même logique qu’avant, on ajoute juste ResidenceNom
+            return await _db.AppelsDeFonds
+                .AsNoTracking()
                 .Select(a => new AppelDeFondsDto
                 {
                     Id = a.Id,
@@ -25,14 +28,24 @@ namespace SyndicApp.Infrastructure.Services.Finances
                     MontantTotal = a.MontantTotal,
                     DateEmission = a.DateEmission,
                     ResidenceId = a.ResidenceId,
+
+                    // ✅ nouveau : nom lisible de la résidence
+                    ResidenceNom = a.Residence != null ? a.Residence.Nom : string.Empty,
+
                     NbPaiements = _db.Paiements.Count(p => p.AppelDeFondsId == a.Id),
-                    MontantPaye = _db.Paiements.Where(p => p.AppelDeFondsId == a.Id).Sum(p => (decimal?)p.Montant) ?? 0m
-                }).ToListAsync(ct);
+                    MontantPaye = _db.Paiements
+                        .Where(p => p.AppelDeFondsId == a.Id)
+                        .Sum(p => (decimal?)p.Montant) ?? 0m
+                    // Paiements : laissé vide pour la liste (DTO initialise déjà à new())
+                })
+                .ToListAsync(ct);
         }
 
         public async Task<AppelDeFondsDto?> GetByIdAsync(Guid id, CancellationToken ct = default)
         {
-            return await _db.AppelsDeFonds.AsNoTracking()
+            // ⚠️ On garde la logique, on enrichit juste avec ResidenceNom + liste des paiements
+            return await _db.AppelsDeFonds
+                .AsNoTracking()
                 .Where(a => a.Id == id)
                 .Select(a => new AppelDeFondsDto
                 {
@@ -41,14 +54,34 @@ namespace SyndicApp.Infrastructure.Services.Finances
                     MontantTotal = a.MontantTotal,
                     DateEmission = a.DateEmission,
                     ResidenceId = a.ResidenceId,
+
+                    // ✅ nom de la résidence
+                    ResidenceNom = a.Residence != null ? a.Residence.Nom : string.Empty,
+
                     NbPaiements = _db.Paiements.Count(p => p.AppelDeFondsId == a.Id),
-                    MontantPaye = _db.Paiements.Where(p => p.AppelDeFondsId == a.Id).Sum(p => (decimal?)p.Montant) ?? 0m
-                }).SingleOrDefaultAsync(ct);
+                    MontantPaye = _db.Paiements
+                        .Where(p => p.AppelDeFondsId == a.Id)
+                        .Sum(p => (decimal?)p.Montant) ?? 0m,
+
+                    // ✅ remplissage de la liste des paiements pour la page Détails
+                    Paiements = a.Paiements
+                        .OrderByDescending(p => p.DatePaiement)
+                        .Select(p => new PaiementDto
+                        {
+                            Id = p.Id,
+                            Montant = p.Montant,
+                            DatePaiement = p.DatePaiement,
+                        })
+                        .ToList()
+                })
+                .SingleOrDefaultAsync(ct);
         }
 
         public async Task<Guid> CreateAsync(CreateAppelDeFondsDto dto, CancellationToken ct = default)
         {
-            if (dto.MontantTotal < 0) throw new InvalidOperationException("MontantTotal doit être ≥ 0.");
+            if (dto.MontantTotal < 0)
+                throw new InvalidOperationException("MontantTotal doit être ≥ 0.");
+
             var entity = new Domain.Entities.Finances.AppelDeFonds
             {
                 Description = dto.Description?.Trim() ?? string.Empty,
@@ -56,6 +89,7 @@ namespace SyndicApp.Infrastructure.Services.Finances
                 DateEmission = dto.DateEmission,
                 ResidenceId = dto.ResidenceId
             };
+
             _db.AppelsDeFonds.Add(entity);
             await _db.SaveChangesAsync(ct);
             return entity.Id;
@@ -64,18 +98,21 @@ namespace SyndicApp.Infrastructure.Services.Finances
         public async Task<bool> UpdateAsync(Guid id, UpdateAppelDeFondsDto dto, CancellationToken ct = default)
         {
             var a = await _db.AppelsDeFonds.FirstOrDefaultAsync(x => x.Id == id, ct);
-            if (a is null) return false;
+            if (a is null)
+                return false;
 
-            // Interdit si clôturé
+            // Interdit si clôturé (on garde exactement cette règle)
             var estCloture = _db.Entry(a).Property<bool>("EstCloture").CurrentValue;
-            if (estCloture) throw new InvalidOperationException("Appel clôturé — modification interdite.");
+            if (estCloture)
+                throw new InvalidOperationException("Appel clôturé — modification interdite.");
 
-            if (dto.MontantTotal < 0) throw new InvalidOperationException("MontantTotal doit être ≥ 0.");
+            if (dto.MontantTotal < 0)
+                throw new InvalidOperationException("MontantTotal doit être ≥ 0.");
 
             a.Description = dto.Description?.Trim() ?? a.Description;
             a.MontantTotal = dto.MontantTotal;
             a.DateEmission = dto.DateEmission;
-            a.ResidenceId = dto.ResidenceId;
+            a.ResidenceId = dto.ResidenceId; // ✅ on garde le fait qu’on puisse changer la résidence
 
             await _db.SaveChangesAsync(ct);
             return true;
@@ -84,7 +121,9 @@ namespace SyndicApp.Infrastructure.Services.Finances
         public async Task<bool> CloturerAsync(Guid id, CancellationToken ct = default)
         {
             var a = await _db.AppelsDeFonds.FirstOrDefaultAsync(x => x.Id == id, ct);
-            if (a is null) return false;
+            if (a is null)
+                return false;
+
             _db.Entry(a).Property<bool>("EstCloture").CurrentValue = true;
             await _db.SaveChangesAsync(ct);
             return true;
@@ -93,11 +132,13 @@ namespace SyndicApp.Infrastructure.Services.Finances
         public async Task<bool> DeleteAsync(Guid id, CancellationToken ct = default)
         {
             var a = await _db.AppelsDeFonds.FirstOrDefaultAsync(x => x.Id == id, ct);
-            if (a is null) return false;
+            if (a is null)
+                return false;
 
-            // Interdire si des paiements existent (règle métier)
+            // Interdire si des paiements existent (règle métier conservée)
             var hasPayments = await _db.Paiements.AnyAsync(p => p.AppelDeFondsId == id, ct);
-            if (hasPayments) throw new InvalidOperationException("Impossible de supprimer : des paiements existent.");
+            if (hasPayments)
+                throw new InvalidOperationException("Impossible de supprimer : des paiements existent.");
 
             _db.AppelsDeFonds.Remove(a);
             await _db.SaveChangesAsync(ct);

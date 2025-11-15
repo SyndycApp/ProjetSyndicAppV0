@@ -13,6 +13,8 @@ namespace SyndicApp.Application.DTOs.Finances
 
         public Guid ResidenceId { get; set; }
 
+        public string ResidenceNom { get; set; } = string.Empty;
+
         // Infos de synthèse utiles côté UI
         public int NbPaiements { get; set; }
         public decimal MontantPaye { get; set; }
