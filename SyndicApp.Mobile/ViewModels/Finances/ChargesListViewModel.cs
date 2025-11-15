@@ -1,11 +1,11 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using IntelliJ.Lang.Annotations;
-using SyndicApp.Mobile.Api;
-using SyndicApp.Mobile.Models;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.Maui.Controls;
+using SyndicApp.Mobile.Api;
+using SyndicApp.Mobile.Models;
 
 namespace SyndicApp.Mobile.ViewModels.Finances
 {
@@ -35,6 +35,8 @@ namespace SyndicApp.Mobile.ViewModels.Finances
                 Charges.Clear();
 
                 var items = await _chargesApi.GetAllAsync();
+                if (items == null) return;
+
                 foreach (var item in items)
                     Charges.Add(item);
             }
@@ -44,17 +46,25 @@ namespace SyndicApp.Mobile.ViewModels.Finances
             }
         }
 
+        // 👉 bouton "+" (route secondaire, relative comme Appels)
         [RelayCommand]
         private async Task NewChargeAsync()
         {
             await Shell.Current.GoToAsync("charge-create");
         }
 
+        // 👉 ouverture détails depuis la ligne
+        [RelayCommand]
+        private async Task OpenDetailsAsync(ChargeDto? charge)
+        {
+            if (charge == null) return;
+            await Shell.Current.GoToAsync($"charge-details?id={charge.Id}");
+        }
+
         [RelayCommand]
         private async Task EditAsync(ChargeDto? charge)
         {
             if (charge == null) return;
-
             await Shell.Current.GoToAsync($"charge-edit?id={charge.Id}");
         }
 

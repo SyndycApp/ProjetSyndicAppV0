@@ -49,6 +49,10 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("affectation-details", typeof(AffectationDetailsPage));
         Routing.RegisterRoute("affectation-historique", typeof(AffectationHistoriquePage));
 
+        // ===== Charges secondaires =====
+        Routing.RegisterRoute("charge-create", typeof(ChargeCreatePage));
+        Routing.RegisterRoute("charge-edit", typeof(ChargeEditPage));
+        Routing.RegisterRoute("charge-details", typeof(ChargeDetailsPage));
 
     }
 }

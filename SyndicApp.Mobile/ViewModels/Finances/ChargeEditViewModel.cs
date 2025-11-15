@@ -1,12 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using IntelliJ.Lang.Annotations;
+using Refit;
 using SyndicApp.Mobile.Api;
 using SyndicApp.Mobile.Models;
 using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Maui.Controls;
 
 namespace SyndicApp.Mobile.ViewModels.Finances
 {
@@ -17,23 +17,12 @@ namespace SyndicApp.Mobile.ViewModels.Finances
 
         private Guid _id;
 
-        [ObservableProperty]
-        private string nom = string.Empty;
-
-        [ObservableProperty]
-        private decimal montant;
-
-        [ObservableProperty]
-        private DateTime dateCharge = DateTime.Today;
-
-        [ObservableProperty]
-        private ObservableCollection<string> residences = new();
-
-        [ObservableProperty]
-        private string? selectedResidence;
-
-        [ObservableProperty]
-        private bool isBusy;
+        [ObservableProperty] private string nom = string.Empty;
+        [ObservableProperty] private decimal montant;
+        [ObservableProperty] private DateTime dateCharge = DateTime.Today;
+        [ObservableProperty] private ObservableCollection<string> residences = new();
+        [ObservableProperty] private string? selectedResidence;
+        [ObservableProperty] private bool isBusy;
 
         public ChargeEditViewModel(IChargesApi chargesApi, IResidencesApi residencesApi)
         {
@@ -52,9 +41,12 @@ namespace SyndicApp.Mobile.ViewModels.Finances
                 IsBusy = true;
                 Residences.Clear();
 
-                var listResidences = await _residencesApi.GetAllAsync();
+                var listResidences = await _residencesApi.GetAllAsync() ?? new();
                 foreach (var r in listResidences)
-                    Residences.Add(r.Nom);
+                {
+                    if (!string.IsNullOrWhiteSpace(r.Nom))
+                        Residences.Add(r.Nom);
+                }
 
                 var charge = await _chargesApi.GetByIdAsync(id);
 
@@ -67,11 +59,20 @@ namespace SyndicApp.Mobile.ViewModels.Finances
                 {
                     SelectedResidence = charge.ResidenceNom;
                 }
-                else
-                {
-                    // fallback : trouver via LookupIdAsync -> pas idéal, mais safe
-                    // ici on ne fait rien si on n'a pas le nom
-                }
+            }
+            catch (ApiException ex)
+            {
+                await Shell.Current.DisplayAlert(
+                    "Erreur API",
+                    ex.Content ?? ex.Message,
+                    "OK");
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert(
+                    "Erreur",
+                    ex.Message,
+                    "OK");
             }
             finally
             {
@@ -82,6 +83,8 @@ namespace SyndicApp.Mobile.ViewModels.Finances
         [RelayCommand]
         private async Task SaveAsync()
         {
+            if (IsBusy) return;
+
             if (string.IsNullOrWhiteSpace(Nom) ||
                 Montant <= 0 ||
                 string.IsNullOrWhiteSpace(SelectedResidence))
@@ -93,24 +96,47 @@ namespace SyndicApp.Mobile.ViewModels.Finances
                 return;
             }
 
-            var residenceId = await _residencesApi.LookupIdAsync(SelectedResidence!);
-
-            var request = new ChargeUpdateRequest
+            try
             {
-                Nom = Nom.Trim(),
-                Montant = Montant,
-                DateCharge = DateCharge,
-                ResidenceId = residenceId
-            };
+                IsBusy = true;
 
-            await _chargesApi.UpdateAsync(_id, request);
+                var residenceId = await _residencesApi.LookupIdAsync(SelectedResidence!);
 
-            await Shell.Current.DisplayAlert(
-                "Succès",
-                "Charge modifiée avec succès.",
-                "OK");
+                var request = new ChargeUpdateRequest
+                {
+                    Nom = Nom.Trim(),
+                    Montant = Montant,
+                    DateCharge = DateCharge,
+                    ResidenceId = residenceId
+                };
 
-            await Shell.Current.GoToAsync("..");
+                await _chargesApi.UpdateAsync(_id, request);
+
+                await Shell.Current.DisplayAlert(
+                    "Succès",
+                    "Charge modifiée avec succès.",
+                    "OK");
+
+                await Shell.Current.GoToAsync("..");
+            }
+            catch (ApiException ex)
+            {
+                await Shell.Current.DisplayAlert(
+                    "Erreur API",
+                    ex.Content ?? ex.Message,
+                    "OK");
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert(
+                    "Erreur",
+                    ex.Message,
+                    "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
     }
 }

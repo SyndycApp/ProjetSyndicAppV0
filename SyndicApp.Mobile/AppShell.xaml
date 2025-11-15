@@ -6,8 +6,7 @@
     xmlns:auth="clr-namespace:SyndicApp.Mobile.Views.Auth"
     xmlns:dash="clr-namespace:SyndicApp.Mobile.Views.Dashboard"
     xmlns:dashAff="clr-namespace:SyndicApp.Mobile.Views.Dashboard"
-    xmlns:views="clr-namespace:SyndicApp.Mobile.Views.Finances"
-    xmlns:finances="clr-namespace=SyndicApp.Mobile.Views.Finances"
+    xmlns:finances="clr-namespace:SyndicApp.Mobile.Views.Finances"
     xmlns:viewsRes="clr-namespace:SyndicApp.Mobile.Views.Residences"
     xmlns:layout="clr-namespace:SyndicApp.Mobile.Views"
     xmlns:viewsBat="clr-namespace:SyndicApp.Mobile.Views.Batiments"
@@ -17,40 +16,60 @@
     Shell.FlyoutBehavior="Disabled">
 
     <!-- ======= Auth (pages racines) ======= -->
-    <ShellContent Route="login" Title="Connexion"
-                  ContentTemplate="{DataTemplate auth:LoginPage}" />
-    <ShellContent Route="register" Title="Créer un compte"
-                  ContentTemplate="{DataTemplate auth:RegisterPage}" />
-    <ShellContent Route="forgot" Title="Mot de passe oublié"
-                  ContentTemplate="{DataTemplate auth:ForgotPasswordPage}" />
+    <ShellContent
+        Route="login"
+        Title="Connexion"
+        ContentTemplate="{DataTemplate auth:LoginPage}" />
+    <ShellContent
+        Route="register"
+        Title="Créer un compte"
+        ContentTemplate="{DataTemplate auth:RegisterPage}" />
+    <ShellContent
+        Route="forgot"
+        Title="Mot de passe oublié"
+        ContentTemplate="{DataTemplate auth:ForgotPasswordPage}" />
 
     <!-- ======= Dashboard (racine) ======= -->
-    <ShellContent Route="syndic-dashboard" Title="Tableau de bord"
-                  ContentTemplate="{DataTemplate dash:SyndicDashboardPage}" />
+    <ShellContent
+        Route="syndic-dashboard"
+        Title="Tableau de bord"
+        ContentTemplate="{DataTemplate dash:SyndicDashboardPage}" />
 
-    <!-- ======= Finances (racine) ======= -->
-    <ShellContent Route="appels" Title="Appels"
-                  ContentTemplate="{DataTemplate views:AppelsPage}" />
+    <!-- ======= Finances (Appels de fonds – racine) ======= -->
+    <ShellContent
+        Route="appels"
+        Title="Appels"
+        ContentTemplate="{DataTemplate finances:AppelsPage}" />
 
     <!-- ======= Résidences (racine) ======= -->
-    <ShellContent Route="residences" Title="Résidences"
-                  ContentTemplate="{DataTemplate viewsRes:ResidencesPage}" />
+    <ShellContent
+        Route="residences"
+        Title="Résidences"
+        ContentTemplate="{DataTemplate viewsRes:ResidencesPage}" />
 
     <!-- ======= Bâtiments (racine) ======= -->
-    <ShellContent Route="batiments" Title="Batiments"
-                  ContentTemplate="{DataTemplate viewsBat:BatimentsPage}" />
+    <ShellContent
+        Route="batiments"
+        Title="Batiments"
+        ContentTemplate="{DataTemplate viewsBat:BatimentsPage}" />
 
     <!-- ======= Lots (racine) ======= -->
-    <ShellContent Route="lots" Title="Lots"
-                  ContentTemplate="{DataTemplate viewsLot:LotsPage}" />
+    <ShellContent
+        Route="lots"
+        Title="Lots"
+        ContentTemplate="{DataTemplate viewsLot:LotsPage}" />
 
     <!-- ======= Affectation Lots (racine) ======= -->
-    <ShellContent Route="affectation-lots" Title="Affectation des lots"
-                  ContentTemplate="{DataTemplate viewsALot:AffectationsPage}" />
+    <ShellContent
+        Route="affectation-lots"
+        Title="Affectation des lots"
+        ContentTemplate="{DataTemplate viewsALot:AffectationsPage}" />
 
     <!-- ======= Drawer (racine) ======= -->
-    <ShellContent Route="drawer" Title="SyndicApp"
-                  ContentTemplate="{DataTemplate layout:DrawerPage}" />
+    <ShellContent
+        Route="drawer"
+        Title="SyndicApp"
+        ContentTemplate="{DataTemplate layout:DrawerPage}" />
 
     <!-- ======= Dashboards Affectations (racine) ======= -->
     <ShellContent
@@ -72,16 +91,12 @@
         Route="affectation-analytics"
         Title="Statistiques"
         ContentTemplate="{DataTemplate dash:AffectationAnalyticsPage}" />
-    <ShellContent
-    Route="charges"
-    ContentTemplate="{DataTemplate finances:ChargesPage}" />
 
+    <!-- ======= Charges (Finances) ======= -->
     <ShellContent
-    Route="charge-create"
-    ContentTemplate="{DataTemplate finances:ChargeCreatePage}" />
+        Route="charges"
+        Title="Charges"
+        ContentTemplate="{DataTemplate finances:ChargesPage}" />
 
-    <ShellContent
-    Route="charge-edit"
-    ContentTemplate="{DataTemplate finances:ChargeEditPage}" />
 
 </Shell>

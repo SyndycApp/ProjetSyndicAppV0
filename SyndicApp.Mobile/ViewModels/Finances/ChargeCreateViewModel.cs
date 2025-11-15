@@ -49,7 +49,11 @@ namespace SyndicApp.Mobile.ViewModels.Finances
 
                 var list = await _residencesApi.GetAllAsync();
                 foreach (var r in list)
-                    Residences.Add(r.Nom);
+                {
+                    var nom = r.Nom;
+                    if (!string.IsNullOrWhiteSpace(nom))
+                        Residences.Add(nom);
+                }
             }
             finally
             {

@@ -1,0 +1,168 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SyndicApp.Mobile.Views.Finances.ChargeDetailsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:SyndicApp.Mobile.ViewModels.Finances"
+    x:DataType="viewmodels:ChargeDetailsViewModel"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="White"
+    Title="Détails charge">
+
+    <ContentPage.Resources>
+        <Color x:Key="TopbarColor">#2563EB</Color>
+        <Color x:Key="HeaderTextOnDark">#FFFFFF</Color>
+        <Color x:Key="BodyText">#111827</Color>
+        <Color x:Key="Divider">#E5E7EB</Color>
+        <Color x:Key="PrimaryActionColor">#4F46E5</Color>
+
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
+        </Style>
+
+        <Style x:Key="MenuButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Padding" Value="12,8" />
+            <Setter Property="HorizontalOptions" Value="Start" />
+        </Style>
+
+        <Style x:Key="LogoutButtonStyle" TargetType="Button" BasedOn="{StaticResource MenuButtonStyle}">
+            <Setter Property="BackgroundColor" Value="#F3F4F6" />
+        </Style>
+
+        <Style x:Key="PrimaryActionButton" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="{StaticResource PrimaryActionColor}" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="CornerRadius" Value="18" />
+            <Setter Property="Padding" Value="16,8" />
+            <Setter Property="FontAttributes" Value="Bold" />
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid x:Name="Root" RowDefinitions="Auto,*">
+        <Grid BackgroundColor="{StaticResource TopbarColor}" Padding="12,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="BtnOpen"
+                    Grid.Column="0"
+                    Text="☰"
+                    FontSize="22"
+                    BackgroundColor="Transparent"
+                    TextColor="{StaticResource HeaderTextOnDark}"
+                    Clicked="OpenDrawer_Clicked" />
+
+            <Label Grid.Column="1"
+                   Text="Charge - détails"
+                   HorizontalTextAlignment="Center"
+                   VerticalOptions="Center"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource HeaderTextOnDark}" />
+
+            <Button Grid.Column="2"
+                    Text="←"
+                    FontSize="22"
+                    BackgroundColor="Transparent"
+                    TextColor="{StaticResource HeaderTextOnDark}"
+                    Clicked="OnBackClicked" />
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16" Spacing="12">
+                <Label Text="{Binding Charge.Nom}" FontSize="24" FontAttributes="Bold" />
+
+                <Frame Padding="16" BorderColor="#E2E8F0" CornerRadius="14">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="{Binding Charge.Montant, StringFormat='Montant : {0:N2} MAD'}" FontAttributes="Bold" />
+                        <Label Text="{Binding Charge.DateCharge, StringFormat='Date : {0:dd/MM/yyyy}'}" />
+                        <Label Text="{Binding Charge.ResidenceNom, StringFormat='Résidence : {0}'}" />
+                    </VerticalStackLayout>
+                </Frame>
+
+                <Grid ColumnDefinitions="*,*" Margin="0,12,0,0" ColumnSpacing="12">
+                    <Button Text="Modifier"
+                            Style="{StaticResource PrimaryActionButton}"
+                            Command="{Binding EditCommand}" />
+
+                    <Button Grid.Column="1"
+                            Text="Supprimer"
+                            Style="{StaticResource PrimaryActionButton}"
+                            TextColor="Red"
+                            Command="{Binding DeleteCommand}" />
+                </Grid>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Backdrop + Drawer (copie de ChargesPage) -->
+        <BoxView x:Name="Backdrop"
+                 Grid.RowSpan="2"
+                 BackgroundColor="#66000000"
+                 Opacity="0"
+                 InputTransparent="True">
+            <BoxView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Backdrop_Tapped" />
+            </BoxView.GestureRecognizers>
+        </BoxView>
+
+        <Border x:Name="Drawer"
+                Grid.RowSpan="2"
+                BackgroundColor="White"
+                StrokeThickness="0"
+                TranslationX="-1000"
+                Padding="0">
+            <Grid RowDefinitions="Auto,*">
+                <Grid BackgroundColor="{StaticResource TopbarColor}" Padding="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Navigation"
+                           TextColor="{StaticResource HeaderTextOnDark}"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center" />
+                    <Button Grid.Column="1"
+                            Text="←"
+                            FontSize="22"
+                            BackgroundColor="Transparent"
+                            TextColor="{StaticResource HeaderTextOnDark}"
+                            Clicked="CloseDrawer_Clicked" />
+                </Grid>
+
+                <ScrollView Grid.Row="1" BackgroundColor="White">
+                    <VerticalStackLayout Padding="16" Spacing="10">
+                        <!-- même menu que ChargesPage -->
+                        <Label Text="Tableau de bord" FontAttributes="Bold" />
+                        <Button Text="Dashboard" Style="{StaticResource MenuButtonStyle}" CommandParameter="//syndic-dashboard" Clicked="OnMenuItemClicked" />
+                        <Button Text="Dashboard Affectations" Style="{StaticResource MenuButtonStyle}" CommandParameter="//affectation-dashboard" Clicked="OnMenuItemClicked" />
+                        <Button Text="Mon espace (copro)" Style="{StaticResource MenuButtonStyle}" CommandParameter="//affectation-user-dashboard" Clicked="OnMenuItemClicked" />
+                        <Button Text="Gardien / Maintenance" Style="{StaticResource MenuButtonStyle}" CommandParameter="//affectation-maintenance-dashboard" Clicked="OnMenuItemClicked" />
+                        <Button Text="Statistiques affectations" Style="{StaticResource MenuButtonStyle}" CommandParameter="//affectation-analytics" Clicked="OnMenuItemClicked" />
+
+                        <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
+                        <Label Text="Résidences &amp; Lots" FontAttributes="Bold" />
+                        <Button Text="Résidences" Style="{StaticResource MenuButtonStyle}" CommandParameter="//residences" Clicked="OnMenuItemClicked" />
+                        <Button Text="Bâtiments"  Style="{StaticResource MenuButtonStyle}" CommandParameter="//batiments"  Clicked="OnMenuItemClicked" />
+                        <Button Text="Lots"       Style="{StaticResource MenuButtonStyle}" CommandParameter="//lots"       Clicked="OnMenuItemClicked" />
+                        <Button Text="Affectations des lots" Style="{StaticResource MenuButtonStyle}" CommandParameter="//affectation-lots" Clicked="OnMenuItemClicked" />
+
+                        <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
+                        <Label Text="Finances" FontAttributes="Bold" />
+                        <Button Text="Appels de fonds" Style="{StaticResource MenuButtonStyle}" CommandParameter="//appels"   Clicked="OnMenuItemClicked" />
+                        <Button Text="Charges"         Style="{StaticResource MenuButtonStyle}" CommandParameter="//charges" Clicked="OnMenuItemClicked" />
+
+                        <BoxView HeightRequest="16" Opacity="0" />
+                        <Button Text="Déconnexion"
+                                Style="{StaticResource LogoutButtonStyle}"
+                                CommandParameter="//login"
+                                Clicked="OnMenuItemClicked" />
+                    </VerticalStackLayout>
+                </ScrollView>
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>

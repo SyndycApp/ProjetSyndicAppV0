@@ -18,7 +18,7 @@ namespace SyndicApp.Mobile.Api
         Task<ChargeDto> CreateAsync([Body] ChargeCreateRequest request);
 
         [Put("/api/Charges/{id}")]
-        Task<ChargeDto> UpdateAsync(Guid id, [Body] ChargeCreateRequest request);
+        Task UpdateAsync(Guid id, [Body] ChargeUpdateRequest request);
 
         [Delete("/api/Charges/{id}")]
         Task DeleteAsync(Guid id);

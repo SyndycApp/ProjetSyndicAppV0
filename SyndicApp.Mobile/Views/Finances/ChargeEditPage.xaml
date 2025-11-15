@@ -3,6 +3,8 @@
     x:Class="SyndicApp.Mobile.Views.Finances.ChargeEditPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:SyndicApp.Mobile.ViewModels.Finances"
+    x:DataType="viewmodels:ChargeEditViewModel"
     Title="Modifier charge"
     Shell.NavBarIsVisible="False"
     BackgroundColor="White">
@@ -11,117 +13,229 @@
         <Color x:Key="TopbarColor">#2563EB</Color>
         <Color x:Key="HeaderTextOnDark">#FFFFFF</Color>
         <Color x:Key="BodyText">#111827</Color>
+        <Color x:Key="Divider">#E5E7EB</Color>
+        <Color x:Key="Chip">#F3F4F6</Color>
 
         <Style TargetType="Label">
             <Setter Property="TextColor" Value="{StaticResource BodyText}" />
         </Style>
+
+        <Style x:Key="MenuButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Padding" Value="12,8" />
+            <Setter Property="HorizontalOptions" Value="Start" />
+        </Style>
+
+        <Style x:Key="LogoutButtonStyle"
+               TargetType="Button"
+               BasedOn="{StaticResource MenuButtonStyle}">
+            <Setter Property="BackgroundColor" Value="{StaticResource Chip}" />
+        </Style>
+
+        <Style TargetType="Entry">
+            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
+            <Setter Property="BackgroundColor" Value="Transparent" />
+        </Style>
+
+        <Style TargetType="Editor">
+            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
+            <Setter Property="BackgroundColor" Value="Transparent" />
+        </Style>
+
+        <Style TargetType="Picker">
+            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
+        </Style>
+
+        <Style TargetType="DatePicker">
+            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
+        </Style>
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="Auto,*">
+    <Grid x:Name="Root"
+          RowDefinitions="Auto,*"
+          BackgroundColor="White">
 
         <!-- Topbar -->
-        <Grid
-            Grid.Row="0"
-            Padding="16,40,16,16"
-            BackgroundColor="{StaticResource TopbarColor}">
+        <Grid BackgroundColor="{StaticResource TopbarColor}"
+              Padding="12,8">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <Button
-                Grid.Column="0"
-                Text="←"
-                FontSize="18"
-                BackgroundColor="Transparent"
-                TextColor="{StaticResource HeaderTextOnDark}"
-                Clicked="OnBackClicked" />
+            <Button x:Name="BtnOpen"
+                    Grid.Column="0"
+                    Text="☰"
+                    FontSize="22"
+                    BackgroundColor="Transparent"
+                    TextColor="{StaticResource HeaderTextOnDark}"
+                    Clicked="OpenDrawer_Clicked" />
 
-            <Label
-                Grid.Column="1"
-                Text="Modifier charge"
-                FontAttributes="Bold"
-                FontSize="20"
-                TextColor="{StaticResource HeaderTextOnDark}"
-                HorizontalTextAlignment="Center" />
+            <Label Grid.Column="1"
+                   Text="Modifier charge"
+                   HorizontalTextAlignment="Center"
+                   VerticalOptions="Center"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource HeaderTextOnDark}" />
+
+            <Button Grid.Column="2"
+                    Text="↩"
+                    FontSize="22"
+                    BackgroundColor="Transparent"
+                    TextColor="{StaticResource HeaderTextOnDark}"
+                    Clicked="OnBackClicked" />
         </Grid>
 
-        <ScrollView Grid.Row="1">
-            <VerticalStackLayout Padding="16,12,16,24" Spacing="16">
+        <!-- FORM -->
+        <ScrollView Grid.Row="1"
+                    Padding="16">
+
+            <VerticalStackLayout Spacing="14">
 
                 <!-- Nom -->
-                <VerticalStackLayout>
-                    <Label Text="Nom de la charge" />
-                    <Frame
-                        HasShadow="False"
-                        BorderColor="Black"
-                        CornerRadius="8"
-                        Padding="8,4">
-                        <Entry
-                            TextColor="Black"
-                            Placeholder="Ex: Eau, Électricité..."
-                            PlaceholderColor="#9CA3AF"
-                            Text="{Binding Nom}" />
-                    </Frame>
-                </VerticalStackLayout>
+                <Label Text="Nom de la charge" />
+                <Border Stroke="Black"
+                        StrokeThickness="1"
+                        Margin="0,2,0,8"
+                        Padding="4">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+                    <Entry
+                        Placeholder="Ex : Eau, Électricité..."
+                        Text="{Binding Nom}" />
+                </Border>
 
                 <!-- Montant -->
-                <VerticalStackLayout>
-                    <Label Text="Montant (MAD)" />
-                    <Frame
-                        HasShadow="False"
-                        BorderColor="Black"
-                        CornerRadius="8"
-                        Padding="8,4">
-                        <Entry
-                            TextColor="Black"
-                            Keyboard="Numeric"
-                            Placeholder="0.00"
-                            PlaceholderColor="#9CA3AF"
-                            Text="{Binding Montant}" />
-                    </Frame>
-                </VerticalStackLayout>
+                <Label Text="Montant (MAD)" />
+                <Border Stroke="Black"
+                        StrokeThickness="1"
+                        Margin="0,2,0,8"
+                        Padding="4">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+                    <Entry
+                        Keyboard="Numeric"
+                        Placeholder="0,00"
+                        Text="{Binding Montant}" />
+                </Border>
 
                 <!-- Date -->
-                <VerticalStackLayout>
-                    <Label Text="Date de la charge" />
-                    <Frame
-                        HasShadow="False"
-                        BorderColor="Black"
-                        CornerRadius="8"
-                        Padding="8,4">
-                        <DatePicker
-                            TextColor="Black"
-                            Date="{Binding DateCharge}" />
-                    </Frame>
-                </VerticalStackLayout>
+                <Label Text="Date de la charge" />
+                <Border Stroke="Black"
+                        StrokeThickness="1"
+                        Margin="0,2,0,8"
+                        Padding="4">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+                    <DatePicker
+                        Date="{Binding DateCharge}" />
+                </Border>
 
                 <!-- Résidence -->
-                <VerticalStackLayout>
-                    <Label Text="Résidence" />
-                    <Frame
-                        HasShadow="False"
-                        BorderColor="Black"
-                        CornerRadius="8"
-                        Padding="8,4">
-                        <Picker
-                            TextColor="Black"
-                            ItemsSource="{Binding Residences}"
-                            SelectedItem="{Binding SelectedResidence}"
-                            Title="Choisir une résidence" />
-                    </Frame>
-                </VerticalStackLayout>
+                <Label Text="Résidence" />
+                <Border Stroke="Black"
+                        StrokeThickness="1"
+                        Margin="0,2,0,8"
+                        Padding="4">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8" />
+                    </Border.StrokeShape>
+                    <Picker
+                        Title="Choisir une résidence"
+                        ItemsSource="{Binding Residences}"
+                        SelectedItem="{Binding SelectedResidence}" />
+                </Border>
 
-                <!-- Bouton enregistrer -->
-                <Button
-                    Text="Enregistrer"
-                    HeightRequest="48"
-                    CornerRadius="24"
-                    FontAttributes="Bold"
-                    Command="{Binding SaveCommand}"
-                    BackgroundColor="#2563EB"
-                    TextColor="White" />
+                <!-- Bouton Enregistrer -->
+                <Button Text="Enregistrer les modifications"
+                        Margin="0,16,0,0"
+                        CornerRadius="10"
+                        Padding="14,10"
+                        BackgroundColor="{StaticResource TopbarColor}"
+                        TextColor="White"
+                        FontAttributes="Bold"
+                        Command="{Binding SaveCommand}" />
             </VerticalStackLayout>
         </ScrollView>
+
+        <!-- BACKDROP -->
+        <BoxView x:Name="Backdrop"
+                 Grid.RowSpan="2"
+                 BackgroundColor="#66000000"
+                 Opacity="0"
+                 InputTransparent="True">
+            <BoxView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Backdrop_Tapped" />
+            </BoxView.GestureRecognizers>
+        </BoxView>
+
+        <!-- DRAWER -->
+        <Border x:Name="Drawer"
+                Grid.RowSpan="2"
+                BackgroundColor="White"
+                StrokeThickness="0"
+                TranslationX="-1000"
+                Padding="0">
+            <Grid RowDefinitions="Auto,*">
+
+                <Grid BackgroundColor="{StaticResource TopbarColor}"
+                      Padding="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Text="Navigation"
+                           TextColor="{StaticResource HeaderTextOnDark}"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center" />
+
+                    <Button Grid.Column="1"
+                            Text="←"
+                            FontSize="22"
+                            BackgroundColor="Transparent"
+                            TextColor="{StaticResource HeaderTextOnDark}"
+                            Clicked="CloseDrawer_Clicked" />
+                </Grid>
+
+                <ScrollView Grid.Row="1"
+                            BackgroundColor="White">
+                    <VerticalStackLayout Padding="16"
+                                         Spacing="10">
+
+                        <Label Text="Tableau de bord" FontAttributes="Bold" />
+                        <Button Text="Dashboard" Style="{StaticResource MenuButtonStyle}" CommandParameter="//syndic-dashboard" Clicked="OnMenuItemClicked" />
+                        <Button Text="Dashboard Affectations" Style="{StaticResource MenuButtonStyle}" CommandParameter="//affectation-dashboard" Clicked="OnMenuItemClicked" />
+                        <Button Text="Mon espace (copro)" Style="{StaticResource MenuButtonStyle}" CommandParameter="//affectation-user-dashboard" Clicked="OnMenuItemClicked" />
+                        <Button Text="Gardien / Maintenance" Style="{StaticResource MenuButtonStyle}" CommandParameter="//affectation-maintenance-dashboard" Clicked="OnMenuItemClicked" />
+                        <Button Text="Statistiques affectations" Style="{StaticResource MenuButtonStyle}" CommandParameter="//affectation-analytics" Clicked="OnMenuItemClicked" />
+
+                        <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
+                        <Label Text="Résidences &amp; Lots" FontAttributes="Bold" />
+                        <Button Text="Résidences"            Style="{StaticResource MenuButtonStyle}" CommandParameter="//residences"         Clicked="OnMenuItemClicked" />
+                        <Button Text="Bâtiments"              Style="{StaticResource MenuButtonStyle}" CommandParameter="//batiments"          Clicked="OnMenuItemClicked" />
+                        <Button Text="Lots"                   Style="{StaticResource MenuButtonStyle}" CommandParameter="//lots"              Clicked="OnMenuItemClicked" />
+                        <Button Text="Affectations des lots"  Style="{StaticResource MenuButtonStyle}" CommandParameter="//affectation-lots"  Clicked="OnMenuItemClicked" />
+
+                        <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
+                        <Label Text="Finances" FontAttributes="Bold" />
+                        <Button Text="Appels de fonds" Style="{StaticResource MenuButtonStyle}" CommandParameter="//appels"   Clicked="OnMenuItemClicked" />
+                        <Button Text="Charges"         Style="{StaticResource MenuButtonStyle}" CommandParameter="//charges" Clicked="OnMenuItemClicked" />
+
+                        <BoxView HeightRequest="16" Opacity="0" />
+                        <Button Text="Déconnexion"
+                                Style="{StaticResource LogoutButtonStyle}"
+                                CommandParameter="//login"
+                                Clicked="OnMenuItemClicked" />
+                    </VerticalStackLayout>
+                </ScrollView>
+            </Grid>
+        </Border>
     </Grid>
 </ContentPage>

@@ -32,7 +32,7 @@ public static class MauiProgram
         builder.UseMicrocharts();
 
         // Choisis la bonne URL :        
-        const string BaseUrl = "http://192.168.31.157:5041";
+        const string BaseUrl = "http://192.168.0.100:5041";
 
 
         // Refit JSON insensible à la casse
@@ -94,6 +94,7 @@ public static class MauiProgram
         AddSecured<IUsersApi>();
         AddSecured<IAffectationsLotsApi>();
         AddSecured<IAffectationLotsApiAlt>();
+        AddSecured<IChargesApi>();
 
         // VMs
         builder.Services.AddTransient<LoginViewModel>();
@@ -126,6 +127,10 @@ public static class MauiProgram
         builder.Services.AddTransient<AffectationAnalyticsViewModel>();
         builder.Services.AddTransient<AffectationMaintenanceDashboardViewModel>();
         builder.Services.AddTransient<AffectationUserDashboardViewModel>();
+        builder.Services.AddTransient<ChargesListViewModel>();
+        builder.Services.AddTransient<ChargeCreateViewModel>();
+        builder.Services.AddTransient<ChargeEditViewModel>();
+        builder.Services.AddTransient<ChargeDetailsViewModel>();
 
 
         // Converters (si DI utilisé)
@@ -165,7 +170,11 @@ public static class MauiProgram
         builder.Services.AddTransient<AffectationUserDashboardPage>();
         builder.Services.AddTransient<AffectationAnalyticsPage>();
         builder.Services.AddTransient<AffectationMaintenanceDashboardPage>();
-        
+        builder.Services.AddTransient<ChargesPage>();
+        builder.Services.AddTransient<ChargeCreatePage>();
+        builder.Services.AddTransient<ChargeEditPage>();
+        builder.Services.AddTransient<ChargeDetailsPage>();
+
 
         var app = builder.Build();
         ServiceHelper.Services = app.Services;
