@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SyndicApp.Mobile.Views.Finances.ChargesPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Name="ChargesPageRoot"
+    Title="Charges"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="White">
+
+    <ContentPage.Resources>
+        <Color x:Key="TopbarColor">#2563EB</Color>
+        <Color x:Key="HeaderTextOnDark">#FFFFFF</Color>
+        <Color x:Key="BodyText">#111827</Color>
+        <Color x:Key="Divider">#E5E7EB</Color>
+
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- Topbar avec bouton drawer + titre + bouton Ajouter -->
+        <Grid
+            Grid.Row="0"
+            Padding="16,40,16,16"
+            BackgroundColor="{StaticResource TopbarColor}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Drawer (Shell flyout) -->
+            <Button
+                Grid.Column="0"
+                Text="☰"
+                FontSize="20"
+                BackgroundColor="Transparent"
+                TextColor="{StaticResource HeaderTextOnDark}"
+                Clicked="OnMenuClicked" />
+
+            <Label
+                Grid.Column="1"
+                HorizontalTextAlignment="Center"
+                Text="Charges"
+                FontAttributes="Bold"
+                FontSize="20"
+                TextColor="{StaticResource HeaderTextOnDark}" />
+
+            <Button
+                Grid.Column="2"
+                Text="+"
+                FontSize="20"
+                BackgroundColor="Transparent"
+                TextColor="{StaticResource HeaderTextOnDark}"
+                Clicked="OnAddClicked" />
+        </Grid>
+
+        <!-- Liste -->
+        <Grid Grid.Row="1" Padding="16,8,16,16">
+            <CollectionView
+                ItemsSource="{Binding Charges}"
+                IsPullToRefreshEnabled="True"
+                IsRefreshing="{Binding IsBusy}"
+                RefreshCommand="{Binding LoadCommand}">
+                <CollectionView.EmptyView>
+                    <StackLayout Padding="20" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Label Text="Aucune charge pour le moment." />
+                    </StackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems Mode="Execute">
+                                    <SwipeItem
+                                        Text="Modifier"
+                                        BackgroundColor="#2563EB"
+                                        TextColor="White"
+                                        Command="{Binding BindingContext.EditCommand, Source={x:Reference ChargesPageRoot}}"
+                                        CommandParameter="{Binding .}" />
+                                    <SwipeItem
+                                        Text="Supprimer"
+                                        BackgroundColor="Red"
+                                        TextColor="White"
+                                        Command="{Binding BindingContext.DeleteCommand, Source={x:Reference ChargesPageRoot}}"
+                                        CommandParameter="{Binding .}" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+
+                            <Frame
+                                Margin="0,4"
+                                Padding="12"
+                                HasShadow="False"
+                                BorderColor="Black"
+                                CornerRadius="12">
+                                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+                                    <Label
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        Text="{Binding Nom}"
+                                        FontAttributes="Bold" />
+
+                                    <Label
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        Text="{Binding Montant, StringFormat='{}{0:F2} MAD'}"
+                                        HorizontalTextAlignment="End" />
+
+                                    <Label
+                                        Grid.Row="1"
+                                        Grid.Column="0"
+                                        Text="{Binding DateCharge, StringFormat='Le {0:dd/MM/yyyy}'}"
+                                        FontSize="12"
+                                        Opacity="0.7" />
+
+                                    <Label
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Text="{Binding ResidenceNom}"
+                                        FontSize="12"
+                                        HorizontalTextAlignment="End"
+                                        Opacity="0.7" />
+                                </Grid>
+                            </Frame>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </Grid>
+</ContentPage>

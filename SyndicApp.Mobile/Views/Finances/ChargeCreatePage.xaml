@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SyndicApp.Mobile.Views.Finances.ChargeCreatePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Nouvelle charge"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="White">
+
+    <ContentPage.Resources>
+        <Color x:Key="TopbarColor">#2563EB</Color>
+        <Color x:Key="HeaderTextOnDark">#FFFFFF</Color>
+        <Color x:Key="BodyText">#111827</Color>
+
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- Topbar -->
+        <Grid
+            Grid.Row="0"
+            Padding="16,40,16,16"
+            BackgroundColor="{StaticResource TopbarColor}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Button
+                Grid.Column="0"
+                Text="←"
+                FontSize="18"
+                BackgroundColor="Transparent"
+                TextColor="{StaticResource HeaderTextOnDark}"
+                Clicked="OnBackClicked" />
+
+            <Label
+                Grid.Column="1"
+                Text="Nouvelle charge"
+                FontAttributes="Bold"
+                FontSize="20"
+                TextColor="{StaticResource HeaderTextOnDark}"
+                HorizontalTextAlignment="Center" />
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16,12,16,24" Spacing="16">
+
+                <!-- Nom -->
+                <VerticalStackLayout>
+                    <Label Text="Nom de la charge" />
+                    <Frame
+                        HasShadow="False"
+                        BorderColor="Black"
+                        CornerRadius="8"
+                        Padding="8,4">
+                        <Entry
+                            TextColor="Black"
+                            Placeholder="Ex: Eau, Électricité..."
+                            PlaceholderColor="#9CA3AF"
+                            Text="{Binding Nom}" />
+                    </Frame>
+                </VerticalStackLayout>
+
+                <!-- Montant -->
+                <VerticalStackLayout>
+                    <Label Text="Montant (MAD)" />
+                    <Frame
+                        HasShadow="False"
+                        BorderColor="Black"
+                        CornerRadius="8"
+                        Padding="8,4">
+                        <Entry
+                            TextColor="Black"
+                            Keyboard="Numeric"
+                            Placeholder="0.00"
+                            PlaceholderColor="#9CA3AF"
+                            Text="{Binding Montant}" />
+                    </Frame>
+                </VerticalStackLayout>
+
+                <!-- Date -->
+                <VerticalStackLayout>
+                    <Label Text="Date de la charge" />
+                    <Frame
+                        HasShadow="False"
+                        BorderColor="Black"
+                        CornerRadius="8"
+                        Padding="8,4">
+                        <DatePicker
+                            TextColor="Black"
+                            Date="{Binding DateCharge}" />
+                    </Frame>
+                </VerticalStackLayout>
+
+                <!-- Résidence -->
+                <VerticalStackLayout>
+                    <Label Text="Résidence" />
+                    <Frame
+                        HasShadow="False"
+                        BorderColor="Black"
+                        CornerRadius="8"
+                        Padding="8,4">
+                        <Picker
+                            TextColor="Black"
+                            ItemsSource="{Binding Residences}"
+                            SelectedItem="{Binding SelectedResidence}"
+                            Title="Choisir une résidence" />
+                    </Frame>
+                </VerticalStackLayout>
+
+                <!-- Bouton enregistrer -->
+                <Button
+                    Text="Enregistrer"
+                    HeightRequest="48"
+                    CornerRadius="24"
+                    FontAttributes="Bold"
+                    Command="{Binding SaveCommand}"
+                    BackgroundColor="#2563EB"
+                    TextColor="White" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

@@ -204,6 +204,24 @@ build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Fin
 build_metadata.AdditionalFiles.TargetPath = Views\Finances\AppelsPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Finances\AppelsPage.xaml
 
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Finances/ChargeCreatePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Finances.ChargeCreatePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Finances\ChargeCreatePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Finances\ChargeCreatePage.xaml
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Finances/ChargeEditPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Finances.ChargeEditPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Finances\ChargeEditPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Finances\ChargeEditPage.xaml
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Finances/ChargesPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Finances.ChargesPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Finances\ChargesPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Finances\ChargesPage.xaml
+
 [C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Lots/LotCreatePage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Lots.LotCreatePage.xaml

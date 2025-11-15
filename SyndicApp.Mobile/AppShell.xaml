@@ -7,6 +7,7 @@
     xmlns:dash="clr-namespace:SyndicApp.Mobile.Views.Dashboard"
     xmlns:dashAff="clr-namespace:SyndicApp.Mobile.Views.Dashboard"
     xmlns:views="clr-namespace:SyndicApp.Mobile.Views.Finances"
+    xmlns:finances="clr-namespace=SyndicApp.Mobile.Views.Finances"
     xmlns:viewsRes="clr-namespace:SyndicApp.Mobile.Views.Residences"
     xmlns:layout="clr-namespace:SyndicApp.Mobile.Views"
     xmlns:viewsBat="clr-namespace:SyndicApp.Mobile.Views.Batiments"
@@ -71,5 +72,16 @@
         Route="affectation-analytics"
         Title="Statistiques"
         ContentTemplate="{DataTemplate dash:AffectationAnalyticsPage}" />
+    <ShellContent
+    Route="charges"
+    ContentTemplate="{DataTemplate finances:ChargesPage}" />
+
+    <ShellContent
+    Route="charge-create"
+    ContentTemplate="{DataTemplate finances:ChargeCreatePage}" />
+
+    <ShellContent
+    Route="charge-edit"
+    ContentTemplate="{DataTemplate finances:ChargeEditPage}" />
 
 </Shell>
