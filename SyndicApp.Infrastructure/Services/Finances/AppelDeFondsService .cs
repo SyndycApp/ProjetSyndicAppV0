@@ -16,6 +16,32 @@ namespace SyndicApp.Infrastructure.Services.Finances
 
         public AppelDeFondsService(ApplicationDbContext db) => _db = db;
 
+        public async Task<Guid?> ResolveIdByDescriptionAsync(string description, CancellationToken ct = default)
+        {
+            if (string.IsNullOrWhiteSpace(description))
+                return null;
+
+            var normalized = description.Trim().ToLower();
+
+            var appel = await _db.AppelsDeFonds
+                .AsNoTracking()
+                .FirstOrDefaultAsync(a => a.Description.ToLower() == normalized, ct);
+
+            return appel?.Id;
+        }
+
+        public async Task<string?> GetDescriptionByIdAsync(Guid id, CancellationToken ct = default)
+        {
+            var description = await _db.AppelsDeFonds
+                .AsNoTracking()
+                .Where(a => a.Id == id)
+                .Select(a => a.Description)
+                .FirstOrDefaultAsync(ct);
+
+            return string.IsNullOrEmpty(description) ? null : description;
+        }
+
+
         public async Task<IReadOnlyList<AppelDeFondsDto>> GetAllAsync(CancellationToken ct = default)
         {
             // ⚠️ On garde la même logique qu’avant, on ajoute juste ResidenceNom

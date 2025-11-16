@@ -15,5 +15,8 @@ namespace SyndicApp.Application.Interfaces.Finances
         Task<bool> CloturerAsync(Guid id, CancellationToken ct = default); // verrouille l’appel
 
         Task<bool> DeleteAsync(Guid id, CancellationToken ct = default);
+
+        Task<Guid?> ResolveIdByDescriptionAsync(string description, CancellationToken ct = default);
+        Task<string?> GetDescriptionByIdAsync(Guid id, CancellationToken ct = default);
     }
 }

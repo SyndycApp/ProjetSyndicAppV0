@@ -27,6 +27,29 @@ namespace SyndicApp.API.Controllers
             return a is null ? NotFound() : Ok(a);
         }
 
+        [HttpGet("resolve-id")]
+        public async Task<ActionResult<Guid>> ResolveId([FromQuery] string description, CancellationToken ct)
+        {
+            if (string.IsNullOrWhiteSpace(description))
+                return BadRequest("La description est obligatoire.");
+
+            var id = await _svc.ResolveIdByDescriptionAsync(description, ct);
+            if (id is null)
+                return NotFound("Aucun appel de fonds trouvé avec cette description.");
+
+            return Ok(id.Value);
+        }
+
+        [HttpGet("{id:guid}/description")]
+        public async Task<ActionResult<string>> GetDescription(Guid id, CancellationToken ct)
+        {
+            var description = await _svc.GetDescriptionByIdAsync(id, ct);
+            if (description is null)
+                return NotFound("Aucun appel de fonds trouvé avec cet Id.");
+
+            return Ok(description);
+        }
+
         [HttpPost]
         public async Task<ActionResult> Create([FromBody] CreateAppelDeFondsDto dto, CancellationToken ct)
         {
