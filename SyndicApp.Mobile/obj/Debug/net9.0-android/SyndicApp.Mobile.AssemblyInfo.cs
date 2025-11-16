@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SyndicApp.Mobile")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+fef961007177148bfd3298109605c154a7231fcc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+b10c743adc14d659330ede145305615db382e28c")]
 [assembly: System.Reflection.AssemblyProductAttribute("SyndicApp.Mobile")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SyndicApp.Mobile")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

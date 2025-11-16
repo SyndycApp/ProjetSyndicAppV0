@@ -9,7 +9,7 @@ namespace SyndicApp.Mobile.Api
         Task<List<AppelDeFondsDto>> GetAllAsync();
 
         [Get("/api/Appels/{id}")]
-        Task<AppelDeFondsDto> GetByIdAsync(string id);                 // ← string
+        Task<AppelDeFondsDto> GetByIdAsync(string id);                
 
         [Post("/api/Appels")]
         Task<AppelDeFondsDto> CreateAsync([Body] AppelDeFondsDto body);

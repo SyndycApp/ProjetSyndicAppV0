@@ -95,6 +95,7 @@ public static class MauiProgram
         AddSecured<IAffectationsLotsApi>();
         AddSecured<IAffectationLotsApiAlt>();
         AddSecured<IChargesApi>();
+        AddSecured<IPaiementsApi>();
 
         // VMs
         builder.Services.AddTransient<LoginViewModel>();
@@ -131,6 +132,9 @@ public static class MauiProgram
         builder.Services.AddTransient<ChargeCreateViewModel>();
         builder.Services.AddTransient<ChargeEditViewModel>();
         builder.Services.AddTransient<ChargeDetailsViewModel>();
+        builder.Services.AddTransient<PaiementsListViewModel>();
+        builder.Services.AddTransient<PaiementCreateViewModel>();
+        builder.Services.AddTransient<PaiementDetailsViewModel>();
 
 
         // Converters (si DI utilisé)
@@ -174,6 +178,9 @@ public static class MauiProgram
         builder.Services.AddTransient<ChargeCreatePage>();
         builder.Services.AddTransient<ChargeEditPage>();
         builder.Services.AddTransient<ChargeDetailsPage>();
+        builder.Services.AddTransient<PaiementsPage>();
+        builder.Services.AddTransient<PaiementCreatePage>();
+        builder.Services.AddTransient<PaiementDetailsPage>();
 
 
         var app = builder.Build();

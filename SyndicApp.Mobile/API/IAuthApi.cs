@@ -10,6 +10,9 @@ public interface IAuthApi
 
     [Post("/api/Auth/register")]
     Task<UserDto> RegisterAsync([Body] RegisterDto dto);
+
+    [Get("/api/Auth")]
+    Task<AuthListResponse> GetAllAsync();
 }
 
 // Api/IAccountApi.cs  (protégé / avec bearer)

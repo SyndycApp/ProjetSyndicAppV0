@@ -54,5 +54,9 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("charge-edit", typeof(ChargeEditPage));
         Routing.RegisterRoute("charge-details", typeof(ChargeDetailsPage));
 
+        // ===== Paiements secondaires =====
+        Routing.RegisterRoute("paiement-create", typeof(PaiementCreatePage));
+        Routing.RegisterRoute("paiement-details", typeof(PaiementDetailsPage));
+
     }
 }

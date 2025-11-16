@@ -169,6 +169,15 @@
 	  <MauiXaml Update="Views\Finances\AppelsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\Finances\PaiementCreatePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Finances\PaiementDetailsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Finances\PaiementsPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Incidents\DevisCreatePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

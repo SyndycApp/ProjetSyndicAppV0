@@ -98,5 +98,10 @@
         Title="Charges"
         ContentTemplate="{DataTemplate finances:ChargesPage}" />
 
+    <ShellContent
+        Route="paiements"
+        Title="Paiements"
+        ContentTemplate="{DataTemplate finances:PaiementsPage}" />
+
 
 </Shell>
