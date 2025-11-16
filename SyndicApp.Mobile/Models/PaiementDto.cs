@@ -9,6 +9,8 @@
         public Guid UserId { get; set; }
 
         public string? NomCompletUser { get; set; }
+
+        public string? AppelDescription { get; set; }
     }
 
     public class PaiementCreateRequest

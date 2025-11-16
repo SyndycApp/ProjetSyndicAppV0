@@ -28,7 +28,8 @@ namespace SyndicApp.Mobile.ViewModels.Finances
             _authApi = authApi;
         }
 
-        [ObservableProperty] private Guid paiementId;
+        // ⚠️ maintenant STRING, pas Guid
+        [ObservableProperty] private string? paiementId;
 
         // Paiement
         [ObservableProperty] private decimal montant;
@@ -53,11 +54,13 @@ namespace SyndicApp.Mobile.ViewModels.Finances
         [RelayCommand]
         public async Task LoadAsync()
         {
-            if (PaiementId == Guid.Empty)
+            // On parse l'id reçu dans la route
+            if (string.IsNullOrWhiteSpace(PaiementId) ||
+                !Guid.TryParse(PaiementId, out var paiementGuid))
                 return;
 
             // 1) Paiement
-            var paiement = await _paiementsApi.GetByIdAsync(PaiementId);
+            var paiement = await _paiementsApi.GetByIdAsync(paiementGuid);
 
             Montant = paiement.Montant;
             DatePaiement = paiement.DatePaiement;
@@ -71,10 +74,10 @@ namespace SyndicApp.Mobile.ViewModels.Finances
             if (user != null)
             {
                 UserRole = user.Roles?.FirstOrDefault();
-                // UserAdresse à remplir si tu as un endpoint Users/{id}
+                // UserAdresse à remplir si endpoint Users/{id}
             }
 
-            // 3) Appel de fonds  ❗ ICI on passe un string
+            // 3) Appel de fonds
             var appel = await _appelsApi.GetByIdAsync(appelId.ToString());
             AppelDescription = appel.Description;
             MontantTotal = appel.MontantTotal;
@@ -83,13 +86,11 @@ namespace SyndicApp.Mobile.ViewModels.Finances
             DateEmission = appel.DateEmission;
             ResidenceNom = appel.ResidenceNom;
 
-            // 4) Résidence : déjà OK en string
+            // 4) Résidence
             var residence = await _residencesApi.GetByIdAsync(appel.ResidenceId.ToString());
             ResidenceAdresseComplete =
                 $"{residence.Adresse}, {residence.Ville} {residence.CodePostal}";
         }
-
-
 
         [RelayCommand]
         public Task GoBack()

@@ -2131,6 +2131,9 @@
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAppelsApi.DeleteAsync(System.String)">
             <inheritdoc />
         </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAppelsApi.GetDescriptionAsync(System.String)">
+            <inheritdoc />
+        </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAppelsApi.SyndicApp#Mobile#Api#IAppelsApi#GetAllAsync">
             <inheritdoc />
         </member>
@@ -2147,6 +2150,9 @@
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAppelsApi.SyndicApp#Mobile#Api#IAppelsApi#DeleteAsync(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAppelsApi.SyndicApp#Mobile#Api#IAppelsApi#GetDescriptionAsync(System.String)">
             <inheritdoc />
         </member>
         <member name="T:Refit.Implementation.Generated.SyndicAppMobileApiIAuthApi">

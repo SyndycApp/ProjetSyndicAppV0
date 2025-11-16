@@ -13,11 +13,16 @@ namespace SyndicApp.Mobile.ViewModels.Finances
     {
         private readonly IPaiementsApi _paiementsApi;
         private readonly IAuthApi _authApi;
+        private readonly IAppelsApi _appelsApi;
 
-        public PaiementsListViewModel(IPaiementsApi paiementsApi, IAuthApi authApi)
+        public PaiementsListViewModel(
+          IPaiementsApi paiementsApi,
+          IAuthApi authApi,
+          IAppelsApi appelsApi)
         {
             _paiementsApi = paiementsApi;
             _authApi = authApi;
+            _appelsApi = appelsApi;
 
             Items = new();
             Users = new();
@@ -33,9 +38,34 @@ namespace SyndicApp.Mobile.ViewModels.Finances
         [RelayCommand]
         public async Task LoadAsync()
         {
+            // 1) Charger les paiements
             var data = await _paiementsApi.GetAllAsync();
-            Items = data?.OrderByDescending(p => p.DatePaiement).ToList() ?? new List<PaiementDto>();
+            var list = data?.OrderByDescending(p => p.DatePaiement).ToList()
+                       ?? new List<PaiementDto>();
 
+            // 1bis) Enrichir avec la description de l'appel (si API dispo)
+            foreach (var p in list)
+            {
+                if (p.AppelDeFondsId != Guid.Empty)
+                {
+                    try
+                    {
+                        var desc = await _appelsApi.GetDescriptionAsync(p.AppelDeFondsId.ToString());
+                        if (!string.IsNullOrWhiteSpace(desc))
+                            p.AppelDescription = desc;
+                    }
+                    catch
+                    {
+                        // En cas d'erreur on laisse l'ID, pas de crash
+                        if (string.IsNullOrWhiteSpace(p.AppelDescription))
+                            p.AppelDescription = p.AppelDeFondsId.ToString();
+                    }
+                }
+            }
+
+            Items = list;
+
+            // 2) Charger la liste des utilisateurs (inchangé)
             try
             {
                 var allUsers = await _authApi.GetAllAsync();
@@ -64,6 +94,7 @@ namespace SyndicApp.Mobile.ViewModels.Finances
                 Users = new List<UserDto>();
             }
         }
+
 
         [RelayCommand]
         public async Task FilterAsync()

@@ -160,46 +160,50 @@
                         </Grid>
                     </CollectionView.EmptyView>
                     <CollectionView.ItemTemplate>
-                        <DataTemplate>
+                        <DataTemplate x:DataType="models:PaiementDto">
                             <Frame Style="{StaticResource CardStyle}" Margin="0,6">
                                 <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto">
 
                                     <!-- Montant + Date -->
                                     <Grid Grid.Row="0" Grid.ColumnSpan="2" ColumnDefinitions="*,*">
                                         <Label Grid.Column="0"
-                                               Text="{Binding Montant, StringFormat='Montant : {0:F2} DH'}"
-                                               FontAttributes="Bold" />
+                           FontSize="15"
+                           FontAttributes="Bold"
+                           Text="{Binding Montant, StringFormat='Montant : {0:F2} DH'}" />
                                         <Label Grid.Column="1"
-                                               Text="{Binding DatePaiement, StringFormat='Le {0:dd/MM/yyyy}'}"
-                                               HorizontalTextAlignment="End"
-                                               Opacity="0.8" />
+                           FontSize="13"
+                           Text="{Binding DatePaiement, StringFormat='Le {0:dd/MM/yyyy}'}"
+                           HorizontalTextAlignment="End"
+                           Opacity="0.8" />
                                     </Grid>
 
                                     <!-- Utilisateur -->
                                     <Label Grid.Row="1" Grid.Column="0"
-                                           Text="{Binding NomCompletUser, StringFormat='Utilisateur : {0}'}"
-                                           FontSize="13" />
+                       Margin="0,6,0,0"
+                       FontSize="14"
+                       Text="{Binding NomCompletUser, StringFormat='Utilisateur : {0}'}" />
 
                                     <!-- Appel (ID pour l’instant) + bouton détails -->
                                     <Grid Grid.Row="1" Grid.ColumnSpan="2"
-                                          ColumnDefinitions="*,Auto"
-                                          Margin="0,22,0,0">
+                      ColumnDefinitions="*,Auto"
+                      Margin="0,28,0,0">
                                         <Label Grid.Column="0"
-                                               Text="{Binding AppelDeFondsId, StringFormat='Appel : {0}'}"
-                                               FontSize="12"
-                                               Opacity="0.7" />
+       Text="{Binding AppelDescription, StringFormat='Appel : {0}'}"
+       FontSize="12"
+       Opacity="0.7" />
+
                                         <Button Grid.Column="1"
-                                                Text="Détails"
-                                                Style="{StaticResource OutlineButtonStyle}"
-                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},
-                                                         Path=BindingContext.GoToDetailsCommand}"
-                                                CommandParameter="{Binding Id}" />
+                            Text="Détails"
+                            Style="{StaticResource OutlineButtonStyle}"
+                            Command="{Binding BindingContext.GoToDetailsCommand, Source={x:Reference RootPage}}"
+                            CommandParameter="{Binding Id}" />
                                     </Grid>
 
                                 </Grid>
                             </Frame>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
+
                 </CollectionView>
 
             </Grid>

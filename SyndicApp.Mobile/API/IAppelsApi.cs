@@ -22,6 +22,9 @@ namespace SyndicApp.Mobile.Api
         Task CloturerAsync(string id);
 
         [Delete("/api/Appels/{id}")]
-        Task DeleteAsync(string id);                             
+        Task DeleteAsync(string id);
+
+        [Get("/api/Appels/{id}/description")]
+        Task<string> GetDescriptionAsync(string id);
     }
 }
