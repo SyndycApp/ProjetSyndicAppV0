@@ -12,6 +12,7 @@
     xmlns:viewsBat="clr-namespace:SyndicApp.Mobile.Views.Batiments"
     xmlns:viewsLot="clr-namespace:SyndicApp.Mobile.Views.Lots"
     xmlns:viewsALot="clr-namespace:SyndicApp.Mobile.Views.Affectations"
+    xmlns:Incidents="clr-namespace:SyndicApp.Mobile.Views.Incidents"
     Shell.NavBarIsVisible="False"
     Shell.FlyoutBehavior="Disabled">
 
@@ -102,6 +103,12 @@
         Route="paiements"
         Title="Paiements"
         ContentTemplate="{DataTemplate finances:PaiementsPage}" />
+
+    <ShellContent
+        Route="incidents"
+        Title="Incidents"
+        ContentTemplate="{DataTemplate Incidents:IncidentsPage}" />
+
 
 
 </Shell>

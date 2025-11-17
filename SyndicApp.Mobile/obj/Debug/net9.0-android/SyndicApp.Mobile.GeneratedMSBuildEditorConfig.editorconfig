@@ -246,6 +246,36 @@ build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Fin
 build_metadata.AdditionalFiles.TargetPath = Views\Finances\PaiementsPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Finances\PaiementsPage.xaml
 
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Incidents/IncidentCreatePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Incidents.IncidentCreatePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Incidents\IncidentCreatePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Incidents\IncidentCreatePage.xaml
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Incidents/IncidentDetailsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Incidents.IncidentDetailsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Incidents\IncidentDetailsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Incidents\IncidentDetailsPage.xaml
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Incidents/IncidentEditPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Incidents.IncidentEditPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Incidents\IncidentEditPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Incidents\IncidentEditPage.xaml
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Incidents/IncidentsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Incidents.IncidentsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Incidents\IncidentsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Incidents\IncidentsPage.xaml
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Incidents/IncidentStatusPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Incidents.IncidentStatusPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Incidents\IncidentStatusPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Incidents\IncidentStatusPage.xaml
+
 [C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Lots/LotCreatePage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Lots.LotCreatePage.xaml

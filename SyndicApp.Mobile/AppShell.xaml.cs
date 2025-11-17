@@ -7,6 +7,7 @@ using SyndicApp.Mobile.Views.Batiments;
 using SyndicApp.Mobile.Views.Finances;
 using SyndicApp.Mobile.Views.Lots;
 using SyndicApp.Mobile.Views.Residences;
+using SyndicApp.Mobile.Views.Incidents;
 using SyndicApp.Mobile.Views.Dashboard;
 
 public partial class AppShell : Shell
@@ -57,6 +58,12 @@ public partial class AppShell : Shell
         // ===== Paiements secondaires =====
         Routing.RegisterRoute("paiement-create", typeof(PaiementCreatePage));
         Routing.RegisterRoute("paiement-details", typeof(PaiementDetailsPage));
+
+        // ===== Incidents =====
+        Routing.RegisterRoute("incident-create", typeof(IncidentCreatePage));
+        Routing.RegisterRoute("incident-details", typeof(IncidentDetailsPage));
+        Routing.RegisterRoute("incident-edit", typeof(IncidentEditPage));
+        Routing.RegisterRoute("incident-status", typeof(IncidentStatusPage));
 
     }
 }

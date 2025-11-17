@@ -10,6 +10,8 @@ using SyndicApp.Mobile.ViewModels.Dashboard;
 using SyndicApp.Mobile.ViewModels.Finances;
 using SyndicApp.Mobile.ViewModels.Lots;
 using SyndicApp.Mobile.ViewModels.Residences;
+using SyndicApp.Mobile.ViewModels.Incidents;
+using SyndicApp.Mobile.Views.Incidents;
 using SyndicApp.Mobile.Views;
 using SyndicApp.Mobile.Views.Auth;
 using SyndicApp.Mobile.Views.Batiments;
@@ -32,7 +34,7 @@ public static class MauiProgram
         builder.UseMicrocharts();
 
         // Choisis la bonne URL :        
-        const string BaseUrl = "http://192.168.11.146:5041";
+        const string BaseUrl = "http://192.168.0.104:5041";
 
 
         // Refit JSON insensible à la casse
@@ -96,6 +98,7 @@ public static class MauiProgram
         AddSecured<IAffectationLotsApiAlt>();
         AddSecured<IChargesApi>();
         AddSecured<IPaiementsApi>();
+        AddSecured<IIncidentsApi>();
 
         // VMs
         builder.Services.AddTransient<LoginViewModel>();
@@ -135,6 +138,11 @@ public static class MauiProgram
         builder.Services.AddTransient<PaiementsListViewModel>();
         builder.Services.AddTransient<PaiementCreateViewModel>();
         builder.Services.AddTransient<PaiementDetailsViewModel>();
+        builder.Services.AddTransient<IncidentsListViewModel>();
+        builder.Services.AddTransient<IncidentCreateViewModel>();
+        builder.Services.AddTransient<IncidentDetailsViewModel>();
+        builder.Services.AddTransient<IncidentEditViewModel>();
+        builder.Services.AddTransient<IncidentStatusViewModel>();
 
 
         // Converters (si DI utilisé)
@@ -181,6 +189,11 @@ public static class MauiProgram
         builder.Services.AddTransient<PaiementsPage>();
         builder.Services.AddTransient<PaiementCreatePage>();
         builder.Services.AddTransient<PaiementDetailsPage>();
+        builder.Services.AddTransient<IncidentsPage>();
+        builder.Services.AddTransient<IncidentCreatePage>();
+        builder.Services.AddTransient<IncidentDetailsPage>();
+        builder.Services.AddTransient<IncidentEditPage>();
+        builder.Services.AddTransient<IncidentStatusPage>();
 
 
         var app = builder.Build();

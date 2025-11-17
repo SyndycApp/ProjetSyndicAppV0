@@ -1,0 +1,322 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SyndicApp.Mobile.Views.Incidents.IncidentsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:SyndicApp.Mobile.Converters"
+    xmlns:vm="clr-namespace:SyndicApp.Mobile.ViewModels.Incidents"
+    xmlns:models="clr-namespace:SyndicApp.Mobile.Models"
+    x:DataType="vm:IncidentsListViewModel"
+    x:Name="RootPage"
+    Title="Incidents"
+    BackgroundColor="White"
+    Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <Color x:Key="TopbarColor">#2563EB</Color>
+        <Color x:Key="HeaderTextOnDark">#FFFFFF</Color>
+        <Color x:Key="BodyText">#111827</Color>
+        <Color x:Key="Divider">#E5E7EB</Color>
+        <Color x:Key="Chip">#F3F4F6</Color>
+
+        <converters:BoolToOuiNonConverter x:Key="BoolToOuiNonConverter" />
+
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
+        </Style>
+
+        <Style TargetType="Picker">
+            <Setter Property="TextColor" Value="Black" />
+            <Setter Property="TitleColor" Value="#6B7280" />
+            <Setter Property="BackgroundColor" Value="White" />
+        </Style>
+
+        <Style x:Key="MenuButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Padding" Value="12,8" />
+            <Setter Property="HorizontalOptions" Value="Start" />
+        </Style>
+
+        <Style x:Key="TitleLabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontAttributes" Value="Bold" />
+        </Style>
+
+        <Style x:Key="FieldLabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="TextColor" Value="#6B7280" />
+        </Style>
+
+        <Style x:Key="PrimaryButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#2563EB" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="Padding" Value="14,10" />
+        </Style>
+
+        <Style x:Key="OutlineButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="TextColor" Value="#2563EB" />
+            <Setter Property="BorderColor" Value="#2563EB" />
+            <Setter Property="BorderWidth" Value="1" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="Padding" Value="14,10" />
+        </Style>
+
+        <Style x:Key="CardStyle" TargetType="Frame">
+            <Setter Property="HasShadow" Value="False" />
+            <Setter Property="CornerRadius" Value="14" />
+            <Setter Property="Padding" Value="14" />
+            <Setter Property="BackgroundColor" Value="White" />
+            <Setter Property="BorderColor" Value="#E5E7EB" />
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*" BackgroundColor="White">
+
+        <!-- TOPBAR -->
+        <Grid BackgroundColor="{StaticResource TopbarColor}" Padding="12,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="BtnOpen"
+                    Grid.Column="0"
+                    Text="☰"
+                    FontSize="22"
+                    BackgroundColor="Transparent"
+                    TextColor="{StaticResource HeaderTextOnDark}"
+                    Clicked="OpenDrawer_Clicked" />
+
+            <Label Grid.Column="1"
+                   Text="Incidents"
+                   HorizontalTextAlignment="Center"
+                   VerticalOptions="Center"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource HeaderTextOnDark}" />
+
+            <Label Grid.Column="2"
+                   Text="• • •"
+                   TextColor="{StaticResource HeaderTextOnDark}"
+                   VerticalOptions="Center" />
+        </Grid>
+
+        <!-- CONTENU -->
+        <Grid Grid.Row="1">
+            <Grid Padding="16" RowDefinitions="Auto,Auto,*">
+
+                <!-- Titre + CTA -->
+                <Grid Row="0" ColumnDefinitions="*,Auto">
+                    <Label Text="Incidents" Style="{StaticResource TitleLabelStyle}" />
+                    <Button Grid.Column="1"
+                            Text="+"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            Command="{Binding GoToCreateCommand}" />
+                </Grid>
+
+                <!-- Filtres -->
+                <Grid Row="1"
+                      RowDefinitions="Auto,Auto"
+                      ColumnDefinitions="*,*">
+
+                    <!-- Ligne 1 -->
+                    <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="4">
+                        <Label Text="Utilisateur" Style="{StaticResource FieldLabelStyle}" />
+                        <Picker ItemsSource="{Binding Users}"
+                                ItemDisplayBinding="{Binding FullName}"
+                                SelectedItem="{Binding SelectedUser}"
+                                Title="Tous les utilisateurs" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="4">
+                        <Label Text="Résidence" Style="{StaticResource FieldLabelStyle}" />
+                        <Picker ItemsSource="{Binding Residences}"
+                                ItemDisplayBinding="{Binding Nom}"
+                                SelectedItem="{Binding SelectedResidence}"
+                                Title="Toutes les résidences" />
+                    </VerticalStackLayout>
+
+                    <!-- Ligne 2 -->
+                    <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="4">
+                        <Label Text="Lot" Style="{StaticResource FieldLabelStyle}" />
+                        <Picker ItemsSource="{Binding Lots}"
+                                ItemDisplayBinding="{Binding NumeroLot}"
+                                SelectedItem="{Binding SelectedLot}"
+                                Title="Tous les lots" />
+                    </VerticalStackLayout>
+
+                    <!-- ⚠️ ICI : suppression de Spacing sur le Grid -->
+                    <Grid Grid.Row="1" Grid.Column="1" ColumnDefinitions="*,Auto">
+                        <VerticalStackLayout Grid.Column="0" Spacing="4">
+                            <Label Text="Urgence" Style="{StaticResource FieldLabelStyle}" />
+                            <Picker ItemsSource="{Binding Urgences}"
+                                    SelectedItem="{Binding SelectedUrgence}"
+                                    Title="Toutes" />
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Grid.Column="1" Spacing="4" HorizontalOptions="End">
+                            <Label Text=" " />
+                            <Button Text="Filtrer"
+                                    Style="{StaticResource OutlineButtonStyle}"
+                                    Command="{Binding FilterCommand}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Grid>
+
+                <!-- LISTE -->
+                <CollectionView Grid.Row="2"
+                                ItemsSource="{Binding Items}"
+                                SelectionMode="None">
+
+                    <CollectionView.EmptyView>
+                        <Grid Padding="24" VerticalOptions="Center">
+                            <Label Text="Aucun incident trouvé."
+                                   HorizontalTextAlignment="Center"
+                                   Opacity="0.6" />
+                        </Grid>
+                    </CollectionView.EmptyView>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:IncidentDto">
+                            <Frame Style="{StaticResource CardStyle}" Margin="0,6">
+
+                                <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,Auto">
+
+                                    <!-- TITRE + URGENCE -->
+                                    <Grid Grid.Row="0" Grid.ColumnSpan="2" ColumnDefinitions="*,Auto">
+
+                                        <Label Grid.Column="0"
+                                               Text="{Binding Titre}"
+                                               FontAttributes="Bold"
+                                               FontSize="15" />
+
+                                        <Border Grid.Column="1"
+                                                BackgroundColor="{StaticResource Chip}"
+                                                StrokeThickness="0"
+                                                Padding="8,2"
+                                                HorizontalOptions="End"
+                                                VerticalOptions="Center"
+                                                StrokeShape="RoundRectangle 10">
+
+                                            <Label Text="{Binding Urgence}"
+                                                   FontSize="12"
+                                                   HorizontalTextAlignment="Center"
+                                                   VerticalTextAlignment="Center" />
+                                        </Border>
+
+                                    </Grid>
+
+                                    <!-- Utilisateur -->
+                                    <Label Grid.Row="1" Grid.ColumnSpan="2"
+                                           Margin="0,4,0,0"
+                                           FontSize="13"
+                                           Text="{Binding DeclareParNom, StringFormat='Déclaré par : {0}'}" />
+
+                                    <!-- Description + bouton Détails -->
+                                    <Grid Grid.Row="2" Grid.ColumnSpan="2" Margin="0,10,0,0" ColumnDefinitions="*,Auto">
+                                        <Label Grid.Column="0"
+                                               FontSize="12"
+                                               Opacity="0.8"
+                                               LineBreakMode="TailTruncation"
+                                               MaxLines="2"
+                                               Text="{Binding Description}" />
+
+                                        <Button Grid.Column="1"
+                                                Text="Détails"
+                                                Style="{StaticResource OutlineButtonStyle}"
+                                                Command="{Binding BindingContext.GoToDetailsCommand, Source={x:Reference RootPage}}"
+                                                CommandParameter="{Binding Id}" />
+                                    </Grid>
+
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+
+            </Grid>
+        </Grid>
+
+        <!-- OVERLAY -->
+        <BoxView x:Name="Backdrop"
+                 Grid.RowSpan="2"
+                 BackgroundColor="#66000000"
+                 Opacity="0"
+                 InputTransparent="True">
+            <BoxView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Backdrop_Tapped" />
+            </BoxView.GestureRecognizers>
+        </BoxView>
+
+        <!-- DRAWER -->
+        <Border x:Name="Drawer"
+                Grid.RowSpan="2"
+                BackgroundColor="White"
+                StrokeThickness="0"
+                TranslationX="-1000"
+                Padding="0">
+            <Grid RowDefinitions="Auto,*">
+
+                <Grid BackgroundColor="{StaticResource TopbarColor}" Padding="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Text="Navigation"
+                           TextColor="{StaticResource HeaderTextOnDark}"
+                           FontAttributes="Bold"
+                           VerticalOptions="Center" />
+
+                    <Button Grid.Column="1"
+                            Text="×"
+                            FontSize="22"
+                            BackgroundColor="Transparent"
+                            TextColor="{StaticResource HeaderTextOnDark}"
+                            Clicked="CloseDrawer_Clicked" />
+
+                </Grid>
+
+                <ScrollView Grid.Row="1" BackgroundColor="White">
+                    <VerticalStackLayout Padding="16" Spacing="10">
+
+                        <Label Text="Tableau de bord" FontAttributes="Bold" />
+                        <Button Text="Dashboard" Style="{StaticResource MenuButtonStyle}" CommandParameter="//syndic-dashboard" Clicked="OnMenuItemClicked" />
+                        <Button Text="Dashboard Affectations" Style="{StaticResource MenuButtonStyle}" CommandParameter="//affectation-dashboard" Clicked="OnMenuItemClicked" />
+                        <Button Text="Mon espace (copro)" Style="{StaticResource MenuButtonStyle}" CommandParameter="//affectation-user-dashboard" Clicked="OnMenuItemClicked" />
+                        <Button Text="Gardien / Maintenance" Style="{StaticResource MenuButtonStyle}" CommandParameter="//affectation-maintenance-dashboard" Clicked="OnMenuItemClicked" />
+                        <Button Text="Statistiques affectations" Style="{StaticResource MenuButtonStyle}" CommandParameter="//affectation-analytics" Clicked="OnMenuItemClicked" />
+
+                        <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
+                        <Label Text="Résidences &amp; Lots" FontAttributes="Bold" />
+                        <Button Text="Résidences" Style="{StaticResource MenuButtonStyle}" CommandParameter="//residences" Clicked="OnMenuItemClicked" />
+                        <Button Text="Bâtiments" Style="{StaticResource MenuButtonStyle}" CommandParameter="//batiments" Clicked="OnMenuItemClicked" />
+                        <Button Text="Lots" Style="{StaticResource MenuButtonStyle}" CommandParameter="//lots" Clicked="OnMenuItemClicked" />
+                        <Button Text="Affectations des lots" Style="{StaticResource MenuButtonStyle}" CommandParameter="//affectation-lots" Clicked="OnMenuItemClicked" />
+                        <Button Text="Historique affectations" Style="{StaticResource MenuButtonStyle}" CommandParameter="//affectation-historique" Clicked="OnMenuItemClicked" />
+
+                        <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
+                        <Label Text="Finances" FontAttributes="Bold" />
+                        <Button Text="Appels de fonds" Style="{StaticResource MenuButtonStyle}" CommandParameter="//appels" Clicked="OnMenuItemClicked" />
+                        <Button Text="Paiements" Style="{StaticResource MenuButtonStyle}" CommandParameter="//paiements" Clicked="OnMenuItemClicked" />
+                        <Button Text="Charges" Style="{StaticResource MenuButtonStyle}" CommandParameter="//charges" Clicked="OnMenuItemClicked" />
+
+                        <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
+                        <Label Text="Incidents &amp; Interventions" FontAttributes="Bold" />
+                        <Button Text="Incidents" Style="{StaticResource MenuButtonStyle}" CommandParameter="//incidents" Clicked="OnMenuItemClicked" />
+                        <Button Text="Interventions" Style="{StaticResource MenuButtonStyle}" CommandParameter="//interventions" Clicked="OnMenuItemClicked" />
+                        <Button Text="Devis de travaux" Style="{StaticResource MenuButtonStyle}" CommandParameter="//devis-travaux" Clicked="OnMenuItemClicked" />
+
+                        <BoxView HeightRequest="16" Opacity="0" />
+                        <Button Text="Déconnexion" Style="{StaticResource MenuButtonStyle}" CommandParameter="//login" Clicked="OnMenuItemClicked" />
+                    </VerticalStackLayout>
+                </ScrollView>
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>
