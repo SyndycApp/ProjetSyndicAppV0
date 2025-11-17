@@ -113,6 +113,19 @@ namespace SyndicApp.Mobile.ViewModels.Incidents
         }
 
         [RelayCommand]
+        private async Task ClearFiltersAsync()
+        {
+            SelectedUser = null;
+            SelectedResidence = null;
+            SelectedLot = null;
+            SelectedUrgence = null;
+
+            
+            await LoadAsync();
+
+        }
+
+        [RelayCommand]
         public async Task FilterAsync()
         {
             var data = await _incidentsApi.GetAllAsync() ?? new List<IncidentDto>();

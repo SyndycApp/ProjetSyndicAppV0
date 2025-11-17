@@ -158,13 +158,20 @@
                                     Title="Toutes" />
                         </VerticalStackLayout>
 
-                        <VerticalStackLayout Grid.Column="1" Spacing="4" HorizontalOptions="End">
-                            <Label Text=" " />
+                        <HorizontalStackLayout Grid.Column="1"
+                                               Spacing="6"
+                                               HorizontalOptions="End"
+                                               VerticalOptions="End">
+                            <Button Text="Vider"
+                                    Style="{StaticResource OutlineButtonStyle}"
+                                     Command="{Binding ClearFiltersCommand}" />
+
                             <Button Text="Filtrer"
                                     Style="{StaticResource OutlineButtonStyle}"
                                     Command="{Binding FilterCommand}" />
-                        </VerticalStackLayout>
+                        </HorizontalStackLayout>
                     </Grid>
+
                 </Grid>
 
                 <!-- LISTE -->

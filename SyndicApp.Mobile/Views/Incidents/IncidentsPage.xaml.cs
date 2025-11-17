@@ -52,6 +52,7 @@ namespace SyndicApp.Mobile.Views.Incidents
             );
         }
 
+
         private async void OpenDrawer_Clicked(object sender, EventArgs e)
         {
             await OpenDrawerAsync();

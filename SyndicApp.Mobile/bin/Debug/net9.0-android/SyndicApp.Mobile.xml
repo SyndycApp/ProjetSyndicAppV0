@@ -1231,6 +1231,7 @@
             <inheritdoc/>
             <inheritdoc/>
             <inheritdoc/>
+            <inheritdoc/>
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Incidents.IncidentsListViewModel.Items">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.IncidentsListViewModel.items"/>
@@ -1267,6 +1268,12 @@
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Incidents.IncidentsListViewModel.LoadCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Incidents.IncidentsListViewModel.LoadAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Incidents.IncidentsListViewModel.clearFiltersCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Incidents.IncidentsListViewModel.ClearFiltersCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.IncidentsListViewModel.ClearFiltersCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Incidents.IncidentsListViewModel.ClearFiltersAsync"/>.</summary>
         </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Incidents.IncidentsListViewModel.filterCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Incidents.IncidentsListViewModel.FilterCommand"/>.</summary>
