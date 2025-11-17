@@ -206,6 +206,23 @@ namespace SyndicApp.Infrastructure.Services.Incidents
             return await MapToDto(id);
         }
 
+        public async Task<IncidentDto?> ResolveByTitleAsync(string titre)
+        {
+            if (string.IsNullOrWhiteSpace(titre))
+                return null;
+
+            // recherche insensible à la casse, sur Titre contenant le texte
+            var entity = await _db.Incidents
+                .AsNoTracking()
+                .Where(i => EF.Functions.Like(i.Titre, $"%{titre}%"))
+                .OrderByDescending(i => i.DateDeclaration)
+                .FirstOrDefaultAsync();
+
+            if (entity == null)
+                return null;
+
+            return await MapToDto(entity.Id);
+        }
         public async Task DeleteAsync(Guid id)
         {
             var entity = await _db.Incidents.FirstOrDefaultAsync(i => i.Id == id)

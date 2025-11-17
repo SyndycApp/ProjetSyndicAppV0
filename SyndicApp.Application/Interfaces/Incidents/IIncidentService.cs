@@ -14,5 +14,7 @@ namespace SyndicApp.Application.Interfaces.Incidents
         Task<IncidentDto?> UpdateAsync(Guid id, IncidentUpdateDto dto);
         Task<IncidentDto?> ChangeStatusAsync(Guid id, IncidentChangeStatusDto dto);
         Task DeleteAsync(Guid id); // interdit si Cloture
+
+        Task<IncidentDto?> ResolveByTitleAsync(string titre);
     }
 }

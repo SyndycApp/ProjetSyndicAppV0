@@ -66,6 +66,16 @@ namespace SyndicApp.API.Controllers
         }
 
 
+        [HttpGet("resolve-id")]
+        public async Task<IActionResult> ResolveId([FromQuery] string titre)
+        {
+            if (string.IsNullOrWhiteSpace(titre))
+                return BadRequest("Le paramètre 'titre' est obligatoire.");
+
+            var incident = await _incidentService.ResolveByTitleAsync(titre);
+            return incident is null ? NotFound() : Ok(incident);
+        }
+
         // DELETE: api/Incidents/{id}
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
