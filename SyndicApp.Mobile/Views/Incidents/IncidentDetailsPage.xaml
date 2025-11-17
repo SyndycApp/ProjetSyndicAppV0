@@ -167,7 +167,7 @@
                     <VerticalStackLayout Spacing="10">
                         <Button Text="Modifier le statut"
                                 Style="{StaticResource PrimaryButtonStyle}"
-                                Command="{Binding GoToUpdateStatusCommand}" />
+                                Command="{Binding GoToChangeStatusCommand}" />
 
                         <Button Text="Modifier l'incident"
                                 Style="{StaticResource OutlineButtonStyle}"

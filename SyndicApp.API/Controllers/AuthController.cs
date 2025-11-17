@@ -1,12 +1,11 @@
+ï»¿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SyndicApp.Application.DTOs.Auth;
 using SyndicApp.Application.Interfaces;
 using SyndicApp.Infrastructure.Identity;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Security.Claims;
 
 namespace SyndicApp.API.Controllers
 {
@@ -15,43 +14,44 @@ namespace SyndicApp.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
-        private readonly ILogger<AuthController> _logger = null!;
+        private readonly ILogger<AuthController> _logger;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public AuthController(IAuthService authService, ILogger<AuthController> logger, UserManager<ApplicationUser> userManager)
+        public AuthController(
+            IAuthService authService,
+            ILogger<AuthController> logger,
+            UserManager<ApplicationUser> userManager)
         {
             _authService = authService;
             _logger = logger;
             _userManager = userManager;
         }
 
+        // ---------------- LOGOUT ----------------
         [Authorize]
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {
-            // uid (custom), sub (JWT standard) ou nameidentifier
             var id = User.FindFirst("uid")?.Value
                      ?? User.FindFirst("sub")?.Value
-                     ?? User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+                     ?? User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            if (string.IsNullOrWhiteSpace(id) || !Guid.TryParse(id, out var userId))
+            if (string.IsNullOrWhiteSpace(id))
                 return Unauthorized();
 
-            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var user = await _userManager.FindByIdAsync(id);
             if (user is null) return Unauthorized();
 
-            // Invalider tout mécanisme de refresh côté serveur
             user.RefreshToken = null;
             user.RefreshTokenExpiryTime = null;
 
-            // Bonus : invalider d’éventuelles sessions persistantes
             await _userManager.UpdateSecurityStampAsync(user);
-
             await _userManager.UpdateAsync(user);
 
-            return Ok(new { message = "Déconnexion réussie" });
+            return Ok(new { message = "DÃ©connexion rÃ©ussie" });
         }
 
+        // ---------------- GET ALL USERS ----------------
         [HttpGet]
         public async Task<ActionResult<List<UserDto>>> GetAll()
         {
@@ -59,11 +59,10 @@ namespace SyndicApp.API.Controllers
             return Ok(res);
         }
 
-
+        // ---------------- REGISTER ----------------
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
-
             if (!ModelState.IsValid)
             {
                 var errors = ModelState.Values
@@ -71,16 +70,14 @@ namespace SyndicApp.API.Controllers
                     .Select(e => e.ErrorMessage)
                     .ToList();
 
-                return BadRequest(new { message = "Validation échouée", details = errors });
+                return BadRequest(new { message = "Validation Ã©chouÃ©e", details = errors });
             }
 
             _logger.LogInformation("API Register called");
-            _logger.LogInformation("RegisterDto reçu : {@RegisterDto}", registerDto);
+            _logger.LogInformation("RegisterDto reÃ§u : {@RegisterDto}", registerDto);
 
             if (registerDto == null)
-            {
-                return BadRequest(new { message = "Données manquantes" });
-            }
+                return BadRequest(new { message = "DonnÃ©es manquantes" });
 
             var result = await _authService.RegisterAsync(registerDto);
 
@@ -101,12 +98,13 @@ namespace SyndicApp.API.Controllers
                     errors = new List<string> { result.Errors.ToString() ?? "Erreur inconnue" };
                 }
 
-                return BadRequest(new { message = "Échec de l'inscription", details = errors });
+                return BadRequest(new { message = "Ã‰chec de l'inscription", details = errors });
             }
 
             return Ok(result.Data);
         }
 
+        // ---------------- LOGIN ----------------
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDto loginDto)
         {
@@ -117,33 +115,53 @@ namespace SyndicApp.API.Controllers
             return Ok(result.Data);
         }
 
+        // ---------------- LOOKUP ----------------
         [HttpGet("lookup")]
-        public async Task<ActionResult<List<UserLookupDto>>> Lookup([FromQuery] string? q, [FromQuery] string? role, [FromQuery] int take = 20)
+        public async Task<ActionResult<List<UserLookupDto>>> Lookup(
+            [FromQuery] string? q,
+            [FromQuery] string? role,
+            [FromQuery] int take = 20)
         {
             var res = await _authService.SearchAsync(q, role, take);
-            if (!res.Success) return BadRequest(new { message = "Lookup échoué", errors = res.Errors });
+            if (!res.Success)
+                return BadRequest(new { message = "Lookup Ã©chouÃ©", errors = res.Errors });
 
-            // Retour direct de la liste (plus simple côté front)
             return Ok(res.Data);
         }
 
+        // ---------------- ME ----------------
+        // ---------------- ME ----------------
         [Authorize]
         [HttpGet("me")]
-        public async Task<IActionResult> Me()
+        public async Task<ActionResult<UserDto>> Me()
         {
-            var userId =
+            var userIdString =
                 User.FindFirstValue("uid") ??
                 User.FindFirstValue(ClaimTypes.NameIdentifier) ??
                 User.FindFirstValue(JwtRegisteredClaimNames.Sub);
 
-            if (string.IsNullOrEmpty(userId))
-                return Unauthorized("Utilisateur non authentifié");
+            if (string.IsNullOrEmpty(userIdString))
+                return Unauthorized("Utilisateur non authentifiÃ©");
 
-            var user = await _authService.GetByIdAsync(Guid.Parse(userId));
-            if (user == null)
+            if (!Guid.TryParse(userIdString, out var userGuid))
+                return Unauthorized("Identifiant utilisateur invalide");
+
+            var user = await _userManager.FindByIdAsync(userIdString);
+            if (user is null)
                 return NotFound("Utilisateur introuvable");
 
-            return Ok(user);
+            var roles = await _userManager.GetRolesAsync(user);
+
+            var dto = new UserDto
+            {
+                Id = userGuid,          
+                FullName = user.FullName,
+                Email = user.Email,
+                Roles = roles.ToList()
+            };
+
+            return Ok(dto);
         }
+
     }
 }
