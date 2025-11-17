@@ -118,7 +118,10 @@
                                    Style="{StaticResource FieldLabelStyle}" />
                             <Editor Text="{Binding Commentaire}"
                                     AutoSize="TextChanges"
-                                    Placeholder="Commentaire sur la mise à jour" />
+                                    Placeholder="Commentaire sur la mise à jour"
+                                    TextColor="{StaticResource BodyText}"
+                                    BackgroundColor="White"
+                                    PlaceholderColor="#6B7280" />
 
                             <Button Text="Enregistrer le statut"
                                     Style="{StaticResource PrimaryButtonStyle}"

@@ -136,8 +136,9 @@
                         <VerticalStackLayout Spacing="6">
                             <Label Text="Déclaration" FontAttributes="Bold" />
 
-                            <Label Text="{Binding DeclareParNom, StringFormat='Déclaré par : {0}'}"
+                            <Label Text="{Binding DeclarantNom, StringFormat='Déclaré par : {0}'}"
                                    FontSize="13" />
+
 
                             <Label Text="{Binding DateDeclaration, StringFormat='Le {0:dd/MM/yyyy HH:mm}'}"
                                    FontSize="13"
@@ -158,7 +159,7 @@
                                    TextColor="#6B7280"
                                    LineBreakMode="WordWrap" />
 
-                            <Label Text="{Binding NumeroLot, StringFormat='Lot : {0}'}"
+                            <Label Text="{Binding LotNumero, StringFormat='Lot : {0}'}"
                                    FontSize="13" />
                         </VerticalStackLayout>
                     </Frame>
