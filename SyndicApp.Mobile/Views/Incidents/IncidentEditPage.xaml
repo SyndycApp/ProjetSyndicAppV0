@@ -106,11 +106,17 @@
                             <Label Text="Description" Style="{StaticResource FieldLabelStyle}" />
                             <Editor Text="{Binding Description}"
                                     AutoSize="TextChanges"
-                                    Placeholder="Mettre à jour la description" />
+                                    Placeholder="Mettre à jour la description"
+                                    TextColor="{StaticResource BodyText}"
+                                    BackgroundColor="White"
+                                    PlaceholderColor="#6B7280" />
 
                             <Label Text="Type d'incident" Style="{StaticResource FieldLabelStyle}" />
                             <Entry Text="{Binding TypeIncident}"
-                                   Placeholder="panne, fuite, ..." />
+                                   Placeholder="panne, fuite, ..."
+                                   TextColor="{StaticResource BodyText}"
+                                   BackgroundColor="White"
+                                   PlaceholderColor="#6B7280" />
 
                             <Label Text="Urgence" Style="{StaticResource FieldLabelStyle}" />
                             <Picker ItemsSource="{Binding Urgences}"
