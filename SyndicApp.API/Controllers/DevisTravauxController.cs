@@ -64,5 +64,15 @@ namespace SyndicApp.API.Controllers
             await _devisService.DeleteAsync(id);
             return NoContent();
         }
+
+        [HttpGet("resolve-id")]
+        public async Task<IActionResult> ResolveId([FromQuery] string titre)
+        {
+            if (string.IsNullOrWhiteSpace(titre))
+                return BadRequest("Le paramètre 'titre' est obligatoire.");
+
+            var devis = await _devisService.ResolveByTitleAsync(titre);
+            return devis is null ? NotFound() : Ok(devis);
+        }
     }
 }

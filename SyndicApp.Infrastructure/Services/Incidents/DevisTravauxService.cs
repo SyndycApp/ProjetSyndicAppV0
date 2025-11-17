@@ -48,6 +48,22 @@ namespace SyndicApp.Infrastructure.Services.Incidents
             return await Map(entity.Id);
         }
 
+        public async Task<DevisDto?> ResolveByTitleAsync(string titre)
+        {
+            if (string.IsNullOrWhiteSpace(titre))
+                return null;
+
+            var devis = await _db.DevisTravaux
+                .AsNoTracking()
+                .Where(d => EF.Functions.Like(d.Titre, $"%{titre}%"))
+                .OrderByDescending(d => d.DateEmission)
+                .FirstOrDefaultAsync();
+
+            if (devis == null)
+                return null;
+
+            return await MapToDto(devis.Id);
+        }
         public async Task<IReadOnlyList<DevisDto?>> GetAllAsync(int page = 1, int pageSize = 50)
         {
             var list = await _db.DevisTravaux.AsNoTracking()
@@ -197,6 +213,32 @@ namespace SyndicApp.Infrastructure.Services.Incidents
 
             dto.InterventionIds = await _db.Interventions.Where(i => i.DevisTravauxId == id).Select(i => i.Id).ToListAsync();
             return dto;
+        }
+
+        // ============= MAPPING PRIVÉ =============
+        private async Task<DevisDto?> MapToDto(Guid id)
+        {
+            var d = await _db.DevisTravaux
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (d == null)
+                return null;
+
+            return new DevisDto
+            {
+                Id = d.Id,
+                Titre = d.Titre,
+                Description = d.Description,
+                MontantHT = d.MontantHT,
+                TauxTVA = d.TauxTVA,
+                ResidenceId = d.ResidenceId,
+                IncidentId = d.IncidentId,
+                Statut = d.Statut,
+                DateEmission = d.DateEmission,
+                ValideParId = d.ValideParId,
+                DateDecision = d.DateDecision
+            };
         }
     }
 }
