@@ -1,6 +1,5 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using SyndicApp.Domain.Entities.Incidents;
 using SyndicApp.Domain.Entities.Incidents.Enums;
 
 namespace SyndicApp.Application.DTOs.Incidents
@@ -15,7 +14,7 @@ namespace SyndicApp.Application.DTOs.Incidents
         public Guid ResidenceId { get; set; }
         public Guid? LotId { get; set; }
 
-        // pas de nav User : juste l�ID du d�clarant
+        // pas de nav User : juste l’ID du déclarant
         public Guid DeclareParId { get; set; }
     }
 
@@ -26,6 +25,10 @@ namespace SyndicApp.Application.DTOs.Incidents
         public string? TypeIncident { get; set; }
         public UrgenceIncident? Urgence { get; set; }
         public Guid? LotId { get; set; }
+
+        // pour l’historique (optionnel)
+        public Guid? AuteurId { get; set; }
+        public string? Commentaire { get; set; }
     }
 
     public class IncidentChangeStatusDto
@@ -33,6 +36,17 @@ namespace SyndicApp.Application.DTOs.Incidents
         public StatutIncident Statut { get; set; }
         public Guid AuteurId { get; set; } // pour historique
         public string? Commentaire { get; set; }
+    }
+
+    public class IncidentHistoriqueDto
+    {
+        public Guid Id { get; set; }
+        public Guid IncidentId { get; set; }
+        public DateTime DateAction { get; set; }
+        public string Action { get; set; } = string.Empty;
+        public string? Commentaire { get; set; }
+        public Guid? AuteurId { get; set; }
+        public string? AuteurNom { get; set; }
     }
 
     public class IncidentDto
@@ -51,5 +65,7 @@ namespace SyndicApp.Application.DTOs.Incidents
 
         public List<Guid> DevisIds { get; set; } = new();
         public List<Guid> InterventionIds { get; set; } = new();
+
+        public List<IncidentHistoriqueDto> Historique { get; set; } = new();
     }
 }

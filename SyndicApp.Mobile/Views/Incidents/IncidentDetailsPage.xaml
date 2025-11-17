@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:SyndicApp.Mobile.ViewModels.Incidents"
+    xmlns:models="clr-namespace:SyndicApp.Mobile.Models"
     x:DataType="vm:IncidentDetailsViewModel"
     x:Name="RootPage"
     Title="Détails incident"
@@ -139,7 +140,6 @@
                             <Label Text="{Binding DeclarantNom, StringFormat='Déclaré par : {0}'}"
                                    FontSize="13" />
 
-
                             <Label Text="{Binding DateDeclaration, StringFormat='Le {0:dd/MM/yyyy HH:mm}'}"
                                    FontSize="13"
                                    Opacity="0.8" />
@@ -161,6 +161,48 @@
 
                             <Label Text="{Binding LotNumero, StringFormat='Lot : {0}'}"
                                    FontSize="13" />
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- Historique -->
+                    <Frame Style="{StaticResource CardStyle}">
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Historique" FontAttributes="Bold" />
+
+                            <CollectionView ItemsSource="{Binding Historique}"
+                                            SelectionMode="None">
+                                <CollectionView.EmptyView>
+                                    <Label Text="Aucun historique disponible."
+                                           FontSize="12"
+                                           Opacity="0.6"
+                                           HorizontalTextAlignment="Center" />
+                                </CollectionView.EmptyView>
+
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="models:IncidentHistoriqueItem">
+                                        <Grid RowDefinitions="Auto,Auto"
+                                              ColumnDefinitions="*,Auto"
+                                              Margin="0,4,0,4">
+                                            <Label Grid.Row="0"
+                                                   Grid.Column="0"
+                                                   Text="{Binding Action}"
+                                                   FontSize="13" />
+                                            <Label Grid.Row="0"
+                                                   Grid.Column="1"
+                                                   Text="{Binding DateAction, StringFormat='{0:dd/MM/yyyy HH:mm}'}"
+                                                   FontSize="11"
+                                                   Opacity="0.7"
+                                                   HorizontalTextAlignment="End" />
+                                            <Label Grid.Row="1"
+                                                   Grid.Column="0"
+                                                   Grid.ColumnSpan="2"
+                                                   Text="{Binding AuteurNom, StringFormat='Par : {0}'}"
+                                                   FontSize="11"
+                                                   Opacity="0.7" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
                         </VerticalStackLayout>
                     </Frame>
 
@@ -201,7 +243,7 @@
             </BoxView.GestureRecognizers>
         </BoxView>
 
-        <!-- DRAWER (même que les autres) -->
+        <!-- DRAWER (inchangé) -->
         <Border x:Name="Drawer"
                 Grid.RowSpan="2"
                 BackgroundColor="White"

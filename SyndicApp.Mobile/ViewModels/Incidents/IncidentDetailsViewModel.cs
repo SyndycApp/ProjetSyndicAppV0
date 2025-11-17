@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.Input;
 using SyndicApp.Mobile.Api;
 using SyndicApp.Mobile.Models;
 using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -46,6 +47,11 @@ namespace SyndicApp.Mobile.ViewModels.Incidents
         [ObservableProperty] private string? residenceAdresseComplete;
         [ObservableProperty] private string? lotNumero;
 
+        // Historique
+        [ObservableProperty]
+        private ObservableCollection<IncidentHistoriqueItem> historique
+            = new ObservableCollection<IncidentHistoriqueItem>();
+
         [RelayCommand]
         public async Task LoadAsync()
         {
@@ -77,11 +83,20 @@ namespace SyndicApp.Mobile.ViewModels.Incidents
             LotNumero = lot.NumeroLot;
 
             // -------- Résidence --------
-            // 🔧 ici on convertit en string, car ton IResidencesApi attend string id
             var residence = await _residencesApi.GetByIdAsync(inc.ResidenceId.ToString());
             ResidenceNom = residence.Nom;
             ResidenceAdresseComplete =
                 $"{residence.Adresse}, {residence.Ville} {residence.CodePostal}";
+
+            // -------- Historique --------
+            Historique.Clear();
+            if (inc.Historique != null)
+            {
+                foreach (var h in inc.Historique.OrderByDescending(x => x.DateAction))
+                {
+                    Historique.Add(h);
+                }
+            }
         }
 
         [RelayCommand]

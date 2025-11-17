@@ -1157,6 +1157,9 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Incidents.IncidentDetailsViewModel.LotNumero">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.IncidentDetailsViewModel.lotNumero"/>
         </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.IncidentDetailsViewModel.Historique">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.IncidentDetailsViewModel.historique"/>
+        </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Incidents.IncidentDetailsViewModel.loadCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Incidents.IncidentDetailsViewModel.LoadCommand"/>.</summary>
         </member>
@@ -1925,6 +1928,9 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.LotNumero">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "LotNumero" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Historique">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Historique" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Commentaire">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Commentaire" generated properties.</summary>
         </member>
@@ -2242,6 +2248,9 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.LotNumero">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "LotNumero" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Historique">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Historique" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Commentaire">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Commentaire" generated properties.</summary>

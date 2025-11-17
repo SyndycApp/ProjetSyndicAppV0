@@ -1,4 +1,7 @@
-﻿namespace SyndicApp.Mobile.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace SyndicApp.Mobile.Models
 {
     public class IncidentDto
     {
@@ -18,6 +21,20 @@
         public string? ResidenceNom { get; set; }
         public string? LotNumero { get; set; }
         public string? DeclarantNomComplet { get; set; }
+
+        // 🔎 Historique remonté par l’API
+        public List<IncidentHistoriqueItem> Historique { get; set; } = new();
+    }
+
+    public class IncidentHistoriqueItem
+    {
+        public Guid Id { get; set; }
+        public Guid IncidentId { get; set; }
+        public DateTime DateAction { get; set; }
+        public string Action { get; set; } = string.Empty;
+        public string? Commentaire { get; set; }
+        public Guid? AuteurId { get; set; }
+        public string? AuteurNom { get; set; }
     }
 
     public class IncidentCreateRequest
@@ -38,6 +55,9 @@
         public string TypeIncident { get; set; } = string.Empty;
         public string Urgence { get; set; } = "Basse";
         public Guid LotId { get; set; }
+
+        public Guid? AuteurId { get; set; }
+        public string Commentaire { get; set; } = string.Empty;
     }
 
     public class IncidentStatusUpdateRequest

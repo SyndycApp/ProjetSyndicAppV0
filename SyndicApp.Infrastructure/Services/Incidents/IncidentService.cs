@@ -37,7 +37,7 @@ namespace SyndicApp.Infrastructure.Services.Incidents
             _db.Incidents.Add(entity);
             await _db.SaveChangesAsync();
 
-            // historique
+            // historique création
             _db.IncidentsHistoriques.Add(new IncidentHistorique
             {
                 IncidentId = entity.Id,
@@ -71,7 +71,6 @@ namespace SyndicApp.Infrastructure.Services.Incidents
                 .ToListAsync();
         }
 
-
         public async Task<IncidentDto?> GetByIdAsync(Guid id) => await MapToDto(id);
 
         public async Task<IReadOnlyList<IncidentDto?>> GetByResidenceAsync(Guid residenceId, int page = 1, int pageSize = 20)
@@ -98,10 +97,15 @@ namespace SyndicApp.Infrastructure.Services.Incidents
 
             // hydrate ids liés
             var incidentIds = list.Select(x => x.Id).ToList();
-            var devis = await _db.DevisTravaux.Where(d => d.IncidentId != null && incidentIds.Contains(d.IncidentId.Value))
-                                              .Select(d => new { d.Id, d.IncidentId }).ToListAsync();
-            var intervs = await _db.Interventions.Where(it => it.IncidentId != null && incidentIds.Contains(it.IncidentId.Value))
-                                                 .Select(it => new { it.Id, it.IncidentId }).ToListAsync();
+            var devis = await _db.DevisTravaux
+                .Where(d => d.IncidentId != null && incidentIds.Contains(d.IncidentId.Value))
+                .Select(d => new { d.Id, d.IncidentId })
+                .ToListAsync();
+
+            var intervs = await _db.Interventions
+                .Where(it => it.IncidentId != null && incidentIds.Contains(it.IncidentId.Value))
+                .Select(it => new { it.Id, it.IncidentId })
+                .ToListAsync();
 
             foreach (var dto in list)
             {
@@ -116,20 +120,66 @@ namespace SyndicApp.Infrastructure.Services.Incidents
         {
             var entity = await _db.Incidents.FirstOrDefaultAsync(i => i.Id == id)
                          ?? throw new InvalidOperationException("Incident introuvable.");
-            if (dto.Titre != null) entity.Titre = dto.Titre;
-            if (dto.Description != null) entity.Description = dto.Description;
-            if (dto.TypeIncident != null) entity.TypeIncident = dto.TypeIncident;
-            if (dto.Urgence.HasValue) entity.Urgence = dto.Urgence.Value;
-            if (dto.LotId.HasValue) entity.LotId = dto.LotId;
+
+            var changes = new List<string>();
+
+            if (dto.Titre != null && dto.Titre != entity.Titre)
+            {
+                changes.Add($"Titre: '{entity.Titre}' → '{dto.Titre}'");
+                entity.Titre = dto.Titre;
+            }
+
+            if (dto.Description != null && dto.Description != entity.Description)
+            {
+                changes.Add("Description mise à jour");
+                entity.Description = dto.Description;
+            }
+
+            if (dto.TypeIncident != null && dto.TypeIncident != entity.TypeIncident)
+            {
+                changes.Add($"Type: '{entity.TypeIncident}' → '{dto.TypeIncident}'");
+                entity.TypeIncident = dto.TypeIncident;
+            }
+
+            if (dto.Urgence.HasValue && dto.Urgence.Value != entity.Urgence)
+            {
+                changes.Add($"Urgence: {entity.Urgence} → {dto.Urgence.Value}");
+                entity.Urgence = dto.Urgence.Value;
+            }
+
+            if (dto.LotId.HasValue && dto.LotId != entity.LotId)
+            {
+                changes.Add($"Lot: {entity.LotId} → {dto.LotId}");
+                entity.LotId = dto.LotId;
+            }
+
+            if (changes.Count == 0)
+            {
+                // rien n’a changé → pas d’enregistrement historique
+                return await MapToDto(id);
+            }
 
             await _db.SaveChangesAsync();
+
+            _db.IncidentsHistoriques.Add(new IncidentHistorique
+            {
+                IncidentId = entity.Id,
+                DateAction = DateTime.UtcNow,
+                Action = "Mise à jour : " + string.Join(" | ", changes),
+                Commentaire = dto.Commentaire,
+                AuteurId = dto.AuteurId ?? entity.DeclareParId
+            });
+            await _db.SaveChangesAsync();
+
             return await MapToDto(id);
         }
 
         public async Task<IncidentDto?> ChangeStatusAsync(Guid id, IncidentChangeStatusDto dto)
         {
-            var entity = await _db.Incidents.Include(i => i.Interventions).FirstOrDefaultAsync(i => i.Id == id)
-                         ?? throw new InvalidOperationException("Incident introuvable.");
+            var entity = await _db.Incidents
+                .Include(i => i.Interventions)
+                .FirstOrDefaultAsync(i => i.Id == id)
+                ?? throw new InvalidOperationException("Incident introuvable.");
 
             // Règle : Clôture possible seulement si toutes les interventions sont Terminee
             if (dto.Statut == StatutIncident.Cloture || dto.Statut == StatutIncident.Resolue)
@@ -186,8 +236,62 @@ namespace SyndicApp.Infrastructure.Services.Incidents
                 DeclareParId = i.DeclareParId
             };
 
-            dto.DevisIds = await _db.DevisTravaux.Where(d => d.IncidentId == id).Select(d => d.Id).ToListAsync();
-            dto.InterventionIds = await _db.Interventions.Where(it => it.IncidentId == id).Select(it => it.Id).ToListAsync();
+            dto.DevisIds = await _db.DevisTravaux
+                .Where(d => d.IncidentId == id)
+                .Select(d => d.Id)
+                .ToListAsync();
+
+            dto.InterventionIds = await _db.Interventions
+                .Where(it => it.IncidentId == id)
+                .Select(it => it.Id)
+                .ToListAsync();
+
+            // 🔎 Historique complet
+            var history = await _db.IncidentsHistoriques
+                .AsNoTracking()
+                .Where(h => h.IncidentId == id)
+                .OrderByDescending(h => h.DateAction)
+                .ToListAsync();
+
+            if (history.Count > 0)
+            {
+                // AuteurId est un Guid non-nullable → pas de .Value ni test null
+                var auteurIds = history
+                    .Select(h => h.AuteurId)
+                    .Distinct()
+                    .ToList();
+
+                var auteurs = await _db.Users
+                    .Where(u => auteurIds.Contains(u.Id))
+                    .Select(u => new { u.Id, u.FullName, u.Email })
+                    .ToListAsync();
+
+                var auteurLookup = auteurs.ToDictionary(
+                    a => a.Id,
+                    a => !string.IsNullOrWhiteSpace(a.FullName)
+                        ? a.FullName
+                        : (a.Email ?? a.Id.ToString())
+                );
+
+                dto.Historique = history.Select(h =>
+                {
+                    string? auteurNom = null;
+                    if (auteurLookup.TryGetValue(h.AuteurId, out var nom))
+                        auteurNom = nom;
+
+                    return new IncidentHistoriqueDto
+                    {
+                        Id = h.Id,
+                        IncidentId = h.IncidentId,
+                        DateAction = h.DateAction,
+                        Action = h.Action,
+                        Commentaire = h.Commentaire,
+                        AuteurId = h.AuteurId,
+                        AuteurNom = auteurNom
+                    };
+                }).ToList();
+            }
+
             return dto;
         }
     }
