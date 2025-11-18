@@ -65,5 +65,10 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("incident-edit", typeof(IncidentEditPage));
         Routing.RegisterRoute("incident-status", typeof(IncidentStatusPage));
 
+        // ===== Devis Travaux =====
+        Routing.RegisterRoute("devis-details", typeof(DevisTravauxDetailsPage));
+        Routing.RegisterRoute("devis-decision", typeof(DevisTravauxDecisionPage));
+        Routing.RegisterRoute("devis-create", typeof(DevisTravauxCreatePage));
+
     }
 }

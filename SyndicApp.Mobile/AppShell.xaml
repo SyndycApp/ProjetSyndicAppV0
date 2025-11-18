@@ -109,6 +109,8 @@
         Title="Incidents"
         ContentTemplate="{DataTemplate Incidents:IncidentsPage}" />
 
-
+    <ShellContent
+        Route="devis-travaux"
+        ContentTemplate="{DataTemplate Incidents:DevisTravauxPage}" />
 
 </Shell>

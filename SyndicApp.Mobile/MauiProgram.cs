@@ -34,7 +34,7 @@ public static class MauiProgram
         builder.UseMicrocharts();
 
         // Choisis la bonne URL :        
-        const string BaseUrl = "http://192.168.11.145:5041";
+        const string BaseUrl = "http://192.168.0.104:5041";
 
 
         // Refit JSON insensible à la casse
@@ -84,9 +84,13 @@ public static class MauiProgram
          .AddHttpMessageHandler<AuthHeaderHandler>();
 
         builder.Services.AddRefitClient<IAppelsApi>(refitSettings)
-    .ConfigureHttpClient(c => c.BaseAddress = new Uri(BaseUrl))
-    .AddHttpMessageHandler<AuthHeaderHandler>();
+                        .ConfigureHttpClient(c => c.BaseAddress = new Uri(BaseUrl))
+                        .AddHttpMessageHandler<AuthHeaderHandler>();
 
+        builder.Services
+                .AddRefitClient<IDevisTravauxApi>()
+                .AddHttpMessageHandler<AuthHeaderHandler>()
+                .ConfigureHttpClient(c => c.BaseAddress = new Uri(BaseUrl));
 
         AddSecured<IAccountApi>();   // /me, /logout protégés
         AddSecured<IAppelsApi>();
@@ -99,6 +103,7 @@ public static class MauiProgram
         AddSecured<IChargesApi>();
         AddSecured<IPaiementsApi>();
         AddSecured<IIncidentsApi>();
+        AddSecured<IDevisTravauxApi>();
 
         // VMs
         builder.Services.AddTransient<LoginViewModel>();
@@ -143,6 +148,10 @@ public static class MauiProgram
         builder.Services.AddTransient<IncidentDetailsViewModel>();
         builder.Services.AddTransient<IncidentEditViewModel>();
         builder.Services.AddTransient<IncidentStatusViewModel>();
+        builder.Services.AddTransient<DevisTravauxListViewModel>();
+        builder.Services.AddTransient<DevisTravauxDetailsViewModel>();
+        builder.Services.AddTransient<DevisTravauxDecisionViewModel>();
+        builder.Services.AddTransient<DevisTravauxCreateViewModel>();
 
 
         // Converters (si DI utilisé)
@@ -194,6 +203,10 @@ public static class MauiProgram
         builder.Services.AddTransient<IncidentDetailsPage>();
         builder.Services.AddTransient<IncidentEditPage>();
         builder.Services.AddTransient<IncidentStatusPage>();
+        builder.Services.AddTransient<DevisTravauxPage>();
+        builder.Services.AddTransient<DevisTravauxDetailsPage>();
+        builder.Services.AddTransient<DevisTravauxDecisionPage>();
+        builder.Services.AddTransient<DevisTravauxCreatePage>();
 
 
         var app = builder.Build();

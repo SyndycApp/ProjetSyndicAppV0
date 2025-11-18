@@ -246,6 +246,30 @@ build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Fin
 build_metadata.AdditionalFiles.TargetPath = Views\Finances\PaiementsPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Finances\PaiementsPage.xaml
 
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Incidents/DevisTravauxCreatePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Incidents.DevisTravauxCreatePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Incidents\DevisTravauxCreatePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Incidents\DevisTravauxCreatePage.xaml
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Incidents/DevisTravauxDecisionPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Incidents.DevisTravauxDecisionPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Incidents\DevisTravauxDecisionPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Incidents\DevisTravauxDecisionPage.xaml
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Incidents/DevisTravauxDetailsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Incidents.DevisTravauxDetailsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Incidents\DevisTravauxDetailsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Incidents\DevisTravauxDetailsPage.xaml
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Incidents/DevisTravauxPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Incidents.DevisTravauxPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Incidents\DevisTravauxPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Incidents\DevisTravauxPage.xaml
+
 [C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Incidents/IncidentCreatePage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Incidents.IncidentCreatePage.xaml

@@ -1060,6 +1060,210 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Finances.PaiementsListViewModel.GoToDetailsCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Finances.PaiementsListViewModel.GoToDetails(System.Guid)"/>.</summary>
         </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxCreateViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxCreateViewModel.IsBusy">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxCreateViewModel.isBusy"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxCreateViewModel.Titre">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxCreateViewModel.titre"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxCreateViewModel.Description">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxCreateViewModel.description"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxCreateViewModel.MontantHT">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxCreateViewModel.montantHT"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxCreateViewModel.TauxTVA">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxCreateViewModel.tauxTVA"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxCreateViewModel.SelectedResidence">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxCreateViewModel.selectedResidence"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxCreateViewModel.SelectedIncident">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxCreateViewModel.selectedIncident"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxCreateViewModel.saveCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxCreateViewModel.SaveCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxCreateViewModel.SaveCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxCreateViewModel.SaveAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxCreateViewModel.cancelCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxCreateViewModel.CancelCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxCreateViewModel.CancelCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxCreateViewModel.CancelAsync"/>.</summary>
+        </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDecisionViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDecisionViewModel.DevisId">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDecisionViewModel.devisId"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDecisionViewModel.IsBusy">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDecisionViewModel.isBusy"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDecisionViewModel.Statut">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDecisionViewModel.statut"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDecisionViewModel.Commentaire">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDecisionViewModel.commentaire"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDecisionViewModel.saveCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDecisionViewModel.SaveCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDecisionViewModel.SaveCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDecisionViewModel.SaveAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDecisionViewModel.cancelCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDecisionViewModel.CancelCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDecisionViewModel.CancelCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDecisionViewModel.CancelAsync"/>.</summary>
+        </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.DevisId">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.devisId"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.IsBusy">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.isBusy"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.IsSyndic">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.isSyndic"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.Titre">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.titre"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.Description">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.description"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.MontantHT">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.montantHT"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.TauxTVA">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.tauxTVA"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.MontantTTC">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.montantTTC"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.Statut">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.statut"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.DateEmission">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.dateEmission"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.ResidenceNom">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.residenceNom"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.ResidenceAdresseComplete">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.residenceAdresseComplete"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.IncidentTitre">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.incidentTitre"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.IncidentDescription">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.incidentDescription"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.IncidentType">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.incidentType"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.IncidentUrgence">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.incidentUrgence"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.IncidentStatut">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.incidentStatut"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.IncidentDateDeclaration">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.incidentDateDeclaration"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.IncidentDeclarantNom">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.incidentDeclarantNom"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.CommentaireDecision">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.commentaireDecision"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.DateDecision">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.dateDecision"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.StatutDecision">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.statutDecision"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.loadCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.LoadCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.LoadCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.LoadAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.goBackCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.GoBackCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.GoBackCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.GoBackAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.goToDecisionCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.GoToDecisionCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.GoToDecisionCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.GoToDecisionAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.deleteCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.DeleteCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.DeleteCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxDetailsViewModel.DeleteAsync"/>.</summary>
+        </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxListViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxListViewModel.IsBusy">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxListViewModel.isBusy"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxListViewModel.IsRefreshing">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxListViewModel.isRefreshing"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxListViewModel.IsSyndic">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxListViewModel.isSyndic"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxListViewModel.loadCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxListViewModel.LoadCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxListViewModel.LoadCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxListViewModel.LoadAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxListViewModel.refreshCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxListViewModel.RefreshCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxListViewModel.RefreshCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxListViewModel.RefreshAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxListViewModel.goToCreateCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxListViewModel.GoToCreateCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxListViewModel.GoToCreateCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxListViewModel.GoToCreateAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxListViewModel.goToDetailsCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxListViewModel.GoToDetailsCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxListViewModel.GoToDetailsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxListViewModel.GoToDetailsAsync(System.Guid)"/>.</summary>
+        </member>
         <member name="T:SyndicApp.Mobile.ViewModels.Incidents.IncidentCreateViewModel">
             <inheritdoc/>
             <inheritdoc/>
@@ -1892,6 +2096,66 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.SelectedDate">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "SelectedDate" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Titre">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Titre" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.MontantHT">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "MontantHT" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.TauxTVA">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "TauxTVA" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.SelectedIncident">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "SelectedIncident" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.DevisId">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "DevisId" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Statut">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Statut" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Commentaire">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Commentaire" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsSyndic">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsSyndic" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.MontantTTC">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "MontantTTC" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IncidentTitre">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IncidentTitre" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IncidentDescription">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IncidentDescription" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IncidentType">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IncidentType" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IncidentUrgence">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IncidentUrgence" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IncidentStatut">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IncidentStatut" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IncidentDateDeclaration">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IncidentDateDeclaration" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IncidentDeclarantNom">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IncidentDeclarantNom" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CommentaireDecision">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CommentaireDecision" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.DateDecision">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "DateDecision" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.StatutDecision">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "StatutDecision" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsRefreshing">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsRefreshing" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Urgences">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Urgences" generated properties.</summary>
         </member>
@@ -1904,9 +2168,6 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.SelectedStatut">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "SelectedStatut" generated properties.</summary>
         </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Titre">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Titre" generated properties.</summary>
-        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.TypeIncident">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "TypeIncident" generated properties.</summary>
         </member>
@@ -1915,9 +2176,6 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Urgence">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Urgence" generated properties.</summary>
-        </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Statut">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Statut" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.DateDeclaration">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "DateDeclaration" generated properties.</summary>
@@ -1930,9 +2188,6 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Historique">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Historique" generated properties.</summary>
-        </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Commentaire">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Commentaire" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.AuteurNom">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "AuteurNom" generated properties.</summary>
@@ -2213,6 +2468,66 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.SelectedDate">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "SelectedDate" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Titre">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Titre" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.MontantHT">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "MontantHT" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.TauxTVA">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "TauxTVA" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.SelectedIncident">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "SelectedIncident" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.DevisId">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "DevisId" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Statut">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Statut" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Commentaire">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Commentaire" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsSyndic">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsSyndic" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.MontantTTC">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "MontantTTC" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IncidentTitre">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IncidentTitre" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IncidentDescription">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IncidentDescription" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IncidentType">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IncidentType" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IncidentUrgence">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IncidentUrgence" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IncidentStatut">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IncidentStatut" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IncidentDateDeclaration">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IncidentDateDeclaration" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IncidentDeclarantNom">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IncidentDeclarantNom" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CommentaireDecision">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CommentaireDecision" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.DateDecision">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "DateDecision" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.StatutDecision">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "StatutDecision" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsRefreshing">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsRefreshing" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Urgences">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Urgences" generated properties.</summary>
         </member>
@@ -2225,9 +2540,6 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.SelectedStatut">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "SelectedStatut" generated properties.</summary>
         </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Titre">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Titre" generated properties.</summary>
-        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.TypeIncident">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "TypeIncident" generated properties.</summary>
         </member>
@@ -2236,9 +2548,6 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Urgence">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Urgence" generated properties.</summary>
-        </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Statut">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Statut" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.DateDeclaration">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "DateDeclaration" generated properties.</summary>
@@ -2251,9 +2560,6 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Historique">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Historique" generated properties.</summary>
-        </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Commentaire">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Commentaire" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.AuteurNom">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "AuteurNom" generated properties.</summary>
@@ -2643,6 +2949,57 @@
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIChargesApi.SyndicApp#Mobile#Api#IChargesApi#DeleteAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="T:Refit.Implementation.Generated.SyndicAppMobileApiIDevisTravauxApi">
+            <inheritdoc />
+        </member>
+        <member name="P:Refit.Implementation.Generated.SyndicAppMobileApiIDevisTravauxApi.Client">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIDevisTravauxApi.#ctor(System.Net.Http.HttpClient,Refit.IRequestBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIDevisTravauxApi.GetAllAsync(System.Int32,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIDevisTravauxApi.GetByIdAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIDevisTravauxApi.CreateAsync(SyndicApp.Mobile.Models.DevisTravauxCreateRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIDevisTravauxApi.DeleteAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIDevisTravauxApi.GetByResidenceAsync(System.Guid,System.Int32,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIDevisTravauxApi.DecideAsync(System.Guid,SyndicApp.Mobile.Models.DevisTravauxDecisionRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIDevisTravauxApi.ResolveByTitleAsync(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIDevisTravauxApi.SyndicApp#Mobile#Api#IDevisTravauxApi#GetAllAsync(System.Int32,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIDevisTravauxApi.SyndicApp#Mobile#Api#IDevisTravauxApi#GetByIdAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIDevisTravauxApi.SyndicApp#Mobile#Api#IDevisTravauxApi#CreateAsync(SyndicApp.Mobile.Models.DevisTravauxCreateRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIDevisTravauxApi.SyndicApp#Mobile#Api#IDevisTravauxApi#DeleteAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIDevisTravauxApi.SyndicApp#Mobile#Api#IDevisTravauxApi#GetByResidenceAsync(System.Guid,System.Int32,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIDevisTravauxApi.SyndicApp#Mobile#Api#IDevisTravauxApi#DecideAsync(System.Guid,SyndicApp.Mobile.Models.DevisTravauxDecisionRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIDevisTravauxApi.SyndicApp#Mobile#Api#IDevisTravauxApi#ResolveByTitleAsync(System.String)">
             <inheritdoc />
         </member>
         <member name="T:Refit.Implementation.Generated.SyndicAppMobileApiIIncidentsApi">
