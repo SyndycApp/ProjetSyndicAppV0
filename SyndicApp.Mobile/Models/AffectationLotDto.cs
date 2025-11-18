@@ -11,6 +11,8 @@ namespace SyndicApp.Mobile.Models
         public DateTime? DateFin { get; set; }
         public bool EstProprietaire { get; set; }
 
+        public string? NomComplet { get; set; }
+
         // Optionnel pour l’UI (si ton API les renvoie)
         public string? UserNom { get; set; }
         public string? LotNumero { get; set; }

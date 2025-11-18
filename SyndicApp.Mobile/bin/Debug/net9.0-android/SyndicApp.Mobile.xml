@@ -1606,6 +1606,15 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotDetailsViewModel.Lot">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Lots.LotDetailsViewModel.lot"/>
         </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotDetailsViewModel.EstOccupe">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Lots.LotDetailsViewModel.estOccupe"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotDetailsViewModel.StatutLot">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Lots.LotDetailsViewModel.statutLot"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotDetailsViewModel.OccupantDisplay">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Lots.LotDetailsViewModel.occupantDisplay"/>
+        </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Lots.LotDetailsViewModel.loadCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Lots.LotDetailsViewModel.LoadCommand"/>.</summary>
         </member>
@@ -2217,6 +2226,15 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Lot">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Lot" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.EstOccupe">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "EstOccupe" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.StatutLot">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "StatutLot" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.OccupantDisplay">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "OccupantDisplay" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Ville">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Ville" generated properties.</summary>
         </member>
@@ -2588,6 +2606,15 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Lot">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Lot" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.EstOccupe">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "EstOccupe" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.StatutLot">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "StatutLot" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.OccupantDisplay">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "OccupantDisplay" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Ville">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Ville" generated properties.</summary>

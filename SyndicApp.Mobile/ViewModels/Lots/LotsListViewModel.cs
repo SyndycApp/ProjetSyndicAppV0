@@ -43,20 +43,33 @@ namespace SyndicApp.Mobile.ViewModels.Lots
             {
                 IsBusy = true;
 
-                // 1) Récupère tous les lots
+                // 1) Tous les lots
                 var lots = await _lotsApi.GetAllAsync();
 
-                // 2) Récupère toutes les affectations
-                var affectations = await _affectationsApi.GetAllAsync();
-
-                // 3) Enrichit chaque lot avec son statut d’occupation
+                // 2) Pour chaque lot, on va chercher l’occupant actuel
                 foreach (var lot in lots)
                 {
-                    var affectationActive = affectations
-                        .FirstOrDefault(a => a.LotId == lot.Id && a.DateFin == null);
+                    try
+                    {
+                        var occ = await _affectationsApi.GetOccupantActuelAsync(lot.Id);
 
-                    lot.EstOccupe = affectationActive != null;
-                    lot.OccupantNom = affectationActive?.UserNom;
+                        if (occ != null)
+                        {
+                            lot.EstOccupe = true;
+                            lot.OccupantNom = occ.NomComplet; // <- c’est CETTE propriété qui doit être remplie par l’API
+                        }
+                        else
+                        {
+                            lot.EstOccupe = false;
+                            lot.OccupantNom = null;
+                        }
+                    }
+                    catch
+                    {
+                        // En cas d’erreur API sur 1 lot, on le marque libre
+                        lot.EstOccupe = false;
+                        lot.OccupantNom = null;
+                    }
                 }
 
                 Items = lots.ToList();
