@@ -147,16 +147,25 @@
 
                     <!-- Boutons -->
                     <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
-                        <Button Grid.Column="0"
-                                Text="Annuler"
-                                Style="{StaticResource OutlineButtonStyle}"
-                                Command="{Binding CancelAsyncCommand}" />
+    <Button Grid.Column="0"
+            Text="Annuler"
+            Style="{StaticResource OutlineButtonStyle}"
+            Command="{Binding CancelCommand}" />
 
-                        <Button Grid.Column="1"
-                                Text="Créer"
-                                Style="{StaticResource PrimaryButtonStyle}"
-                                Command="{Binding SaveAsyncCommand}" />
-                    </Grid>
+    <Button Grid.Column="1"
+            Text="Créer"
+            Style="{StaticResource PrimaryButtonStyle}"
+            Command="{Binding SaveCommand}">
+        <Button.Triggers>
+            <DataTrigger TargetType="Button"
+                         Binding="{Binding IsBusy}"
+                         Value="True">
+                <Setter Property="Text" Value="Enregistrement..." />
+            </DataTrigger>
+        </Button.Triggers>
+    </Button>
+</Grid>
+
 
                 </VerticalStackLayout>
             </ScrollView>
@@ -199,7 +208,6 @@
                             BackgroundColor="Transparent"
                             TextColor="{StaticResource HeaderTextOnDark}"
                             Clicked="CloseDrawer_Clicked" />
-
                 </Grid>
 
                 <ScrollView Grid.Row="1" BackgroundColor="White">

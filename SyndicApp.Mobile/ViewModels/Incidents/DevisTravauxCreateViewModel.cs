@@ -15,31 +15,18 @@ namespace SyndicApp.Mobile.ViewModels.Incidents
         private readonly IResidencesApi _residencesApi;
         private readonly IIncidentsApi _incidentsApi;
 
-        [ObservableProperty]
-        private bool isBusy;
+        [ObservableProperty] private bool isBusy;
 
-        // Champs du formulaire
-        [ObservableProperty]
-        private string titre = string.Empty;
+        [ObservableProperty] private string titre = string.Empty;
+        [ObservableProperty] private string description = string.Empty;
+        [ObservableProperty] private decimal montantHT;
+        [ObservableProperty] private decimal tauxTVA;
 
-        [ObservableProperty]
-        private string description = string.Empty;
-
-        [ObservableProperty]
-        private decimal montantHT;
-
-        [ObservableProperty]
-        private decimal tauxTVA;
-
-        // Sélection résidence / incident
         public ObservableCollection<ResidenceDto> Residences { get; } = new();
         public ObservableCollection<IncidentDto> Incidents { get; } = new();
 
-        [ObservableProperty]
-        private ResidenceDto? selectedResidence;
-
-        [ObservableProperty]
-        private IncidentDto? selectedIncident;
+        [ObservableProperty] private ResidenceDto? selectedResidence;
+        [ObservableProperty] private IncidentDto? selectedIncident;
 
         public DevisTravauxCreateViewModel(
             IDevisTravauxApi devisApi,
@@ -51,6 +38,7 @@ namespace SyndicApp.Mobile.ViewModels.Incidents
             _incidentsApi = incidentsApi;
         }
 
+        [RelayCommand]
         public async Task LoadAsync()
         {
             if (IsBusy) return;
@@ -83,11 +71,11 @@ namespace SyndicApp.Mobile.ViewModels.Incidents
         }
 
         [RelayCommand]
-        private async Task SaveAsync()
+        public async Task SaveAsync()
         {
             if (IsBusy) return;
 
-            // 👇 Debug pour être sûr que le clic arrive bien ici
+            // Debug pour vérifier que le bouton marche
             await Shell.Current.DisplayAlert("Debug", "SaveAsync exécuté", "OK");
 
             try
@@ -128,7 +116,9 @@ namespace SyndicApp.Mobile.ViewModels.Incidents
                     MontantHT = MontantHT,
                     TauxTVA = TauxTVA,
                     ResidenceId = SelectedResidence.Id,
-                    IncidentId = SelectedIncident?.Id ?? Guid.Empty
+                    IncidentId = SelectedIncident != null
+                        ? SelectedIncident.Id
+                        : Guid.Empty
                 };
 
                 var created = await _devisApi.CreateAsync(req);
@@ -138,7 +128,6 @@ namespace SyndicApp.Mobile.ViewModels.Incidents
                     "Devis créé avec succès.",
                     "OK");
 
-                // Retour à la liste des devis
                 await Shell.Current.GoToAsync("//devis-travaux");
             }
             catch (Exception ex)
@@ -155,7 +144,7 @@ namespace SyndicApp.Mobile.ViewModels.Incidents
         }
 
         [RelayCommand]
-        private Task CancelAsync()
+        public Task CancelAsync()
             => Shell.Current.GoToAsync("//devis-travaux");
     }
 }
