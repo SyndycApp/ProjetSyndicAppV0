@@ -73,9 +73,37 @@
                   <VerticalStackLayout Spacing="2">
                     <Label Text="{Binding NumeroLot}" FontAttributes="Bold" FontSize="16" />
                     <Label Text="{Binding Type}" FontSize="12" TextColor="#6B7280" />
+
+                    <!-- Statut Occupation -->
+                    <Label Text="{Binding StatutOccupation}"
+                           FontSize="12">
+                      <Label.Triggers>
+                        <DataTrigger TargetType="Label"
+                                     Binding="{Binding EstOccupe}"
+                                     Value="True">
+                          <Setter Property="TextColor" Value="#16A34A" /> <!-- vert -->
+                        </DataTrigger>
+                        <DataTrigger TargetType="Label"
+                                     Binding="{Binding EstOccupe}"
+                                     Value="False">
+                          <Setter Property="TextColor" Value="#6B7280" /> <!-- gris -->
+                        </DataTrigger>
+                      </Label.Triggers>
+                    </Label>
+
+                    <!-- Occupant -->
+                    <Label Text="{Binding OccupantDisplay}"
+                           FontSize="11"
+                           TextColor="#6B7280" />
                   </VerticalStackLayout>
-                  <Label Grid.Column="1" Text="&#x203A;" FontSize="22" VerticalOptions="Center" TextColor="#9CA3AF" />
+
+                  <Label Grid.Column="1"
+                         Text="&#x203A;"
+                         FontSize="22"
+                         VerticalOptions="Center"
+                         TextColor="#9CA3AF" />
                 </Grid>
+
                 <Frame.GestureRecognizers>
                   <TapGestureRecognizer
                     Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.OpenDetailsAsyncCommand}"
@@ -88,8 +116,11 @@
       </VerticalStackLayout>
     </Grid>
 
+    <!-- Drawer / overlay inchangés -->
     <BoxView x:Name="Backdrop" Grid.RowSpan="2" BackgroundColor="#66000000" Opacity="0" InputTransparent="True">
-      <BoxView.GestureRecognizers><TapGestureRecognizer Tapped="Backdrop_Tapped"/></BoxView.GestureRecognizers>
+      <BoxView.GestureRecognizers>
+        <TapGestureRecognizer Tapped="Backdrop_Tapped"/>
+      </BoxView.GestureRecognizers>
     </BoxView>
 
     <Border x:Name="Drawer" Grid.RowSpan="2" BackgroundColor="White" StrokeThickness="0" TranslationX="-1000" Padding="0">
@@ -105,10 +136,10 @@
           <VerticalStackLayout Padding="16" Spacing="10">
             <Label Text="Tableau de bord" FontAttributes="Bold" />
             <Button Text="Dashboard" Style="{StaticResource MenuButtonStyle}" CommandParameter="//syndic-dashboard" Clicked="OnMenuItemClicked"/>
-                <Button Text="Dashboard Affectations"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//affectation-dashboard"
-            Clicked="OnMenuItemClicked"/>
+            <Button Text="Dashboard Affectations"
+                    Style="{StaticResource MenuButtonStyle}"
+                    CommandParameter="//affectation-dashboard"
+                    Clicked="OnMenuItemClicked"/>
             <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
             <Label Text="Residences et Lots" FontAttributes="Bold" />
             <Button Text="Residences" Style="{StaticResource MenuButtonStyle}" CommandParameter="//residences" Clicked="OnMenuItemClicked"/>

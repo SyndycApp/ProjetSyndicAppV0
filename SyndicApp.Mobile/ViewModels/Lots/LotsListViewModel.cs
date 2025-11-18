@@ -13,7 +13,8 @@ namespace SyndicApp.Mobile.ViewModels.Lots
 {
     public partial class LotsListViewModel : ObservableObject, IRecipient<LotChangedMessage>
     {
-        private readonly ILotsApi _api;
+        private readonly ILotsApi _lotsApi;
+        private readonly IAffectationsLotsApi _affectationsApi;
 
         [ObservableProperty] bool isBusy;
         [ObservableProperty] List<LotDto> items = new();
@@ -22,9 +23,11 @@ namespace SyndicApp.Mobile.ViewModels.Lots
         public IAsyncRelayCommand OpenCreateAsyncCommand { get; }
         public IAsyncRelayCommand<Guid> OpenDetailsAsyncCommand { get; }
 
-        public LotsListViewModel(ILotsApi api)
+        public LotsListViewModel(ILotsApi lotsApi, IAffectationsLotsApi affectationsApi)
         {
-            _api = api;
+            _lotsApi = lotsApi;
+            _affectationsApi = affectationsApi;
+
             LoadAsyncCommand = new AsyncRelayCommand(LoadAsync);
             OpenCreateAsyncCommand = new AsyncRelayCommand(OpenCreateAsync);
             OpenDetailsAsyncCommand = new AsyncRelayCommand<Guid>(OpenDetailsAsync);
@@ -35,8 +38,33 @@ namespace SyndicApp.Mobile.ViewModels.Lots
         public async Task LoadAsync()
         {
             if (IsBusy) return;
-            try { IsBusy = true; Items = (await _api.GetAllAsync()).ToList(); }
-            finally { IsBusy = false; }
+
+            try
+            {
+                IsBusy = true;
+
+                // 1) Récupère tous les lots
+                var lots = await _lotsApi.GetAllAsync();
+
+                // 2) Récupère toutes les affectations
+                var affectations = await _affectationsApi.GetAllAsync();
+
+                // 3) Enrichit chaque lot avec son statut d’occupation
+                foreach (var lot in lots)
+                {
+                    var affectationActive = affectations
+                        .FirstOrDefault(a => a.LotId == lot.Id && a.DateFin == null);
+
+                    lot.EstOccupe = affectationActive != null;
+                    lot.OccupantNom = affectationActive?.UserNom;
+                }
+
+                Items = lots.ToList();
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
 
         private Task OpenCreateAsync() => Shell.Current.GoToAsync("lot-create");

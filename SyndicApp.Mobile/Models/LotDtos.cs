@@ -11,6 +11,20 @@ namespace SyndicApp.Mobile.Models
         public Guid ResidenceId { get; set; }
         public Guid? BatimentId { get; set; }
         public string? BatimentNom { get; set; }
+
+        // ---- Nouveaux champs pour l’UI ----
+        public bool EstOccupe { get; set; }
+        public string? OccupantNom { get; set; }
+
+        // Texte prêt à binder dans le XAML
+        public string StatutOccupation => EstOccupe ? "Occupé" : "Libre";
+
+        public string OccupantDisplay =>
+            EstOccupe
+                ? (!string.IsNullOrWhiteSpace(OccupantNom)
+                    ? $"Occupant : {OccupantNom}"
+                    : "Occupant : (non renseigné)")
+                : "Pas d’occupant";
     }
 
     public class CreateLotDto
@@ -23,6 +37,4 @@ namespace SyndicApp.Mobile.Models
     }
 
     public class UpdateLotDto : CreateLotDto { }
-
- 
 }
