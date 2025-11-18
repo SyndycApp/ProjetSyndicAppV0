@@ -1,67 +1,104 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using Refit;
 using SyndicApp.Mobile.Api;
 using SyndicApp.Mobile.Common.Messages;
 using SyndicApp.Mobile.Models;
+using System;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 
-namespace SyndicApp.Mobile.ViewModels.Residences;
-
-[QueryProperty(nameof(Id), "id")]
-public partial class ResidenceDetailsViewModel : ObservableObject
+namespace SyndicApp.Mobile.ViewModels.Residences
 {
-    private readonly IResidencesApi _api;
-
-    [ObservableProperty] private string id = "";
-    [ObservableProperty] private ResidenceDto? residence;
-
-    public ResidenceDetailsViewModel(IResidencesApi api) => _api = api;
-
-    [RelayCommand]
-    public async Task LoadAsync()
+    [QueryProperty(nameof(Id), "id")]
+    public partial class ResidenceDetailsViewModel : ObservableObject
     {
-        if (string.IsNullOrWhiteSpace(Id)) return;
-        Residence = await _api.GetByIdAsync(Id);
-    }
+        private readonly IResidencesApi _residencesApi;
+        private readonly ILotsApi _lotsApi;
 
-    [RelayCommand]
-    public async Task EditAsync()
-    {
-        if (string.IsNullOrWhiteSpace(Id)) return;
-        await Shell.Current.GoToAsync($"residence-edit?id={Id}");
-    }
+        [ObservableProperty] private string id = "";
+        [ObservableProperty] private ResidenceDto? residence;
 
-    [RelayCommand]
-    public async Task DeleteAsync()
-    {
-        if (string.IsNullOrWhiteSpace(Id)) return;
+        // ✅ liste des lots liés à la résidence
+        public ObservableCollection<LotDto> Lots { get; } = new();
 
-        var ok = await Shell.Current.DisplayAlert(
-            "Suppression", "Supprimer cette résidence ?", "Oui", "Non");
-        if (!ok) return;
-
-        try
+        public ResidenceDetailsViewModel(IResidencesApi residencesApi, ILotsApi lotsApi)
         {
-            var guid = Guid.Parse(Id);
-            await _api.DeleteAsync(guid);
-
-            WeakReferenceMessenger.Default.Send(new ResidenceChangedMessage(true));
-
-           
-            await Shell.Current.GoToAsync("//residences");
+            _residencesApi = residencesApi;
+            _lotsApi = lotsApi;
         }
-        catch (ApiException ex)
-        {
-           
-            var msg = string.IsNullOrWhiteSpace(ex.Content)
-                ? ex.Message
-                : ex.Content;
 
-            await Shell.Current.DisplayAlert("Erreur API", msg, "OK");
-        }
-        catch (Exception ex)
+        [RelayCommand]
+        public async Task LoadAsync()
         {
-            await Shell.Current.DisplayAlert("Erreur", ex.Message, "OK");
+            if (string.IsNullOrWhiteSpace(Id)) return;
+
+            try
+            {
+                // Détail résidence
+                Residence = await _residencesApi.GetByIdAsync(Id);
+
+                // Lots de la résidence
+                Lots.Clear();
+                if (Guid.TryParse(Id, out var resId))
+                {
+                    var lots = await _lotsApi.GetByResidenceAsync(resId);
+                    foreach (var lot in lots)
+                        Lots.Add(lot);
+                }
+            }
+            catch (ApiException ex)
+            {
+                var msg = string.IsNullOrWhiteSpace(ex.Content)
+                    ? ex.Message
+                    : ex.Content;
+
+                await Shell.Current.DisplayAlert("Erreur API", msg, "OK");
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Erreur", ex.Message, "OK");
+            }
+        }
+
+        [RelayCommand]
+        public async Task EditAsync()
+        {
+            if (string.IsNullOrWhiteSpace(Id)) return;
+            await Shell.Current.GoToAsync($"residence-edit?id={Id}");
+        }
+
+        [RelayCommand]
+        public async Task DeleteAsync()
+        {
+            if (string.IsNullOrWhiteSpace(Id)) return;
+
+            var ok = await Shell.Current.DisplayAlert(
+                "Suppression", "Supprimer cette résidence ?", "Oui", "Non");
+            if (!ok) return;
+
+            try
+            {
+                var guid = Guid.Parse(Id);
+                await _residencesApi.DeleteAsync(guid);
+
+                WeakReferenceMessenger.Default.Send(new ResidenceChangedMessage(true));
+
+                await Shell.Current.GoToAsync("//residences");
+            }
+            catch (ApiException ex)
+            {
+                var msg = string.IsNullOrWhiteSpace(ex.Content)
+                    ? ex.Message
+                    : ex.Content;
+
+                await Shell.Current.DisplayAlert("Erreur API", msg, "OK");
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Erreur", ex.Message, "OK");
+            }
         }
     }
 }
