@@ -8,6 +8,8 @@ using SyndicApp.Application.Interfaces;                 // IEmailSender, IPasswo
 using SyndicApp.Application.Interfaces.Finances;
 using SyndicApp.Application.Interfaces.Incidents;
 using SyndicApp.Application.Interfaces.Residences;
+using SyndicApp.Application.Interfaces.Personnel;
+using SyndicApp.Infrastructure.Services.Personnel;
 
 using SyndicApp.Infrastructure;
 using SyndicApp.Infrastructure.Data;                   // SeedData
@@ -116,6 +118,8 @@ builder.Services.AddScoped<ISoldeService, SoldeService>();
 builder.Services.AddScoped<IIncidentService, IncidentService>();
 builder.Services.AddScoped<IDevisTravauxService, DevisTravauxService>();
 builder.Services.AddScoped<IInterventionService, InterventionService>();
+
+builder.Services.AddScoped<IPrestataireService, PrestataireService>();
 
 // DataProtection (persistance des clés)
 builder.Services.AddDataProtection()

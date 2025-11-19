@@ -28,7 +28,6 @@ namespace SyndicApp.Infrastructure.Services.Incidents
                 DevisTravauxId = dto.DevisTravauxId,
                 IncidentId = dto.IncidentId,
                 EmployeId = dto.EmployeId,
-                PrestataireExterne = dto.PrestataireExterne,
                 DatePrevue = dto.DatePrevue,
                 CoutEstime = dto.CoutEstime,
                 Statut = StatutIntervention.Planifiee
@@ -53,10 +52,12 @@ namespace SyndicApp.Infrastructure.Services.Incidents
 
         public async Task<IReadOnlyList<InterventionDto?>> GetByResidenceAsync(Guid residenceId, int page = 1, int pageSize = 20)
         {
-            return await _db.Interventions.AsNoTracking()
+            return await _db.Interventions
+                .AsNoTracking()
                 .Where(i => i.ResidenceId == residenceId)
                 .OrderByDescending(i => i.DatePrevue ?? i.DateRealisation ?? DateTime.MinValue)
-                .Skip((page - 1) * pageSize).Take(pageSize)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
                 .Select(i => new InterventionDto
                 {
                     Id = i.Id,
@@ -65,29 +66,8 @@ namespace SyndicApp.Infrastructure.Services.Incidents
                     DevisTravauxId = i.DevisTravauxId,
                     IncidentId = i.IncidentId,
                     EmployeId = i.EmployeId,
-                    PrestataireExterne = i.PrestataireExterne,
-                    DatePrevue = i.DatePrevue,
-                    DateRealisation = i.DateRealisation,
-                    CoutEstime = i.CoutEstime,
-                    CoutReel = i.CoutReel,
-                    Statut = i.Statut
-                }).ToListAsync();
-        }
-
-        public async Task<IReadOnlyList<InterventionDto?>> GetAllAsync(int page = 1, int pageSize = 50)
-        {
-            return await _db.Interventions.AsNoTracking()
-                .OrderByDescending(i => i.DatePrevue ?? i.DateRealisation ?? DateTime.MinValue)
-                .Skip((page - 1) * pageSize).Take(pageSize)
-                .Select(i => new InterventionDto
-                {
-                    Id = i.Id,
-                    Description = i.Description,
-                    ResidenceId = i.ResidenceId,
-                    DevisTravauxId = i.DevisTravauxId,
-                    IncidentId = i.IncidentId,
-                    EmployeId = i.EmployeId,
-                    PrestataireExterne = i.PrestataireExterne,
+                    // 🔹 On expose dans le DTO le nom du prestataire lié
+                    PrestataireExterne = i.Prestataire != null ? i.Prestataire.Nom : null,
                     DatePrevue = i.DatePrevue,
                     DateRealisation = i.DateRealisation,
                     CoutEstime = i.CoutEstime,
@@ -97,6 +77,31 @@ namespace SyndicApp.Infrastructure.Services.Incidents
                 .ToListAsync();
         }
 
+        public async Task<IReadOnlyList<InterventionDto?>> GetAllAsync(int page = 1, int pageSize = 50)
+        {
+            return await _db.Interventions
+                .AsNoTracking()
+                .OrderByDescending(i => i.DatePrevue ?? i.DateRealisation ?? DateTime.MinValue)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Select(i => new InterventionDto
+                {
+                    Id = i.Id,
+                    Description = i.Description,
+                    ResidenceId = i.ResidenceId,
+                    DevisTravauxId = i.DevisTravauxId,
+                    IncidentId = i.IncidentId,
+                    EmployeId = i.EmployeId,
+                    // 🔹 idem ici
+                    PrestataireExterne = i.Prestataire != null ? i.Prestataire.Nom : null,
+                    DatePrevue = i.DatePrevue,
+                    DateRealisation = i.DateRealisation,
+                    CoutEstime = i.CoutEstime,
+                    CoutReel = i.CoutReel,
+                    Statut = i.Statut
+                })
+                .ToListAsync();
+        }
 
         public async Task<InterventionDto?> ChangeStatusAsync(Guid id, InterventionChangeStatusDto dto)
         {
@@ -137,7 +142,11 @@ namespace SyndicApp.Infrastructure.Services.Incidents
 
         private async Task<InterventionDto?> Map(Guid id)
         {
-            var i = await _db.Interventions.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            var i = await _db.Interventions
+                             .AsNoTracking()
+                             .Include(x => x.Prestataire)
+                             .FirstOrDefaultAsync(x => x.Id == id);
+
             if (i == null) return null;
 
             return new InterventionDto
@@ -148,7 +157,7 @@ namespace SyndicApp.Infrastructure.Services.Incidents
                 DevisTravauxId = i.DevisTravauxId,
                 IncidentId = i.IncidentId,
                 EmployeId = i.EmployeId,
-                PrestataireExterne = i.PrestataireExterne,
+                PrestataireExterne = i.Prestataire?.Nom,
                 DatePrevue = i.DatePrevue,
                 DateRealisation = i.DateRealisation,
                 CoutEstime = i.CoutEstime,

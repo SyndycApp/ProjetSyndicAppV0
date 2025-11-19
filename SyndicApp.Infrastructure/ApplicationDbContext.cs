@@ -72,6 +72,8 @@ namespace SyndicApp.Infrastructure
         // Notifications
         public DbSet<Notification> Notifications => Set<Notification>();
 
+        public DbSet<Prestataire> Prestataires { get; set; } = default!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -437,6 +439,12 @@ namespace SyndicApp.Infrastructure
                  .HasForeignKey(h => h.InterventionId)
                  .OnDelete(DeleteBehavior.Cascade);
             });
+
+            modelBuilder.Entity<Intervention>()
+                .HasOne(i => i.Prestataire)
+                .WithMany(p => p.Interventions)
+                .HasForeignKey(i => i.PrestataireId)
+                .OnDelete(DeleteBehavior.SetNull);
 
 
             // ================= Historiques Incidents/Devis/Interventions =================
