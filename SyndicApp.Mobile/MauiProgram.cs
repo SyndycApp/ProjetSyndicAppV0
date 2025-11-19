@@ -34,7 +34,7 @@ public static class MauiProgram
         builder.UseMicrocharts();
 
         // Choisis la bonne URL :        
-        const string BaseUrl = "http://192.168.1.19:5041";
+        const string BaseUrl = "http://192.168.11.160:5041";
 
 
         // Refit JSON insensible à la casse
@@ -104,6 +104,7 @@ public static class MauiProgram
         AddSecured<IPaiementsApi>();
         AddSecured<IIncidentsApi>();
         AddSecured<IDevisTravauxApi>();
+        AddSecured<IInterventionsApi>();
 
         // VMs
         builder.Services.AddTransient<LoginViewModel>();
@@ -152,6 +153,8 @@ public static class MauiProgram
         builder.Services.AddTransient<DevisTravauxDetailsViewModel>();
         builder.Services.AddTransient<DevisTravauxDecisionViewModel>();
         builder.Services.AddTransient<DevisTravauxCreateViewModel>();
+        builder.Services.AddTransient<InterventionsListViewModel>();
+        builder.Services.AddTransient<InterventionDetailsViewModel>();
 
 
         // Converters (si DI utilisé)
@@ -207,6 +210,8 @@ public static class MauiProgram
         builder.Services.AddTransient<DevisTravauxDetailsPage>();
         builder.Services.AddTransient<DevisTravauxDecisionPage>();
         builder.Services.AddTransient<DevisTravauxCreatePage>();
+        builder.Services.AddTransient<InterventionsPage>();
+        builder.Services.AddTransient<InterventionDetailsPage>();
 
 
         var app = builder.Build();

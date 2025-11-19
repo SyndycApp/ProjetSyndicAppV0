@@ -1539,6 +1539,102 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Incidents.IncidentStatusViewModel.SaveCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Incidents.IncidentStatusViewModel.SaveAsync"/>.</summary>
         </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Incidents.InterventionDetailsViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.InterventionDetailsViewModel.IdParam">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.InterventionDetailsViewModel.idParam"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.InterventionDetailsViewModel.Id">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.InterventionDetailsViewModel.id"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.InterventionDetailsViewModel.Item">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.InterventionDetailsViewModel.item"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.InterventionDetailsViewModel.IsBusy">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.InterventionDetailsViewModel.isBusy"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Incidents.InterventionDetailsViewModel.loadCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Incidents.InterventionDetailsViewModel.LoadCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.InterventionDetailsViewModel.LoadCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Incidents.InterventionDetailsViewModel.LoadAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Incidents.InterventionDetailsViewModel.deleteCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Incidents.InterventionDetailsViewModel.DeleteCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.InterventionDetailsViewModel.DeleteCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Incidents.InterventionDetailsViewModel.DeleteAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Incidents.InterventionDetailsViewModel.startCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Incidents.InterventionDetailsViewModel.StartCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.InterventionDetailsViewModel.StartCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Incidents.InterventionDetailsViewModel.StartAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Incidents.InterventionDetailsViewModel.completeCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Incidents.InterventionDetailsViewModel.CompleteCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.InterventionDetailsViewModel.CompleteCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Incidents.InterventionDetailsViewModel.CompleteAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Incidents.InterventionDetailsViewModel.cancelCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Incidents.InterventionDetailsViewModel.CancelCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.InterventionDetailsViewModel.CancelCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Incidents.InterventionDetailsViewModel.CancelAsync"/>.</summary>
+        </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Incidents.InterventionsListViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.InterventionsListViewModel.Items">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.InterventionsListViewModel.items"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.InterventionsListViewModel.SearchText">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.InterventionsListViewModel.searchText"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.InterventionsListViewModel.SelectedStatut">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.InterventionsListViewModel.selectedStatut"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.InterventionsListViewModel.IsBusy">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Incidents.InterventionsListViewModel.isBusy"/>
+        </member>
+        <member name="M:SyndicApp.Mobile.ViewModels.Incidents.InterventionsListViewModel.OnSearchTextChanged(System.String)">
+            <summary>Executes the logic for when <see cref="P:SyndicApp.Mobile.ViewModels.Incidents.InterventionsListViewModel.SearchText"/> just changed.</summary>
+            <param name="value">The new property value that was set.</param>
+            <remarks>This method is invoked right after the value of <see cref="P:SyndicApp.Mobile.ViewModels.Incidents.InterventionsListViewModel.SearchText"/> is changed.</remarks>
+        </member>
+        <member name="M:SyndicApp.Mobile.ViewModels.Incidents.InterventionsListViewModel.OnSelectedStatutChanged(System.Nullable{SyndicApp.Mobile.Models.StatutIntervention})">
+            <summary>Executes the logic for when <see cref="P:SyndicApp.Mobile.ViewModels.Incidents.InterventionsListViewModel.SelectedStatut"/> just changed.</summary>
+            <param name="value">The new property value that was set.</param>
+            <remarks>This method is invoked right after the value of <see cref="P:SyndicApp.Mobile.ViewModels.Incidents.InterventionsListViewModel.SelectedStatut"/> is changed.</remarks>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Incidents.InterventionsListViewModel.loadCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Incidents.InterventionsListViewModel.LoadCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.InterventionsListViewModel.LoadCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Incidents.InterventionsListViewModel.LoadAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Incidents.InterventionsListViewModel.refreshCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Incidents.InterventionsListViewModel.RefreshCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.InterventionsListViewModel.RefreshCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Incidents.InterventionsListViewModel.RefreshAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Incidents.InterventionsListViewModel.goToDetailsCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Incidents.InterventionsListViewModel.GoToDetailsCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Incidents.InterventionsListViewModel.GoToDetailsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Incidents.InterventionsListViewModel.GoToDetails(System.Guid)"/>.</summary>
+        </member>
         <member name="T:SyndicApp.Mobile.ViewModels.Lots.LotCreateViewModel">
             <inheritdoc/>
             <inheritdoc/>
@@ -3085,6 +3181,51 @@
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIIncidentsApi.SyndicApp#Mobile#Api#IIncidentsApi#UpdateStatusAsync(System.String,SyndicApp.Mobile.Models.IncidentStatusUpdateRequest)">
+            <inheritdoc />
+        </member>
+        <member name="T:Refit.Implementation.Generated.SyndicAppMobileApiIInterventionsApi">
+            <inheritdoc />
+        </member>
+        <member name="P:Refit.Implementation.Generated.SyndicAppMobileApiIInterventionsApi.Client">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIInterventionsApi.#ctor(System.Net.Http.HttpClient,Refit.IRequestBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIInterventionsApi.GetAllAsync(System.Int32,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIInterventionsApi.GetByIdAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIInterventionsApi.GetByResidenceAsync(System.Guid,System.Int32,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIInterventionsApi.CreateAsync(SyndicApp.Mobile.Models.InterventionCreateRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIInterventionsApi.ChangeStatusAsync(System.Guid,SyndicApp.Mobile.Models.InterventionChangeStatusRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIInterventionsApi.DeleteAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIInterventionsApi.SyndicApp#Mobile#Api#IInterventionsApi#GetAllAsync(System.Int32,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIInterventionsApi.SyndicApp#Mobile#Api#IInterventionsApi#GetByIdAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIInterventionsApi.SyndicApp#Mobile#Api#IInterventionsApi#GetByResidenceAsync(System.Guid,System.Int32,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIInterventionsApi.SyndicApp#Mobile#Api#IInterventionsApi#CreateAsync(SyndicApp.Mobile.Models.InterventionCreateRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIInterventionsApi.SyndicApp#Mobile#Api#IInterventionsApi#ChangeStatusAsync(System.Guid,SyndicApp.Mobile.Models.InterventionChangeStatusRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIInterventionsApi.SyndicApp#Mobile#Api#IInterventionsApi#DeleteAsync(System.Guid)">
             <inheritdoc />
         </member>
         <member name="T:Refit.Implementation.Generated.SyndicAppMobileApiILotsApi">

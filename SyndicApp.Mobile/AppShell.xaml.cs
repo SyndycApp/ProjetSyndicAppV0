@@ -70,5 +70,8 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("devis-decision", typeof(DevisTravauxDecisionPage));
         Routing.RegisterRoute("devis-create", typeof(DevisTravauxCreatePage));
 
+
+        Routing.RegisterRoute("intervention-details", typeof(InterventionDetailsPage));
+
     }
 }

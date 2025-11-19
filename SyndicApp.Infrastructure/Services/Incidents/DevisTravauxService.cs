@@ -169,6 +169,7 @@ namespace SyndicApp.Infrastructure.Services.Incidents
                         ResidenceId = devis.ResidenceId,
                         DevisTravauxId = devis.Id,
                         IncidentId = devis.IncidentId,
+                        CoutEstime = devis.MontantHT * (1 + devis.TauxTVA / 100m),
                         DatePrevue = DateTime.UtcNow.AddDays(3) // par défaut
                     });
                     await _db.SaveChangesAsync();
