@@ -70,32 +70,47 @@ namespace SyndicApp.Mobile.ViewModels.Finances
         {
             if (SelectedAppel == null || SelectedUser == null)
             {
-                await Shell.Current.DisplayAlert("Erreur", "Veuillez sélectionner l'appel de fonds et l'utilisateur.", "OK");
+                await Shell.Current.DisplayAlert("Erreur",
+                    "Veuillez sélectionner l'appel de fonds et l'utilisateur.",
+                    "OK");
                 return;
             }
 
             if (Montant <= 0)
             {
-                await Shell.Current.DisplayAlert("Erreur", "Le montant doit être supérieur à 0.", "OK");
+                await Shell.Current.DisplayAlert("Erreur",
+                    "Le montant doit être supérieur à 0.",
+                    "OK");
                 return;
             }
 
-            // Conversion robuste en Guid (que l'Id soit Guid ou string côté DTO)
-            var appelId = Guid.Parse(SelectedAppel.Id.ToString()!);
-            var userId = Guid.Parse(SelectedUser.Id.ToString()!);
-
-            var request = new PaiementCreateRequest
+            try
             {
-                AppelDeFondsId = appelId,
-                UserId = userId,
-                Montant = Montant,
-                DatePaiement = DatePaiement
-            };
+                var appelId = Guid.Parse(SelectedAppel.Id.ToString()!);
+                var userId = Guid.Parse(SelectedUser.Id.ToString()!);
+                var request = new PaiementCreateRequest
+                {
+                    AppelDeFondsId = appelId,  
+                    UserId = userId,         
+                    Montant = Montant,
+                    DatePaiement = DatePaiement
+                };
 
-            await _paiementsApi.CreateAsync(request);
+                await _paiementsApi.CreateAsync(request);
 
-            await Shell.Current.DisplayAlert("Succès", "Paiement enregistré.", "OK");
-            await Shell.Current.GoToAsync("..");
+                await Shell.Current.DisplayAlert("Succès", "Paiement enregistré.", "OK");
+                await Shell.Current.GoToAsync("..");
+            }
+            catch (ApiException ex)
+            {
+                var details = string.IsNullOrWhiteSpace(ex.Content) ? ex.Message : ex.Content;
+                await Shell.Current.DisplayAlert("Erreur API (400)", details, "OK");
+            }
+            catch (Exception ex)
+            {
+                await Shell.Current.DisplayAlert("Erreur", ex.Message, "OK");
+            }
         }
+
     }
 }

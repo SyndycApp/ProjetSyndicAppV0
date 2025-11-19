@@ -2,6 +2,10 @@
 using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
 using SyndicApp.Mobile.ViewModels.Affectations;
+using SyndicApp.Mobile.Models;
+
+
+
 
 namespace SyndicApp.Mobile.Views.Affectations
 {
@@ -128,6 +132,29 @@ namespace SyndicApp.Mobile.Views.Affectations
 
         private async void Backdrop_Tapped(object sender, TappedEventArgs e)
             => await CloseDrawerAsync();
+
+
+
+        private async void OnDetailsClicked(object sender, EventArgs e)
+{
+    try
+    {
+        // Récupère l’item (AffectationLotDto) lié à ce bouton
+        if (sender is not Button btn) return;
+        if (btn.BindingContext is not AffectationLotDto item) return;
+
+        // Récupère le VM
+        if (BindingContext is not AffectationsListViewModel vm) return;
+
+        // Appelle la méthode du VM (celle marquée [RelayCommand])
+        await vm.GoToDetails(item.Id);
+    }
+    catch (Exception ex)
+    {
+        await DisplayAlert("Erreur", ex.Message, "OK");
+    }
+}
+
 
         private async void OnMenuItemClicked(object sender, EventArgs e)
         {

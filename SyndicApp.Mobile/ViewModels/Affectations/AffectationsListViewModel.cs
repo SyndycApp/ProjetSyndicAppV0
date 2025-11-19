@@ -157,5 +157,6 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
 
         [RelayCommand]
         public Task GoToDetails(Guid id) => Shell.Current.GoToAsync($"affectation-details?id={id}");
+
     }
 }

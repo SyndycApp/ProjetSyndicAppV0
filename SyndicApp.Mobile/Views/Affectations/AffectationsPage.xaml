@@ -189,9 +189,7 @@
                                         <Button Grid.Column="3"
                                                 Text="Détails"
                                                 Style="{StaticResource OutlineButtonStyle}"
-                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},
-                                                         Path=BindingContext.GoToDetailsCommand}"
-                                                CommandParameter="{Binding Id}" />
+                                                Clicked="OnDetailsClicked" />
                                     </Grid>
                                 </Grid>
                             </Frame>
