@@ -336,6 +336,24 @@ build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Lot
 build_metadata.AdditionalFiles.TargetPath = Views\Lots\LotsPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Lots\LotsPage.xaml
 
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Personnel/PrestataireCreatePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Personnel.PrestataireCreatePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Personnel\PrestataireCreatePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Personnel\PrestataireCreatePage.xaml
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Personnel/PrestataireDetailsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Personnel.PrestataireDetailsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Personnel\PrestataireDetailsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Personnel\PrestataireDetailsPage.xaml
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Personnel/PrestatairesPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Personnel.PrestatairesPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\Personnel\PrestatairesPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\Personnel\PrestatairesPage.xaml
+
 [C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Views/Residences/ResidenceCreatePage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Residences.ResidenceCreatePage.xaml

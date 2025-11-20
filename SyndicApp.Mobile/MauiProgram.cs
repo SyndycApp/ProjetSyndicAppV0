@@ -1,4 +1,5 @@
-﻿using Refit;
+﻿using Microcharts.Maui;
+using Refit;
 using SyndicApp.Mobile.Api;
 using SyndicApp.Mobile.Converters;
 using SyndicApp.Mobile.Handlers;
@@ -8,20 +9,21 @@ using SyndicApp.Mobile.ViewModels.Auth;
 using SyndicApp.Mobile.ViewModels.Batiments;
 using SyndicApp.Mobile.ViewModels.Dashboard;
 using SyndicApp.Mobile.ViewModels.Finances;
-using SyndicApp.Mobile.ViewModels.Lots;
-using SyndicApp.Mobile.ViewModels.Residences;
 using SyndicApp.Mobile.ViewModels.Incidents;
-using SyndicApp.Mobile.Views.Incidents;
+using SyndicApp.Mobile.ViewModels.Lots;
+using SyndicApp.Mobile.ViewModels.Personnel;
+using SyndicApp.Mobile.ViewModels.Residences;
 using SyndicApp.Mobile.Views;
+using SyndicApp.Mobile.Views.Affectations;
 using SyndicApp.Mobile.Views.Auth;
 using SyndicApp.Mobile.Views.Batiments;
 using SyndicApp.Mobile.Views.Dashboard;
 using SyndicApp.Mobile.Views.Finances;
+using SyndicApp.Mobile.Views.Incidents;
 using SyndicApp.Mobile.Views.Lots;
+using SyndicApp.Mobile.Views.Personnel;
 using SyndicApp.Mobile.Views.Residences;
-using SyndicApp.Mobile.Views.Affectations;
 using System.Text.Json;
-using Microcharts.Maui;
 
 namespace SyndicApp.Mobile;
 
@@ -92,7 +94,11 @@ public static class MauiProgram
                 .AddHttpMessageHandler<AuthHeaderHandler>()
                 .ConfigureHttpClient(c => c.BaseAddress = new Uri(BaseUrl));
 
-        AddSecured<IAccountApi>();   // /me, /logout protégés
+        builder.Services.AddRefitClient<IPrestatairesApi>()
+            .ConfigureHttpClient(c => c.BaseAddress = new Uri(BaseUrl))
+            .AddHttpMessageHandler<AuthHeaderHandler>();
+
+        AddSecured<IAccountApi>();   
         AddSecured<IAppelsApi>();
         AddSecured<IResidencesApi>();
         AddSecured<IBatimentsApi>();
@@ -105,6 +111,7 @@ public static class MauiProgram
         AddSecured<IIncidentsApi>();
         AddSecured<IDevisTravauxApi>();
         AddSecured<IInterventionsApi>();
+        AddSecured<IPrestatairesApi>();
 
         // VMs
         builder.Services.AddTransient<LoginViewModel>();
@@ -155,6 +162,9 @@ public static class MauiProgram
         builder.Services.AddTransient<DevisTravauxCreateViewModel>();
         builder.Services.AddTransient<InterventionsListViewModel>();
         builder.Services.AddTransient<InterventionDetailsViewModel>();
+        builder.Services.AddTransient<PrestatairesListViewModel>();
+        builder.Services.AddTransient<PrestataireCreateViewModel>();
+        builder.Services.AddTransient<PrestataireDetailsViewModel>();
 
 
         // Converters (si DI utilisé)
@@ -212,6 +222,9 @@ public static class MauiProgram
         builder.Services.AddTransient<DevisTravauxCreatePage>();
         builder.Services.AddTransient<InterventionsPage>();
         builder.Services.AddTransient<InterventionDetailsPage>();
+        builder.Services.AddTransient<PrestatairesPage>();
+        builder.Services.AddTransient<PrestataireCreatePage>();
+        builder.Services.AddTransient<PrestataireDetailsPage>();
 
 
         var app = builder.Build();

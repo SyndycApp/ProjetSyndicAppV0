@@ -59,7 +59,7 @@ namespace SyndicApp.API.Controllers
             return Ok(res);
         }
 
-        // ---------------- REGISTER ----------------
+        // ---------------- REGISTER USER ----------------
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
         {
@@ -86,22 +86,55 @@ namespace SyndicApp.API.Controllers
                 List<string> errors;
 
                 if (result.Errors == null)
-                {
                     errors = new List<string> { "Erreur inconnue" };
-                }
                 else if (result.Errors is List<string> errorList)
-                {
                     errors = errorList;
-                }
                 else
-                {
                     errors = new List<string> { result.Errors.ToString() ?? "Erreur inconnue" };
-                }
 
                 return BadRequest(new { message = "Échec de l'inscription", details = errors });
             }
 
             return Ok(result.Data);
+        }
+
+        // ---------------- REGISTER PRESTATAIRE ----------------
+        [HttpPost("register-from-prestataire-account")]
+        public async Task<IActionResult> RegisterPrestataire([FromBody] RegisterPrestataireDto dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            // 1) Vérifier que le prestataire existe
+            var prestataire = await _authService.GetPrestataireEntityAsync(dto.PrestataireId);
+            if (prestataire == null)
+                return NotFound(new { message = "Prestataire introuvable" });
+
+            // 2) Créer l’utilisateur avec rôle = Prestataire
+            var result = await _authService.RegisterAsync(new RegisterDto
+            {
+                FullName = prestataire.Nom,
+                Email = dto.Email,
+                Password = dto.Password,
+                Adresse = prestataire.Adresse,
+                DateNaissance = DateTime.UtcNow.AddYears(-30), // fake
+                Role = "Prestataire"
+            });
+
+            if (!result.Success)
+                return BadRequest(result.Errors);
+
+            // 3) Associer le compte au prestataire
+            await _authService.BindPrestataireToUserAsync(dto.PrestataireId, result.Data!.Id);
+
+            return Ok(new
+            {
+                message = "Compte prestataire créé avec succès",
+                result.Data!.Id,
+                result.Data.Email,
+                result.Data.FullName,
+                result.Data.Roles
+            });
         }
 
         // ---------------- LOGIN ----------------
@@ -130,7 +163,6 @@ namespace SyndicApp.API.Controllers
         }
 
         // ---------------- ME ----------------
-        // ---------------- ME ----------------
         [Authorize]
         [HttpGet("me")]
         public async Task<ActionResult<UserDto>> Me()
@@ -154,7 +186,7 @@ namespace SyndicApp.API.Controllers
 
             var dto = new UserDto
             {
-                Id = userGuid,          
+                Id = userGuid,
                 FullName = user.FullName,
                 Email = user.Email,
                 Roles = roles.ToList()
@@ -162,6 +194,5 @@ namespace SyndicApp.API.Controllers
 
             return Ok(dto);
         }
-
     }
 }

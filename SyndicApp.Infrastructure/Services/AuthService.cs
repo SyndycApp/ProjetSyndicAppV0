@@ -1,8 +1,9 @@
-using Microsoft.AspNetCore.Identity;
+ï»¿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SyndicApp.Application.DTOs.Auth;
 using SyndicApp.Application.Interfaces;
+using SyndicApp.Domain.Entities.Personnel;
 using SyndicApp.Infrastructure.Identity;
 using System;
 using System.Collections.Generic;
@@ -17,17 +18,39 @@ namespace SyndicApp.Infrastructure.Services
         private readonly RoleManager<IdentityRole<Guid>> _roleManager;
         private readonly ILogger<AuthService> _logger;
         private readonly IJwtTokenGenerator _jwt;
+        private readonly ApplicationDbContext _db;   // ðŸ”¹ nouveau
 
         public AuthService(
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole<Guid>> roleManager,
             IJwtTokenGenerator jwt,
-            ILogger<AuthService> logger)
+            ILogger<AuthService> logger,
+            ApplicationDbContext db)                
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _jwt = jwt;
             _logger = logger;
+            _db = db;
+        }
+
+        public async Task<Prestataire?> GetPrestataireEntityAsync(Guid id)
+        {
+            return await _db.Prestataires
+                            .AsNoTracking()
+                            .FirstOrDefaultAsync(p => p.Id == id);
+        }
+
+        public async Task BindPrestataireToUserAsync(Guid prestataireId, Guid userId)
+        {
+            var entity = await _db.Prestataires
+                                  .FirstOrDefaultAsync(p => p.Id == prestataireId);
+
+            if (entity == null)
+                return;
+
+            entity.UserId = userId;
+            await _db.SaveChangesAsync();
         }
 
         public async Task<Result<UserDto>> RegisterAsync(RegisterDto dto)
@@ -36,7 +59,7 @@ namespace SyndicApp.Infrastructure.Services
             {
                 var userExists = await _userManager.FindByEmailAsync(dto.Email);
                 if (userExists != null)
-                    return Result<UserDto>.Fail("Email déjà utilisé");
+                    return Result<UserDto>.Fail("Email dÃ©jÃ  utilisÃ©");
 
                 if (dto.DateNaissance == null)
                     return Result<UserDto>.Fail("La date de naissance est obligatoire.");
@@ -54,7 +77,7 @@ namespace SyndicApp.Infrastructure.Services
                 if (!result.Succeeded)
                 {
                     var errors = result.Errors.Select(e => e.Description).ToList();
-                    _logger.LogWarning("Erreur création user : {Errors}", string.Join(", ", errors));
+                    _logger.LogWarning("Erreur crÃ©ation user : {Errors}", string.Join(", ", errors));
                     return Result<UserDto>.Fail(errors);
                 }
 
@@ -69,7 +92,7 @@ namespace SyndicApp.Infrastructure.Services
                 }
                 else
                 {
-                    return Result<UserDto>.Fail("Le rôle est obligatoire.");
+                    return Result<UserDto>.Fail("Le rÃ´le est obligatoire.");
                 }
 
                 var roles = await _userManager.GetRolesAsync(user);
@@ -82,7 +105,9 @@ namespace SyndicApp.Infrastructure.Services
                     Id = user.Id,
                     Email = user.Email,
                     FullName = user.FullName,
-                    Token = _jwt.GenerateToken(new UserDto { Id = user.Id, Email = user.Email, FullName = user.FullName }, roles),
+                    Token = _jwt.GenerateToken(
+                        new UserDto { Id = user.Id, Email = user.Email, FullName = user.FullName },
+                        roles),
                     Roles = roles.ToList()
                 };
 
@@ -141,7 +166,7 @@ namespace SyndicApp.Infrastructure.Services
                 var users = _userManager.Users.ToList();
 
                 if (!users.Any())
-                    return Result<List<UserDto>>.Fail("Aucun utilisateur trouvé.");
+                    return Result<List<UserDto>>.Fail("Aucun utilisateur trouvÃ©.");
 
                 var result = new List<UserDto>();
 
@@ -162,18 +187,17 @@ namespace SyndicApp.Infrastructure.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erreur interne lors de la récupération des utilisateurs");
+                _logger.LogError(ex, "Erreur interne lors de la rÃ©cupÃ©ration des utilisateurs");
                 return Result<List<UserDto>>.Fail("Erreur interne du serveur");
             }
         }
+
         public async Task<Result<List<UserLookupDto>>> SearchAsync(string? q, string? role, int take = 35)
         {
             try
             {
-                // Base: tous les users
                 var queryable = _userManager.Users.AsNoTracking();
 
-                // Filtre texte (FullName ou Email)
                 if (!string.IsNullOrWhiteSpace(q))
                 {
                     var term = q.Trim().ToLower();
@@ -182,15 +206,12 @@ namespace SyndicApp.Infrastructure.Services
                         (u.Email != null && u.Email.ToLower().Contains(term)));
                 }
 
-                // Tri par nom puis email
                 queryable = queryable
                     .OrderBy(u => u.FullName ?? u.Email)
                     .ThenBy(u => u.Email);
 
-                // On limite ici (évite de charger trop)
                 var users = await queryable.Take(Math.Max(1, take)).ToListAsync();
 
-                // Filtre par rôle si demandé (GetUsersInRoleAsync est simple et suffisant ici)
                 if (!string.IsNullOrWhiteSpace(role))
                 {
                     var inRole = await _userManager.GetUsersInRoleAsync(role);
@@ -198,7 +219,6 @@ namespace SyndicApp.Infrastructure.Services
                     users = users.Where(u => inRoleIds.Contains(u.Id)).ToList();
                 }
 
-                // Projection en lookup (Label = FullName si dispo, sinon Email)
                 var lookups = new List<UserLookupDto>(users.Count);
                 foreach (var u in users)
                 {
@@ -206,14 +226,13 @@ namespace SyndicApp.Infrastructure.Services
                     lookups.Add(new UserLookupDto
                     {
                         Id = u.Id,
-                        Label = !string.IsNullOrWhiteSpace(u.FullName) ? u.FullName! : (u.Email ?? u.Id.ToString()),
+                        Label = !string.IsNullOrWhiteSpace(u.FullName)
+                            ? u.FullName!
+                            : (u.Email ?? u.Id.ToString()),
                         Email = u.Email,
                         Roles = roles.ToList()
                     });
                 }
-
-                if (lookups.Count == 0)
-                    return Result<List<UserLookupDto>>.Ok(new List<UserLookupDto>()); // Liste vide OK
 
                 return Result<List<UserLookupDto>>.Ok(lookups);
             }
@@ -248,7 +267,7 @@ namespace SyndicApp.Infrastructure.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erreur interne lors de la récupération de l'utilisateur");
+                _logger.LogError(ex, "Erreur interne lors de la rÃ©cupÃ©ration de l'utilisateur");
                 return Result<UserDto>.Fail("Erreur interne du serveur");
             }
         }

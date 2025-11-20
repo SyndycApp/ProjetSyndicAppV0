@@ -1,4 +1,5 @@
 using SyndicApp.Application.DTOs.Auth;
+using SyndicApp.Domain.Entities.Personnel;
 using System;
 using System.Threading.Tasks;
 
@@ -12,5 +13,9 @@ namespace SyndicApp.Application.Interfaces
         Task<Result<List<UserDto>>> GetAllAsync();
 
         Task<Result<List<UserLookupDto>>> SearchAsync(string? q, string? role, int take = 35 );
+
+        Task<Prestataire?> GetPrestataireEntityAsync(Guid id);
+        Task BindPrestataireToUserAsync(Guid prestataireId, Guid userId);
+
     }
 }

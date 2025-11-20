@@ -8,6 +8,7 @@ using SyndicApp.Mobile.Views.Finances;
 using SyndicApp.Mobile.Views.Lots;
 using SyndicApp.Mobile.Views.Residences;
 using SyndicApp.Mobile.Views.Incidents;
+using SyndicApp.Mobile.Views.Personnel;
 using SyndicApp.Mobile.Views.Dashboard;
 
 public partial class AppShell : Shell
@@ -73,5 +74,7 @@ public partial class AppShell : Shell
 
         Routing.RegisterRoute("intervention-details", typeof(InterventionDetailsPage));
 
+        Routing.RegisterRoute("prestataire-create", typeof(PrestataireCreatePage));
+        Routing.RegisterRoute("prestataire-details", typeof(PrestataireDetailsPage));
     }
 }

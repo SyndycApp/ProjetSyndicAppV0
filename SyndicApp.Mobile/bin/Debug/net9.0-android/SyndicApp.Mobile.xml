@@ -1793,6 +1793,137 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotsListViewModel.Items">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Lots.LotsListViewModel.items"/>
         </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Personnel.PrestataireCreateViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.PrestataireCreateViewModel.Nom">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Personnel.PrestataireCreateViewModel.nom"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.PrestataireCreateViewModel.TypeService">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Personnel.PrestataireCreateViewModel.typeService"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.PrestataireCreateViewModel.Email">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Personnel.PrestataireCreateViewModel.email"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.PrestataireCreateViewModel.Telephone">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Personnel.PrestataireCreateViewModel.telephone"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.PrestataireCreateViewModel.Adresse">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Personnel.PrestataireCreateViewModel.adresse"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.PrestataireCreateViewModel.Notes">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Personnel.PrestataireCreateViewModel.notes"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.PrestataireCreateViewModel.IsBusy">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Personnel.PrestataireCreateViewModel.isBusy"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Personnel.PrestataireCreateViewModel.saveCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Personnel.PrestataireCreateViewModel.SaveCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.PrestataireCreateViewModel.SaveCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Personnel.PrestataireCreateViewModel.SaveAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Personnel.PrestataireCreateViewModel.cancelCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Personnel.PrestataireCreateViewModel.CancelCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.PrestataireCreateViewModel.CancelCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Personnel.PrestataireCreateViewModel.CancelAsync"/>.</summary>
+        </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Personnel.PrestataireDetailsViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.PrestataireDetailsViewModel.IdParam">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Personnel.PrestataireDetailsViewModel.idParam"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.PrestataireDetailsViewModel.Id">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Personnel.PrestataireDetailsViewModel.id"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.PrestataireDetailsViewModel.Item">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Personnel.PrestataireDetailsViewModel.item"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.PrestataireDetailsViewModel.IsBusy">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Personnel.PrestataireDetailsViewModel.isBusy"/>
+        </member>
+        <member name="M:SyndicApp.Mobile.ViewModels.Personnel.PrestataireDetailsViewModel.OnItemChanged(SyndicApp.Mobile.Models.PrestataireDto)">
+            <summary>Executes the logic for when <see cref="P:SyndicApp.Mobile.ViewModels.Personnel.PrestataireDetailsViewModel.Item"/> just changed.</summary>
+            <param name="value">The new property value that was set.</param>
+            <remarks>This method is invoked right after the value of <see cref="P:SyndicApp.Mobile.ViewModels.Personnel.PrestataireDetailsViewModel.Item"/> is changed.</remarks>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Personnel.PrestataireDetailsViewModel.loadCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Personnel.PrestataireDetailsViewModel.LoadCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.PrestataireDetailsViewModel.LoadCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Personnel.PrestataireDetailsViewModel.LoadAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Personnel.PrestataireDetailsViewModel.deleteCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Personnel.PrestataireDetailsViewModel.DeleteCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.PrestataireDetailsViewModel.DeleteCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Personnel.PrestataireDetailsViewModel.DeleteAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Personnel.PrestataireDetailsViewModel.createAccountCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Personnel.PrestataireDetailsViewModel.CreateAccountCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.PrestataireDetailsViewModel.CreateAccountCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Personnel.PrestataireDetailsViewModel.CreateAccountAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Personnel.PrestataireDetailsViewModel.backCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Personnel.PrestataireDetailsViewModel.BackCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.PrestataireDetailsViewModel.BackCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Personnel.PrestataireDetailsViewModel.BackAsync"/>.</summary>
+        </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Personnel.PrestatairesListViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.PrestatairesListViewModel.IsBusy">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Personnel.PrestatairesListViewModel.isBusy"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.PrestatairesListViewModel.IsRefreshing">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Personnel.PrestatairesListViewModel.isRefreshing"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.PrestatairesListViewModel.SearchText">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Personnel.PrestatairesListViewModel.searchText"/>
+        </member>
+        <member name="M:SyndicApp.Mobile.ViewModels.Personnel.PrestatairesListViewModel.OnSearchTextChanged(System.String)">
+            <summary>Executes the logic for when <see cref="P:SyndicApp.Mobile.ViewModels.Personnel.PrestatairesListViewModel.SearchText"/> just changed.</summary>
+            <param name="value">The new property value that was set.</param>
+            <remarks>This method is invoked right after the value of <see cref="P:SyndicApp.Mobile.ViewModels.Personnel.PrestatairesListViewModel.SearchText"/> is changed.</remarks>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Personnel.PrestatairesListViewModel.loadCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Personnel.PrestatairesListViewModel.LoadCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.PrestatairesListViewModel.LoadCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Personnel.PrestatairesListViewModel.LoadAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Personnel.PrestatairesListViewModel.refreshCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Personnel.PrestatairesListViewModel.RefreshCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.PrestatairesListViewModel.RefreshCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Personnel.PrestatairesListViewModel.RefreshAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Personnel.PrestatairesListViewModel.goToCreateCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Personnel.PrestatairesListViewModel.GoToCreateCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.PrestatairesListViewModel.GoToCreateCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Personnel.PrestatairesListViewModel.GoToCreateAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Personnel.PrestatairesListViewModel.goToDetailsCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Personnel.PrestatairesListViewModel.GoToDetailsCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.PrestatairesListViewModel.GoToDetailsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Personnel.PrestatairesListViewModel.GoToDetailsAsync(System.Guid)"/>.</summary>
+        </member>
         <member name="T:SyndicApp.Mobile.ViewModels.Residences.ResidenceCreateViewModel">
             <inheritdoc/>
             <inheritdoc/>
@@ -2331,6 +2462,15 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.OccupantDisplay">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "OccupantDisplay" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.TypeService">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "TypeService" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Telephone">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Telephone" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Notes">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Notes" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Ville">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Ville" generated properties.</summary>
         </member>
@@ -2712,6 +2852,15 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.OccupantDisplay">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "OccupantDisplay" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.TypeService">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "TypeService" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Telephone">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Telephone" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Notes">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Notes" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Ville">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Ville" generated properties.</summary>
         </member>
@@ -2967,6 +3116,9 @@
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAuthApi.GetAllAsync">
             <inheritdoc />
         </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAuthApi.RegisterFromPrestataireAccountAsync(SyndicApp.Mobile.Models.CreatePrestataireAccountRequest)">
+            <inheritdoc />
+        </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAuthApi.SyndicApp#Mobile#Api#IAuthApi#LoginAsync(SyndicApp.Mobile.Models.LoginDto)">
             <inheritdoc />
         </member>
@@ -2974,6 +3126,9 @@
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAuthApi.SyndicApp#Mobile#Api#IAuthApi#GetAllAsync">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAuthApi.SyndicApp#Mobile#Api#IAuthApi#RegisterFromPrestataireAccountAsync(SyndicApp.Mobile.Models.CreatePrestataireAccountRequest)">
             <inheritdoc />
         </member>
         <member name="T:Refit.Implementation.Generated.SyndicAppMobileApiIAccountApi">
@@ -3355,6 +3510,45 @@
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPasswordApi.SyndicApp#Mobile#Api#IPasswordApi#LogoutAsync">
+            <inheritdoc />
+        </member>
+        <member name="T:Refit.Implementation.Generated.SyndicAppMobileApiIPrestatairesApi">
+            <inheritdoc />
+        </member>
+        <member name="P:Refit.Implementation.Generated.SyndicAppMobileApiIPrestatairesApi.Client">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPrestatairesApi.#ctor(System.Net.Http.HttpClient,Refit.IRequestBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPrestatairesApi.GetAllAsync(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPrestatairesApi.GetByIdAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPrestatairesApi.CreateAsync(SyndicApp.Mobile.Models.PrestataireCreateRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPrestatairesApi.UpdateAsync(System.Guid,SyndicApp.Mobile.Models.PrestataireUpdateRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPrestatairesApi.DeleteAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPrestatairesApi.SyndicApp#Mobile#Api#IPrestatairesApi#GetAllAsync(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPrestatairesApi.SyndicApp#Mobile#Api#IPrestatairesApi#GetByIdAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPrestatairesApi.SyndicApp#Mobile#Api#IPrestatairesApi#CreateAsync(SyndicApp.Mobile.Models.PrestataireCreateRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPrestatairesApi.SyndicApp#Mobile#Api#IPrestatairesApi#UpdateAsync(System.Guid,SyndicApp.Mobile.Models.PrestataireUpdateRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPrestatairesApi.SyndicApp#Mobile#Api#IPrestatairesApi#DeleteAsync(System.Guid)">
             <inheritdoc />
         </member>
         <member name="T:Refit.Implementation.Generated.IResidencesApi">

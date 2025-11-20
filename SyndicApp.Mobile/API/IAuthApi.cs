@@ -13,6 +13,9 @@ public interface IAuthApi
 
     [Get("/api/Auth")]
     Task<AuthListResponse> GetAllAsync();
+
+    [Post("/api/Auth/register-from-prestataire-account")]
+    Task<UserDto> RegisterFromPrestataireAccountAsync([Body] CreatePrestataireAccountRequest dto);
 }
 
 // Api/IAccountApi.cs  (protégé / avec bearer)

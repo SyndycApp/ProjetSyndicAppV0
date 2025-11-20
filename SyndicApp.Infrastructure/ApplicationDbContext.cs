@@ -440,11 +440,26 @@ namespace SyndicApp.Infrastructure
                  .OnDelete(DeleteBehavior.Cascade);
             });
 
-            modelBuilder.Entity<Intervention>()
-                .HasOne(i => i.Prestataire)
-                .WithMany(p => p.Interventions)
-                .HasForeignKey(i => i.PrestataireId)
-                .OnDelete(DeleteBehavior.SetNull);
+            // ================= Prestataires =================
+            modelBuilder.Entity<Prestataire>(b =>
+            {
+                b.ToTable("Prestataires");
+
+                b.Property(p => p.Nom)
+                 .HasMaxLength(200)
+                 .IsRequired();
+
+                b.Property(p => p.TypeService).HasMaxLength(200);
+                b.Property(p => p.Email).HasMaxLength(200);
+                b.Property(p => p.Telephone).HasMaxLength(50);
+
+                // FK optionnelle vers AspNetUsers
+                b.HasOne<ApplicationUser>()
+                 .WithMany()
+                 .HasForeignKey(p => p.UserId)
+                 .OnDelete(DeleteBehavior.SetNull);
+            });
+
 
 
             // ================= Historiques Incidents/Devis/Interventions =================

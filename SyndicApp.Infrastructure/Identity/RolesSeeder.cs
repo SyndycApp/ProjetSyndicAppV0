@@ -7,7 +7,7 @@ namespace SyndicApp.Infrastructure.Identity
 {
     public static class RolesSeeder
     {
-        private static readonly string[] Roles = new[] { "Syndic", "Copropriétaire", "Gardien", "Locataire" };
+        private static readonly string[] Roles = new[] { "Syndic", "Copropriétaire", "Gardien", "Locataire", "Prestataire" };
 
         public static async Task SeedAsync(RoleManager<IdentityRole<Guid>> roleManager, ILogger logger)
         {

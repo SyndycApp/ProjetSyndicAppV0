@@ -12,6 +12,8 @@ namespace SyndicApp.Domain.Entities.Personnel
         public string? Adresse { get; set; }
         public string? Notes { get; set; }
 
+        public Guid? UserId { get; set; }
+
         public ICollection<Intervention> Interventions { get; set; }
             = new List<Intervention>();
     }

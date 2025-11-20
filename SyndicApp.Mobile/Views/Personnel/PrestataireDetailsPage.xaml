@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SyndicApp.Mobile.Views.Personnel.PrestataireDetailsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:SyndicApp.Mobile.ViewModels.Personnel"
+    x:DataType="vm:PrestataireDetailsViewModel"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="White">
+
+    <ContentPage.Resources>
+        <Color x:Key="TopbarColor">#2563EB</Color>
+        <Color x:Key="HeaderTextOnDark">#FFFFFF</Color>
+        <Color x:Key="BodyText">#111827</Color>
+        <Color x:Key="Divider">#E5E7EB</Color>
+        <Color x:Key="Chip">#F3F4F6</Color>
+
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
+        </Style>
+
+        <Style x:Key="PrimaryButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#2563EB" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="Padding" Value="12,8" />
+        </Style>
+
+        <Style x:Key="DangerButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#DC2626" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="Padding" Value="10,8" />
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*">
+        <!-- TOPBAR simple -->
+        <Grid BackgroundColor="{StaticResource TopbarColor}"
+              Padding="12,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0"
+                    Text="←"
+                    FontSize="22"
+                    BackgroundColor="Transparent"
+                    TextColor="{StaticResource HeaderTextOnDark}"
+                    Command="{Binding BackCommand}" />
+
+            <Label Grid.Column="1"
+                   Text="Détails prestataire"
+                   HorizontalTextAlignment="Center"
+                   VerticalOptions="Center"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource HeaderTextOnDark}" />
+
+            <Button Grid.Column="2"
+                    Text="🗑"
+                    FontSize="18"
+                    BackgroundColor="Transparent"
+                    TextColor="{StaticResource HeaderTextOnDark}"
+                    Command="{Binding DeleteCommand}" />
+        </Grid>
+
+        <!-- CONTENU -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16" Spacing="16">
+
+                <ActivityIndicator IsRunning="{Binding IsBusy}"
+                                   IsVisible="{Binding IsBusy}" />
+
+                <!-- Carte infos -->
+                <Frame HasShadow="False"
+                       CornerRadius="14"
+                       Padding="14"
+                       BorderColor="{StaticResource Divider}">
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="{Binding Item.Nom}"
+                               FontSize="20"
+                               FontAttributes="Bold" />
+                        <Label Text="{Binding Item.TypeService}"
+                               Opacity="0.7" />
+                        <Label Text="{Binding Item.Email}"
+                               Opacity="0.8" />
+                        <Label Text="{Binding Item.Telephone}"
+                               Opacity="0.8" />
+                        <Label Text="{Binding Item.Adresse}"
+                               Opacity="0.8" />
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Carte actions -->
+                <Frame HasShadow="False"
+                       CornerRadius="14"
+                       Padding="14"
+                       BorderColor="{StaticResource Divider}">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="Actions"
+                               FontAttributes="Bold" />
+
+                        <!-- 🔥 Bouton création de compte -->
+                        <Button Text="Créer un compte de connexion"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                Command="{Binding CreateAccountCommand}"
+                                IsEnabled="{Binding CanCreateAccount}" />
+
+                        <Label Text="Ce bouton permet de créer un utilisateur lié à ce prestataire, avec un rôle 'Prestataire'."
+                               FontSize="12"
+                               Opacity="0.6" />
+                    </VerticalStackLayout>
+                </Frame>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

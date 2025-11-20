@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SyndicApp.Mobile.Views.Personnel.PrestataireCreatePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:SyndicApp.Mobile.ViewModels.Personnel"
+    x:DataType="vm:PrestataireCreateViewModel"
+    Shell.NavBarIsVisible="False"
+    Title="Créer prestataire"
+    BackgroundColor="White">
+
+    <ContentPage.Resources>
+        <Color x:Key="TopbarColor">#2563EB</Color>
+        <Color x:Key="HeaderTextOnDark">#FFFFFF</Color>
+        <Color x:Key="BodyText">#111827</Color>
+        <Color x:Key="Divider">#E5E7EB</Color>
+
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- Topbar simple -->
+        <Grid BackgroundColor="{StaticResource TopbarColor}" Padding="12,8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0"
+                    Text="←"
+                    FontSize="22"
+                    BackgroundColor="Transparent"
+                    TextColor="{StaticResource HeaderTextOnDark}"
+                    Command="{Binding CancelCommand}" />
+
+            <Label Grid.Column="1"
+                   Text="Créer un prestataire"
+                   HorizontalTextAlignment="Center"
+                   VerticalOptions="Center"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource HeaderTextOnDark}"/>
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="16" Spacing="12">
+
+                <ActivityIndicator IsRunning="{Binding IsBusy}"
+                                   IsVisible="{Binding IsBusy}"
+                                   HorizontalOptions="Center" />
+
+                <Label Text="Nom" />
+                <Entry Text="{Binding Nom}" Placeholder="Nom du prestataire" />
+
+                <Label Text="Type de service" />
+                <Entry Text="{Binding TypeService}" Placeholder="Ex: Plomberie, Électricité..." />
+
+                <Label Text="Email" />
+                <Entry Text="{Binding Email}" Keyboard="Email" />
+
+                <Label Text="Téléphone" />
+                <Entry Text="{Binding Telephone}" Keyboard="Telephone" />
+
+                <Label Text="Adresse" />
+                <Editor Text="{Binding Adresse}" AutoSize="TextChanges" />
+
+                <Label Text="Notes" />
+                <Editor Text="{Binding Notes}" AutoSize="TextChanges" />
+
+                <Button Text="Enregistrer"
+                        Margin="0,20,0,0"
+                        BackgroundColor="#2563EB"
+                        TextColor="White"
+                        Command="{Binding SaveCommand}" />
+
+                <Button Text="Annuler"
+                        BackgroundColor="Transparent"
+                        TextColor="#2563EB"
+                        Command="{Binding CancelCommand}" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
