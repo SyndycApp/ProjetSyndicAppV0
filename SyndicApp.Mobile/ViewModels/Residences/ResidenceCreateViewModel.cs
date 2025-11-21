@@ -31,12 +31,10 @@ public partial class ResidenceCreateViewModel : ObservableObject
 
         await _api.CreateAsync(dto);
 
-        // notifier la liste puis revenir
         WeakReferenceMessenger.Default.Send(new ResidenceChangedMessage(true));
         await Shell.Current.GoToAsync("//residences");
     }
 
-    
     [RelayCommand]
     public async Task CancelAsync() => await Shell.Current.GoToAsync("//residences");
 }

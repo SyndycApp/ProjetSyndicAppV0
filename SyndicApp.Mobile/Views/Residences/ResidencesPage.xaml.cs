@@ -10,18 +10,24 @@ public partial class ResidencesPage : ContentPage
     {
         InitializeComponent();
         BindingContext = vm;
-        Loaded += async (_, __) => await vm.LoadAsync();
     }
 
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
+
         var width = this.Width > 0 ? this.Width : Application.Current?.Windows[0]?.Page?.Width ?? 360;
         Drawer.WidthRequest = width;
         Drawer.TranslationX = -width;
         Backdrop.InputTransparent = true;
         Backdrop.Opacity = 0;
         _isOpen = false;
+
+        // 🔁 recharge la liste à chaque retour sur la page
+        if (BindingContext is ResidencesListViewModel vm)
+        {
+            await vm.LoadAsync();
+        }
     }
 
     protected override void OnSizeAllocated(double width, double height)

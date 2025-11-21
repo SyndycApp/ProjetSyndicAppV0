@@ -37,7 +37,6 @@ namespace SyndicApp.Mobile.Views.Residences
             }
         }
 
-        // ===== Drawer handlers =====
         private async void OpenDrawer_Clicked(object sender, EventArgs e)
         {
             if (_isOpen) return;
@@ -61,7 +60,6 @@ namespace SyndicApp.Mobile.Views.Residences
             Backdrop.InputTransparent = true;
         }
 
-        // ===== Menu navigation =====
         private async void OnMenuItemClicked(object sender, EventArgs e)
         {
             if (sender is Button b && b.CommandParameter is string route && !string.IsNullOrWhiteSpace(route))

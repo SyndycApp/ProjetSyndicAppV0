@@ -15,10 +15,9 @@ public partial class ResidencesListViewModel : ObservableObject, IRecipient<Resi
 
     [ObservableProperty] private List<ResidenceDto> residences = new();
 
-
     public IAsyncRelayCommand LoadAsyncCommand { get; }
-    public IAsyncRelayCommand OpenCreateAsyncCommand { get; }                
-    public IAsyncRelayCommand<Guid> OpenDetailsAsyncCommand { get; }       
+    public IAsyncRelayCommand OpenCreateAsyncCommand { get; }
+    public IAsyncRelayCommand<Guid> OpenDetailsAsyncCommand { get; }
 
     public ResidencesListViewModel(IResidencesApi api)
     {
@@ -29,7 +28,11 @@ public partial class ResidencesListViewModel : ObservableObject, IRecipient<Resi
         OpenDetailsAsyncCommand = new AsyncRelayCommand<Guid>(OpenDetailsAsync);
 
         WeakReferenceMessenger.Default.Register<BatimentChangedMessage>(this,
-              async (_, __) => await LoadAsync());
+            async (_, __) => await LoadAsync());
+
+
+        WeakReferenceMessenger.Default.Register<ResidenceChangedMessage>(this,
+            async (_, __) => await LoadAsync());
     }
 
     [RelayCommand]
@@ -50,7 +53,6 @@ public partial class ResidencesListViewModel : ObservableObject, IRecipient<Resi
 
     private Task OpenDetailsAsync(Guid id)
         => Shell.Current.GoToAsync($"residence-details?id={id:D}");
-
 
     public async void Receive(ResidenceChangedMessage message) => await LoadAsync();
 }

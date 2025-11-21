@@ -35,7 +35,6 @@ public partial class ResidenceEditViewModel : ObservableObject
     [RelayCommand]
     public async Task SaveAsync()
     {
-        // ⚠️ utiliser le DTO de mise à jour
         var payload = new ResidenceDto
         {
             Nom = Nom,
@@ -46,7 +45,6 @@ public partial class ResidenceEditViewModel : ObservableObject
 
         await _api.UpdateAsync(Id, payload);
 
-        // notifier la liste + rester fluide
         WeakReferenceMessenger.Default.Send(new ResidenceChangedMessage(true));
         await Shell.Current.GoToAsync($"residence-details?id={Id}");
     }

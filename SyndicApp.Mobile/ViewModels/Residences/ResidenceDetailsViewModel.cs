@@ -20,7 +20,6 @@ namespace SyndicApp.Mobile.ViewModels.Residences
         [ObservableProperty] private string id = "";
         [ObservableProperty] private ResidenceDto? residence;
 
-        // ✅ liste des lots liés à la résidence
         public ObservableCollection<LotDto> Lots { get; } = new();
 
         public ResidenceDetailsViewModel(IResidencesApi residencesApi, ILotsApi lotsApi)
@@ -36,10 +35,8 @@ namespace SyndicApp.Mobile.ViewModels.Residences
 
             try
             {
-                // Détail résidence
                 Residence = await _residencesApi.GetByIdAsync(Id);
 
-                // Lots de la résidence
                 Lots.Clear();
                 if (Guid.TryParse(Id, out var resId))
                 {
