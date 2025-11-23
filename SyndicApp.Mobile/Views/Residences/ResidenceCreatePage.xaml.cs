@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Storage;
 using SyndicApp.Mobile.ViewModels.Residences;
 
 namespace SyndicApp.Mobile.Views.Residences
@@ -18,6 +19,19 @@ namespace SyndicApp.Mobile.Views.Residences
         protected override void OnAppearing()
         {
             base.OnAppearing();
+
+            // 🔐 Restriction de rôle : seul le Syndic peut créer
+            var role = Preferences.Get("user_role", string.Empty)?.ToLowerInvariant();
+            if (role != "syndic")
+            {
+                Shell.Current.DisplayAlert(
+                    "Accès refusé",
+                    "Seul le Syndic peut créer une résidence.",
+                    "OK");
+
+                Shell.Current.GoToAsync("//residences");
+                return;
+            }
 
             var width = this.Width > 0 ? this.Width : Application.Current?.Windows[0]?.Page?.Width ?? 360;
             Drawer.WidthRequest = width;
@@ -69,6 +83,7 @@ namespace SyndicApp.Mobile.Views.Residences
             }
         }
 
+        // Seulement si tu veux l'utiliser via Clicked dans le XAML
         private async void OnCancelClicked(object sender, EventArgs e)
         {
             await CloseDrawerAsync();

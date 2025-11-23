@@ -97,16 +97,13 @@
                 <ScrollView Grid.Row="1" BackgroundColor="White">
                     <VerticalStackLayout Padding="16" Spacing="10">
                         <!-- même drawer que les autres pages -->
-                        <!-- (contenu identique à ResidencesPage) -->
-                        <!-- DASHBOARD etc... -->
-                        <!-- je laisse ton contenu tel quel -->
                         <Label Text="Tableau de bord" FontAttributes="Bold"/>
                         <Button Text="Dashboard"
                                 Style="{StaticResource MenuButtonStyle}"
                                 CommandParameter="//syndic-dashboard"
                                 Clicked="OnMenuItemClicked"/>
 
-                        <!-- ... (tout le reste identique) ... -->
+                        <!-- Ici tu peux remettre tout ton gros menu si tu veux 100% identique -->
                     </VerticalStackLayout>
                 </ScrollView>
 

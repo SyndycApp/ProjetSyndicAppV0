@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Storage;
 using SyndicApp.Mobile.ViewModels.Residences;
 
 namespace SyndicApp.Mobile.Views.Residences
@@ -19,6 +20,13 @@ namespace SyndicApp.Mobile.Views.Residences
         protected override void OnAppearing()
         {
             base.OnAppearing();
+
+            // 🔐 Gestion du bouton Delete selon le rôle
+            var role = Preferences.Get("user_role", string.Empty)?.ToLowerInvariant();
+            if (role != "syndic" && DeleteButton != null)
+            {
+                DeleteButton.IsVisible = false;
+            }
 
             var width = Width > 0
                 ? Width
@@ -78,6 +86,17 @@ namespace SyndicApp.Mobile.Views.Residences
 
         private async void Delete_Clicked(object sender, EventArgs e)
         {
+            // Par sécurité on re-check le rôle ici aussi
+            var role = Preferences.Get("user_role", string.Empty)?.ToLowerInvariant();
+            if (role != "syndic")
+            {
+                await Shell.Current.DisplayAlert(
+                    "Accès refusé",
+                    "Seul le Syndic peut supprimer une résidence.",
+                    "OK");
+                return;
+            }
+
             if (BindingContext is ResidenceDetailsViewModel vm)
                 await vm.DeleteAsync();
         }

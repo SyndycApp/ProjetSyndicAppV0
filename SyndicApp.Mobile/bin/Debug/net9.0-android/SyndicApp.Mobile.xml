@@ -460,6 +460,8 @@
         <member name="T:SyndicApp.Mobile.ViewModels.Batiments.BatimentsListViewModel">
             <inheritdoc/>
             <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentsListViewModel.IsBusy">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentsListViewModel.isBusy"/>
@@ -472,6 +474,18 @@
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentsListViewModel.LoadCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Batiments.BatimentsListViewModel.LoadAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentsListViewModel.openDetailsCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentsListViewModel.OpenDetailsCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentsListViewModel.OpenDetailsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Batiments.BatimentsListViewModel.OpenDetailsAsync(System.Guid)"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentsListViewModel.openCreateCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentsListViewModel.OpenCreateCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentsListViewModel.OpenCreateCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Batiments.BatimentsListViewModel.OpenCreateAsync"/>.</summary>
         </member>
         <member name="T:SyndicApp.Mobile.ViewModels.Common.BaseViewModel">
             <inheritdoc/>
@@ -2018,6 +2032,8 @@
         <member name="T:SyndicApp.Mobile.ViewModels.Residences.ResidencesListViewModel">
             <inheritdoc/>
             <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Residences.ResidencesListViewModel.IsBusy">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Residences.ResidencesListViewModel.isBusy"/>
@@ -2030,6 +2046,18 @@
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Residences.ResidencesListViewModel.LoadCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Residences.ResidencesListViewModel.LoadAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Residences.ResidencesListViewModel.openDetailsCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Residences.ResidencesListViewModel.OpenDetailsCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Residences.ResidencesListViewModel.OpenDetailsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Residences.ResidencesListViewModel.OpenDetailsAsync(System.Guid)"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Residences.ResidencesListViewModel.openCreateCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Residences.ResidencesListViewModel.OpenCreateCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Residences.ResidencesListViewModel.OpenCreateCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Residences.ResidencesListViewModel.OpenCreateAsync"/>.</summary>
         </member>
         <member name="T:SyndicApp.Mobile.Resource">
             <summary>

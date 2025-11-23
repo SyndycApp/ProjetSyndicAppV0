@@ -1,72 +1,52 @@
-﻿using SyndicApp.Mobile.ViewModels.Residences;
+﻿using System;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Storage;
+using SyndicApp.Mobile.ViewModels.Residences;
 
-namespace SyndicApp.Mobile.Views.Residences;
-
-public partial class ResidencesPage : ContentPage
+namespace SyndicApp.Mobile.Views.Residences
 {
-    private bool _isOpen;
-
-    public ResidencesPage(ResidencesListViewModel vm)
+    public partial class ResidencesPage : ContentPage
     {
-        InitializeComponent();
-        BindingContext = vm;
-    }
-
-    protected override async void OnAppearing()
-    {
-        base.OnAppearing();
-
-        var width = this.Width > 0 ? this.Width : Application.Current?.Windows[0]?.Page?.Width ?? 360;
-        Drawer.WidthRequest = width;
-        Drawer.TranslationX = -width;
-        Backdrop.InputTransparent = true;
-        Backdrop.Opacity = 0;
-        _isOpen = false;
-
-        // 🔁 recharge la liste à chaque retour sur la page
-        if (BindingContext is ResidencesListViewModel vm)
+        public ResidencesPage(ResidencesListViewModel vm)
         {
-            await vm.LoadAsync();
+            InitializeComponent();
+            BindingContext = vm;
         }
-    }
 
-    protected override void OnSizeAllocated(double width, double height)
-    {
-        base.OnSizeAllocated(width, height);
-        if (width > 0)
+        protected override void OnAppearing()
         {
-            Drawer.WidthRequest = width;
-            if (!_isOpen) Drawer.TranslationX = -width;
+            base.OnAppearing();
+
+            // Gérer la visibilité du bouton "+" selon le rôle
+            try
+            {
+                var role = Preferences.Get("user_role", null)?.Trim() ?? string.Empty;
+                var roleLower = role.ToLowerInvariant();
+                bool isSyndic = roleLower.Contains("syndic");
+
+                BtnAddResidence.IsVisible = isSyndic;
+            }
+            catch
+            {
+                // En cas de souci, on laisse visible
+                BtnAddResidence.IsVisible = true;
+            }
         }
-    }
 
-    private async void OpenDrawer_Clicked(object sender, EventArgs e)
-    {
-        if (_isOpen) return;
-        _isOpen = true;
-        Backdrop.InputTransparent = false;
-        await Backdrop.FadeTo(1, 160, Easing.CubicOut);
-        await Drawer.TranslateTo(0, 0, 220, Easing.CubicOut);
-    }
-
-    private async void CloseDrawer_Clicked(object sender, EventArgs e) => await CloseDrawerAsync();
-    private async void Backdrop_Tapped(object sender, TappedEventArgs e) => await CloseDrawerAsync();
-
-    private async Task CloseDrawerAsync()
-    {
-        if (!_isOpen) return;
-        _isOpen = false;
-        await Drawer.TranslateTo(-Drawer.Width, 0, 220, Easing.CubicIn);
-        await Backdrop.FadeTo(0, 140, Easing.CubicIn);
-        Backdrop.InputTransparent = true;
-    }
-
-    private async void OnMenuItemClicked(object sender, EventArgs e)
-    {
-        if (sender is Button b && b.CommandParameter is string route && !string.IsNullOrWhiteSpace(route))
+        // 🔹 CLICK SUR LE BOUTON "+"
+        private async void OnAddResidenceClicked(object sender, EventArgs e)
         {
-            await CloseDrawerAsync();
-            await Shell.Current.GoToAsync(route);
+            try
+            {
+                await Shell.Current.GoToAsync("residence-create");
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert(
+                    "Erreur navigation",
+                    $"Impossible d’ouvrir la page de création.\n\n{ex.Message}",
+                    "OK");
+            }
         }
     }
 }

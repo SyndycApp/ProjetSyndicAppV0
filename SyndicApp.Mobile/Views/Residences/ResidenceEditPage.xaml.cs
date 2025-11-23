@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Storage;
 using SyndicApp.Mobile.ViewModels.Residences;
 
 namespace SyndicApp.Mobile.Views.Residences
@@ -19,6 +20,19 @@ namespace SyndicApp.Mobile.Views.Residences
         protected override void OnAppearing()
         {
             base.OnAppearing();
+
+            // 🔐 Restriction : seul le Syndic peut modifier
+            var role = Preferences.Get("user_role", string.Empty)?.ToLowerInvariant();
+            if (role != "syndic")
+            {
+                Shell.Current.DisplayAlert(
+                    "Accès refusé",
+                    "Seul le Syndic peut modifier une résidence.",
+                    "OK");
+
+                Shell.Current.GoToAsync("..");
+                return;
+            }
 
             var width = Width > 0
                 ? Width

@@ -1,74 +1,39 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Storage;
 using SyndicApp.Mobile.ViewModels.Batiments;
 
-namespace SyndicApp.Mobile.Views.Batiments;
-
-public partial class BatimentDetailsPage : ContentPage
+namespace SyndicApp.Mobile.Views.Batiments
 {
-    private bool _isOpen;
-
-    public BatimentDetailsPage(BatimentDetailsViewModel vm)
+    public partial class BatimentDetailsPage : ContentPage
     {
-        InitializeComponent();
-        BindingContext = vm;
-        Loaded += async (_, __) => await vm.LoadAsync();
-    }
-
-    protected override void OnAppearing()
-    {
-        base.OnAppearing();
-        var width = this.Width > 0 ? this.Width : Application.Current?.Windows[0]?.Page?.Width ?? 360;
-        Drawer.WidthRequest = width;
-        Drawer.TranslationX = -width;
-        Backdrop.InputTransparent = true;
-        Backdrop.Opacity = 0;
-        _isOpen = false;
-    }
-
-    protected override void OnSizeAllocated(double width, double height)
-    {
-        base.OnSizeAllocated(width, height);
-        if (width > 0)
+        public BatimentDetailsPage(BatimentDetailsViewModel vm)
         {
-            Drawer.WidthRequest = width;
-            if (!_isOpen) Drawer.TranslationX = -width;
+            InitializeComponent();
+            BindingContext = vm;
+            Loaded += async (_, __) => await vm.LoadAsync();
         }
-    }
 
-    private async void OpenDrawer_Clicked(object sender, EventArgs e)
-    {
-        if (_isOpen) return;
-        _isOpen = true;
-        Backdrop.InputTransparent = false;
-        await Backdrop.FadeTo(1, 160, Easing.CubicOut);
-        await Drawer.TranslateTo(0, 0, 220, Easing.CubicOut);
-    }
-
-    private async void CloseDrawer_Clicked(object sender, EventArgs e) => await CloseDrawerAsync();
-    private async void Backdrop_Tapped(object sender, TappedEventArgs e) => await CloseDrawerAsync();
-
-    private async Task CloseDrawerAsync()
-    {
-        if (!_isOpen) return;
-        _isOpen = false;
-        await Drawer.TranslateTo(-Drawer.Width, 0, 220, Easing.CubicIn);
-        await Backdrop.FadeTo(0, 140, Easing.CubicIn);
-        Backdrop.InputTransparent = true;
-    }
-
-    private async void OnMenuItemClicked(object sender, EventArgs e)
-    {
-        if (sender is Button b && b.CommandParameter is string route && !string.IsNullOrWhiteSpace(route))
+        protected override void OnAppearing()
         {
-            await CloseDrawerAsync();
-            await Shell.Current.GoToAsync(route);
-        }
-    }
+            base.OnAppearing();
 
-    private async void Back_Clicked(object sender, EventArgs e)
-    {
-        await Shell.Current.Navigation.PopAsync();
+            try
+            {
+                var role = Preferences.Get("user_role", null)?.Trim() ?? string.Empty;
+                var isSyndic = role.ToLowerInvariant().Contains("syndic");
+
+                BtnEdit.IsVisible = isSyndic;
+                BtnDelete.IsVisible = isSyndic;
+            }
+            catch
+            {
+                BtnEdit.IsVisible = true;
+                BtnDelete.IsVisible = true;
+            }
+        }
+
+        private async void Back_Clicked(object sender, EventArgs e)
+            => await Shell.Current.GoToAsync("..");
     }
 }
