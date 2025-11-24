@@ -52,7 +52,6 @@
                     TextColor="{StaticResource HeaderTextOnDark}"
                     Clicked="OpenDrawer_Clicked"/>
 
-            <!-- ⚠️ IMPORTANT : x:Name pour pouvoir changer le titre en C# -->
             <Label x:Name="TitleLabel"
                    Grid.Column="1"
                    Text="SyndicApp"
@@ -67,7 +66,7 @@
                    VerticalOptions="Center"/>
         </Grid>
 
-        <!-- ===== CONTENU PAGE ===== -->
+        <!-- ===== CONTENU PAGE (MainContent) ===== -->
         <Grid Grid.Row="1" BackgroundColor="White">
             <Grid x:Name="MainHost"/>
         </Grid>

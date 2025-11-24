@@ -1,27 +1,24 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<layouts:RoleDrawerLayout
+<ContentPage
     x:Class="SyndicApp.Mobile.Views.Affectations.AffectationsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:layout="clr-namespace:SyndicApp.Mobile.Views.Layout"
     xmlns:vm="clr-namespace:SyndicApp.Mobile.ViewModels.Affectations"
     xmlns:converters="clr-namespace:SyndicApp.Mobile.Converters"
-    xmlns:layouts="clr-namespace:SyndicApp.Mobile.Views.Layout"
-    x:DataType="vm:AffectationsListViewModel"
+    Title="Affectations"
     Shell.NavBarIsVisible="False"
     BackgroundColor="White">
 
-    <layouts:RoleDrawerLayout.Resources>
-        <Color x:Key="BodyText">#111827</Color>
+    <ContentPage.Resources>
+
         <Color x:Key="Divider">#E5E7EB</Color>
         <converters:BoolToOuiNonConverter x:Key="BoolToOuiNonConverter" />
 
-        <Style TargetType="Label">
-            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
-        </Style>
-
         <Style x:Key="TitleLabelStyle" TargetType="Label">
-            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontSize" Value="22" />
             <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
         </Style>
 
         <Style x:Key="FieldLabelStyle" TargetType="Label">
@@ -32,8 +29,8 @@
         <Style x:Key="PrimaryButtonStyle" TargetType="Button">
             <Setter Property="BackgroundColor" Value="#2563EB" />
             <Setter Property="TextColor" Value="White" />
-            <Setter Property="CornerRadius" Value="10" />
-            <Setter Property="Padding" Value="14,10" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="Padding" Value="14,6" />
         </Style>
 
         <Style x:Key="OutlineButtonStyle" TargetType="Button">
@@ -42,7 +39,7 @@
             <Setter Property="BorderColor" Value="#2563EB" />
             <Setter Property="BorderWidth" Value="1" />
             <Setter Property="CornerRadius" Value="10" />
-            <Setter Property="Padding" Value="14,10" />
+            <Setter Property="Padding" Value="10,6" />
         </Style>
 
         <Style x:Key="CardStyle" TargetType="Frame">
@@ -52,100 +49,140 @@
             <Setter Property="BackgroundColor" Value="White" />
             <Setter Property="BorderColor" Value="#E5E7EB" />
         </Style>
-    </layouts:RoleDrawerLayout.Resources>
+    </ContentPage.Resources>
 
-    <Grid Padding="16" RowDefinitions="Auto,Auto,*">
+    <layout:RoleDrawerLayout>
+        <layout:RoleDrawerLayout.MainContent>
 
-        <!-- Titre + bouton AJOUT -->
-        <Grid Row="0" ColumnDefinitions="*,Auto">
-            <Label Text="Affectations des lots" Style="{StaticResource TitleLabelStyle}" />
-            <Button Grid.Column="1"
-                    Text="+"
-                    Style="{StaticResource PrimaryButtonStyle}"
-                    Command="{Binding GoToCreateCommand}"
-                    IsVisible="{Binding CanCreate}" />
-        </Grid>
+            <!-- ===== CONTENU PAGE AFFECTATIONS ===== -->
+            <Grid BackgroundColor="White"
+                  Padding="16"
+                  RowDefinitions="Auto,Auto,*">
 
-        <!-- Filtres -->
-        <Grid Row="1" ColumnDefinitions="*,*,Auto" RowDefinitions="Auto,Auto" Margin="0,8,0,8">
-            <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="4">
-                <Label Text="Utilisateur" Style="{StaticResource FieldLabelStyle}" />
-                <Picker ItemsSource="{Binding Users}"
-                        ItemDisplayBinding="{Binding FullName}"
-                        SelectedItem="{Binding SelectedUser}"
-                        TextColor="Black"
-                        BackgroundColor="White" />
-            </VerticalStackLayout>
+                <!-- Titre + bouton AJOUT -->
+                <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                    <Label Text="Affectations des lots"
+                           Style="{StaticResource TitleLabelStyle}" />
 
-            <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="4">
-                <Label Text="Lot" Style="{StaticResource FieldLabelStyle}" />
-                <Picker ItemsSource="{Binding Lots}"
-                        ItemDisplayBinding="{Binding NumeroLot}"
-                        SelectedItem="{Binding SelectedLot}"
-                        Title="Tous"
-                        HorizontalOptions="FillAndExpand"
-                        TextColor="Black"
-                        BackgroundColor="White" />
-            </VerticalStackLayout>
-
-            <VerticalStackLayout Grid.Row="1" Grid.Column="2" Spacing="4" HorizontalOptions="End">
-                <Label Text=" " />
-                <Button Text="Filtrer"
-                        Style="{StaticResource OutlineButtonStyle}"
-                        Command="{Binding FilterCommand}" />
-            </VerticalStackLayout>
-        </Grid>
-
-        <!-- Liste -->
-        <CollectionView Grid.Row="2" ItemsSource="{Binding Items}" SelectionMode="None">
-            <CollectionView.EmptyView>
-                <Grid Padding="24" VerticalOptions="Center">
-                    <Label Text="Aucune affectation trouvée."
-                           HorizontalTextAlignment="Center"
-                           Opacity="0.6" />
+                    <!-- visible uniquement pour Syndic (géré dans code-behind) -->
+                    <Button x:Name="BtnAddAffectation"
+                            Grid.Column="1"
+                            Text="+"
+                            Style="{StaticResource PrimaryButtonStyle}"
+                            Clicked="OnAddAffectationClicked" />
                 </Grid>
-            </CollectionView.EmptyView>
 
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame Style="{StaticResource CardStyle}" Margin="0,6">
-                        <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto">
-                            <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="2">
-                                <Label Text="{Binding LotNumero}" FontAttributes="Bold" />
-                                <Label Text="{Binding UserNom}" />
-                            </VerticalStackLayout>
+                <!-- Filtres -->
+                <Grid Grid.Row="1"
+                      Margin="0,8,0,8"
+                      ColumnDefinitions="*,*,Auto"
+                      RowDefinitions="Auto,Auto">
 
-                            <Label Grid.Row="0" Grid.Column="1"
-                                   Text="{Binding Statut}"
-                                   HorizontalTextAlignment="End"
-                                   FontAttributes="Bold" />
+                    <VerticalStackLayout Grid.Row="1"
+                                         Grid.Column="0"
+                                         Spacing="4">
+                        <Label Text="Utilisateur" Style="{StaticResource FieldLabelStyle}" />
+                        <Picker ItemsSource="{Binding Users}"
+                                ItemDisplayBinding="{Binding FullName}"
+                                SelectedItem="{Binding SelectedUser}"
+                                Title="Tous"
+                                TextColor="Black"
+                                BackgroundColor="White" />
+                    </VerticalStackLayout>
 
-                            <Grid Grid.Row="1" Grid.ColumnSpan="2" ColumnDefinitions="*,*"
-                                  Margin="0,6,0,0">
-                                <Label Grid.Column="0"
-                                       Text="{Binding DateDebut, StringFormat='Début : {0:dd/MM/yyyy}'}"
-                                       Opacity="0.7" />
-                                <Label Grid.Column="1"
-                                       Text="{Binding DateFin, StringFormat='Fin : {0:dd/MM/yyyy}'}"
-                                       Opacity="0.7"
-                                       HorizontalTextAlignment="End" />
-                            </Grid>
+                    <VerticalStackLayout Grid.Row="1"
+                                         Grid.Column="1"
+                                         Spacing="4">
+                        <Label Text="Lot" Style="{StaticResource FieldLabelStyle}" />
+                        <Picker ItemsSource="{Binding Lots}"
+                                ItemDisplayBinding="{Binding NumeroLot}"
+                                SelectedItem="{Binding SelectedLot}"
+                                Title="Tous"
+                                HorizontalOptions="FillAndExpand"
+                                TextColor="Black"
+                                BackgroundColor="White" />
+                    </VerticalStackLayout>
 
-                            <Grid Grid.Row="1" Grid.ColumnSpan="2" ColumnDefinitions="Auto,Auto,*,Auto"
-                                  Margin="0,40,0,0">
-                                <Label Grid.Column="0" Text="Propriétaire :" Opacity="0.7" />
-                                <Label Grid.Column="1"
-                                       Text="{Binding EstProprietaire, Converter={StaticResource BoolToOuiNonConverter}}" />
-                                <Label Grid.Column="2" />
-                                <Button Grid.Column="3"
-                                        Text="Détails"
-                                        Style="{StaticResource OutlineButtonStyle}"
-                                        Clicked="OnDetailsClicked" />
-                            </Grid>
+                    <VerticalStackLayout Grid.Row="1"
+                                         Grid.Column="2"
+                                         Spacing="4"
+                                         HorizontalOptions="End">
+                        <Label Text=" " />
+                        <Button Text="Filtrer"
+                                Style="{StaticResource OutlineButtonStyle}"
+                                Command="{Binding FilterCommand}" />
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- Liste -->
+                <CollectionView Grid.Row="2"
+                                ItemsSource="{Binding Items}"
+                                SelectionMode="None">
+                    <CollectionView.EmptyView>
+                        <Grid Padding="24" VerticalOptions="Center">
+                            <Label Text="Aucune affectation trouvée."
+                                   HorizontalTextAlignment="Center"
+                                   Opacity="0.6" />
                         </Grid>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </Grid>
-</layouts:RoleDrawerLayout>
+                    </CollectionView.EmptyView>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Style="{StaticResource CardStyle}" Margin="0,6">
+                                <Grid RowDefinitions="Auto,Auto"
+                                      ColumnDefinitions="*,Auto">
+
+                                    <VerticalStackLayout Grid.Row="0"
+                                                         Grid.Column="0"
+                                                         Spacing="2">
+                                        <Label Text="{Binding LotNumero}"
+                                               FontAttributes="Bold" />
+                                        <Label Text="{Binding UserNom}" />
+                                    </VerticalStackLayout>
+
+                                    <Label Grid.Row="0"
+                                           Grid.Column="1"
+                                           Text="{Binding Statut}"
+                                           HorizontalTextAlignment="End"
+                                           FontAttributes="Bold" />
+
+                                    <Grid Grid.Row="1"
+                                          Grid.ColumnSpan="2"
+                                          ColumnDefinitions="*,*"
+                                          Margin="0,6,0,0">
+                                        <Label Grid.Column="0"
+                                               Text="{Binding DateDebut, StringFormat='Début : {0:dd/MM/yyyy}'}"
+                                               Opacity="0.7" />
+                                        <Label Grid.Column="1"
+                                               Text="{Binding DateFin, StringFormat='Fin : {0:dd/MM/yyyy}'}"
+                                               Opacity="0.7"
+                                               HorizontalTextAlignment="End" />
+                                    </Grid>
+
+                                    <Grid Grid.Row="1"
+                                          Grid.ColumnSpan="2"
+                                          ColumnDefinitions="Auto,Auto,*,Auto"
+                                          Margin="0,40,0,0">
+                                        <Label Grid.Column="0"
+                                               Text="Propriétaire :"
+                                               Opacity="0.7" />
+                                        <Label Grid.Column="1"
+                                               Text="{Binding EstProprietaire, Converter={StaticResource BoolToOuiNonConverter}}" />
+                                        <Label Grid.Column="2" />
+                                        <Button Grid.Column="3"
+                                                Text="Détails"
+                                                Style="{StaticResource OutlineButtonStyle}"
+                                                CommandParameter="{Binding Id}"
+                                                Clicked="OnDetailsClicked" />
+                                    </Grid>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </Grid>
+
+        </layout:RoleDrawerLayout.MainContent>
+    </layout:RoleDrawerLayout>
+</ContentPage>

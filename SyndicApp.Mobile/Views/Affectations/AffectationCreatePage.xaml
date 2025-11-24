@@ -1,101 +1,99 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<layouts:RoleDrawerLayout
+<ContentPage
     x:Class="SyndicApp.Mobile.Views.Affectations.AffectationCreatePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:layout="clr-namespace:SyndicApp.Mobile.Views.Layout"
     xmlns:vm="clr-namespace:SyndicApp.Mobile.ViewModels.Affectations"
-    xmlns:layouts="clr-namespace:SyndicApp.Mobile.Views.Layout"
-    x:DataType="vm:AffectationCreateViewModel"
-    BackgroundColor="White"
-    Shell.NavBarIsVisible="True">
+    Title="Nouvelle affectation"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="White">
 
-    <layouts:RoleDrawerLayout.Resources>
-        <Color x:Key="BrandBlue">#2563EB</Color>
-        <Color x:Key="TextDark">#111827</Color>
-        <Color x:Key="FieldBorder">#E5E7EB</Color>
-        <Color x:Key="Hint">#6B7280</Color>
-
-        <Style TargetType="Label">
-            <Setter Property="TextColor" Value="{StaticResource TextDark}" />
+    <ContentPage.Resources>
+        <Style x:Key="FieldLabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="TextColor" Value="#6B7280" />
         </Style>
 
-        <Style TargetType="Picker">
-            <Setter Property="TextColor" Value="{StaticResource TextDark}" />
-            <Setter Property="BackgroundColor" Value="White" />
-        </Style>
-
-        <Style TargetType="DatePicker">
-            <Setter Property="TextColor" Value="{StaticResource TextDark}" />
-            <Setter Property="BackgroundColor" Value="White" />
-        </Style>
-
-        <Style TargetType="Switch">
-            <Setter Property="OnColor" Value="{StaticResource BrandBlue}" />
-            <Setter Property="ThumbColor" Value="#2563EB" />
-        </Style>
-
-        <Style x:Key="PrimaryButton" TargetType="Button">
-            <Setter Property="BackgroundColor" Value="{StaticResource BrandBlue}" />
+        <Style x:Key="PrimaryButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#2563EB" />
             <Setter Property="TextColor" Value="White" />
-            <Setter Property="CornerRadius" Value="24" />
-            <Setter Property="Padding" Value="14,12" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="Padding" Value="14,10" />
         </Style>
 
-        <Style x:Key="FieldContainer" TargetType="Frame">
-            <Setter Property="Padding" Value="12" />
-            <Setter Property="HasShadow" Value="False" />
-            <Setter Property="CornerRadius" Value="12" />
-            <Setter Property="BackgroundColor" Value="White" />
-            <Setter Property="BorderColor" Value="{StaticResource FieldBorder}" />
+        <Style x:Key="OutlineButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="TextColor" Value="#2563EB" />
+            <Setter Property="BorderColor" Value="#2563EB" />
+            <Setter Property="BorderWidth" Value="1" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="Padding" Value="14,10" />
         </Style>
-    </layouts:RoleDrawerLayout.Resources>
+    </ContentPage.Resources>
 
-    <ScrollView Padding="16">
-        <VerticalStackLayout Spacing="16">
+    <layout:RoleDrawerLayout>
+        <layout:RoleDrawerLayout.MainContent>
 
-            <Label Text="Créer une affectation" FontSize="28" FontAttributes="Bold" />
-            <VerticalStackLayout Spacing="6">
-                <Label Text="Utilisateur" Opacity="0.9" />
-                <Frame Style="{StaticResource FieldContainer}">
-                    <Picker ItemsSource="{Binding Users}"
-                            ItemDisplayBinding="{Binding Label}"
-                            SelectedItem="{Binding SelectedUser}" />
-                </Frame>
-            </VerticalStackLayout>
-            <VerticalStackLayout Spacing="6">
-                <Label Text="Lot" Opacity="0.9" />
-                <Frame Style="{StaticResource FieldContainer}">
-                    <Picker ItemsSource="{Binding Lots}"
-                            ItemDisplayBinding="{Binding NumeroLot}"
-                            SelectedItem="{Binding SelectedLot}" />
-                </Frame>
-            </VerticalStackLayout>
-            <VerticalStackLayout Spacing="6">
-                <Label Text="Date début" Opacity="0.9" />
-                <Frame Style="{StaticResource FieldContainer}">
-                    <DatePicker Date="{Binding DateDebut}" />
-                </Frame>
-            </VerticalStackLayout>
-            <Grid ColumnDefinitions="*,Auto" Padding="0,8,0,0">
-                <Label Text="Est propriétaire ?" Grid.Column="0" VerticalOptions="Center" />
+            <ScrollView>
+                <VerticalStackLayout Padding="16" Spacing="14">
 
-                <Border Grid.Column="1"
-                        BackgroundColor="#dddfe1f0"
-                        Stroke="#dddfe1f0"
-                        StrokeThickness="1"
-                        Padding="6"
-                        StrokeShape="RoundRectangle 16"
-                        HorizontalOptions="End"
-                        VerticalOptions="Center">
-                    <Switch IsToggled="{Binding EstProprietaire}"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center" />
-                </Border>
-            </Grid>
-            <Button Text="Enregistrer"
-                    Style="{StaticResource PrimaryButton}"
-                    Command="{Binding CreateAsyncCommand}"
-                    IsVisible="{Binding CanCreate}" />
-        </VerticalStackLayout>
-    </ScrollView>
-</layouts:RoleDrawerLayout>
+                    <Label Text="Nouvelle affectation"
+                           FontSize="22"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource BodyText}" />
+
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Utilisateur" Style="{StaticResource FieldLabelStyle}" />
+                        <Picker ItemsSource="{Binding Users}"
+                                ItemDisplayBinding="{Binding FullName}"
+                                SelectedItem="{Binding SelectedUser}"
+                                Title="Choisir un utilisateur"
+                                TextColor="Black"
+                                BackgroundColor="White" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Lot" Style="{StaticResource FieldLabelStyle}" />
+                        <Picker ItemsSource="{Binding Lots}"
+                                ItemDisplayBinding="{Binding NumeroLot}"
+                                SelectedItem="{Binding SelectedLot}"
+                                Title="Choisir un lot"
+                                TextColor="Black"
+                                BackgroundColor="White" />
+                    </VerticalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Date début" Style="{StaticResource FieldLabelStyle}" />
+                            <DatePicker Date="{Binding DateDebut}" />
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Date fin (optionnelle)" Style="{StaticResource FieldLabelStyle}" />
+                            <DatePicker Date="{Binding DateFin}" />
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                        <Label Text="Propriétaire ?" Style="{StaticResource FieldLabelStyle}" />
+                        <Switch IsToggled="{Binding EstProprietaire}" />
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="10" Margin="0,20,0,0">
+                        <Button x:Name="BtnSave"
+                                Text="Enregistrer"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                Command="{Binding CreateAsyncCommand}" />
+
+                        <Button Text="Annuler"
+                                Style="{StaticResource OutlineButtonStyle}"
+                                Command="{Binding CancelCommand}" />
+                    </HorizontalStackLayout>
+
+                </VerticalStackLayout>
+            </ScrollView>
+
+        </layout:RoleDrawerLayout.MainContent>
+    </layout:RoleDrawerLayout>
+</ContentPage>

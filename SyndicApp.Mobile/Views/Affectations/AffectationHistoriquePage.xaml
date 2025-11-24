@@ -1,20 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<layouts:RoleDrawerLayout
+<ContentPage
     x:Class="SyndicApp.Mobile.Views.Affectations.AffectationHistoriquePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:layout="clr-namespace:SyndicApp.Mobile.Views.Layout"
     xmlns:vm="clr-namespace:SyndicApp.Mobile.ViewModels.Affectations"
-    xmlns:layouts="clr-namespace:SyndicApp.Mobile.Views.Layout"
-    x:DataType="vm:AffectationHistoriqueViewModel"
-    BackgroundColor="White"
-    Shell.NavBarIsVisible="False">
+    xmlns:converters="clr-namespace:SyndicApp.Mobile.Converters"
+    Title="Historique affectations"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="White">
 
-    <layouts:RoleDrawerLayout.Resources>
-        <Color x:Key="BodyText">#111827</Color>
-        <Color x:Key="Divider">#E5E7EB</Color>
+    <ContentPage.Resources>
+        <converters:BoolToOuiNonConverter x:Key="BoolToOuiNonConverter" />
 
-        <Style TargetType="Label">
-            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
+        <Style x:Key="FieldLabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="TextColor" Value="#6B7280" />
         </Style>
 
         <Style x:Key="CardStyle" TargetType="Frame">
@@ -24,50 +25,68 @@
             <Setter Property="BackgroundColor" Value="White" />
             <Setter Property="BorderColor" Value="#E5E7EB" />
         </Style>
-    </layouts:RoleDrawerLayout.Resources>
+    </ContentPage.Resources>
 
-    <CollectionView ItemsSource="{Binding Items}"
-                    SelectionMode="None"
-                    Margin="16">
-        <CollectionView.EmptyView>
-            <Grid Padding="24" VerticalOptions="Center">
-                <Label Text="Aucun historique pour ce lot."
-                       HorizontalTextAlignment="Center"
-                       Opacity="0.6" />
-            </Grid>
-        </CollectionView.EmptyView>
+    <layout:RoleDrawerLayout>
+        <layout:RoleDrawerLayout.MainContent>
 
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <Frame Style="{StaticResource CardStyle}" Margin="0,6">
-                    <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto">
-                        <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="2">
-                            <Label Text="{Binding UserNom}" FontAttributes="Bold" />
-                            <Label Text="{Binding LotNumero}" Opacity="0.7" />
-                        </VerticalStackLayout>
+            <Grid Padding="16" RowDefinitions="Auto,*">
 
-                        <Label Grid.Row="0" Grid.Column="1"
-                               Text="{Binding Statut}"
-                               FontAttributes="Bold"
-                               HorizontalTextAlignment="End" />
+                <Label Grid.Row="0"
+                       Text="Historique des affectations"
+                       FontSize="22"
+                       FontAttributes="Bold"
+                       TextColor="{StaticResource BodyText}" />
 
-                        <Grid Grid.Row="1" Grid.ColumnSpan="2"
-                              ColumnDefinitions="*,*,Auto"
-                              Margin="0,4,0,0">
-                            <Label Grid.Column="0"
-                                   Text="{Binding DateDebut, StringFormat='Début : {0:dd/MM/yyyy}'}"
-                                   Opacity="0.7" />
-                            <Label Grid.Column="1"
-                                   Text="{Binding DateFin, StringFormat='Fin : {0:dd/MM/yyyy}'}"
-                                   Opacity="0.7"
-                                   HorizontalTextAlignment="Center" />
-                            <Label Grid.Column="2"
-                                   Text="{Binding EstProprietaire, StringFormat='Propriétaire : {0}'}"
-                                   HorizontalTextAlignment="End" />
+                <CollectionView Grid.Row="1"
+                                ItemsSource="{Binding Items}"
+                                SelectionMode="None">
+                    <CollectionView.EmptyView>
+                        <Grid Padding="24" VerticalOptions="Center">
+                            <Label Text="Aucun historique pour ce lot."
+                                   HorizontalTextAlignment="Center"
+                                   Opacity="0.6" />
                         </Grid>
-                    </Grid>
-                </Frame>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
-</layouts:RoleDrawerLayout>
+                    </CollectionView.EmptyView>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Style="{StaticResource CardStyle}" Margin="0,6">
+                                <Grid RowDefinitions="Auto,Auto"
+                                      ColumnDefinitions="*,Auto">
+
+                                    <VerticalStackLayout Grid.Row="0"
+                                                         Grid.Column="0"
+                                                         Spacing="2">
+                                        <Label Text="{Binding UserNom}" FontAttributes="Bold" />
+                                        <Label Text="{Binding Statut}" />
+                                    </VerticalStackLayout>
+
+                                    <Label Grid.Row="0"
+                                           Grid.Column="1"
+                                           Text="{Binding EstProprietaire, Converter={StaticResource BoolToOuiNonConverter}}"
+                                           HorizontalTextAlignment="End" />
+
+                                    <Grid Grid.Row="1"
+                                          Grid.ColumnSpan="2"
+                                          ColumnDefinitions="*,*"
+                                          Margin="0,6,0,0">
+                                        <Label Grid.Column="0"
+                                               Text="{Binding DateDebut, StringFormat='Début : {0:dd/MM/yyyy}'}"
+                                               Opacity="0.7" />
+                                        <Label Grid.Column="1"
+                                               Text="{Binding DateFin, StringFormat='Fin : {0:dd/MM/yyyy}'}"
+                                               HorizontalTextAlignment="End"
+                                               Opacity="0.7" />
+                                    </Grid>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </Grid>
+
+        </layout:RoleDrawerLayout.MainContent>
+    </layout:RoleDrawerLayout>
+</ContentPage>

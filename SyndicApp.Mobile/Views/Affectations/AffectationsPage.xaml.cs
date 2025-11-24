@@ -1,42 +1,49 @@
 ﻿using System;
 using Microsoft.Maui.Controls;
-using SyndicApp.Mobile.Models;
+using Microsoft.Maui.Storage;
 using SyndicApp.Mobile.ViewModels.Affectations;
-using SyndicApp.Mobile.Views.Layout;
 
 namespace SyndicApp.Mobile.Views.Affectations
 {
-    public partial class AffectationsPage : RoleDrawerLayout
+    public partial class AffectationsPage : ContentPage
     {
-        public AffectationsPage()
+        public AffectationsPage(AffectationsListViewModel vm)
         {
             InitializeComponent();
-            BindingContext ??= ServiceHelper.Get<AffectationsListViewModel>();
+            BindingContext = vm;
         }
 
-        protected override async void OnAppearing()
+        protected override void OnAppearing()
         {
             base.OnAppearing();
-            if (BindingContext is AffectationsListViewModel vm)
-                await vm.LoadAsync();
+
+            // Gérer la visibilité du bouton "+" selon le rôle
+            try
+            {
+                var role = Preferences.Get("user_role", null)?.Trim() ?? string.Empty;
+                var roleLower = role.ToLowerInvariant();
+                var isSyndic = roleLower.Contains("syndic");
+
+                BtnAddAffectation.IsVisible = isSyndic;
+            }
+            catch
+            {
+                BtnAddAffectation.IsVisible = true;
+            }
         }
 
         private async void OnDetailsClicked(object sender, EventArgs e)
         {
-            try
+            if (sender is Button btn && btn.CommandParameter is Guid id)
             {
-                if (sender is not Button btn)
-                    return;
-
-                if (btn.BindingContext is not AffectationLotDto item)
-                    return;
-
-                await Shell.Current.GoToAsync($"affectation-details?id={item.Id}");
+                await Shell.Current.GoToAsync($"affectation-details?id={id:D}");
             }
-            catch (Exception ex)
-            {
-                await Application.Current.MainPage.DisplayAlert("Erreur", ex.Message, "OK");
-            }
+        }
+
+        // si tu veux utiliser le bouton "+" pour ouvrir la création via code-behind
+        private async void OnAddAffectationClicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("affectation-create");
         }
     }
 }

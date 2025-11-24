@@ -1,38 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<layouts:RoleDrawerLayout
+<ContentPage
     x:Class="SyndicApp.Mobile.Views.Affectations.AffectationDetailsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:layout="clr-namespace:SyndicApp.Mobile.Views.Layout"
     xmlns:vm="clr-namespace:SyndicApp.Mobile.ViewModels.Affectations"
     xmlns:converters="clr-namespace:SyndicApp.Mobile.Converters"
-    xmlns:layouts="clr-namespace:SyndicApp.Mobile.Views.Layout"
-    x:DataType="vm:AffectationDetailsViewModel"
-    BackgroundColor="White"
-    Shell.NavBarIsVisible="True">
+    Title="Détails affectation"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="White">
 
-    <layouts:RoleDrawerLayout.Resources>
-        <Color x:Key="BodyText">#111827</Color>
-        <Color x:Key="Divider">#E5E7EB</Color>
-        <Color x:Key="Danger">#DC2626</Color>
-
+    <ContentPage.Resources>
         <converters:BoolToOuiNonConverter x:Key="BoolToOuiNonConverter" />
 
-        <Style TargetType="Label">
+        <Style x:Key="FieldLabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="TextColor" Value="#6B7280" />
+        </Style>
+
+        <Style x:Key="ValueLabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="14" />
             <Setter Property="TextColor" Value="{StaticResource BodyText}" />
         </Style>
 
-        <Style x:Key="TitleLabelStyle" TargetType="Label">
-            <Setter Property="FontSize" Value="20" />
-            <Setter Property="FontAttributes" Value="Bold" />
-            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
-        </Style>
-
-        <Style x:Key="CardStyle" TargetType="Frame">
-            <Setter Property="HasShadow" Value="False" />
-            <Setter Property="CornerRadius" Value="14" />
-            <Setter Property="Padding" Value="14" />
-            <Setter Property="BackgroundColor" Value="White" />
-            <Setter Property="BorderColor" Value="{StaticResource Divider}" />
+        <Style x:Key="PrimaryButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#2563EB" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="Padding" Value="14,10" />
         </Style>
 
         <Style x:Key="OutlineButtonStyle" TargetType="Button">
@@ -40,70 +35,68 @@
             <Setter Property="TextColor" Value="#2563EB" />
             <Setter Property="BorderColor" Value="#2563EB" />
             <Setter Property="BorderWidth" Value="1" />
-            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="CornerRadius" Value="10" />
             <Setter Property="Padding" Value="14,10" />
         </Style>
+    </ContentPage.Resources>
 
-        <Style x:Key="DangerOutlineButtonStyle" TargetType="Button" BasedOn="{StaticResource OutlineButtonStyle}">
-            <Setter Property="TextColor" Value="{StaticResource Danger}" />
-            <Setter Property="BorderColor" Value="{StaticResource Danger}" />
-        </Style>
-    </layouts:RoleDrawerLayout.Resources>
+    <layout:RoleDrawerLayout>
+        <layout:RoleDrawerLayout.MainContent>
 
-    <ScrollView Padding="16,16,16,32">
-        <VerticalStackLayout Spacing="16">
+            <ScrollView>
+                <VerticalStackLayout Padding="16" Spacing="14">
 
-            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8" Margin="0,0,0,4">
-                <Label Grid.Column="0"
-                       Text="Détails de l'affectation"
-                       Style="{StaticResource TitleLabelStyle}"
-                       VerticalOptions="Center"
-                       LineBreakMode="TailTruncation"
-                       MaxLines="1" />
+                    <Label Text="Détails de l'affectation"
+                           FontSize="22"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource BodyText}" />
 
-                <Button Grid.Column="1"
-                        Text="🗑"
-                        Style="{StaticResource DangerOutlineButtonStyle}"
-                        WidthRequest="44"
-                        HeightRequest="40"
-                        Padding="0"
-                        HorizontalOptions="End"
-                        VerticalOptions="Center"
-                        Command="{Binding DeleteCommand}"
-                        IsVisible="{Binding CanDelete}" />
-            </Grid>
+                    <Grid ColumnDefinitions="Auto,*" RowSpacing="8">
 
-            <Frame Style="{StaticResource CardStyle}">
-                <VerticalStackLayout Spacing="6">
-                    <Label Text="{Binding Item.LotNumero, StringFormat='Lot : {0}'}" />
-                    <Label Text="{Binding Item.UserNom,   StringFormat='Utilisateur : {0}'}" />
-                    <Label Text="{Binding Item.Statut,    StringFormat='Statut : {0}'}" />
-                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6">
-                        <Label Grid.Column="0" Text="Propriétaire :" />
+                        <Label Grid.Column="0" Text="Utilisateur :" Style="{StaticResource FieldLabelStyle}" />
+                        <Label Grid.Column="1" Text="{Binding UserNom}" Style="{StaticResource ValueLabelStyle}" />
+
+                        <Label Grid.Column="0" Text="Lot :" Style="{StaticResource FieldLabelStyle}" />
+                        <Label Grid.Column="1" Text="{Binding LotNumero}" Style="{StaticResource ValueLabelStyle}" />
+
+                        <Label Grid.Column="0" Text="Statut :" Style="{StaticResource FieldLabelStyle}" />
+                        <Label Grid.Column="1" Text="{Binding Statut}" Style="{StaticResource ValueLabelStyle}" />
+
+                        <Label Grid.Column="0" Text="Date début :" Style="{StaticResource FieldLabelStyle}" />
                         <Label Grid.Column="1"
-                               Text="{Binding Item.EstProprietaire, Converter={StaticResource BoolToOuiNonConverter}}" />
+                               Text="{Binding DateDebut, StringFormat='{0:dd/MM/yyyy}'}"
+                               Style="{StaticResource ValueLabelStyle}" />
+
+                        <Label Grid.Column="0" Text="Date fin :" Style="{StaticResource FieldLabelStyle}" />
+                        <Label Grid.Column="1"
+                               Text="{Binding DateFin, StringFormat='{0:dd/MM/yyyy}'}"
+                               Style="{StaticResource ValueLabelStyle}" />
+
+                        <Label Grid.Column="0" Text="Propriétaire :" Style="{StaticResource FieldLabelStyle}" />
+                        <Label Grid.Column="1"
+                               Text="{Binding EstProprietaire, Converter={StaticResource BoolToOuiNonConverter}}"
+                               Style="{StaticResource ValueLabelStyle}" />
                     </Grid>
-                    <Label Text="{Binding Item.DateDebut, StringFormat='Début : {0:dd/MM/yyyy}'}" />
-                    <Label Text="{Binding Item.DateFin,   StringFormat='Fin : {0:dd/MM/yyyy}'}" />
+
+                    <VerticalStackLayout Spacing="10" Margin="0,20,0,0">
+                        <Button x:Name="BtnEdit"
+                                Text="Modifier"
+                                Style="{StaticResource PrimaryButtonStyle}"
+                                Command="{Binding EditCommand}" />
+
+                        <Button x:Name="BtnClose"
+                                Text="Clôturer l'affectation"
+                                Style="{StaticResource OutlineButtonStyle}"
+                                Command="{Binding CloseCommand}" />
+
+                        <Button Text="Historique du lot"
+                                Style="{StaticResource OutlineButtonStyle}"
+                                Command="{Binding GoToHistoriqueCommand}" />
+                    </VerticalStackLayout>
+
                 </VerticalStackLayout>
-            </Frame>
+            </ScrollView>
 
-            <HorizontalStackLayout Spacing="12" Padding="0,0,0,8">
-                <Button Text="Clôturer"
-                        Style="{StaticResource OutlineButtonStyle}"
-                        Command="{Binding CloturerCommand}"
-                        IsVisible="{Binding CanEdit}" />
-
-                <Button Text="Changer statut"
-                        Style="{StaticResource OutlineButtonStyle}"
-                        Command="{Binding ToggleStatutCommand}"
-                        IsVisible="{Binding CanEdit}" />
-
-                <Button Text="Historique"
-                        Style="{StaticResource OutlineButtonStyle}"
-                        Command="{Binding OpenHistoriqueCommand}" />
-            </HorizontalStackLayout>
-
-        </VerticalStackLayout>
-    </ScrollView>
-</layouts:RoleDrawerLayout>
+        </layout:RoleDrawerLayout.MainContent>
+    </layout:RoleDrawerLayout>
+</ContentPage>
