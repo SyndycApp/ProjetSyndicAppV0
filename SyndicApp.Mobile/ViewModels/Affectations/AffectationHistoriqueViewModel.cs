@@ -17,19 +17,15 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
             Items = new();
         }
 
-        // Param brut reçu via Shell
         [ObservableProperty] private string? lotIdParam;
 
-        // Optionnel: garder le Guid parsé si tu veux l’exposer
         [ObservableProperty] private Guid lotId;
 
-        // On reste sur ton modèle unique
         [ObservableProperty] private List<AffectationLotDto> items;
 
         [RelayCommand]
         public async Task LoadAsync()
         {
-            // ✅ Parse sécurisé
             if (!Guid.TryParse(LotIdParam, out var gid))
                 return;
 

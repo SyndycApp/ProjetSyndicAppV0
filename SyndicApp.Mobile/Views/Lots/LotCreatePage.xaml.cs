@@ -1,15 +1,16 @@
-﻿using Microsoft.Maui.Controls;
-using SyndicApp.Mobile.ViewModels.Lots;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Storage;
+using SyndicApp.Mobile.ViewModels.Lots;
 
 namespace SyndicApp.Mobile.Views.Lots
 {
     public partial class LotCreatePage : ContentPage
     {
-        private bool _isOpen;
-
-        public LotCreatePage() : this(ServiceHelper.Services.GetRequiredService<LotCreateViewModel>()) { }
+        public LotCreatePage() : this(ServiceHelper.Services.GetRequiredService<LotCreateViewModel>())
+        {
+        }
 
         public LotCreatePage(LotCreateViewModel vm)
         {
@@ -21,66 +22,35 @@ namespace SyndicApp.Mobile.Views.Lots
         {
             base.OnAppearing();
 
-            var w = this.Width > 0 ? this.Width : Application.Current?.Windows[0]?.Page?.Width ?? 360;
-            Drawer.WidthRequest = w;
-            Drawer.TranslationX = -w;
+            // 🔐 Sécurité : seul le syndic peut créer un lot
+            try
+            {
+                var role = Preferences.Get("user_role", null)?.Trim() ?? string.Empty;
+                var roleLower = role.ToLowerInvariant();
+                bool isSyndic = roleLower.Contains("syndic");
 
-            Backdrop.InputTransparent = true;
-            Backdrop.Opacity = 0;
-            _isOpen = false;
+                if (!isSyndic)
+                {
+                    await DisplayAlert("Accès refusé", "Seul le syndic peut créer un lot.", "OK");
+                    await Shell.Current.GoToAsync("..");
+                    return;
+                }
+            }
+            catch
+            {
+                // si problème de rôle, on laisse mais c'est très rare
+            }
 
-            // Charge résidences/bâtiments
+            // Charger résidences + bâtiments
             if (BindingContext is LotCreateViewModel vm)
                 await vm.LoadAsync();
-
         }
 
-        protected override void OnSizeAllocated(double w, double h)
-        {
-            base.OnSizeAllocated(w, h);
-            if (w > 0)
-            {
-                Drawer.WidthRequest = w;
-                if (!_isOpen) Drawer.TranslationX = -w;
-            }
-        }
-
+        // Changement de résidence => recharger les bâtiments
         private async void ResidenceChanged(object sender, EventArgs e)
         {
             if (BindingContext is LotCreateViewModel vm)
                 await vm.ResidenceChangedAsync();
-        }
-
-        private async void OpenDrawer_Clicked(object s, EventArgs e)
-        {
-            if (_isOpen) return;
-            _isOpen = true;
-            Backdrop.InputTransparent = false;
-            await Backdrop.FadeTo(1, 160, Easing.CubicOut);
-            await Drawer.TranslateTo(0, 0, 220, Easing.CubicOut);
-        }
-
-
-
-        private async void CloseDrawer_Clicked(object s, EventArgs e) => await CloseDrawerAsync();
-        private async void Backdrop_Tapped(object s, TappedEventArgs e) => await CloseDrawerAsync();
-
-        private async Task CloseDrawerAsync()
-        {
-            if (!_isOpen) return;
-            _isOpen = false;
-            await Drawer.TranslateTo(-Drawer.Width, 0, 220, Easing.CubicIn);
-            await Backdrop.FadeTo(0, 140, Easing.CubicIn);
-            Backdrop.InputTransparent = true;
-        }
-
-        private async void OnMenuItemClicked(object s, EventArgs e)
-        {
-            if (s is Button b && b.CommandParameter is string r && !string.IsNullOrWhiteSpace(r))
-            {
-                await CloseDrawerAsync();
-                await Shell.Current.GoToAsync(r);
-            }
         }
     }
 }

@@ -1,15 +1,15 @@
 ﻿using Microsoft.Maui.Controls;
 using SyndicApp.Mobile.ViewModels.Affectations;
+using SyndicApp.Mobile.Views.Layout;
 
 namespace SyndicApp.Mobile.Views.Affectations
 {
-    public partial class AffectationCreatePage : ContentPage
+    public partial class AffectationCreatePage : RoleDrawerLayout
     {
         public AffectationCreatePage()
         {
             InitializeComponent();
             BindingContext ??= ServiceHelper.Get<AffectationCreateViewModel>();
-
         }
 
         protected override async void OnAppearing()
@@ -17,22 +17,6 @@ namespace SyndicApp.Mobile.Views.Affectations
             base.OnAppearing();
             if (BindingContext is AffectationCreateViewModel vm)
                 await vm.LoadAsync();
-        }
-
-        private async void OnSaveClicked(object? sender, EventArgs e)
-        {
-            
-            if (BindingContext is AffectationCreateViewModel vm)
-            {
-                try
-                {
-                    await vm.CreateAsync(); // appelle la méthode marquée [RelayCommand]
-                }
-                catch (Exception ex)
-                {
-                    await DisplayAlert("Erreur", ex.Message, "OK");
-                }
-            }
         }
     }
 }

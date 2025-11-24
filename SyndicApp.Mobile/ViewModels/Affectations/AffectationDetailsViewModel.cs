@@ -6,7 +6,6 @@ using System.Net;
 
 namespace SyndicApp.Mobile.ViewModels.Affectations
 {
-    // ⇩⇩ reçoît "id" en string pour éviter le cast automatique foireux
     [QueryProperty(nameof(IdParam), "id")]
     public partial class AffectationDetailsViewModel : ObservableObject
     {
@@ -17,22 +16,24 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
         {
             _api = api;
             _lotsApi = lotsApi;
+
+            CanDelete = true;
+            CanEdit = true;
         }
 
-        // Route param brut
         [ObservableProperty] private string? idParam;
 
-        // Guid interne (optionnel si tu veux l'avoir)
         [ObservableProperty] private Guid id;
 
-        // Données affichées
         [ObservableProperty] private AffectationLotDto? item;
         [ObservableProperty] private bool isBusy;
+
+        [ObservableProperty] private bool canDelete;
+        [ObservableProperty] private bool canEdit;
 
         [RelayCommand]
         public async Task LoadAsync()
         {
-            // ✅ Validation du paramètre de navigation
             if (!Guid.TryParse(IdParam, out var guid))
             {
                 await Shell.Current.DisplayAlert("Navigation", "Identifiant invalide.", "OK");
@@ -45,13 +46,10 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
             {
                 IsBusy = true;
 
-                // 1️⃣ Charger les données principales
                 Item = await _api.GetByIdAsync(guid);
 
-                // 2️⃣ Compléter les champs manquants (Lot / User)
                 if (Item != null)
                 {
-                    // 🔹 Compléter LotNumero si absent
                     if (string.IsNullOrWhiteSpace(Item.LotNumero) && Item.LotId != Guid.Empty)
                     {
                         try
@@ -62,16 +60,14 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
                         }
                         catch
                         {
-                            // On ignore toute erreur, ne casse pas le flux
                         }
                     }
 
-                    // 🔹 Compléter UserNom si absent
                     if (string.IsNullOrWhiteSpace(Item.UserNom) && Item.UserId != Guid.Empty)
                     {
                         try
                         {
-                            var usersRes = await _api.GetAllUsersAsync(); // ApiResult<List<AuthListItemDto>>
+                            var usersRes = await _api.GetAllUsersAsync(); 
                             var u = usersRes?.Data?.FirstOrDefault(x => x.Id == Item.UserId);
                             if (u != null)
                                 Item.UserNom = !string.IsNullOrWhiteSpace(u.FullName)
@@ -80,11 +76,9 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
                         }
                         catch
                         {
-                            // idem, silencieux
                         }
                     }
 
-                    // 🔄 Notifie la vue que Item a été mis à jour
                     OnPropertyChanged(nameof(Item));
                 }
             }
@@ -105,6 +99,13 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
         [RelayCommand]
         public async Task DeleteAsync()
         {
+            if (!CanDelete)
+            {
+                await Shell.Current.DisplayAlert("Droits insuffisants",
+                    "Tu n'as pas le droit de supprimer cette affectation.", "OK");
+                return;
+            }
+
             if (Item is null) return;
 
             var confirm = await Shell.Current.DisplayAlert(
@@ -115,16 +116,13 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
 
             try
             {
-                // 🔹 Appel à l'API
                 await _api.DeleteAsync(Item.Id);
 
-                // 🔹 Si tout va bien → message + retour
                 await Shell.Current.DisplayAlert("OK", "Affectation supprimée avec succès.", "OK");
                 await Shell.Current.GoToAsync("//affectation-lots"); // ✅ retour vers la liste complète
             }
             catch (ApiException apiEx) when ((int)apiEx.StatusCode == 204)
             {
-                // ✅ Cas NoContent (succès silencieux)
                 await Shell.Current.DisplayAlert("OK", "Affectation supprimée avec succès.", "OK");
                 await Shell.Current.GoToAsync("//affectation-lots");
             }
@@ -139,11 +137,16 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
             }
         }
 
-
-
         [RelayCommand]
         public async Task CloturerAsync()
         {
+            if (!CanEdit)
+            {
+                await Shell.Current.DisplayAlert("Droits insuffisants",
+                    "Tu n'as pas le droit de clôturer cette affectation.", "OK");
+                return;
+            }
+
             if (Item is null) return;
 
             var input = await Shell.Current.DisplayPromptAsync(
@@ -170,7 +173,6 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
             }
             catch (ApiException apiEx) when (apiEx.StatusCode == HttpStatusCode.NoContent)
             {
-                // L’API a répondu 204: on considère succès et on recharge l’item
                 Item = await _api.GetByIdAsync(Item.Id);
                 await Shell.Current.DisplayAlert("OK", "Affectation clôturée.", "OK");
             }
@@ -187,6 +189,13 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
         [RelayCommand]
         public async Task ToggleStatutAsync()
         {
+            if (!CanEdit)
+            {
+                await Shell.Current.DisplayAlert("Droits insuffisants",
+                    "Tu n'as pas le droit de modifier le statut.", "OK");
+                return;
+            }
+
             if (Item is null) return;
 
             var nouveau = !Item.EstProprietaire;
@@ -205,7 +214,6 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
             }
             catch (ApiException apiEx) when (apiEx.StatusCode == HttpStatusCode.NoContent)
             {
-                // 204: succès silencieux → on recharge
                 Item = await _api.GetByIdAsync(Item.Id);
                 await Shell.Current.DisplayAlert("OK", "Statut modifié.", "OK");
             }

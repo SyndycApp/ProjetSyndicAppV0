@@ -13,13 +13,14 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
         public AffectationCreateViewModel(IAffectationsLotsApi api, ILotsApi lotsApi)
         {
             _api = api;
-            DateDebut = DateTime.Today;
             _lotsApi = lotsApi;
 
             DateDebut = DateTime.Today;
+
+            // TODO: à piloter selon le rôle (Syndic, etc.)
+            CanCreate = true;
         }
 
-        // Listes pour les Pickers (types alignés sur tes modèles)
         [ObservableProperty] private List<UserSelectItem>? users;
         [ObservableProperty] private List<LotDto>? lots;
 
@@ -29,12 +30,14 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
         [ObservableProperty] private DateTime dateDebut;
         [ObservableProperty] private bool estProprietaire;
 
+        [ObservableProperty] private bool canCreate;
+
         [RelayCommand]
         public async Task LoadAsync()
         {
             try
             {
-                // 1) Utilisateurs
+
                 var all = await _api.GetAllUsersAsync();
                 if (all?.Success == true && all.Data != null)
                 {
@@ -44,7 +47,9 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
                             Id = u.Id,
                             Email = u.Email,
                             Roles = u.Roles,
-                            Label = !string.IsNullOrWhiteSpace(u.FullName) ? u.FullName! : (u.Email ?? u.Id.ToString())
+                            Label = !string.IsNullOrWhiteSpace(u.FullName)
+                                ? u.FullName!
+                                : (u.Email ?? u.Id.ToString())
                         })
                         .OrderBy(u => u.Label)
                         .ToList();
@@ -56,13 +61,10 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
                     await Shell.Current.DisplayAlert("Users", $"Aucun utilisateur. Détails: {msg}", "OK");
                 }
 
-                // 2) Lots (selon ta signature existante)
+
                 Lots = await _lotsApi.GetAllAsync();
                 if (Lots == null || Lots.Count == 0)
                     await Shell.Current.DisplayAlert("Lots", "Aucun lot retourné.", "OK");
-
-                // Feedback rapide
-                await Shell.Current.DisplayAlert("Chargement", $"Users: {Users?.Count ?? 0} / Lots: {Lots?.Count ?? 0}", "OK");
             }
             catch (ApiException apiEx)
             {
@@ -76,13 +78,11 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
             }
         }
 
-
         private async Task<Guid?> ResolveUserIdAsync(UserSelectItem item)
         {
-            // Re-résoudre l’Id via /api/Auth/lookup?q=<Label>
             var label = item.Label?.Trim();
             if (string.IsNullOrWhiteSpace(label))
-                return item.Id; // fallback
+                return item.Id; 
 
             var hits = await _api.LookupUsersAsync(q: label, role: null, take: 10);
 
@@ -97,6 +97,13 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
         [RelayCommand]
         public async Task CreateAsync()
         {
+            if (!CanCreate)
+            {
+                await Shell.Current.DisplayAlert("Droits insuffisants",
+                    "Tu n'as pas le droit de créer une affectation.", "OK");
+                return;
+            }
+
             if (SelectedUser == null || SelectedLot == null)
             {
                 await Shell.Current.DisplayAlert("Erreur", "Sélectionne un utilisateur et un lot.", "OK");
@@ -122,6 +129,5 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
             await Shell.Current.DisplayAlert("OK", "Affectation créée", "OK");
             await Shell.Current.GoToAsync("..");
         }
-
     }
 }

@@ -42,6 +42,48 @@ namespace SyndicApp.Mobile.Views.Layout
             }
         }
 
+        // ====== TITLE BINDABLE PROPERTY (PageTitle) ======
+        public static readonly BindableProperty PageTitleProperty =
+            BindableProperty.Create(
+                nameof(PageTitle),
+                typeof(string),
+                typeof(RoleDrawerLayout),
+                "SyndicApp",
+                propertyChanged: OnPageTitleChanged);
+
+        public string PageTitle
+        {
+            get => (string)GetValue(PageTitleProperty);
+            set => SetValue(PageTitleProperty, value);
+        }
+
+        private static void OnPageTitleChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            var layout = (RoleDrawerLayout)bindable;
+
+            if (layout.TitleLabel != null && newValue is string title)
+            {
+                layout.TitleLabel.Text = title;
+            }
+        }
+
+        // ====== Hook "page appearing" pour les classes dérivées ======
+        protected virtual void OnAppearing()
+        {
+            // par défaut : rien
+        }
+
+        protected override void OnHandlerChanged()
+        {
+            base.OnHandlerChanged();
+
+            if (Handler != null)
+            {
+                // Le layout est attaché à l’UI → on appelle le hook
+                OnAppearing();
+            }
+        }
+
         public RoleDrawerLayout()
         {
             InitializeComponent();
@@ -64,7 +106,10 @@ namespace SyndicApp.Mobile.Views.Layout
 
         private void RoleDrawerLayout_SizeChanged(object? sender, EventArgs e)
         {
-            var width = Width > 0 ? Width : Application.Current?.Windows[0]?.Page?.Width ?? 360;
+            var width = Width > 0
+                ? Width
+                : Application.Current?.Windows[0]?.Page?.Width ?? 360;
+
             Drawer.WidthRequest = width;
             if (!_isOpen)
                 Drawer.TranslationX = -width;

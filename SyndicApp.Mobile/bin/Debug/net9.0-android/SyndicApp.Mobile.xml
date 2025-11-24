@@ -34,6 +34,9 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationCreateViewModel.EstProprietaire">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Affectations.AffectationCreateViewModel.estProprietaire"/>
         </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationCreateViewModel.CanCreate">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Affectations.AffectationCreateViewModel.canCreate"/>
+        </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Affectations.AffectationCreateViewModel.loadCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationCreateViewModel.LoadCommand"/>.</summary>
         </member>
@@ -65,6 +68,12 @@
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.IsBusy">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.isBusy"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.CanDelete">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.canDelete"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.CanEdit">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.canEdit"/>
         </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.loadCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.LoadCommand"/>.</summary>
@@ -139,6 +148,9 @@
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationsListViewModel.SelectedLot">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Affectations.AffectationsListViewModel.selectedLot"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationsListViewModel.CanCreate">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Affectations.AffectationsListViewModel.canCreate"/>
         </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Affectations.AffectationsListViewModel.loadCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationsListViewModel.LoadCommand"/>.</summary>
@@ -2142,6 +2154,9 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.EstProprietaire">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "EstProprietaire" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CanCreate">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CanCreate" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IdParam">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IdParam" generated properties.</summary>
         </member>
@@ -2153,6 +2168,12 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsBusy">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsBusy" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CanDelete">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CanDelete" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CanEdit">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CanEdit" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.LotIdParam">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "LotIdParam" generated properties.</summary>
@@ -2532,6 +2553,9 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.EstProprietaire">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "EstProprietaire" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CanCreate">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CanCreate" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IdParam">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IdParam" generated properties.</summary>
         </member>
@@ -2543,6 +2567,12 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsBusy">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsBusy" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CanDelete">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CanDelete" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CanEdit">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CanEdit" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.LotIdParam">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "LotIdParam" generated properties.</summary>

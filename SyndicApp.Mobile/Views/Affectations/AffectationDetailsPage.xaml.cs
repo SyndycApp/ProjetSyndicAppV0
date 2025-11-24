@@ -1,9 +1,10 @@
 ﻿using Microsoft.Maui.Controls;
 using SyndicApp.Mobile.ViewModels.Affectations;
+using SyndicApp.Mobile.Views.Layout;
 
 namespace SyndicApp.Mobile.Views.Affectations
 {
-    public partial class AffectationDetailsPage : ContentPage
+    public partial class AffectationDetailsPage : RoleDrawerLayout
     {
         public AffectationDetailsPage()
         {

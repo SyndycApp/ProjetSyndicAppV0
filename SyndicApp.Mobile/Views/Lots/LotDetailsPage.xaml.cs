@@ -1,16 +1,15 @@
-﻿using Microsoft.Maui.Controls;
+﻿using System;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Storage;
 using SyndicApp.Mobile.ViewModels.Lots;
-using System;
-using System.Threading.Tasks;
 
 namespace SyndicApp.Mobile.Views.Lots
 {
     public partial class LotDetailsPage : ContentPage
     {
-        private bool _isOpen;
-
-
-        public LotDetailsPage() : this(ServiceHelper.Services.GetRequiredService<LotDetailsViewModel>()) { }
+        public LotDetailsPage() : this(ServiceHelper.Services.GetRequiredService<LotDetailsViewModel>())
+        {
+        }
 
         public LotDetailsPage(LotDetailsViewModel vm)
         {
@@ -25,55 +24,31 @@ namespace SyndicApp.Mobile.Views.Lots
         {
             base.OnAppearing();
 
-            var w = this.Width > 0 ? this.Width : Application.Current?.Windows[0]?.Page?.Width ?? 360;
-            Drawer.WidthRequest = w;
-            Drawer.TranslationX = -w;
-
-            Backdrop.InputTransparent = true;
-            Backdrop.Opacity = 0;
-            _isOpen = false;
-        }
-
-        protected override void OnSizeAllocated(double w, double h)
-        {
-            base.OnSizeAllocated(w, h);
-            if (w > 0)
+            // Gérer les droits (Modifier/Supprimer visibles uniquement pour le syndic)
+            try
             {
-                Drawer.WidthRequest = w;
-                if (!_isOpen) Drawer.TranslationX = -w;
+                var role = Preferences.Get("user_role", null)?.Trim() ?? string.Empty;
+                var roleLower = role.ToLowerInvariant();
+                bool isSyndic = roleLower.Contains("syndic");
+
+                BtnEdit.IsVisible = isSyndic;
+                BtnDelete.IsVisible = isSyndic;
+
+                // Le bouton retour reste visible pour tout le monde
+                BtnBack.IsVisible = true;
+            }
+            catch
+            {
+                // En cas de souci, on laisse tout visible
+                BtnEdit.IsVisible = true;
+                BtnDelete.IsVisible = true;
+                BtnBack.IsVisible = true;
             }
         }
 
-        private async void OpenDrawer_Clicked(object s, EventArgs e)
+        private async void Back_Clicked(object sender, EventArgs e)
         {
-            if (_isOpen) return;
-            _isOpen = true;
-            Backdrop.InputTransparent = false;
-            await Backdrop.FadeTo(1, 160, Easing.CubicOut);
-            await Drawer.TranslateTo(0, 0, 220, Easing.CubicOut);
-        }
-
-        private async void CloseDrawer_Clicked(object s, EventArgs e) => await CloseDrawerAsync();
-        private async void Backdrop_Tapped(object s, TappedEventArgs e) => await CloseDrawerAsync();
-
-        private async Task CloseDrawerAsync()
-        {
-            if (!_isOpen) return;
-            _isOpen = false;
-            await Drawer.TranslateTo(-Drawer.Width, 0, 220, Easing.CubicIn);
-            await Backdrop.FadeTo(0, 140, Easing.CubicIn);
-            Backdrop.InputTransparent = true;
-        }
-
-        private async void Back_Clicked(object s, EventArgs e) => await Shell.Current.GoToAsync("..");
-
-        private async void OnMenuItemClicked(object s, EventArgs e)
-        {
-            if (s is Button b && b.CommandParameter is string r && !string.IsNullOrWhiteSpace(r))
-            {
-                await CloseDrawerAsync();
-                await Shell.Current.GoToAsync(r);
-            }
+            await Shell.Current.GoToAsync("..");
         }
     }
 }

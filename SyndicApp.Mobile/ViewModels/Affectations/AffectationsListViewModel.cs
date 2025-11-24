@@ -22,6 +22,8 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
             Items = new();
             Users = new();
             Lots = new();
+
+            CanCreate = true;
         }
 
         [ObservableProperty] private List<AffectationLotDto> items;
@@ -32,16 +34,17 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
         [ObservableProperty] private UserDto? selectedUser;
         [ObservableProperty] private LotDto? selectedLot;
 
+        [ObservableProperty] private bool canCreate;
+
         [RelayCommand]
         public async Task LoadAsync()
         {
-
             var data = await _api.GetAllAsync();
             Items = data?.ToList() ?? new List<AffectationLotDto>();
 
             try
             {
-                var allUsers = await _api.GetAllUsersAsync(); 
+                var allUsers = await _api.GetAllUsersAsync();
                 if (allUsers?.Success == true && allUsers.Data != null)
                 {
                     Users = allUsers.Data
@@ -49,7 +52,9 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
                         {
                             Id = u.Id,
                             Email = u.Email ?? string.Empty,
-                            FullName = !string.IsNullOrWhiteSpace(u.FullName) ? u.FullName! : (u.Email ?? u.Id.ToString()),
+                            FullName = !string.IsNullOrWhiteSpace(u.FullName)
+                                ? u.FullName!
+                                : (u.Email ?? u.Id.ToString()),
                             Roles = u.Roles ?? new List<string>()
                         })
                         .OrderBy(u => u.FullName)
@@ -107,7 +112,7 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
                             lotIdFilter = first.Id;
                     }
                 }
-                catch {  }
+                catch { }
 
                 if (lotIdFilter == null || lotIdFilter == Guid.Empty)
                     lotIdFilter = SelectedLot.Id;
@@ -138,7 +143,7 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
                         SelectedLot = lot;
                     }
                 }
-                catch {  }
+                catch { }
             }
 
             var filtered = data.Where(x =>
@@ -153,10 +158,19 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
         }
 
         [RelayCommand]
-        public Task GoToCreate() => Shell.Current.GoToAsync("affectation-create");
+        public async Task GoToCreate()
+        {
+            if (!CanCreate)
+            {
+                await Shell.Current.DisplayAlert("Droits insuffisants",
+                    "Tu n'as pas le droit de créer une affectation.", "OK");
+                return;
+            }
+
+            await Shell.Current.GoToAsync("affectation-create");
+        }
 
         [RelayCommand]
         public Task GoToDetails(Guid id) => Shell.Current.GoToAsync($"affectation-details?id={id}");
-
     }
 }
