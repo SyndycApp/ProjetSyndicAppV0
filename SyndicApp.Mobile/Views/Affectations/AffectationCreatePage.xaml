@@ -9,87 +9,97 @@
     Shell.NavBarIsVisible="False"
     BackgroundColor="White">
 
-    <ContentPage.Resources>
-        <Style x:Key="FieldLabelStyle" TargetType="Label">
-            <Setter Property="FontSize" Value="12" />
-            <Setter Property="TextColor" Value="#6B7280" />
-        </Style>
-
-        <Style x:Key="PrimaryButtonStyle" TargetType="Button">
-            <Setter Property="BackgroundColor" Value="#2563EB" />
-            <Setter Property="TextColor" Value="White" />
-            <Setter Property="CornerRadius" Value="10" />
-            <Setter Property="Padding" Value="14,10" />
-        </Style>
-
-        <Style x:Key="OutlineButtonStyle" TargetType="Button">
-            <Setter Property="BackgroundColor" Value="Transparent" />
-            <Setter Property="TextColor" Value="#2563EB" />
-            <Setter Property="BorderColor" Value="#2563EB" />
-            <Setter Property="BorderWidth" Value="1" />
-            <Setter Property="CornerRadius" Value="10" />
-            <Setter Property="Padding" Value="14,10" />
-        </Style>
-    </ContentPage.Resources>
-
     <layout:RoleDrawerLayout>
         <layout:RoleDrawerLayout.MainContent>
 
             <ScrollView>
-                <VerticalStackLayout Padding="16" Spacing="14">
+                <VerticalStackLayout Padding="16"
+                                     Spacing="16">
 
                     <Label Text="Nouvelle affectation"
                            FontSize="22"
-                           FontAttributes="Bold"
-                           TextColor="{StaticResource BodyText}" />
+                           FontAttributes="Bold" />
 
+                    <!-- Utilisateur -->
                     <VerticalStackLayout Spacing="4">
-                        <Label Text="Utilisateur" Style="{StaticResource FieldLabelStyle}" />
+                        <Label Text="Utilisateur"
+                               FontSize="12"
+                               TextColor="#6B7280" />
                         <Picker ItemsSource="{Binding Users}"
                                 ItemDisplayBinding="{Binding FullName}"
                                 SelectedItem="{Binding SelectedUser}"
                                 Title="Choisir un utilisateur"
-                                TextColor="Black"
-                                BackgroundColor="White" />
+                                TextColor="White"
+                                BackgroundColor="#2563EB" />
                     </VerticalStackLayout>
 
+                    <!-- Lot -->
                     <VerticalStackLayout Spacing="4">
-                        <Label Text="Lot" Style="{StaticResource FieldLabelStyle}" />
+                        <Label Text="Lot"
+                               FontSize="12"
+                               TextColor="#6B7280" />
                         <Picker ItemsSource="{Binding Lots}"
                                 ItemDisplayBinding="{Binding NumeroLot}"
                                 SelectedItem="{Binding SelectedLot}"
                                 Title="Choisir un lot"
-                                TextColor="Black"
-                                BackgroundColor="White" />
+                                TextColor="White"
+                                BackgroundColor="#2563EB" />
                     </VerticalStackLayout>
 
-                    <HorizontalStackLayout Spacing="10">
-                        <VerticalStackLayout Spacing="4">
-                            <Label Text="Date début" Style="{StaticResource FieldLabelStyle}" />
+                    <!-- Dates -->
+                    <Grid ColumnDefinitions="*,*"
+                          ColumnSpacing="12">
+                        <VerticalStackLayout Grid.Column="0"
+                                             Spacing="4">
+                            <Label Text="Date de début"
+                                   FontSize="12"
+                                   TextColor="#6B7280" />
                             <DatePicker Date="{Binding DateDebut}" />
                         </VerticalStackLayout>
 
-                        <VerticalStackLayout Spacing="4">
-                            <Label Text="Date fin (optionnelle)" Style="{StaticResource FieldLabelStyle}" />
-                            <DatePicker Date="{Binding DateFin}" />
+                        <VerticalStackLayout Grid.Column="1"
+                                             Spacing="4">
+                            <Label Text="Date de fin (optionnelle)"
+                                   FontSize="12"
+                                   TextColor="#6B7280" />
+                            <DatePicker Date="{Binding DateFin}"
+                                        IsEnabled="{Binding HasDateFin}" />
                         </VerticalStackLayout>
-                    </HorizontalStackLayout>
+                    </Grid>
 
-                    <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
-                        <Label Text="Propriétaire ?" Style="{StaticResource FieldLabelStyle}" />
-                        <Switch IsToggled="{Binding EstProprietaire}" />
-                    </HorizontalStackLayout>
+                    <!-- Propriétaire -->
+                    <Grid ColumnDefinitions="Auto,*"
+                          Margin="0,8,0,0">
+                        <Label Grid.Column="0"
+                               Text="Propriétaire"
+                               VerticalOptions="Center" />
+                        <Switch Grid.Column="1"
+                                HorizontalOptions="Start"
+                                IsToggled="{Binding EstProprietaire}" />
+                    </Grid>
 
-                    <HorizontalStackLayout Spacing="10" Margin="0,20,0,0">
-                        <Button x:Name="BtnSave"
+                    <!-- Boutons -->
+                    <Grid ColumnDefinitions="*,*"
+                          Margin="0,24,0,0"
+                          ColumnSpacing="12">
+                        <Button Grid.Column="0"
+                                Text="Annuler"
+                                BackgroundColor="Transparent"
+                                TextColor="#2563EB"
+                                BorderColor="#2563EB"
+                                BorderWidth="1"
+                                CornerRadius="10"
+                                Padding="14,10"
+                                Clicked="OnCancelClicked" />
+
+                        <Button Grid.Column="1"
                                 Text="Enregistrer"
-                                Style="{StaticResource PrimaryButtonStyle}"
-                                Command="{Binding CreateAsyncCommand}" />
-
-                        <Button Text="Annuler"
-                                Style="{StaticResource OutlineButtonStyle}"
-                                Command="{Binding CancelCommand}" />
-                    </HorizontalStackLayout>
+                                BackgroundColor="#2563EB"
+                                TextColor="White"
+                                CornerRadius="10"
+                                Padding="14,10"
+                                Clicked="OnSaveClicked" />
+                    </Grid>
 
                 </VerticalStackLayout>
             </ScrollView>

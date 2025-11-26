@@ -6,14 +6,13 @@ namespace SyndicApp.Mobile.Views.Layout
 {
     public partial class RoleDrawerLayout : ContentView
     {
-        private const uint AnimationDuration = 200;
-
-        // === MainContent bindable property (utilisée par .MainContent dans les XAML) ===
+        // ========= MainContent (contenu de la page) =========
         public static readonly BindableProperty MainContentProperty =
             BindableProperty.Create(
                 nameof(MainContent),
                 typeof(View),
                 typeof(RoleDrawerLayout),
+                null,
                 propertyChanged: OnMainContentChanged);
 
         public View MainContent
@@ -25,94 +24,95 @@ namespace SyndicApp.Mobile.Views.Layout
         private static void OnMainContentChanged(BindableObject bindable, object oldValue, object newValue)
         {
             var layout = (RoleDrawerLayout)bindable;
-
             layout.MainHost.Children.Clear();
+
             if (newValue is View view)
-            {
                 layout.MainHost.Children.Add(view);
-            }
         }
+
+        private bool _isOpen;
 
         public RoleDrawerLayout()
         {
             InitializeComponent();
 
-            // Initial state of drawer / backdrop
-            Loaded += (_, _) =>
-            {
-                Drawer.TranslationX = -Drawer.Width;
-                Backdrop.Opacity = 0;
-                Backdrop.InputTransparent = true;
-            };
+            // ⚠️ IMPORTANT :
+            // On ne touche PAS à Drawer.TranslationX ni Backdrop ici.
+            // On laisse les valeurs définies dans le XAML :
+            //   Drawer.TranslationX = -1000 (fermé)
+            //   Backdrop.Opacity = 0, InputTransparent = true
         }
 
-        public void SetPageTitle(string title)
-        {
-            TitleLabel.Text = title;
-        }
+        // ========= OUVERTURE / FERMETURE =========
 
-        private async void OpenDrawer_Clicked(object sender, EventArgs e)
+        private async Task OpenDrawerAsync()
         {
-            await OpenDrawerAsync(true);
-        }
+            if (_isOpen)
+                return;
 
-        private async void CloseDrawer_Clicked(object sender, EventArgs e)
-        {
-            await CloseDrawerAsync(true);
-        }
-
-        private async void Backdrop_Tapped(object sender, EventArgs e)
-        {
-            await CloseDrawerAsync(true);
-        }
-
-        public async Task OpenDrawerAsync(bool animate)
-        {
+            _isOpen = true;
             Backdrop.InputTransparent = false;
 
-            if (animate)
-            {
-                await Task.WhenAll(
-                    Drawer.TranslateTo(0, 0, AnimationDuration, Easing.CubicOut),
-                    Backdrop.FadeTo(1, AnimationDuration, Easing.CubicOut)
-                );
-            }
-            else
-            {
-                Drawer.TranslationX = 0;
-                Backdrop.Opacity = 1;
-            }
+            // Le drawer est déjà en dehors de l'écran (XAML: -1000),
+            // on l'anime juste vers 0.
+            await Task.WhenAll(
+                Drawer.TranslateTo(0, 0, 200, Easing.CubicOut),
+                Backdrop.FadeTo(0.5, 200, Easing.CubicOut));
         }
 
-        public async Task CloseDrawerAsync(bool animate)
+        private async Task CloseDrawerAsync()
         {
-            if (animate)
-            {
-                await Task.WhenAll(
-                    Drawer.TranslateTo(-Drawer.Width, 0, AnimationDuration, Easing.CubicIn),
-                    Backdrop.FadeTo(0, AnimationDuration, Easing.CubicIn)
-                );
-            }
-            else
-            {
-                Drawer.TranslationX = -Drawer.Width;
-                Backdrop.Opacity = 0;
-            }
+            if (!_isOpen)
+                return;
+
+            _isOpen = false;
+
+            // On l’anime vers la gauche, puis on désactive le backdrop.
+            await Task.WhenAll(
+                Drawer.TranslateTo(-Drawer.Width, 0, 200, Easing.CubicIn),
+                Backdrop.FadeTo(0, 200, Easing.CubicIn));
 
             Backdrop.InputTransparent = true;
         }
 
+        // ========= HANDLERS XAML =========
+
+        private async void OpenDrawer_Clicked(object sender, EventArgs e)
+        {
+            await OpenDrawerAsync();
+        }
+
+        private async void CloseDrawer_Clicked(object sender, EventArgs e)
+        {
+            await CloseDrawerAsync();
+        }
+
+        private async void Backdrop_Tapped(object sender, TappedEventArgs e)
+        {
+            await CloseDrawerAsync();
+        }
+
+        // 🔴 IMPORTANT : on ferme le drawer AVANT la navigation
         private async void OnMenuItemClicked(object sender, EventArgs e)
         {
-            if (sender is not Button button)
+            if (sender is not Button btn)
                 return;
 
-            var route = button.CommandParameter as string;
-            if (string.IsNullOrWhiteSpace(route))
+            if (btn.CommandParameter is not string route || string.IsNullOrWhiteSpace(route))
                 return;
 
-            await CloseDrawerAsync(true);
-            await Shell.Current.GoToAsync(route);
+            // 1) Fermer le drawer sur la page actuelle
+            await CloseDrawerAsync();
+
+            // 2) Naviguer vers la nouvelle page
+            try
+            {
+                await Shell.Current.GoToAsync(route);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Navigation error: {ex}");
+            }
         }
     }
 }

@@ -5,95 +5,61 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:layout="clr-namespace:SyndicApp.Mobile.Views.Layout"
     xmlns:vm="clr-namespace:SyndicApp.Mobile.ViewModels.Affectations"
-    xmlns:converters="clr-namespace:SyndicApp.Mobile.Converters"
     Title="Affectations"
     Shell.NavBarIsVisible="False"
     BackgroundColor="White">
 
-    <ContentPage.Resources>
-
-        <Color x:Key="Divider">#E5E7EB</Color>
-        <converters:BoolToOuiNonConverter x:Key="BoolToOuiNonConverter" />
-
-        <Style x:Key="TitleLabelStyle" TargetType="Label">
-            <Setter Property="FontSize" Value="22" />
-            <Setter Property="FontAttributes" Value="Bold" />
-            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
-        </Style>
-
-        <Style x:Key="FieldLabelStyle" TargetType="Label">
-            <Setter Property="FontSize" Value="12" />
-            <Setter Property="TextColor" Value="#6B7280" />
-        </Style>
-
-        <Style x:Key="PrimaryButtonStyle" TargetType="Button">
-            <Setter Property="BackgroundColor" Value="#2563EB" />
-            <Setter Property="TextColor" Value="White" />
-            <Setter Property="CornerRadius" Value="12" />
-            <Setter Property="Padding" Value="14,6" />
-        </Style>
-
-        <Style x:Key="OutlineButtonStyle" TargetType="Button">
-            <Setter Property="BackgroundColor" Value="Transparent" />
-            <Setter Property="TextColor" Value="#2563EB" />
-            <Setter Property="BorderColor" Value="#2563EB" />
-            <Setter Property="BorderWidth" Value="1" />
-            <Setter Property="CornerRadius" Value="10" />
-            <Setter Property="Padding" Value="10,6" />
-        </Style>
-
-        <Style x:Key="CardStyle" TargetType="Frame">
-            <Setter Property="HasShadow" Value="False" />
-            <Setter Property="CornerRadius" Value="14" />
-            <Setter Property="Padding" Value="14" />
-            <Setter Property="BackgroundColor" Value="White" />
-            <Setter Property="BorderColor" Value="#E5E7EB" />
-        </Style>
-    </ContentPage.Resources>
+    <!-- Pas de x:DataType pour éviter les warnings XC00xx -->
 
     <layout:RoleDrawerLayout>
         <layout:RoleDrawerLayout.MainContent>
 
-            <!-- ===== CONTENU PAGE AFFECTATIONS ===== -->
-            <Grid BackgroundColor="White"
-                  Padding="16"
-                  RowDefinitions="Auto,Auto,*">
+            <Grid Padding="16" RowDefinitions="Auto,Auto,*">
 
                 <!-- Titre + bouton AJOUT -->
-                <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                <Grid RowDefinitions="Auto"
+                      ColumnDefinitions="*,Auto">
                     <Label Text="Affectations des lots"
-                           Style="{StaticResource TitleLabelStyle}" />
+                           FontSize="22"
+                           FontAttributes="Bold" />
 
-                    <!-- visible uniquement pour Syndic (géré dans code-behind) -->
                     <Button x:Name="BtnAddAffectation"
                             Grid.Column="1"
                             Text="+"
-                            Style="{StaticResource PrimaryButtonStyle}"
+                            BackgroundColor="#2563EB"
+                            TextColor="White"
+                            CornerRadius="12"
+                            Padding="14,6"
                             Clicked="OnAddAffectationClicked" />
                 </Grid>
 
                 <!-- Filtres -->
-                <Grid Grid.Row="1"
-                      Margin="0,8,0,8"
+                <Grid Row="1"
                       ColumnDefinitions="*,*,Auto"
-                      RowDefinitions="Auto,Auto">
+                      RowDefinitions="Auto,Auto"
+                      Margin="0,8,0,8">
 
+                    <!-- Utilisateur -->
                     <VerticalStackLayout Grid.Row="1"
                                          Grid.Column="0"
                                          Spacing="4">
-                        <Label Text="Utilisateur" Style="{StaticResource FieldLabelStyle}" />
+                        <Label Text="Utilisateur"
+                               FontSize="12"
+                               TextColor="#6B7280" />
                         <Picker ItemsSource="{Binding Users}"
                                 ItemDisplayBinding="{Binding FullName}"
                                 SelectedItem="{Binding SelectedUser}"
-                                Title="Tous"
                                 TextColor="Black"
                                 BackgroundColor="White" />
                     </VerticalStackLayout>
 
+                    <!-- Lot -->
                     <VerticalStackLayout Grid.Row="1"
                                          Grid.Column="1"
                                          Spacing="4">
-                        <Label Text="Lot" Style="{StaticResource FieldLabelStyle}" />
+                        <Label Text="Lot"
+                               FontSize="12"
+                               TextColor="#6B7280" />
                         <Picker ItemsSource="{Binding Lots}"
                                 ItemDisplayBinding="{Binding NumeroLot}"
                                 SelectedItem="{Binding SelectedLot}"
@@ -103,13 +69,19 @@
                                 BackgroundColor="White" />
                     </VerticalStackLayout>
 
+                    <!-- Bouton Filtrer -->
                     <VerticalStackLayout Grid.Row="1"
                                          Grid.Column="2"
                                          Spacing="4"
                                          HorizontalOptions="End">
                         <Label Text=" " />
                         <Button Text="Filtrer"
-                                Style="{StaticResource OutlineButtonStyle}"
+                                BackgroundColor="Transparent"
+                                TextColor="#2563EB"
+                                BorderColor="#2563EB"
+                                BorderWidth="1"
+                                CornerRadius="10"
+                                Padding="14,10"
                                 Command="{Binding FilterCommand}" />
                     </VerticalStackLayout>
                 </Grid>
@@ -128,10 +100,16 @@
 
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Frame Style="{StaticResource CardStyle}" Margin="0,6">
+                            <Frame Margin="0,6"
+                                   Padding="14"
+                                   CornerRadius="14"
+                                   HasShadow="False"
+                                   BackgroundColor="White"
+                                   BorderColor="#E5E7EB">
                                 <Grid RowDefinitions="Auto,Auto"
                                       ColumnDefinitions="*,Auto">
 
+                                    <!-- Ligne 1 : lot + user + statut -->
                                     <VerticalStackLayout Grid.Row="0"
                                                          Grid.Column="0"
                                                          Spacing="2">
@@ -146,6 +124,7 @@
                                            HorizontalTextAlignment="End"
                                            FontAttributes="Bold" />
 
+                                    <!-- Dates -->
                                     <Grid Grid.Row="1"
                                           Grid.ColumnSpan="2"
                                           ColumnDefinitions="*,*"
@@ -159,20 +138,26 @@
                                                HorizontalTextAlignment="End" />
                                     </Grid>
 
+                                    <!-- Propriétaire + bouton détails -->
                                     <Grid Grid.Row="1"
                                           Grid.ColumnSpan="2"
                                           ColumnDefinitions="Auto,Auto,*,Auto"
                                           Margin="0,40,0,0">
                                         <Label Grid.Column="0"
-                                               Text="Propriétaire :"
+                                               Text="Propriétaire : "
                                                Opacity="0.7" />
                                         <Label Grid.Column="1"
-                                               Text="{Binding EstProprietaire, Converter={StaticResource BoolToOuiNonConverter}}" />
+                                               Text="{Binding EstProprietaireLabel}" />
                                         <Label Grid.Column="2" />
+
                                         <Button Grid.Column="3"
                                                 Text="Détails"
-                                                Style="{StaticResource OutlineButtonStyle}"
-                                                CommandParameter="{Binding Id}"
+                                                BackgroundColor="Transparent"
+                                                TextColor="#2563EB"
+                                                BorderColor="#2563EB"
+                                                BorderWidth="1"
+                                                CornerRadius="10"
+                                                Padding="10,6"
                                                 Clicked="OnDetailsClicked" />
                                     </Grid>
                                 </Grid>
