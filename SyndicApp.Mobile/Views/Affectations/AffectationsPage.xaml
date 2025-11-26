@@ -5,9 +5,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:layout="clr-namespace:SyndicApp.Mobile.Views.Layout"
     xmlns:vm="clr-namespace:SyndicApp.Mobile.ViewModels.Affectations"
+    xmlns:converters="clr-namespace:SyndicApp.Mobile.Converters"
     Title="Affectations"
     Shell.NavBarIsVisible="False"
     BackgroundColor="White">
+
+    <!-- RESSOURCES -->
+    <ContentPage.Resources>
+        <!-- Convertit bool -> Oui / Non -->
+        <converters:BoolToOuiNonConverter x:Key="BoolToOuiNonConverter" />
+    </ContentPage.Resources>
 
     <!-- Pas de x:DataType pour éviter les warnings XC00xx -->
 
@@ -144,10 +151,11 @@
                                           ColumnDefinitions="Auto,Auto,*,Auto"
                                           Margin="0,40,0,0">
                                         <Label Grid.Column="0"
-                                               Text="Propriétaire : "
+                                               Text="Propriétaire :"
                                                Opacity="0.7" />
                                         <Label Grid.Column="1"
-                                               Text="{Binding EstProprietaireLabel}" />
+                                               Text="{Binding EstProprietaire,
+                                                              Converter={StaticResource BoolToOuiNonConverter}}" />
                                         <Label Grid.Column="2" />
 
                                         <Button Grid.Column="3"

@@ -21,17 +21,18 @@
                            FontAttributes="Bold" />
 
                     <!-- Utilisateur -->
-                    <VerticalStackLayout Spacing="4">
-                        <Label Text="Utilisateur"
-                               FontSize="12"
-                               TextColor="#6B7280" />
-                        <Picker ItemsSource="{Binding Users}"
-                                ItemDisplayBinding="{Binding FullName}"
-                                SelectedItem="{Binding SelectedUser}"
-                                Title="Choisir un utilisateur"
-                                TextColor="White"
-                                BackgroundColor="#2563EB" />
-                    </VerticalStackLayout>
+<VerticalStackLayout Spacing="4">
+    <Label Text="Utilisateur"
+           FontSize="12"
+           TextColor="#6B7280" />
+    <Picker ItemsSource="{Binding Users}"
+            ItemDisplayBinding="{Binding Label}"
+            SelectedItem="{Binding SelectedUser}"
+            Title="Choisir un utilisateur"
+            TextColor="White"
+            BackgroundColor="#2563EB" />
+</VerticalStackLayout>
+
 
                     <!-- Lot -->
                     <VerticalStackLayout Spacing="4">
