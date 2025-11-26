@@ -19,10 +19,19 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
 
             CanDelete = true;
             CanEdit = true;
+
+            // ✅ Commandes utilisées par le XAML
+            EditCommand = new AsyncRelayCommand(EditAsync);
+            CloseCommand = new AsyncRelayCommand(CloturerAsync);
+            GoToHistoriqueCommand = new AsyncRelayCommand(OpenHistoriqueAsync);
         }
 
-        [ObservableProperty] private string? idParam;
+        // 🔹 Commandes exposées pour le XAML
+        public IAsyncRelayCommand EditCommand { get; }
+        public IAsyncRelayCommand CloseCommand { get; }
+        public IAsyncRelayCommand GoToHistoriqueCommand { get; }
 
+        [ObservableProperty] private string? idParam;
         [ObservableProperty] private Guid id;
 
         [ObservableProperty] private AffectationLotDto? item;
@@ -50,6 +59,7 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
 
                 if (Item != null)
                 {
+                    // Résolution du numéro de lot si manquant
                     if (string.IsNullOrWhiteSpace(Item.LotNumero) && Item.LotId != Guid.Empty)
                     {
                         try
@@ -58,25 +68,22 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
                             if (lot != null)
                                 Item.LotNumero = lot.NumeroLot;
                         }
-                        catch
-                        {
-                        }
+                        catch { }
                     }
 
+                    // Résolution du nom utilisateur si manquant
                     if (string.IsNullOrWhiteSpace(Item.UserNom) && Item.UserId != Guid.Empty)
                     {
                         try
                         {
-                            var usersRes = await _api.GetAllUsersAsync(); 
+                            var usersRes = await _api.GetAllUsersAsync();
                             var u = usersRes?.Data?.FirstOrDefault(x => x.Id == Item.UserId);
                             if (u != null)
                                 Item.UserNom = !string.IsNullOrWhiteSpace(u.FullName)
                                     ? u.FullName!
                                     : (u.Email ?? u.Id.ToString());
                         }
-                        catch
-                        {
-                        }
+                        catch { }
                     }
 
                     OnPropertyChanged(nameof(Item));
@@ -94,6 +101,15 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
             {
                 IsBusy = false;
             }
+        }
+
+        // 🔹 Bouton "Modifier"
+        private async Task EditAsync()
+        {
+            if (Item is null) return;
+
+            // 👉 adapte le nom de la route si besoin
+            await Shell.Current.GoToAsync($"affectation-edit?id={Item.Id}");
         }
 
         [RelayCommand]
@@ -119,7 +135,7 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
                 await _api.DeleteAsync(Item.Id);
 
                 await Shell.Current.DisplayAlert("OK", "Affectation supprimée avec succès.", "OK");
-                await Shell.Current.GoToAsync("//affectation-lots"); // ✅ retour vers la liste complète
+                await Shell.Current.GoToAsync("//affectation-lots");
             }
             catch (ApiException apiEx) when ((int)apiEx.StatusCode == 204)
             {
@@ -137,6 +153,7 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
             }
         }
 
+        // 🔹 Bouton "Clôturer l'affectation"
         [RelayCommand]
         public async Task CloturerAsync()
         {
@@ -167,7 +184,7 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
             try
             {
                 var dto = new AffectationClotureDto { DateFin = dateFin };
-                var updated = await _api.CloturerAsync(Item.Id, dto); // OK si l'API renvoie 200 + body
+                var updated = await _api.CloturerAsync(Item.Id, dto);
                 Item = updated;
                 await Shell.Current.DisplayAlert("OK", "Affectation clôturée.", "OK");
             }
@@ -208,7 +225,7 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
             try
             {
                 var dto = new AffectationChangerStatutDto { EstProprietaire = nouveau };
-                var updated = await _api.ChangerStatutAsync(Item.Id, dto); // OK si 200 + body
+                var updated = await _api.ChangerStatutAsync(Item.Id, dto);
                 Item = updated;
                 await Shell.Current.DisplayAlert("OK", "Statut modifié.", "OK");
             }
@@ -227,6 +244,7 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
             }
         }
 
+        // 🔹 Bouton "Historique du lot"
         [RelayCommand]
         public Task OpenHistoriqueAsync()
         {
