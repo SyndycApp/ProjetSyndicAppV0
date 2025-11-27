@@ -21,18 +21,17 @@
                            FontAttributes="Bold" />
 
                     <!-- Utilisateur -->
-<VerticalStackLayout Spacing="4">
-    <Label Text="Utilisateur"
-           FontSize="12"
-           TextColor="#6B7280" />
-    <Picker ItemsSource="{Binding Users}"
-            ItemDisplayBinding="{Binding Label}"
-            SelectedItem="{Binding SelectedUser}"
-            Title="Choisir un utilisateur"
-            TextColor="White"
-            BackgroundColor="#2563EB" />
-</VerticalStackLayout>
-
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Utilisateur"
+                               FontSize="12"
+                               TextColor="#6B7280" />
+                        <Picker ItemsSource="{Binding Users}"
+                                ItemDisplayBinding="{Binding Label}"
+                                SelectedItem="{Binding SelectedUser}"
+                                Title="Choisir un utilisateur"
+                                TextColor="White"
+                                BackgroundColor="#2563EB" />
+                    </VerticalStackLayout>
 
                     <!-- Lot -->
                     <VerticalStackLayout Spacing="4">
@@ -93,7 +92,9 @@
                                 Padding="14,10"
                                 Clicked="OnCancelClicked" />
 
-                        <Button Grid.Column="1"
+                        <!-- ICI : x:Name ajouté -->
+                        <Button x:Name="BtnSave"
+                                Grid.Column="1"
                                 Text="Enregistrer"
                                 BackgroundColor="#2563EB"
                                 TextColor="White"

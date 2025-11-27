@@ -19,17 +19,7 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
 
             CanDelete = true;
             CanEdit = true;
-
-            // ✅ Commandes utilisées par le XAML
-            EditCommand = new AsyncRelayCommand(EditAsync);
-            CloseCommand = new AsyncRelayCommand(CloturerAsync);
-            GoToHistoriqueCommand = new AsyncRelayCommand(OpenHistoriqueAsync);
         }
-
-        // 🔹 Commandes exposées pour le XAML
-        public IAsyncRelayCommand EditCommand { get; }
-        public IAsyncRelayCommand CloseCommand { get; }
-        public IAsyncRelayCommand GoToHistoriqueCommand { get; }
 
         [ObservableProperty] private string? idParam;
         [ObservableProperty] private Guid id;
@@ -59,7 +49,7 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
 
                 if (Item != null)
                 {
-                    // Résolution du numéro de lot si manquant
+                    // Compléter le lot si besoin
                     if (string.IsNullOrWhiteSpace(Item.LotNumero) && Item.LotId != Guid.Empty)
                     {
                         try
@@ -71,7 +61,7 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
                         catch { }
                     }
 
-                    // Résolution du nom utilisateur si manquant
+                    // Compléter l’utilisateur si besoin
                     if (string.IsNullOrWhiteSpace(Item.UserNom) && Item.UserId != Guid.Empty)
                     {
                         try
@@ -104,53 +94,14 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
         }
 
         // 🔹 Bouton "Modifier"
-        private async Task EditAsync()
-        {
-            if (Item is null) return;
-
-            // 👉 adapte le nom de la route si besoin
-            await Shell.Current.GoToAsync($"affectation-edit?id={Item.Id}");
-        }
-
         [RelayCommand]
-        public async Task DeleteAsync()
+        public Task EditAsync()
         {
-            if (!CanDelete)
-            {
-                await Shell.Current.DisplayAlert("Droits insuffisants",
-                    "Tu n'as pas le droit de supprimer cette affectation.", "OK");
-                return;
-            }
+            if (Item is null)
+                return Task.CompletedTask;
 
-            if (Item is null) return;
-
-            var confirm = await Shell.Current.DisplayAlert(
-                "Supprimer",
-                "Confirmer la suppression de cette affectation ?",
-                "Supprimer", "Annuler");
-            if (!confirm) return;
-
-            try
-            {
-                await _api.DeleteAsync(Item.Id);
-
-                await Shell.Current.DisplayAlert("OK", "Affectation supprimée avec succès.", "OK");
-                await Shell.Current.GoToAsync("//affectation-lots");
-            }
-            catch (ApiException apiEx) when ((int)apiEx.StatusCode == 204)
-            {
-                await Shell.Current.DisplayAlert("OK", "Affectation supprimée avec succès.", "OK");
-                await Shell.Current.GoToAsync("//affectation-lots");
-            }
-            catch (ApiException apiEx)
-            {
-                await Shell.Current.DisplayAlert("API",
-                    $"{(int)apiEx.StatusCode} - {apiEx.StatusCode}\n{apiEx.Content}", "OK");
-            }
-            catch (Exception ex)
-            {
-                await Shell.Current.DisplayAlert("Erreur", ex.Message, "OK");
-            }
+            // On réutilise le formulaire de création avec un id → mode édition
+            return Shell.Current.GoToAsync($"affectation-create?id={Item.Id}");
         }
 
         // 🔹 Bouton "Clôturer l'affectation"
@@ -171,8 +122,8 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
                 "Date de fin (jj/mm/aaaa)",
                 accept: "Valider", cancel: "Annuler",
                 initialValue: DateTime.Today.ToString("dd/MM/yyyy"),
-                keyboard: Keyboard.Numeric
-            );
+                keyboard: Keyboard.Numeric);
+
             if (string.IsNullOrWhiteSpace(input)) return;
 
             if (!DateTime.TryParse(input, out var dateFin))
@@ -195,7 +146,8 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
             }
             catch (ApiException apiEx)
             {
-                await Shell.Current.DisplayAlert("API", $"{(int)apiEx.StatusCode} - {apiEx.StatusCode}\n{apiEx.Content}", "OK");
+                await Shell.Current.DisplayAlert("API",
+                    $"{(int)apiEx.StatusCode} - {apiEx.StatusCode}\n{apiEx.Content}", "OK");
             }
             catch (Exception ex)
             {
@@ -203,48 +155,7 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
             }
         }
 
-        [RelayCommand]
-        public async Task ToggleStatutAsync()
-        {
-            if (!CanEdit)
-            {
-                await Shell.Current.DisplayAlert("Droits insuffisants",
-                    "Tu n'as pas le droit de modifier le statut.", "OK");
-                return;
-            }
-
-            if (Item is null) return;
-
-            var nouveau = !Item.EstProprietaire;
-            var ok = await Shell.Current.DisplayAlert(
-                "Changer le statut",
-                $"Passer « Est propriétaire » à {(nouveau ? "Oui" : "Non")} ?",
-                "Oui", "Non");
-            if (!ok) return;
-
-            try
-            {
-                var dto = new AffectationChangerStatutDto { EstProprietaire = nouveau };
-                var updated = await _api.ChangerStatutAsync(Item.Id, dto);
-                Item = updated;
-                await Shell.Current.DisplayAlert("OK", "Statut modifié.", "OK");
-            }
-            catch (ApiException apiEx) when (apiEx.StatusCode == HttpStatusCode.NoContent)
-            {
-                Item = await _api.GetByIdAsync(Item.Id);
-                await Shell.Current.DisplayAlert("OK", "Statut modifié.", "OK");
-            }
-            catch (ApiException apiEx)
-            {
-                await Shell.Current.DisplayAlert("API", $"{(int)apiEx.StatusCode} - {apiEx.StatusCode}\n{apiEx.Content}", "OK");
-            }
-            catch (Exception ex)
-            {
-                await Shell.Current.DisplayAlert("Erreur", ex.Message, "OK");
-            }
-        }
-
-        // 🔹 Bouton "Historique du lot"
+        // 🔹 Historique du lot
         [RelayCommand]
         public Task OpenHistoriqueAsync()
         {

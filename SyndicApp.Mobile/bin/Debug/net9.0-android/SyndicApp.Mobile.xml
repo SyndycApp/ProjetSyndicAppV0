@@ -16,6 +16,12 @@
             <inheritdoc/>
             <inheritdoc/>
         </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationCreateViewModel.IdParam">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Affectations.AffectationCreateViewModel.idParam"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationCreateViewModel.Id">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Affectations.AffectationCreateViewModel.id"/>
+        </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationCreateViewModel.Users">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Affectations.AffectationCreateViewModel.users"/>
         </member>
@@ -30,6 +36,9 @@
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationCreateViewModel.DateDebut">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Affectations.AffectationCreateViewModel.dateDebut"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationCreateViewModel.DateFin">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Affectations.AffectationCreateViewModel.dateFin"/>
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationCreateViewModel.EstProprietaire">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Affectations.AffectationCreateViewModel.estProprietaire"/>
@@ -50,7 +59,6 @@
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Affectations.AffectationCreateViewModel.CreateAsync"/>.</summary>
         </member>
         <member name="T:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel">
-            <inheritdoc/>
             <inheritdoc/>
             <inheritdoc/>
             <inheritdoc/>
@@ -81,23 +89,17 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.LoadCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.LoadAsync"/>.</summary>
         </member>
-        <member name="F:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.deleteCommand">
-            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.DeleteCommand"/>.</summary>
+        <member name="F:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.editCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.EditCommand"/>.</summary>
         </member>
-        <member name="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.DeleteCommand">
-            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.DeleteAsync"/>.</summary>
+        <member name="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.EditCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.EditAsync"/>.</summary>
         </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.cloturerCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.CloturerCommand"/>.</summary>
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.CloturerCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.CloturerAsync"/>.</summary>
-        </member>
-        <member name="F:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.toggleStatutCommand">
-            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.ToggleStatutCommand"/>.</summary>
-        </member>
-        <member name="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.ToggleStatutCommand">
-            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.ToggleStatutAsync"/>.</summary>
         </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.openHistoriqueCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationDetailsViewModel.OpenHistoriqueCommand"/>.</summary>
@@ -2136,6 +2138,12 @@
             for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
             </summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IdParam">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IdParam" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Id">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Id" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Users">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Users" generated properties.</summary>
         </member>
@@ -2151,17 +2159,14 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.DateDebut">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "DateDebut" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.DateFin">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "DateFin" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.EstProprietaire">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "EstProprietaire" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CanCreate">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CanCreate" generated properties.</summary>
-        </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IdParam">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IdParam" generated properties.</summary>
-        </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Id">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Id" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Item">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Item" generated properties.</summary>
@@ -2535,6 +2540,12 @@
             for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
             </summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IdParam">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IdParam" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Id">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Id" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Users">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Users" generated properties.</summary>
         </member>
@@ -2550,17 +2561,14 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.DateDebut">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "DateDebut" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.DateFin">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "DateFin" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.EstProprietaire">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "EstProprietaire" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CanCreate">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CanCreate" generated properties.</summary>
-        </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IdParam">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IdParam" generated properties.</summary>
-        </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Id">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Id" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Item">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Item" generated properties.</summary>

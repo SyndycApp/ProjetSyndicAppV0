@@ -16,7 +16,9 @@ namespace SyndicApp.Mobile.Views.Affectations
             base.OnAppearing();
 
             if (BindingContext is AffectationHistoriqueViewModel vm)
+            {
                 await vm.LoadAsync();
+            }
         }
     }
 }

@@ -4,7 +4,6 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:layout="clr-namespace:SyndicApp.Mobile.Views.Layout"
-    xmlns:vm="clr-namespace:SyndicApp.Mobile.ViewModels.Affectations"
     xmlns:converters="clr-namespace:SyndicApp.Mobile.Converters"
     Title="Détails affectation"
     Shell.NavBarIsVisible="False"
@@ -12,6 +11,8 @@
 
     <ContentPage.Resources>
         <converters:BoolToOuiNonConverter x:Key="BoolToOuiNonConverter" />
+
+        <Color x:Key="BodyText">#111827</Color>
 
         <Style x:Key="FieldLabelStyle" TargetType="Label">
             <Setter Property="FontSize" Value="12" />
@@ -51,90 +52,75 @@
                            FontAttributes="Bold"
                            TextColor="{StaticResource BodyText}" />
 
-                    <!-- GRID AVEC ROWS BIEN DÉFINIES -->
+                    <!-- 1 champ par ligne -->
                     <Grid ColumnDefinitions="Auto,*"
                           RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto"
                           RowSpacing="8">
 
-                        <!-- Row 0 : Utilisateur -->
-                        <Label Grid.Row="0"
-                               Grid.Column="0"
+                        <!-- Utilisateur -->
+                        <Label Grid.Row="0" Grid.Column="0"
                                Text="Utilisateur :"
                                Style="{StaticResource FieldLabelStyle}" />
-                        <Label Grid.Row="0"
-                               Grid.Column="1"
-                               Text="{Binding UserNom}"
+                        <Label Grid.Row="0" Grid.Column="1"
+                               Text="{Binding Item.UserNom}"
                                Style="{StaticResource ValueLabelStyle}" />
 
-                        <!-- Row 1 : Lot -->
-                        <Label Grid.Row="1"
-                               Grid.Column="0"
+                        <!-- Lot -->
+                        <Label Grid.Row="1" Grid.Column="0"
                                Text="Lot :"
                                Style="{StaticResource FieldLabelStyle}" />
-                        <Label Grid.Row="1"
-                               Grid.Column="1"
-                               Text="{Binding LotNumero}"
+                        <Label Grid.Row="1" Grid.Column="1"
+                               Text="{Binding Item.LotNumero}"
                                Style="{StaticResource ValueLabelStyle}" />
 
-                        <!-- Row 2 : Statut -->
-                        <Label Grid.Row="2"
-                               Grid.Column="0"
+                        <!-- Statut -->
+                        <Label Grid.Row="2" Grid.Column="0"
                                Text="Statut :"
                                Style="{StaticResource FieldLabelStyle}" />
-                        <Label Grid.Row="2"
-                               Grid.Column="1"
-                               Text="{Binding Statut}"
+                        <Label Grid.Row="2" Grid.Column="1"
+                               Text="{Binding Item.Statut}"
                                Style="{StaticResource ValueLabelStyle}" />
 
-                        <!-- Row 3 : Date début -->
-                        <Label Grid.Row="3"
-                               Grid.Column="0"
+                        <!-- Date début -->
+                        <Label Grid.Row="3" Grid.Column="0"
                                Text="Date début :"
                                Style="{StaticResource FieldLabelStyle}" />
-                        <Label Grid.Row="3"
-                               Grid.Column="1"
-                               Text="{Binding DateDebut, StringFormat='{0:dd/MM/yyyy}'}"
+                        <Label Grid.Row="3" Grid.Column="1"
+                               Text="{Binding Item.DateDebut, StringFormat='{0:dd/MM/yyyy}'}"
                                Style="{StaticResource ValueLabelStyle}" />
 
-                        <!-- Row 4 : Date fin -->
-                        <Label Grid.Row="4"
-                               Grid.Column="0"
+                        <!-- Date fin -->
+                        <Label Grid.Row="4" Grid.Column="0"
                                Text="Date fin :"
                                Style="{StaticResource FieldLabelStyle}" />
-                        <Label Grid.Row="4"
-                               Grid.Column="1"
-                               Text="{Binding DateFin, StringFormat='{0:dd/MM/yyyy}'}"
+                        <Label Grid.Row="4" Grid.Column="1"
+                               Text="{Binding Item.DateFin, StringFormat='{0:dd/MM/yyyy}'}"
                                Style="{StaticResource ValueLabelStyle}" />
 
-                        <!-- Row 5 : Propriétaire -->
-                        <Label Grid.Row="5"
-                               Grid.Column="0"
+                        <!-- Propriétaire -->
+                        <Label Grid.Row="5" Grid.Column="0"
                                Text="Propriétaire :"
                                Style="{StaticResource FieldLabelStyle}" />
-                        <Label Grid.Row="5"
-                               Grid.Column="1"
-                               Text="{Binding EstProprietaire, Converter={StaticResource BoolToOuiNonConverter}}"
+                        <Label Grid.Row="5" Grid.Column="1"
+                               Text="{Binding Item.EstProprietaire, Converter={StaticResource BoolToOuiNonConverter}}"
                                Style="{StaticResource ValueLabelStyle}" />
                     </Grid>
 
-                    <!-- BOUTONS ACTIONS -->
+                    <!-- Boutons -->
                     <VerticalStackLayout Spacing="10" Margin="0,20,0,0">
                         <Button x:Name="BtnEdit"
                                 Text="Modifier"
                                 Style="{StaticResource PrimaryButtonStyle}"
-                                Command="{Binding EditCommand}"
-                                Clicked="OnEditClicked" />
+                                Command="{Binding EditCommand}" />
 
                         <Button x:Name="BtnClose"
                                 Text="Clôturer l'affectation"
                                 Style="{StaticResource OutlineButtonStyle}"
-                                Command="{Binding CloseCommand}"
-                                Clicked="OnCloseClicked" />
+                                Command="{Binding CloturerCommand}" />
 
                         <Button Text="Historique du lot"
                                 Style="{StaticResource OutlineButtonStyle}"
-                                Command="{Binding GoToHistoriqueCommand}"
-                                Clicked="OnHistoriqueClicked" />
+                                Command="{Binding OpenHistoriqueCommand}" />
                     </VerticalStackLayout>
 
                 </VerticalStackLayout>

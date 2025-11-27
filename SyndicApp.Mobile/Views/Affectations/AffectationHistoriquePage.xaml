@@ -4,46 +4,31 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:layout="clr-namespace:SyndicApp.Mobile.Views.Layout"
-    xmlns:vm="clr-namespace:SyndicApp.Mobile.ViewModels.Affectations"
-    xmlns:converters="clr-namespace:SyndicApp.Mobile.Converters"
-    Title="Historique affectations"
+    Title="Historique des affectations"
     Shell.NavBarIsVisible="False"
     BackgroundColor="White">
-
-    <ContentPage.Resources>
-        <converters:BoolToOuiNonConverter x:Key="BoolToOuiNonConverter" />
-
-        <Style x:Key="FieldLabelStyle" TargetType="Label">
-            <Setter Property="FontSize" Value="12" />
-            <Setter Property="TextColor" Value="#6B7280" />
-        </Style>
-
-        <Style x:Key="CardStyle" TargetType="Frame">
-            <Setter Property="HasShadow" Value="False" />
-            <Setter Property="CornerRadius" Value="14" />
-            <Setter Property="Padding" Value="14" />
-            <Setter Property="BackgroundColor" Value="White" />
-            <Setter Property="BorderColor" Value="#E5E7EB" />
-        </Style>
-    </ContentPage.Resources>
 
     <layout:RoleDrawerLayout>
         <layout:RoleDrawerLayout.MainContent>
 
             <Grid Padding="16" RowDefinitions="Auto,*">
 
+                <!-- Titre -->
                 <Label Grid.Row="0"
-                       Text="Historique des affectations"
+                       Text="Historique du lot"
                        FontSize="22"
                        FontAttributes="Bold"
-                       TextColor="{StaticResource BodyText}" />
+                       TextColor="#111827" />
 
+                <!-- Liste -->
                 <CollectionView Grid.Row="1"
+                                Margin="0,12,0,0"
                                 ItemsSource="{Binding Items}"
                                 SelectionMode="None">
+
                     <CollectionView.EmptyView>
                         <Grid Padding="24" VerticalOptions="Center">
-                            <Label Text="Aucun historique pour ce lot."
+                            <Label Text="Aucune affectation trouvée pour ce lot."
                                    HorizontalTextAlignment="Center"
                                    Opacity="0.6" />
                         </Grid>
@@ -51,22 +36,29 @@
 
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
-                            <Frame Style="{StaticResource CardStyle}" Margin="0,6">
-                                <Grid RowDefinitions="Auto,Auto"
+                            <Frame Margin="0,6"
+                                   Padding="14"
+                                   CornerRadius="14"
+                                   HasShadow="False"
+                                   BackgroundColor="White"
+                                   BorderColor="#E5E7EB">
+
+                                <Grid RowDefinitions="Auto,Auto,Auto"
                                       ColumnDefinitions="*,Auto">
 
-                                    <VerticalStackLayout Grid.Row="0"
-                                                         Grid.Column="0"
-                                                         Spacing="2">
-                                        <Label Text="{Binding UserNom}" FontAttributes="Bold" />
-                                        <Label Text="{Binding Statut}" />
-                                    </VerticalStackLayout>
+                                    <!-- Ligne 1 : utilisateur + statut -->
+                                    <Label Grid.Row="0"
+                                           Grid.Column="0"
+                                           Text="{Binding UserNom}"
+                                           FontAttributes="Bold" />
 
                                     <Label Grid.Row="0"
                                            Grid.Column="1"
-                                           Text="{Binding EstProprietaire, Converter={StaticResource BoolToOuiNonConverter}}"
+                                           Text="{Binding Statut}"
+                                           FontAttributes="Bold"
                                            HorizontalTextAlignment="End" />
 
+                                    <!-- Ligne 2 : dates -->
                                     <Grid Grid.Row="1"
                                           Grid.ColumnSpan="2"
                                           ColumnDefinitions="*,*"
@@ -79,6 +71,19 @@
                                                HorizontalTextAlignment="End"
                                                Opacity="0.7" />
                                     </Grid>
+
+                                    <!-- Ligne 3 : propriétaire -->
+                                    <Grid Grid.Row="2"
+                                          Grid.ColumnSpan="2"
+                                          ColumnDefinitions="Auto,Auto"
+                                          Margin="0,6,0,0">
+                                        <Label Grid.Column="0"
+                                               Text="Propriétaire : "
+                                               Opacity="0.7" />
+                                        <Label Grid.Column="1"
+                                               Text="{Binding EstProprietaire, StringFormat='{0}'}" />
+                                    </Grid>
+
                                 </Grid>
                             </Frame>
                         </DataTemplate>
