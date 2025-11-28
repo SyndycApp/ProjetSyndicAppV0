@@ -19,6 +19,9 @@ public interface IBatimentsApi
     [Delete("/api/Batiments/{id}")]
     Task DeleteAsync(Guid id);
 
+    [Get("/api/Batiments/for-current-user")]
+    Task<List<BatimentDto>> GetForCurrentUserAsync();
+
     [Get("/api/Batiments/resolve-id")]
     Task<Guid?> ResolveIdAsync([Query] string name);
 }

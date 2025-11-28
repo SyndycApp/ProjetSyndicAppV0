@@ -48,7 +48,7 @@ namespace SyndicApp.Mobile.ViewModels.Residences
             try
             {
                 IsBusy = true;
-                var list = await _api.GetAllAsync();
+                var list = await _api.GetForCurrentUserAsync();
                 Residences = list.ToList();
             }
             finally

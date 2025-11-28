@@ -3,6 +3,7 @@ using SyndicApp.Application.DTOs.Residences;
 using SyndicApp.Application.Interfaces.Residences;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace SyndicApp.API.Controllers
@@ -52,6 +53,26 @@ namespace SyndicApp.API.Controllers
         [HttpPut("{id:guid}")]
         public async Task<ActionResult> Update(Guid id, UpdateLotDto dto)
             => await _svc.UpdateAsync(id, dto) ? NoContent() : NotFound();
+
+        [HttpGet("for-current-user")]
+        public async Task<ActionResult<IReadOnlyList<LotDto>>> GetForCurrentUser(CancellationToken ct)
+        {
+            var userIdStr = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                          ?? User.FindFirstValue("sub");
+
+            if (!Guid.TryParse(userIdStr, out var userId))
+                return Forbid();
+
+            var isSyndic = User.FindAll(ClaimTypes.Role)
+                .Any(c => string.Equals(c.Value, "Syndic", StringComparison.OrdinalIgnoreCase));
+
+            if (isSyndic)
+                return Ok(await _svc.GetAllAsync(ct));
+
+            var items = await _svc.GetForUserAsync(userId, ct);
+            return Ok(items);
+        }
+
 
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult> Delete(Guid id)

@@ -15,6 +15,8 @@ namespace SyndicApp.Application.Interfaces.Residences
         Task<bool> UpdateAsync(Guid id, UpdateLotDto dto, CancellationToken ct = default);
         Task<bool> DeleteAsync(Guid id, CancellationToken ct = default);
 
+        Task<IReadOnlyList<LotDto>> GetForUserAsync(Guid userId, CancellationToken ct = default);
+
         Task<IReadOnlyList<LotDto>> SearchAsync(
             string? numeroLot = null,
             string? type = null,

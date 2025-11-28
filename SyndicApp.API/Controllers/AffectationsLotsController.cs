@@ -3,6 +3,7 @@ using SyndicApp.Application.DTOs.Residences;
 using SyndicApp.Application.Interfaces.Residences;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading;               // ✅ pour CancellationToken
 using System.Threading.Tasks;
 
@@ -105,6 +106,26 @@ namespace SyndicApp.API.Controllers
             var ok = await _svc.UpdateAsync(id, dto, ct);
             return ok ? NoContent() : NotFound();
         }
+
+        [HttpGet("for-current-user")]
+        public async Task<ActionResult<IReadOnlyList<AffectationLotDto>>> GetForCurrentUser(CancellationToken ct)
+        {
+            var userIdStr = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                          ?? User.FindFirstValue("sub");
+
+            if (!Guid.TryParse(userIdStr, out var userId))
+                return Forbid();
+
+            var isSyndic = User.FindAll(ClaimTypes.Role)
+                .Any(c => string.Equals(c.Value, "Syndic", StringComparison.OrdinalIgnoreCase));
+
+            if (isSyndic)
+                return Ok(await _svc.GetAllAsync(ct));
+
+            var items = await _svc.GetByUserAsync(userId, ct);
+            return Ok(items);
+        }
+
 
         // Occupant actuel d’un lot (route alternative côté /api/lots/…)
         [HttpGet("~/api/lots/{lotId:guid}/occupant-actuel")]

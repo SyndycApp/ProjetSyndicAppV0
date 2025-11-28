@@ -3068,6 +3068,9 @@
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAffectationsLotsApi.GetAllUsersAsync">
             <inheritdoc />
         </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAffectationsLotsApi.GetForCurrentUserAsync">
+            <inheritdoc />
+        </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAffectationsLotsApi.LookupUsersAsync(System.String,System.String,System.Int32)">
             <inheritdoc />
         </member>
@@ -3108,6 +3111,9 @@
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAffectationsLotsApi.SyndicApp#Mobile#Api#IAffectationsLotsApi#GetAllUsersAsync">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAffectationsLotsApi.SyndicApp#Mobile#Api#IAffectationsLotsApi#GetForCurrentUserAsync">
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAffectationsLotsApi.SyndicApp#Mobile#Api#IAffectationsLotsApi#LookupUsersAsync(System.String,System.String,System.Int32)">
@@ -3242,6 +3248,9 @@
         <member name="M:Refit.Implementation.Generated.IBatimentsApi.DeleteAsync(System.Guid)">
             <inheritdoc />
         </member>
+        <member name="M:Refit.Implementation.Generated.IBatimentsApi.GetForCurrentUserAsync">
+            <inheritdoc />
+        </member>
         <member name="M:Refit.Implementation.Generated.IBatimentsApi.ResolveIdAsync(System.String)">
             <inheritdoc />
         </member>
@@ -3258,6 +3267,9 @@
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.IBatimentsApi.IBatimentsApi#DeleteAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.IBatimentsApi.IBatimentsApi#GetForCurrentUserAsync">
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.IBatimentsApi.IBatimentsApi#ResolveIdAsync(System.String)">
@@ -3476,6 +3488,9 @@
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiILotsApi.DeleteAsync(System.Guid)">
             <inheritdoc />
         </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiILotsApi.GetForCurrentUserAsync">
+            <inheritdoc />
+        </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiILotsApi.ResolveIdAsync(System.String,System.String)">
             <inheritdoc />
         </member>
@@ -3498,6 +3513,9 @@
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiILotsApi.SyndicApp#Mobile#Api#ILotsApi#DeleteAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiILotsApi.SyndicApp#Mobile#Api#ILotsApi#GetForCurrentUserAsync">
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiILotsApi.SyndicApp#Mobile#Api#ILotsApi#ResolveIdAsync(System.String,System.String)">
@@ -3641,6 +3659,9 @@
         <member name="M:Refit.Implementation.Generated.IResidencesApi.DeleteAsync(System.Guid)">
             <inheritdoc />
         </member>
+        <member name="M:Refit.Implementation.Generated.IResidencesApi.GetForCurrentUserAsync">
+            <inheritdoc />
+        </member>
         <member name="M:Refit.Implementation.Generated.IResidencesApi.LookupIdAsync(System.String)">
             <inheritdoc />
         </member>
@@ -3657,6 +3678,9 @@
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.IResidencesApi.IResidencesApi#DeleteAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.IResidencesApi.IResidencesApi#GetForCurrentUserAsync">
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.IResidencesApi.IResidencesApi#LookupIdAsync(System.String)">

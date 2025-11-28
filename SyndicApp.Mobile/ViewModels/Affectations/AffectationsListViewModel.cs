@@ -39,7 +39,7 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
         [RelayCommand]
         public async Task LoadAsync()
         {
-            var data = await _api.GetAllAsync();
+            var data = await _api.GetForCurrentUserAsync();
             Items = data?.ToList() ?? new List<AffectationLotDto>();
 
             try
@@ -95,7 +95,7 @@ namespace SyndicApp.Mobile.ViewModels.Affectations
         [RelayCommand]
         public async Task FilterAsync()
         {
-            var data = await _api.GetAllAsync() ?? Enumerable.Empty<AffectationLotDto>();
+            var data = await _api.GetForCurrentUserAsync() ?? Enumerable.Empty<AffectationLotDto>();
 
             Guid? lotIdFilter = null;
 

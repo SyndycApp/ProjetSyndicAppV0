@@ -4,6 +4,7 @@ using SyndicApp.Application.DTOs.Residences;
 using SyndicApp.Application.Interfaces.Residences;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -80,6 +81,28 @@ namespace SyndicApp.API.Controllers
         {
             var deleted = await _svc.DeleteAsync(id);
             return deleted ? NoContent() : NotFound();
+        }
+
+        [HttpGet("for-current-user")]
+        public async Task<ActionResult<IEnumerable<ResidenceDto>>> GetForCurrentUser(CancellationToken ct)
+        {
+            var userIdStr = User.FindFirstValue(ClaimTypes.NameIdentifier)
+                          ?? User.FindFirstValue("sub");
+
+            if (!Guid.TryParse(userIdStr, out var userId))
+                return Forbid();
+
+            var isSyndic = User.FindAll(ClaimTypes.Role)
+                .Any(c => string.Equals(c.Value, "Syndic", StringComparison.OrdinalIgnoreCase));
+
+            if (isSyndic)
+            {
+                var all = await _svc.GetAllAsync(ct);
+                return Ok(all);
+            }
+
+            var mine = await _svc.GetForUserAsync(userId, ct);
+            return Ok(mine);
         }
 
         [HttpGet("{id:guid}/details")]

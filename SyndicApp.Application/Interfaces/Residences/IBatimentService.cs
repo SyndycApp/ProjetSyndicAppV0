@@ -15,6 +15,8 @@ namespace SyndicApp.Application.Interfaces.Residences
         Task<bool> UpdateAsync(Guid id, UpdateBatimentDto dto, CancellationToken ct = default);
         Task<bool> DeleteAsync(Guid id, CancellationToken ct = default);
 
+        Task<IReadOnlyList<BatimentDto>> GetForUserAsync(Guid userId, CancellationToken ct = default);
+
         Task<Guid?> ResolveIdByNameAsync(string nom, CancellationToken ct = default);
     }
 }

@@ -26,6 +26,10 @@ namespace SyndicApp.Mobile.Api
         [Delete("/api/Lots/{id}")]
         Task DeleteAsync(Guid id);
 
+        [Get("/api/Lots/for-current-user")]
+        Task<List<LotDto>> GetForCurrentUserAsync();
+
+
         [Get("/api/Lots/resolve-id")]
         Task<IdResponse> ResolveIdAsync([Query] string numeroLot, [Query] string type);
 

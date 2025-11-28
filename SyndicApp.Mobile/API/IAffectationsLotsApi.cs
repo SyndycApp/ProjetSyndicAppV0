@@ -48,6 +48,10 @@ namespace SyndicApp.Mobile.Api
         [Get("/api/Auth")]
         Task<ApiResult<List<AuthListItemDto>>> GetAllUsersAsync();
 
+        [Get("/api/AffectationsLots/for-current-user")]
+        Task<List<AffectationLotDto>> GetForCurrentUserAsync();
+
+
         // Lookup par q/role/take (pour résoudre un Id à partir du nom/label)
         [Get("/api/Auth/lookup")]
         Task<List<UserSelectItem>> LookupUsersAsync(

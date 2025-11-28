@@ -83,6 +83,28 @@ namespace SyndicApp.Infrastructure.Services.Residences
             return true;
         }
 
+        public async Task<IReadOnlyList<BatimentDto>> GetForUserAsync(Guid userId, CancellationToken ct = default)
+        {
+            var query =
+                from b in _db.Batiments.AsNoTracking()
+                join l in _db.Lots.AsNoTracking()
+                    on b.Id equals EF.Property<Guid?>(l, "BatimentId")
+                join a in _db.AffectationsLots.AsNoTracking().Where(x => x.DateFin == null)
+                    on l.Id equals a.LotId
+                where a.UserId == userId
+                group new { b, l } by new { b.Id, b.Nom, b.ResidenceId } into g
+                select new BatimentDto
+                {
+                    Id = g.Key.Id,
+                    Nom = g.Key.Nom,
+                    ResidenceId = g.Key.ResidenceId,
+                    NbLots = g.Count()
+                };
+
+            return await query.ToListAsync(ct);
+        }
+
+
         public async Task<Guid?> ResolveIdByNameAsync(string nom, CancellationToken ct = default)
         {
             if (string.IsNullOrWhiteSpace(nom)) return null;

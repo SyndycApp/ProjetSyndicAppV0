@@ -194,6 +194,35 @@ namespace SyndicApp.Infrastructure.Services.Residences
             return res;
         }
 
+        public async Task<IReadOnlyList<ResidenceDto>> GetForUserAsync(Guid userId, CancellationToken ct = default)
+        {
+            var query =
+                from r in _db.Residences.AsNoTracking()
+                join l in _db.Lots.AsNoTracking() on r.Id equals l.ResidenceId
+                join a in _db.AffectationsLots.AsNoTracking().Where(x => x.DateFin == null)
+                    on l.Id equals a.LotId
+                where a.UserId == userId
+                group new { r, l, a } by new { r.Id, r.Nom, r.Adresse, r.Ville, r.CodePostal } into g
+                select new ResidenceDto
+                {
+                    Id = g.Key.Id,
+                    Nom = g.Key.Nom,
+                    Adresse = g.Key.Adresse,
+                    Ville = g.Key.Ville,
+                    CodePostal = g.Key.CodePostal,
+                    NbBatiments = _db.Batiments.Count(b => b.ResidenceId == g.Key.Id),
+                    NbLots = _db.Lots.Count(l => l.ResidenceId == g.Key.Id),
+                    NbIncidents = (
+                        from i in _db.Incidents
+                        join l in _db.Lots on i.LotId equals l.Id
+                        where l.ResidenceId == g.Key.Id
+                        select i.Id
+                    ).Count()
+                };
+
+            return await query.ToListAsync(ct);
+        }
+
         public async Task<IReadOnlyList<ResidenceOccupantDto>> GetOccupantsAsync(Guid residenceId, CancellationToken ct = default)
         {
             var query =

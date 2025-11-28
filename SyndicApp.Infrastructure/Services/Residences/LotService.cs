@@ -164,6 +164,30 @@ namespace SyndicApp.Infrastructure.Services.Residences
             return result;
         }
 
+        public async Task<IReadOnlyList<LotDto>> GetForUserAsync(Guid userId, CancellationToken ct = default)
+        {
+            var query =
+                from l in _db.Lots.AsNoTracking()
+                join a in _db.AffectationsLots.AsNoTracking().Where(x => x.DateFin == null)
+                    on l.Id equals a.LotId
+                where a.UserId == userId
+                join b in _db.Batiments.AsNoTracking()
+                    on EF.Property<Guid?>(l, "BatimentId") equals b.Id into jb
+                from b in jb.DefaultIfEmpty()
+                select new LotDto
+                {
+                    Id = l.Id,
+                    NumeroLot = l.NumeroLot,
+                    Type = l.Type,
+                    Surface = l.Surface,
+                    ResidenceId = l.ResidenceId,
+                    BatimentId = b != null ? b.Id : (Guid?)null,
+                    BatimentNom = b != null ? b.Nom : null
+                };
+
+            return await query.ToListAsync(ct);
+        }
+
         public async Task<bool> DeleteAsync(Guid id, CancellationToken ct = default)
         {
             var l = await _db.Lots.FirstOrDefaultAsync(x => x.Id == id, ct);

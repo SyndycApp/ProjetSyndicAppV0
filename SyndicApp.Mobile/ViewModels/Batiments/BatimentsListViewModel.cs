@@ -34,7 +34,7 @@ namespace SyndicApp.Mobile.ViewModels.Batiments
             try
             {
                 IsBusy = true;
-                var list = await _api.GetAllAsync();
+                var list = await _api.GetForCurrentUserAsync();
                 Items = list.ToList();
             }
             finally

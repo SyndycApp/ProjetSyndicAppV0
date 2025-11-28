@@ -44,7 +44,7 @@ namespace SyndicApp.Mobile.ViewModels.Lots
                 IsBusy = true;
 
                 // 1) Tous les lots
-                var lots = await _lotsApi.GetAllAsync();
+                var lots = await _lotsApi.GetForCurrentUserAsync();
 
                 // 2) Pour chaque lot, on va chercher l’occupant actuel
                 foreach (var lot in lots)
@@ -56,7 +56,7 @@ namespace SyndicApp.Mobile.ViewModels.Lots
                         if (occ != null)
                         {
                             lot.EstOccupe = true;
-                            lot.OccupantNom = occ.NomComplet; // <- c’est CETTE propriété qui doit être remplie par l’API
+                            lot.OccupantNom = occ.NomComplet; 
                         }
                         else
                         {
@@ -66,7 +66,6 @@ namespace SyndicApp.Mobile.ViewModels.Lots
                     }
                     catch
                     {
-                        // En cas d’erreur API sur 1 lot, on le marque libre
                         lot.EstOccupe = false;
                         lot.OccupantNom = null;
                     }
