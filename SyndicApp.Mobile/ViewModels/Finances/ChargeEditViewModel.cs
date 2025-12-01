@@ -1,12 +1,13 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Storage;
 using Refit;
 using SyndicApp.Mobile.Api;
 using SyndicApp.Mobile.Models;
-using System;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using Microsoft.Maui.Controls;
 
 namespace SyndicApp.Mobile.ViewModels.Finances
 {
@@ -24,10 +25,22 @@ namespace SyndicApp.Mobile.ViewModels.Finances
         [ObservableProperty] private string? selectedResidence;
         [ObservableProperty] private bool isBusy;
 
+        // 🔐 rôle
+        [ObservableProperty]
+        private bool isSyndic;
+
+        public bool CanManageCharges => IsSyndic;
+
         public ChargeEditViewModel(IChargesApi chargesApi, IResidencesApi residencesApi)
         {
             _chargesApi = chargesApi;
             _residencesApi = residencesApi;
+
+            var role = Preferences.Get("user_role", string.Empty)
+                                  ?.ToLowerInvariant()
+                                  ?? string.Empty;
+
+            IsSyndic = role.Contains("syndic");
         }
 
         public async Task InitializeAsync(Guid id)
@@ -84,6 +97,15 @@ namespace SyndicApp.Mobile.ViewModels.Finances
         private async Task SaveAsync()
         {
             if (IsBusy) return;
+
+            if (!CanManageCharges)
+            {
+                await Shell.Current.DisplayAlert(
+                    "Accès restreint",
+                    "Vous n'avez pas les droits pour modifier cette charge.",
+                    "OK");
+                return;
+            }
 
             if (string.IsNullOrWhiteSpace(Nom) ||
                 Montant <= 0 ||

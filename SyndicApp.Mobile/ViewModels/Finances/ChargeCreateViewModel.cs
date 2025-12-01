@@ -1,11 +1,12 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using IntelliJ.Lang.Annotations;
-using SyndicApp.Mobile.Api;
-using SyndicApp.Mobile.Models;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Storage;
+using SyndicApp.Mobile.Api;
+using SyndicApp.Mobile.Models;
 
 namespace SyndicApp.Mobile.ViewModels.Finances
 {
@@ -32,10 +33,22 @@ namespace SyndicApp.Mobile.ViewModels.Finances
         [ObservableProperty]
         private bool isBusy;
 
+        // 🔐 rôle
+        [ObservableProperty]
+        private bool isSyndic;
+
+        public bool CanManageCharges => IsSyndic;
+
         public ChargeCreateViewModel(IChargesApi chargesApi, IResidencesApi residencesApi)
         {
             _chargesApi = chargesApi;
             _residencesApi = residencesApi;
+
+            var role = Preferences.Get("user_role", string.Empty)
+                                  ?.ToLowerInvariant()
+                                  ?? string.Empty;
+
+            IsSyndic = role.Contains("syndic");
         }
 
         public async Task InitializeAsync()
@@ -48,6 +61,8 @@ namespace SyndicApp.Mobile.ViewModels.Finances
                 Residences.Clear();
 
                 var list = await _residencesApi.GetAllAsync();
+                if (list == null) return;
+
                 foreach (var r in list)
                 {
                     var nom = r.Nom;
@@ -64,6 +79,15 @@ namespace SyndicApp.Mobile.ViewModels.Finances
         [RelayCommand]
         private async Task SaveAsync()
         {
+            if (!CanManageCharges)
+            {
+                await Shell.Current.DisplayAlert(
+                    "Accès restreint",
+                    "Vous n'avez pas les droits pour créer une charge.",
+                    "OK");
+                return;
+            }
+
             if (string.IsNullOrWhiteSpace(Nom) ||
                 Montant <= 0 ||
                 string.IsNullOrWhiteSpace(SelectedResidence))

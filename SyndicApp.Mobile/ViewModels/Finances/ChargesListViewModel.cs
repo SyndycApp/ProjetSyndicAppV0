@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Storage;
 using SyndicApp.Mobile.Api;
 using SyndicApp.Mobile.Models;
 
@@ -19,9 +20,22 @@ namespace SyndicApp.Mobile.ViewModels.Finances
         [ObservableProperty]
         private ObservableCollection<ChargeDto> charges = new();
 
+        // 🔐 flag de rôle
+        [ObservableProperty]
+        private bool isSyndic;
+
+        // 🔐 utilisé par le XAML (CanManageCharges) + par les commandes
+        public bool CanManageCharges => IsSyndic;
+
         public ChargesListViewModel(IChargesApi chargesApi)
         {
             _chargesApi = chargesApi;
+
+            var role = Preferences.Get("user_role", string.Empty)
+                                  ?.ToLowerInvariant()
+                                  ?? string.Empty;
+
+            IsSyndic = role.Contains("syndic");
         }
 
         [RelayCommand]
@@ -46,10 +60,19 @@ namespace SyndicApp.Mobile.ViewModels.Finances
             }
         }
 
-        // 👉 bouton "+" (route secondaire, relative comme Appels)
+        // 👉 bouton "+"
         [RelayCommand]
         private async Task NewChargeAsync()
         {
+            if (!CanManageCharges)
+            {
+                await Shell.Current.DisplayAlert(
+                    "Accès restreint",
+                    "Seul le syndic peut créer une charge.",
+                    "OK");
+                return;
+            }
+
             await Shell.Current.GoToAsync("charge-create");
         }
 
@@ -65,6 +88,16 @@ namespace SyndicApp.Mobile.ViewModels.Finances
         private async Task EditAsync(ChargeDto? charge)
         {
             if (charge == null) return;
+
+            if (!CanManageCharges)
+            {
+                await Shell.Current.DisplayAlert(
+                    "Accès restreint",
+                    "Vous n'avez pas les droits pour modifier cette charge.",
+                    "OK");
+                return;
+            }
+
             await Shell.Current.GoToAsync($"charge-edit?id={charge.Id}");
         }
 
@@ -72,6 +105,15 @@ namespace SyndicApp.Mobile.ViewModels.Finances
         private async Task DeleteAsync(ChargeDto? charge)
         {
             if (charge == null) return;
+
+            if (!CanManageCharges)
+            {
+                await Shell.Current.DisplayAlert(
+                    "Accès restreint",
+                    "Vous n'avez pas les droits pour supprimer cette charge.",
+                    "OK");
+                return;
+            }
 
             var confirm = await Shell.Current.DisplayAlert(
                 "Confirmation",

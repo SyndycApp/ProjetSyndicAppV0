@@ -852,6 +852,9 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Finances.ChargeCreateViewModel.IsBusy">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.ChargeCreateViewModel.isBusy"/>
         </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Finances.ChargeCreateViewModel.IsSyndic">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.ChargeCreateViewModel.isSyndic"/>
+        </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Finances.ChargeCreateViewModel.saveCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Finances.ChargeCreateViewModel.SaveCommand"/>.</summary>
         </member>
@@ -872,6 +875,9 @@
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Finances.ChargeDetailsViewModel.IsBusy">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.ChargeDetailsViewModel.isBusy"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Finances.ChargeDetailsViewModel.IsSyndic">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.ChargeDetailsViewModel.isSyndic"/>
         </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Finances.ChargeDetailsViewModel.loadCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Finances.ChargeDetailsViewModel.LoadCommand"/>.</summary>
@@ -913,6 +919,9 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Finances.ChargeEditViewModel.IsBusy">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.ChargeEditViewModel.isBusy"/>
         </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Finances.ChargeEditViewModel.IsSyndic">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.ChargeEditViewModel.isSyndic"/>
+        </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Finances.ChargeEditViewModel.saveCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Finances.ChargeEditViewModel.SaveCommand"/>.</summary>
         </member>
@@ -932,6 +941,9 @@
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Finances.ChargesListViewModel.Charges">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.ChargesListViewModel.charges"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Finances.ChargesListViewModel.IsSyndic">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.ChargesListViewModel.isSyndic"/>
         </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Finances.ChargesListViewModel.loadCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Finances.ChargesListViewModel.LoadCommand"/>.</summary>
