@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Storage;
 using Refit;
 using SyndicApp.Mobile.Api;
 using SyndicApp.Mobile.Models;
@@ -32,10 +33,16 @@ namespace SyndicApp.Mobile.ViewModels.Finances
         [ObservableProperty] private List<ResidenceDto> residences = new();
         [ObservableProperty] private ResidenceDto? selectedResidence;
 
+        [ObservableProperty] private bool isSyndic;
+
         public AppelEditViewModel(IAppelsApi api, IResidencesApi residencesApi)
         {
             _api = api;
             _residencesApi = residencesApi;
+
+            var role = Preferences.Get("user_role", string.Empty)?.ToLowerInvariant() ?? string.Empty;
+            IsSyndic = role.Contains("syndic");
+
             _ = LoadResidencesAsync();
         }
 
@@ -97,6 +104,12 @@ namespace SyndicApp.Mobile.ViewModels.Finances
         public async Task SaveAsync()
         {
             if (IsBusy || string.IsNullOrWhiteSpace(Id)) return;
+
+            if (!IsSyndic)
+            {
+                await Shell.Current.DisplayAlert("Accès restreint", "Seul le syndic peut modifier un appel de fonds.", "OK");
+                return;
+            }
 
             try
             {
@@ -161,6 +174,12 @@ namespace SyndicApp.Mobile.ViewModels.Finances
         {
             if (string.IsNullOrWhiteSpace(Id)) return;
 
+            if (!IsSyndic)
+            {
+                await Shell.Current.DisplayAlert("Accès restreint", "Seul le syndic peut clôturer un appel de fonds.", "OK");
+                return;
+            }
+
             await _api.CloturerAsync(Id);
             await Shell.Current.GoToAsync($"appel-details?id={Id}");
         }
@@ -169,6 +188,12 @@ namespace SyndicApp.Mobile.ViewModels.Finances
         public async Task DeleteAsync()
         {
             if (string.IsNullOrWhiteSpace(Id)) return;
+
+            if (!IsSyndic)
+            {
+                await Shell.Current.DisplayAlert("Accès restreint", "Seul le syndic peut supprimer un appel de fonds.", "OK");
+                return;
+            }
 
             var ok = await Shell.Current.DisplayAlert(
                 "Suppression",

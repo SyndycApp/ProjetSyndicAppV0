@@ -1,491 +1,172 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
     x:Class="SyndicApp.Mobile.Views.Finances.AppelEditPage"
+    x:Name="Page"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:viewmodels="clr-namespace:SyndicApp.Mobile.ViewModels.Finances"
     xmlns:conv="clr-namespace:SyndicApp.Mobile.Converters"
+    xmlns:layouts="clr-namespace:SyndicApp.Mobile.Views.Layout"
     x:DataType="viewmodels:AppelEditViewModel"
     Shell.NavBarIsVisible="False"
     BackgroundColor="White"
     Title="Modifier l'appel">
 
-	<ContentPage.Resources>
-		<Color x:Key="TopbarColor">#2563EB</Color>
-		<Color x:Key="HeaderTextOnDark">#FFFFFF</Color>
-		<Color x:Key="BodyText">#111827</Color>
-		<Color x:Key="Divider">#E5E7EB</Color>
-		<Color x:Key="Chip">#F3F4F6</Color>
+    <ContentPage.Resources>
+        <Color x:Key="TopbarColor">#2563EB</Color>
+        <Color x:Key="HeaderTextOnDark">#FFFFFF</Color>
+        <Color x:Key="BodyText">#111827</Color>
+        <Color x:Key="Divider">#E5E7EB</Color>
+        <Color x:Key="Chip">#F3F4F6</Color>
 
-		<Style TargetType="Label">
-			<Setter Property="TextColor" Value="{StaticResource BodyText}" />
-		</Style>
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
+        </Style>
 
-		<Style x:Key="MenuButtonStyle" TargetType="Button">
-			<Setter Property="BackgroundColor" Value="Transparent" />
-			<Setter Property="TextColor" Value="{StaticResource BodyText}" />
-			<Setter Property="CornerRadius" Value="8" />
-			<Setter Property="Padding" Value="12,8" />
-			<Setter Property="HorizontalOptions" Value="Start" />
-		</Style>
+        <Style TargetType="Entry">
+            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
+            <Setter Property="BackgroundColor" Value="Transparent" />
+        </Style>
 
-		<Style x:Key="LogoutButtonStyle"
-               TargetType="Button"
-               BasedOn="{StaticResource MenuButtonStyle}">
-			<Setter Property="BackgroundColor" Value="{StaticResource Chip}" />
-		</Style>
+        <Style TargetType="Editor">
+            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
+            <Setter Property="BackgroundColor" Value="Transparent" />
+        </Style>
 
-		<Style TargetType="Entry">
-			<Setter Property="TextColor" Value="{StaticResource BodyText}" />
-			<Setter Property="BackgroundColor" Value="Transparent" />
-		</Style>
+        <Style TargetType="Picker">
+            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
+        </Style>
 
-		<Style TargetType="Editor">
-			<Setter Property="TextColor" Value="{StaticResource BodyText}" />
-			<Setter Property="BackgroundColor" Value="Transparent" />
-		</Style>
+        <Style TargetType="DatePicker">
+            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
+        </Style>
 
-		<!-- ✅ Ajout sans toucher au reste : texte visible dans Picker & DatePicker -->
-		<Style TargetType="Picker">
-			<Setter Property="TextColor" Value="{StaticResource BodyText}" />
-		</Style>
+        <conv:ProgressConverter x:Key="ProgressConverter" />
+    </ContentPage.Resources>
 
-		<Style TargetType="DatePicker">
-			<Setter Property="TextColor" Value="{StaticResource BodyText}" />
-		</Style>
-		<!-- ✅ Fin des ajouts -->
+    <layouts:RoleDrawerLayout>
+        <layouts:RoleDrawerLayout.MainContent>
+            <Grid RowDefinitions="Auto,*"
+                  BackgroundColor="White">
 
-		<conv:ProgressConverter x:Key="ProgressConverter" />
-	</ContentPage.Resources>
+                <!-- Topbar local -->
+                <Grid Grid.Row="0"
+                      BackgroundColor="{StaticResource TopbarColor}"
+                      Padding="12,8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
-	<Grid x:Name="Root"
-          RowDefinitions="Auto,*"
-          BackgroundColor="White">
-
-		<!-- Topbar -->
-		<Grid BackgroundColor="{StaticResource TopbarColor}"
-              Padding="12,8">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="Auto" />
-				<ColumnDefinition Width="*" />
-				<ColumnDefinition Width="Auto" />
-			</Grid.ColumnDefinitions>
-
-			<Button x:Name="BtnOpen"
-                    Grid.Column="0"
-                    Text="☰"
-                    FontSize="22"
-                    BackgroundColor="Transparent"
-                    TextColor="{StaticResource HeaderTextOnDark}"
-                    Clicked="OpenDrawer_Clicked" />
-
-			<Label Grid.Column="1"
-                   Text="Modifier l'appel"
-                   HorizontalTextAlignment="Center"
-                   VerticalOptions="Center"
-                   FontAttributes="Bold"
-                   TextColor="{StaticResource HeaderTextOnDark}" />
-
-			<Button Grid.Column="2"
-                    Text="↩"
-                    FontSize="22"
-                    BackgroundColor="Transparent"
-                    TextColor="{StaticResource HeaderTextOnDark}"
-                    Clicked="OnBackClicked" />
-		</Grid>
-
-		<!-- FORMULAIRE EDIT -->
-		<ScrollView Grid.Row="1"
-                    Padding="16">
-
-			<VerticalStackLayout Spacing="14">
-
-				<!-- Résidence -->
-				<Label Text="Résidence" />
-				<Border Stroke="Black"
-                        StrokeThickness="1"
-                        Margin="0,2,0,8"
-                        Padding="4">
-					<Border.StrokeShape>
-						<RoundRectangle CornerRadius="8" />
-					</Border.StrokeShape>
-					<Picker
-                        Title="Sélectionner une résidence"
-                        ItemsSource="{Binding Residences}"
-                        ItemDisplayBinding="{Binding Nom}"
-                        SelectedItem="{Binding SelectedResidence}" />
-				</Border>
-
-				<!-- Description -->
-				<Label Text="Description" />
-				<Border Stroke="Black"
-                        StrokeThickness="1"
-                        Margin="0,2,0,8"
-                        Padding="4">
-					<Border.StrokeShape>
-						<RoundRectangle CornerRadius="8" />
-					</Border.StrokeShape>
-					<Editor
-                        Text="{Binding Description}"
-                        AutoSize="TextChanges"
-                        Placeholder="Ex : Appel de fonds 1er trimestre" />
-				</Border>
-
-				<!-- Montant total -->
-				<Label Text="Montant total" />
-				<Border Stroke="Black"
-                        StrokeThickness="1"
-                        Margin="0,2,0,8"
-                        Padding="4">
-					<Border.StrokeShape>
-						<RoundRectangle CornerRadius="8" />
-					</Border.StrokeShape>
-					<Entry
-                        Keyboard="Numeric"
-                        Placeholder="0,00"
-                        Text="{Binding MontantTotal}" />
-				</Border>
-
-				<!-- Nombre de paiements / échéances -->
-				<Label Text="Nombre de paiements" />
-				<Border Stroke="Black"
-                        StrokeThickness="1"
-                        Margin="0,2,0,8"
-                        Padding="4">
-					<Border.StrokeShape>
-						<RoundRectangle CornerRadius="8" />
-					</Border.StrokeShape>
-					<Entry
-                        Keyboard="Numeric"
-                        Placeholder="Ex : 3"
-                        Text="{Binding NbPaiements}" />
-				</Border>
-
-				<!-- Date d'émission -->
-				<Label Text="Date d'émission" />
-				<Border Stroke="Black"
-                        StrokeThickness="1"
-                        Margin="0,2,0,8"
-                        Padding="4">
-					<Border.StrokeShape>
-						<RoundRectangle CornerRadius="8" />
-					</Border.StrokeShape>
-					<DatePicker
-                        Date="{Binding DateEmission}" />
-				</Border>
-
-				<!-- Bouton Enregistrer -->
-				<Button Text="Enregistrer les modifications"
-                        Margin="0,16,0,0"
-                        CornerRadius="10"
-                        Padding="14,10"
-                        BackgroundColor="{StaticResource TopbarColor}"
-                        TextColor="White"
-                        FontAttributes="Bold"
-                        Command="{Binding SaveCommand}" />
-			</VerticalStackLayout>
-		</ScrollView>
-
-		<!-- BACKDROP -->
-		<BoxView x:Name="Backdrop"
-                 Grid.RowSpan="2"
-                 BackgroundColor="#66000000"
-                 Opacity="0"
-                 InputTransparent="True">
-			<BoxView.GestureRecognizers>
-				<TapGestureRecognizer Tapped="Backdrop_Tapped" />
-			</BoxView.GestureRecognizers>
-		</BoxView>
-
-		<!-- DRAWER -->
-		<Border x:Name="Drawer"
-                Grid.RowSpan="2"
-                BackgroundColor="White"
-                StrokeThickness="0"
-                TranslationX="-1000"
-                Padding="0">
-			<Grid RowDefinitions="Auto,*">
-
-				<Grid BackgroundColor="{StaticResource TopbarColor}"
-                      Padding="16">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="Auto" />
-					</Grid.ColumnDefinitions>
-
-					<Label Text="Navigation"
-                           TextColor="{StaticResource HeaderTextOnDark}"
-                           FontAttributes="Bold"
-                           VerticalOptions="Center" />
-
-					<Button Grid.Column="1"
+                    <Button Grid.Column="0"
                             Text="←"
                             FontSize="22"
                             BackgroundColor="Transparent"
                             TextColor="{StaticResource HeaderTextOnDark}"
-                            Clicked="CloseDrawer_Clicked" />
-				</Grid>
+                            Clicked="OnBackClicked" />
 
-				<ScrollView Grid.Row="1" BackgroundColor="White">
-  <VerticalStackLayout Padding="16" Spacing="10">
+                    <Label Grid.Column="1"
+                           Text="Modifier l'appel"
+                           HorizontalTextAlignment="Center"
+                           VerticalOptions="Center"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource HeaderTextOnDark}" />
+                </Grid>
 
-    <!-- DASHBOARD -->
-    <Label Text="Tableau de bord" FontAttributes="Bold"/>
-    <Button Text="Dashboard"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//syndic-dashboard"
-            Clicked="OnMenuItemClicked"/>
+                <!-- Formulaire edit -->
+                <ScrollView Grid.Row="1"
+                            Padding="16">
 
-    <Button Text="Dashboard Affectations"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//affectation-dashboard"
-            Clicked="OnMenuItemClicked"/>
+                    <VerticalStackLayout Spacing="14">
 
-    <Button Text="Mon espace (copro)"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//affectation-user-dashboard"
-            Clicked="OnMenuItemClicked"/>
+                        <!-- Résidence -->
+                        <Label Text="Résidence" />
+                        <Border Stroke="Black"
+                                StrokeThickness="1"
+                                Margin="0,2,0,8"
+                                Padding="4">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8" />
+                            </Border.StrokeShape>
+                            <Picker
+                                Title="Sélectionner une résidence"
+                                ItemsSource="{Binding Residences}"
+                                ItemDisplayBinding="{Binding Nom}"
+                                SelectedItem="{Binding SelectedResidence}" />
+                        </Border>
 
-    <Button Text="Gardien / Maintenance"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//affectation-maintenance-dashboard"
-            Clicked="OnMenuItemClicked"/>
+                        <!-- Description -->
+                        <Label Text="Description" />
+                        <Border Stroke="Black"
+                                StrokeThickness="1"
+                                Margin="0,2,0,8"
+                                Padding="4">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8" />
+                            </Border.StrokeShape>
+                            <Editor
+                                Text="{Binding Description}"
+                                AutoSize="TextChanges"
+                                Placeholder="Ex : Appel de fonds 1er trimestre" />
+                        </Border>
 
-    <Button Text="Statistiques affectations"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//affectation-analytics"
-            Clicked="OnMenuItemClicked"/>
+                        <!-- Montant total -->
+                        <Label Text="Montant total" />
+                        <Border Stroke="Black"
+                                StrokeThickness="1"
+                                Margin="0,2,0,8"
+                                Padding="4">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8" />
+                            </Border.StrokeShape>
+                            <Entry
+                                Keyboard="Numeric"
+                                Placeholder="0,00"
+                                Text="{Binding MontantTotal}" />
+                        </Border>
 
-    <!-- RÉSIDENCES / LOTS -->
-    <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
-    <Label Text="Résidences &amp; Lots" FontAttributes="Bold"/>
+                        <!-- Nombre de paiements -->
+                        <Label Text="Nombre de paiements" />
+                        <Border Stroke="Black"
+                                StrokeThickness="1"
+                                Margin="0,2,0,8"
+                                Padding="4">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8" />
+                            </Border.StrokeShape>
+                            <Entry
+                                Keyboard="Numeric"
+                                Placeholder="Ex : 3"
+                                Text="{Binding NbPaiements}" />
+                        </Border>
 
-    <Button Text="Résidences"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//residences"
-            Clicked="OnMenuItemClicked"/>
+                        <!-- Date émission -->
+                        <Label Text="Date d'émission" />
+                        <Border Stroke="Black"
+                                StrokeThickness="1"
+                                Margin="0,2,0,8"
+                                Padding="4">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8" />
+                            </Border.StrokeShape>
+                            <DatePicker
+                                Date="{Binding DateEmission}" />
+                        </Border>
 
-    <Button Text="Bâtiments"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//batiments"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Lots"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//lots"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Affectations des lots"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//affectation-lots"
-            Clicked="OnMenuItemClicked"/>
-
-    <!-- ❌ Occupant actuel & Historique affectations SUPPRIMÉS -->
-
-    <!-- FINANCES -->
-    <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
-    <Label Text="Finances" FontAttributes="Bold"/>
-
-    <Button Text="Appels de fonds"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//appels"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Charges"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//charges"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Paiements"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//paiements"
-            Clicked="OnMenuItemClicked"/>
-
-    <!-- INCIDENTS / INTERVENTIONS / DEVIS -->
-    <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
-    <Label Text="Incidents &amp; Interventions" FontAttributes="Bold"/>
-
-    <Button Text="Incidents"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//incidents"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Interventions"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//interventions"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Devis de travaux"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//devis-travaux"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Prestataires"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//prestataires"
-            Clicked="OnMenuItemClicked"/>
-
-    <!-- ASSEMBLÉES GÉNÉRALES -->
-    <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
-    <Label Text="Assemblées Générales" FontAttributes="Bold"/>
-
-    <Button Text="Convocations"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//ag/convocations"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Ordre du jour"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//ag/ordre-du-jour"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Votes"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//ag/votes"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Décisions"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//ag/decisions"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Procès-verbal (PV)"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//ag/pv"
-            Clicked="OnMenuItemClicked"/>
-
-    <!-- DOCUMENTS / ANNONCES -->
-    <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
-    <Label Text="Documents &amp; Annonces" FontAttributes="Bold"/>
-
-    <Button Text="Documents"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//documents"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Catégories de documents"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//documents/categories"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Annonces"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//annonces"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Catégories d'annonces"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//annonces/categories"
-            Clicked="OnMenuItemClicked"/>
-
-    <!-- MESSAGERIE -->
-    <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
-    <Label Text="Messagerie" FontAttributes="Bold"/>
-
-    <Button Text="Conversations"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//messages/conversations"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Messages"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//messages"
-            Clicked="OnMenuItemClicked"/>
-
-    <!-- PERSONNEL -->
-    <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
-    <Label Text="Personnel" FontAttributes="Bold"/>
-
-    <Button Text="Employés"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//personnel/employes"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Plannings &amp; Présences"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//personnel/plannings"
-            Clicked="OnMenuItemClicked"/>
-
-    <!-- RECRUTEMENT -->
-    <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
-    <Label Text="Recrutement" FontAttributes="Bold"/>
-
-    <Button Text="Offres d'emploi"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//recrutement/offres"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Candidatures"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//recrutement/candidatures"
-            Clicked="OnMenuItemClicked"/>
-
-    <!-- MARKETPLACE -->
-    <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
-    <Label Text="Marketplace" FontAttributes="Bold"/>
-
-    <Button Text="Annonces de biens"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//marketplace/biens"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Demandes"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//marketplace/demandes"
-            Clicked="OnMenuItemClicked"/>
-
-    <!-- NOTIFICATIONS -->
-    <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
-    <Label Text="Notifications" FontAttributes="Bold"/>
-
-    <Button Text="Centre de notifications"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//notifications"
-            Clicked="OnMenuItemClicked"/>
-
-    <!-- UTILISATEURS & RÔLES -->
-    <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
-    <Label Text="Utilisateurs &amp; Rôles" FontAttributes="Bold"/>
-
-    <Button Text="Utilisateurs"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//admin/utilisateurs"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Rôles &amp; Permissions"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//admin/roles"
-            Clicked="OnMenuItemClicked"/>
-
-    <!-- PARAMÈTRES -->
-    <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
-    <Label Text="Paramètres" FontAttributes="Bold"/>
-
-    <Button Text="Profil"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//settings/profil"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Préférences"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//settings/preferences"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="À propos &amp; Support"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//settings/a-propos"
-            Clicked="OnMenuItemClicked"/>
-
-    <!-- DÉCONNEXION -->
-    <BoxView HeightRequest="16" Opacity="0"/>
-    <Button Text="Déconnexion"
-            Style="{StaticResource LogoutButtonStyle}"
-            CommandParameter="//login"
-            Clicked="OnMenuItemClicked"/>
-  </VerticalStackLayout>
-</ScrollView>
-
-			</Grid>
-		</Border>
-	</Grid>
+                        <!-- Bouton enregistrer (Syndic only) -->
+                        <Button Text="Enregistrer les modifications"
+                                Margin="0,16,0,0"
+                                CornerRadius="10"
+                                Padding="14,10"
+                                BackgroundColor="{StaticResource TopbarColor}"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                Command="{Binding SaveCommand}"
+                                IsVisible="{Binding IsSyndic}" />
+                    </VerticalStackLayout>
+                </ScrollView>
+            </Grid>
+        </layouts:RoleDrawerLayout.MainContent>
+    </layouts:RoleDrawerLayout>
 </ContentPage>

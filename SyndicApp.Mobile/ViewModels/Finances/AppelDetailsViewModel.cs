@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Storage;
 using SyndicApp.Mobile.Api;
 using SyndicApp.Mobile.Models;
 
@@ -15,10 +16,14 @@ namespace SyndicApp.Mobile.ViewModels.Finances
         [ObservableProperty] private string id = string.Empty;
         [ObservableProperty] private AppelDeFondsDto? appel;
         [ObservableProperty] private bool isBusy;
+        [ObservableProperty] private bool isSyndic;
 
         public AppelDetailsViewModel(IAppelsApi api)
         {
             _api = api;
+
+            var role = Preferences.Get("user_role", string.Empty)?.ToLowerInvariant() ?? string.Empty;
+            IsSyndic = role.Contains("syndic");
         }
 
         [RelayCommand]
@@ -40,6 +45,12 @@ namespace SyndicApp.Mobile.ViewModels.Finances
         [RelayCommand]
         public async Task EditAsync()
         {
+            if (!IsSyndic)
+            {
+                await Shell.Current.DisplayAlert("Accès restreint", "Seul le syndic peut modifier un appel de fonds.", "OK");
+                return;
+            }
+
             await Shell.Current.GoToAsync($"appel-edit?id={Id}");
         }
 
@@ -47,6 +58,12 @@ namespace SyndicApp.Mobile.ViewModels.Finances
         public async Task CloturerAsync()
         {
             if (IsBusy || string.IsNullOrWhiteSpace(Id)) return;
+
+            if (!IsSyndic)
+            {
+                await Shell.Current.DisplayAlert("Accès restreint", "Seul le syndic peut clôturer un appel de fonds.", "OK");
+                return;
+            }
 
             try
             {
@@ -64,6 +81,12 @@ namespace SyndicApp.Mobile.ViewModels.Finances
         public async Task DeleteAsync()
         {
             if (string.IsNullOrWhiteSpace(Id)) return;
+
+            if (!IsSyndic)
+            {
+                await Shell.Current.DisplayAlert("Accès restreint", "Seul le syndic peut supprimer un appel de fonds.", "OK");
+                return;
+            }
 
             var ok = await Shell.Current.DisplayAlert("Suppression", "Supprimer cet appel ?", "Oui", "Non");
             if (!ok) return;

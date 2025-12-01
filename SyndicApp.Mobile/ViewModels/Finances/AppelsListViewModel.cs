@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Storage;
 using SyndicApp.Mobile.Api;
 using SyndicApp.Mobile.Models;
 
@@ -16,11 +17,15 @@ namespace SyndicApp.Mobile.ViewModels.Finances
 
         [ObservableProperty] private bool isBusy;
         [ObservableProperty] private List<AppelDeFondsDto> appels = new();
+        [ObservableProperty] private bool isSyndic;
 
         public AppelsListViewModel(IAppelsApi api, IResidencesApi residencesApi)
         {
             _api = api;
             _residencesApi = residencesApi;
+
+            var role = Preferences.Get("user_role", string.Empty)?.ToLowerInvariant() ?? string.Empty;
+            IsSyndic = role.Contains("syndic");
         }
 
         [RelayCommand]
@@ -57,7 +62,15 @@ namespace SyndicApp.Mobile.ViewModels.Finances
 
         [RelayCommand]
         public async Task OpenCreateAsync()
-            => await Shell.Current.GoToAsync("appel-create");
+        {
+            if (!IsSyndic)
+            {
+                await Shell.Current.DisplayAlert("Accès restreint", "Seul le syndic peut créer un appel de fonds.", "OK");
+                return;
+            }
+
+            await Shell.Current.GoToAsync("appel-create");
+        }
 
         [RelayCommand]
         public async Task OpenDetailsAsync(AppelDeFondsDto a)

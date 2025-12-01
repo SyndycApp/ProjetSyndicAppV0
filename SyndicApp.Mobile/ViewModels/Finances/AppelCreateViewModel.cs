@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using IntelliJ.Lang.Annotations;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Storage;
 using Refit;
 using SyndicApp.Mobile.Api;
 using SyndicApp.Mobile.Models;
@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Threading.Tasks;
-using static Android.Util.EventLogTags;
 
 namespace SyndicApp.Mobile.ViewModels.Finances
 {
@@ -27,10 +26,16 @@ namespace SyndicApp.Mobile.ViewModels.Finances
         [ObservableProperty] private List<ResidenceDto> residences = new();
         [ObservableProperty] private ResidenceDto? selectedResidence;
 
+        [ObservableProperty] private bool isSyndic;
+
         public AppelCreateViewModel(IAppelsApi api, IResidencesApi residencesApi)
         {
             _api = api;
             _residencesApi = residencesApi;
+
+            var role = Preferences.Get("user_role", string.Empty)?.ToLowerInvariant() ?? string.Empty;
+            IsSyndic = role.Contains("syndic");
+
             _ = LoadResidencesAsync();
         }
 
@@ -61,6 +66,12 @@ namespace SyndicApp.Mobile.ViewModels.Finances
         private async Task CreateAsync()
         {
             if (IsBusy) return;
+
+            if (!IsSyndic)
+            {
+                await Shell.Current.DisplayAlert("Accès restreint", "Seul le syndic peut créer un appel de fonds.", "OK");
+                return;
+            }
 
             if (string.IsNullOrWhiteSpace(Description))
             {
@@ -123,8 +134,8 @@ namespace SyndicApp.Mobile.ViewModels.Finances
 
         private static bool TryParseDecimal(string? input, out decimal value)
         {
-            input = (input ?? string.Empty).Trim();
-            input = input.Replace(' ', '\0');
+            input ??= string.Empty;
+            input = input.Trim().Replace(" ", string.Empty);
 
             if (decimal.TryParse(input, NumberStyles.Number, CultureInfo.CurrentCulture, out value))
                 return true;

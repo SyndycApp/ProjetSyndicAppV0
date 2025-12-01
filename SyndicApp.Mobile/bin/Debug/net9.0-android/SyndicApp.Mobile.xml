@@ -665,6 +665,9 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Finances.AppelCreateViewModel.SelectedResidence">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.AppelCreateViewModel.selectedResidence"/>
         </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Finances.AppelCreateViewModel.IsSyndic">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.AppelCreateViewModel.isSyndic"/>
+        </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Finances.AppelCreateViewModel.loadResidencesCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Finances.AppelCreateViewModel.LoadResidencesCommand"/>.</summary>
         </member>
@@ -692,6 +695,9 @@
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.IsBusy">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.isBusy"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.IsSyndic">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.isSyndic"/>
         </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.loadCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.LoadCommand"/>.</summary>
@@ -758,6 +764,9 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Finances.AppelEditViewModel.SelectedResidence">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.AppelEditViewModel.selectedResidence"/>
         </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Finances.AppelEditViewModel.IsSyndic">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.AppelEditViewModel.isSyndic"/>
+        </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Finances.AppelEditViewModel.loadResidencesCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Finances.AppelEditViewModel.LoadResidencesCommand"/>.</summary>
         </member>
@@ -799,6 +808,9 @@
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Finances.AppelsListViewModel.Appels">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.AppelsListViewModel.appels"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Finances.AppelsListViewModel.IsSyndic">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.AppelsListViewModel.isSyndic"/>
         </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Finances.AppelsListViewModel.loadCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Finances.AppelsListViewModel.LoadCommand"/>.</summary>
@@ -2333,6 +2345,9 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.MontantTotalText">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "MontantTotalText" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsSyndic">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsSyndic" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Appel">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Appel" generated properties.</summary>
         </member>
@@ -2413,9 +2428,6 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Commentaire">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Commentaire" generated properties.</summary>
-        </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsSyndic">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsSyndic" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.MontantTTC">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "MontantTTC" generated properties.</summary>
@@ -2735,6 +2747,9 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.MontantTotalText">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "MontantTotalText" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsSyndic">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsSyndic" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Appel">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Appel" generated properties.</summary>
         </member>
@@ -2815,9 +2830,6 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Commentaire">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Commentaire" generated properties.</summary>
-        </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsSyndic">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsSyndic" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.MontantTTC">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "MontantTTC" generated properties.</summary>
