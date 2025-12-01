@@ -1,18 +1,21 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Maui.Controls;
+using SyndicApp.Mobile.Api;
 using SyndicApp.Mobile.ViewModels.Incidents;
 
 namespace SyndicApp.Mobile.Views.Incidents
 {
     public partial class IncidentCreatePage : ContentPage
     {
-        private bool _isDrawerOpen;
+        private readonly IAccountApi _accountApi;
 
-        public IncidentCreatePage(IncidentCreateViewModel vm)
+        public IncidentCreatePage(IncidentCreateViewModel vm, IAccountApi accountApi)
         {
             InitializeComponent();
             BindingContext = vm;
+            _accountApi = accountApi;
         }
 
         protected override async void OnAppearing()
@@ -23,58 +26,37 @@ namespace SyndicApp.Mobile.Views.Incidents
             {
                 await vm.LoadAsync();
             }
+
+            await ApplyRoleRestrictionsAsync();
         }
 
-        // ===== Drawer =====
-
-        private async Task OpenDrawerAsync()
+        private async Task ApplyRoleRestrictionsAsync()
         {
-            _isDrawerOpen = true;
-            Backdrop.InputTransparent = false;
-
-            await Task.WhenAll(
-                Drawer.TranslateTo(0, 0, 250, Easing.CubicOut),
-                Backdrop.FadeTo(1, 250, Easing.CubicIn)
-            );
-        }
-
-        private async Task CloseDrawerAsync()
-        {
-            if (!_isDrawerOpen)
-                return;
-
-            _isDrawerOpen = false;
-            Backdrop.InputTransparent = true;
-
-            await Task.WhenAll(
-                Drawer.TranslateTo(-1000, 0, 250, Easing.CubicIn),
-                Backdrop.FadeTo(0, 250, Easing.CubicOut)
-            );
-        }
-
-        private async void OpenDrawer_Clicked(object sender, EventArgs e)
-        {
-            await OpenDrawerAsync();
-        }
-
-        private async void CloseDrawer_Clicked(object sender, EventArgs e)
-        {
-            await CloseDrawerAsync();
-        }
-
-        private async void Backdrop_Tapped(object sender, TappedEventArgs e)
-        {
-            await CloseDrawerAsync();
-        }
-
-        private async void OnMenuItemClicked(object sender, EventArgs e)
-        {
-            if (sender is Button btn &&
-                btn.CommandParameter is string route &&
-                !string.IsNullOrWhiteSpace(route))
+            try
             {
-                await CloseDrawerAsync();
-                await Shell.Current.GoToAsync(route);
+                var me = await _accountApi.MeAsync();
+                var roles = me.Roles ?? new System.Collections.Generic.List<string>();
+
+                bool isSyndic = roles.Any(r => r.Equals("Syndic", StringComparison.OrdinalIgnoreCase));
+                bool isGardien = roles.Any(r => r.Equals("Gardien", StringComparison.OrdinalIgnoreCase));
+                bool isCopro = roles.Any(r =>
+                    r.Equals("Copropriétaire", StringComparison.OrdinalIgnoreCase) ||
+                    r.Equals("Coproprietaire", StringComparison.OrdinalIgnoreCase) ||
+                    r.Equals("Copro", StringComparison.OrdinalIgnoreCase));
+
+                // Exemple : ici tout le monde peut créer un incident
+                // Si tu veux bloquer certains rôles, fais-le ici.
+                if (!isSyndic && !isGardien && !isCopro)
+                {
+                    await DisplayAlert("Accès refusé",
+                        "Vous n’êtes pas autorisé à créer un incident.",
+                        "OK");
+                    await Shell.Current.GoToAsync("..");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Erreur rôles IncidentCreatePage : {ex}");
             }
         }
     }
