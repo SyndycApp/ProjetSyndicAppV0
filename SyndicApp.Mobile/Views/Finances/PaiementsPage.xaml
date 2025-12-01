@@ -3,201 +3,70 @@
     x:Class="SyndicApp.Mobile.Views.Finances.PaiementsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:converters="clr-namespace:SyndicApp.Mobile.Converters"
-    xmlns:vm="clr-namespace:SyndicApp.Mobile.ViewModels.Finances"
+    xmlns:viewmodels="clr-namespace:SyndicApp.Mobile.ViewModels.Finances"
     xmlns:models="clr-namespace:SyndicApp.Mobile.Models"
-    x:DataType="vm:PaiementsListViewModel"
-    x:Name="RootPage"
-    Title="Paiements"
+    xmlns:layouts="clr-namespace:SyndicApp.Mobile.Views.Layout"
+    x:DataType="viewmodels:PaiementsListViewModel"
     BackgroundColor="White"
-    Shell.NavBarIsVisible="False">
+    Shell.NavBarIsVisible="False"
+    Title="Paiements">
 
     <ContentPage.Resources>
         <Color x:Key="TopbarColor">#2563EB</Color>
-        <Color x:Key="HeaderTextOnDark">#FFFFFF</Color>
         <Color x:Key="BodyText">#111827</Color>
-        <Color x:Key="Divider">#E5E7EB</Color>
-        <Color x:Key="Chip">#F3F4F6</Color>
-
-        <!-- Même converter que sur Affectations (au cas où) -->
-        <converters:BoolToOuiNonConverter x:Key="BoolToOuiNonConverter" />
-
-        <Style TargetType="Label">
-            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
-        </Style>
-
-        <Style TargetType="Picker">
-            <Setter Property="TextColor" Value="Black" />
-            <Setter Property="TitleColor" Value="#6B7280" />
-            <Setter Property="BackgroundColor" Value="White" />
-        </Style>
-
-        <Style x:Key="MenuButtonStyle" TargetType="Button">
-            <Setter Property="BackgroundColor" Value="Transparent" />
-            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
-            <Setter Property="CornerRadius" Value="8" />
-            <Setter Property="Padding" Value="12,8" />
-            <Setter Property="HorizontalOptions" Value="Start" />
-        </Style>
-
-        <Style x:Key="TitleLabelStyle" TargetType="Label">
-            <Setter Property="FontSize" Value="20" />
-            <Setter Property="FontAttributes" Value="Bold" />
-        </Style>
-
-        <Style x:Key="FieldLabelStyle" TargetType="Label">
-            <Setter Property="FontSize" Value="12" />
-            <Setter Property="TextColor" Value="#6B7280" />
-        </Style>
-
-        <Style x:Key="PrimaryButtonStyle" TargetType="Button">
-            <Setter Property="BackgroundColor" Value="#2563EB" />
-            <Setter Property="TextColor" Value="White" />
-            <Setter Property="CornerRadius" Value="10" />
-            <Setter Property="Padding" Value="14,10" />
-        </Style>
-
-        <Style x:Key="OutlineButtonStyle" TargetType="Button">
-            <Setter Property="BackgroundColor" Value="Transparent" />
-            <Setter Property="TextColor" Value="#2563EB" />
-            <Setter Property="BorderColor" Value="#2563EB" />
-            <Setter Property="BorderWidth" Value="1" />
-            <Setter Property="CornerRadius" Value="10" />
-            <Setter Property="Padding" Value="14,10" />
-        </Style>
-
-        <Style x:Key="CardStyle" TargetType="Frame">
-            <Setter Property="HasShadow" Value="False" />
-            <Setter Property="CornerRadius" Value="14" />
-            <Setter Property="Padding" Value="14" />
-            <Setter Property="BackgroundColor" Value="White" />
-            <Setter Property="BorderColor" Value="#E5E7EB" />
-        </Style>
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="Auto,*" BackgroundColor="White">
+    <layouts:RoleDrawerLayout>
 
-        <!-- TOPBAR -->
-        <Grid BackgroundColor="{StaticResource TopbarColor}" Padding="12,8">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
+        <layouts:RoleDrawerLayout.MainContent>
+            <Grid Padding="16" RowDefinitions="Auto,*">
 
-            <Button x:Name="BtnOpen"
-                    Grid.Column="0"
-                    Text="☰"
-                    FontSize="22"
-                    BackgroundColor="Transparent"
-                    TextColor="{StaticResource HeaderTextOnDark}"
-                    Clicked="OpenDrawer_Clicked" />
+                <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,12">
+                    <Label Text="Paiements"
+                           FontAttributes="Bold"
+                           FontSize="20" />
 
-            <Label Grid.Column="1"
-                   Text="Paiements"
-                   HorizontalTextAlignment="Center"
-                   VerticalOptions="Center"
-                   FontAttributes="Bold"
-                   TextColor="{StaticResource HeaderTextOnDark}" />
-
-            <Label Grid.Column="2"
-                   Text="• • •"
-                   TextColor="{StaticResource HeaderTextOnDark}"
-                   VerticalOptions="Center" />
-        </Grid>
-
-        <!-- CONTENU -->
-        <Grid Grid.Row="1">
-            <Grid Padding="16" RowDefinitions="Auto,Auto,*">
-
-                <!-- Titre + CTA -->
-                <Grid Row="0" ColumnDefinitions="*,Auto">
-                    <Label Text="Paiements" Style="{StaticResource TitleLabelStyle}" />
                     <Button Grid.Column="1"
-                            Text="+"
-                            Style="{StaticResource PrimaryButtonStyle}"
-                            Command="{Binding GoToCreateCommand}" />
+                            Text="+ Ajouter"
+                            Command="{Binding GoToCreateCommand}"
+                            BackgroundColor="{StaticResource TopbarColor}"
+                            TextColor="White"
+                            CornerRadius="18"
+                            Padding="14,6"
+                            IsVisible="{Binding IsSyndic}" />
                 </Grid>
 
-                <!-- Filtres -->
-                <Grid Row="1" ColumnDefinitions="*,*,Auto" RowDefinitions="Auto,Auto">
-                    <!-- Utilisateur -->
-                    <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="4">
-                        <Label Text="Utilisateur" Style="{StaticResource FieldLabelStyle}" />
-                        <Picker ItemsSource="{Binding Users}"
-                                ItemDisplayBinding="{Binding FullName}"
-                                SelectedItem="{Binding SelectedUser}"
-                                Title="Tous"
-                                TextColor="Black"
-                                BackgroundColor="White" />
-                    </VerticalStackLayout>
-
-                    <!-- Date de paiement -->
-                    <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="4">
-                        <Label Text="Date de paiement" Style="{StaticResource FieldLabelStyle}" />
-                        <DatePicker Date="{Binding SelectedDate}"
-                                    Format="dd/MM/yyyy" />
-                    </VerticalStackLayout>
-
-                    <!-- Bouton Filtrer -->
-                    <VerticalStackLayout Grid.Row="1" Grid.Column="2" Spacing="4" HorizontalOptions="End">
-                        <Label Text=" " />
-                        <Button Text="Filtrer"
-                                Style="{StaticResource OutlineButtonStyle}"
-                                Command="{Binding FilterCommand}" />
-                    </VerticalStackLayout>
-                </Grid>
-
-                <!-- Liste des paiements -->
-                <CollectionView Grid.Row="2"
+                <CollectionView Grid.Row="1"
                                 ItemsSource="{Binding Items}"
                                 SelectionMode="None">
+
                     <CollectionView.EmptyView>
-                        <Grid Padding="24" VerticalOptions="Center">
-                            <Label Text="Aucun paiement trouvé."
-                                   HorizontalTextAlignment="Center"
-                                   Opacity="0.6" />
-                        </Grid>
+                        <Label Text="Aucun paiement trouvé."
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
                     </CollectionView.EmptyView>
+
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="models:PaiementDto">
-                            <Frame Style="{StaticResource CardStyle}" Margin="0,6">
-                                <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto">
+                            <Frame Padding="14" Margin="0,6" HasShadow="False" CornerRadius="12">
+                                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
 
-                                    <!-- Montant + Date -->
-                                    <Grid Grid.Row="0" Grid.ColumnSpan="2" ColumnDefinitions="*,*">
-                                        <Label Grid.Column="0"
-                           FontSize="15"
-                           FontAttributes="Bold"
-                           Text="{Binding Montant, StringFormat='Montant : {0:F2} DH'}" />
-                                        <Label Grid.Column="1"
-                           FontSize="13"
-                           Text="{Binding DatePaiement, StringFormat='Le {0:dd/MM/yyyy}'}"
-                           HorizontalTextAlignment="End"
-                           Opacity="0.8" />
-                                    </Grid>
+                                    <!-- Montant -->
+                                    <Label Grid.ColumnSpan="2"
+                                           Text="{Binding Montant, StringFormat='{0:F2} DH'}"
+                                           FontAttributes="Bold"
+                                           FontSize="16" />
 
-                                    <!-- Utilisateur -->
-                                    <Label Grid.Row="1" Grid.Column="0"
-                       Margin="0,6,0,0"
-                       FontSize="14"
-                       Text="{Binding NomCompletUser, StringFormat='Utilisateur : {0}'}" />
+                                    <Label Grid.Row="1"
+                                           Text="{Binding NomCompletUser}"
+                                           Opacity="0.8" />
 
-                                    <!-- Appel (ID pour l’instant) + bouton détails -->
-                                    <Grid Grid.Row="1" Grid.ColumnSpan="2"
-                      ColumnDefinitions="*,Auto"
-                      Margin="0,28,0,0">
-                                        <Label Grid.Column="0"
-       Text="{Binding AppelDescription, StringFormat='Appel : {0}'}"
-       FontSize="12"
-       Opacity="0.7" />
-
-                                        <Button Grid.Column="1"
-                            Text="Détails"
-                            Style="{StaticResource OutlineButtonStyle}"
-                            Command="{Binding BindingContext.GoToDetailsCommand, Source={x:Reference RootPage}}"
-                            CommandParameter="{Binding Id}" />
-                                    </Grid>
+                                    <!-- Tap gesture -->
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding Source={x:Reference RootPage}, Path=BindingContext.GoToDetailsCommand}"
+                                            CommandParameter="{Binding Id}" />
+                                    </Grid.GestureRecognizers>
 
                                 </Grid>
                             </Frame>
@@ -207,304 +76,7 @@
                 </CollectionView>
 
             </Grid>
-        </Grid>
+        </layouts:RoleDrawerLayout.MainContent>
 
-        <!-- OVERLAY -->
-        <BoxView x:Name="Backdrop"
-                 Grid.RowSpan="2"
-                 BackgroundColor="#66000000"
-                 Opacity="0"
-                 InputTransparent="True">
-            <BoxView.GestureRecognizers>
-                <TapGestureRecognizer Tapped="Backdrop_Tapped" />
-            </BoxView.GestureRecognizers>
-        </BoxView>
-
-        <!-- DRAWER -->
-        <Border x:Name="Drawer"
-                Grid.RowSpan="2"
-                BackgroundColor="White"
-                StrokeThickness="0"
-                TranslationX="-1000"
-                Padding="0">
-            <Grid RowDefinitions="Auto,*">
-                <Grid BackgroundColor="{StaticResource TopbarColor}" Padding="16">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <Label Text="Navigation"
-                           TextColor="{StaticResource HeaderTextOnDark}"
-                           FontAttributes="Bold"
-                           VerticalOptions="Center" />
-                    <Button Grid.Column="1"
-                            Text="×"
-                            FontSize="22"
-                            BackgroundColor="Transparent"
-                            TextColor="{StaticResource HeaderTextOnDark}"
-                            Clicked="CloseDrawer_Clicked" />
-                </Grid>
-
-              <ScrollView Grid.Row="1" BackgroundColor="White">
-  <VerticalStackLayout Padding="16" Spacing="10">
-
-    <!-- DASHBOARD -->
-    <Label Text="Tableau de bord" FontAttributes="Bold"/>
-    <Button Text="Dashboard"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//syndic-dashboard"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Dashboard Affectations"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//affectation-dashboard"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Mon espace (copro)"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//affectation-user-dashboard"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Gardien / Maintenance"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//affectation-maintenance-dashboard"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Statistiques affectations"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//affectation-analytics"
-            Clicked="OnMenuItemClicked"/>
-
-    <!-- RÉSIDENCES / LOTS -->
-    <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
-    <Label Text="Résidences &amp; Lots" FontAttributes="Bold"/>
-
-    <Button Text="Résidences"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//residences"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Bâtiments"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//batiments"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Lots"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//lots"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Affectations des lots"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//affectation-lots"
-            Clicked="OnMenuItemClicked"/>
-
-    <!-- ❌ Occupant actuel & Historique affectations SUPPRIMÉS -->
-
-    <!-- FINANCES -->
-    <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
-    <Label Text="Finances" FontAttributes="Bold"/>
-
-    <Button Text="Appels de fonds"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//appels"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Charges"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//charges"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Paiements"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//paiements"
-            Clicked="OnMenuItemClicked"/>
-
-    <!-- INCIDENTS / INTERVENTIONS / DEVIS -->
-    <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
-    <Label Text="Incidents &amp; Interventions" FontAttributes="Bold"/>
-
-    <Button Text="Incidents"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//incidents"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Interventions"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//interventions"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Devis de travaux"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//devis-travaux"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Prestataires"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//prestataires"
-            Clicked="OnMenuItemClicked"/>
-
-    <!-- ASSEMBLÉES GÉNÉRALES -->
-    <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
-    <Label Text="Assemblées Générales" FontAttributes="Bold"/>
-
-    <Button Text="Convocations"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//ag/convocations"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Ordre du jour"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//ag/ordre-du-jour"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Votes"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//ag/votes"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Décisions"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//ag/decisions"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Procès-verbal (PV)"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//ag/pv"
-            Clicked="OnMenuItemClicked"/>
-
-    <!-- DOCUMENTS / ANNONCES -->
-    <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
-    <Label Text="Documents &amp; Annonces" FontAttributes="Bold"/>
-
-    <Button Text="Documents"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//documents"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Catégories de documents"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//documents/categories"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Annonces"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//annonces"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Catégories d'annonces"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//annonces/categories"
-            Clicked="OnMenuItemClicked"/>
-
-    <!-- MESSAGERIE -->
-    <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
-    <Label Text="Messagerie" FontAttributes="Bold"/>
-
-    <Button Text="Conversations"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//messages/conversations"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Messages"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//messages"
-            Clicked="OnMenuItemClicked"/>
-
-    <!-- PERSONNEL -->
-    <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
-    <Label Text="Personnel" FontAttributes="Bold"/>
-
-    <Button Text="Employés"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//personnel/employes"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Plannings &amp; Présences"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//personnel/plannings"
-            Clicked="OnMenuItemClicked"/>
-
-    <!-- RECRUTEMENT -->
-    <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
-    <Label Text="Recrutement" FontAttributes="Bold"/>
-
-    <Button Text="Offres d'emploi"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//recrutement/offres"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Candidatures"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//recrutement/candidatures"
-            Clicked="OnMenuItemClicked"/>
-
-    <!-- MARKETPLACE -->
-    <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
-    <Label Text="Marketplace" FontAttributes="Bold"/>
-
-    <Button Text="Annonces de biens"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//marketplace/biens"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Demandes"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//marketplace/demandes"
-            Clicked="OnMenuItemClicked"/>
-
-    <!-- NOTIFICATIONS -->
-    <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
-    <Label Text="Notifications" FontAttributes="Bold"/>
-
-    <Button Text="Centre de notifications"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//notifications"
-            Clicked="OnMenuItemClicked"/>
-
-    <!-- UTILISATEURS & RÔLES -->
-    <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
-    <Label Text="Utilisateurs &amp; Rôles" FontAttributes="Bold"/>
-
-    <Button Text="Utilisateurs"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//admin/utilisateurs"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Rôles &amp; Permissions"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//admin/roles"
-            Clicked="OnMenuItemClicked"/>
-
-    <!-- PARAMÈTRES -->
-    <BoxView HeightRequest="1" BackgroundColor="{StaticResource Divider}" />
-    <Label Text="Paramètres" FontAttributes="Bold"/>
-
-    <Button Text="Profil"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//settings/profil"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="Préférences"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//settings/preferences"
-            Clicked="OnMenuItemClicked"/>
-
-    <Button Text="À propos &amp; Support"
-            Style="{StaticResource MenuButtonStyle}"
-            CommandParameter="//settings/a-propos"
-            Clicked="OnMenuItemClicked"/>
-
-    <!-- DÉCONNEXION -->
-    <BoxView HeightRequest="16" Opacity="0"/>
-    <Button Text="Déconnexion"
-            Style="{StaticResource LogoutButtonStyle}"
-            CommandParameter="//login"
-            Clicked="OnMenuItemClicked"/>
-  </VerticalStackLayout>
-</ScrollView>
-
-            </Grid>
-        </Border>
-    </Grid>
+    </layouts:RoleDrawerLayout>
 </ContentPage>

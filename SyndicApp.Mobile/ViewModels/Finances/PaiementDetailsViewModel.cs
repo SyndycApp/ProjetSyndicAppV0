@@ -28,19 +28,19 @@ namespace SyndicApp.Mobile.ViewModels.Finances
             _authApi = authApi;
         }
 
-        // ⚠️ maintenant STRING, pas Guid
+        // PARAM ID
         [ObservableProperty] private string? paiementId;
 
         // Paiement
         [ObservableProperty] private decimal montant;
         [ObservableProperty] private DateTime datePaiement;
 
-        // Utilisateur
+        // User
         [ObservableProperty] private string? userFullName;
         [ObservableProperty] private string? userRole;
         [ObservableProperty] private string? userAdresse;
 
-        // Appel de fonds
+        // Appel
         [ObservableProperty] private string? appelDescription;
         [ObservableProperty] private decimal montantTotal;
         [ObservableProperty] private decimal montantReste;
@@ -51,34 +51,30 @@ namespace SyndicApp.Mobile.ViewModels.Finances
         [ObservableProperty] private string? residenceNom;
         [ObservableProperty] private string? residenceAdresseComplete;
 
+        // ===== LOAD =====
         [RelayCommand]
         public async Task LoadAsync()
         {
-            // On parse l'id reçu dans la route
-            if (string.IsNullOrWhiteSpace(PaiementId) ||
-                !Guid.TryParse(PaiementId, out var paiementGuid))
-                return;
+            if (string.IsNullOrWhiteSpace(PaiementId)) return;
+            if (!Guid.TryParse(PaiementId, out var id)) return;
 
-            // 1) Paiement
-            var paiement = await _paiementsApi.GetByIdAsync(paiementGuid);
+            var paiement = await _paiementsApi.GetByIdAsync(id);
 
             Montant = paiement.Montant;
             DatePaiement = paiement.DatePaiement;
             UserFullName = paiement.NomCompletUser;
-            var userId = paiement.UserId;
-            var appelId = paiement.AppelDeFondsId;
 
-            // 2) User (rôle)
-            var allUsers = await _authApi.GetAllAsync();
-            var user = allUsers?.Data?.FirstOrDefault(u => u.Id == userId);
-            if (user != null)
+            // User
+            var users = await _authApi.GetAllAsync();
+            var u = users?.Data?.FirstOrDefault(x => x.Id == paiement.UserId);
+            if (u != null)
             {
-                UserRole = user.Roles?.FirstOrDefault();
-                // UserAdresse à remplir si endpoint Users/{id}
+                UserRole = u.Roles?.FirstOrDefault();
+                UserAdresse = u.Email; // placeholder
             }
 
-            // 3) Appel de fonds
-            var appel = await _appelsApi.GetByIdAsync(appelId.ToString());
+            // Appel
+            var appel = await _appelsApi.GetByIdAsync(paiement.AppelDeFondsId.ToString());
             AppelDescription = appel.Description;
             MontantTotal = appel.MontantTotal;
             MontantReste = appel.MontantReste;
@@ -86,14 +82,12 @@ namespace SyndicApp.Mobile.ViewModels.Finances
             DateEmission = appel.DateEmission;
             ResidenceNom = appel.ResidenceNom;
 
-            // 4) Résidence
-            var residence = await _residencesApi.GetByIdAsync(appel.ResidenceId.ToString());
-            ResidenceAdresseComplete =
-                $"{residence.Adresse}, {residence.Ville} {residence.CodePostal}";
+            // Résidence
+            var res = await _residencesApi.GetByIdAsync(appel.ResidenceId.ToString());
+            ResidenceAdresseComplete = $"{res.Adresse}, {res.Ville} {res.CodePostal}";
         }
 
         [RelayCommand]
-        public Task GoBack()
-            => Shell.Current.GoToAsync("..");
+        public Task GoBack() => Shell.Current.GoToAsync("..");
     }
 }

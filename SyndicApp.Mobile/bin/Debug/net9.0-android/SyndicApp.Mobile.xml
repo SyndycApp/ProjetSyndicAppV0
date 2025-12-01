@@ -1073,6 +1073,9 @@
             <inheritdoc/>
             <inheritdoc/>
         </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Finances.PaiementsListViewModel.IsSyndic">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.PaiementsListViewModel.isSyndic"/>
+        </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Finances.PaiementsListViewModel.Items">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.PaiementsListViewModel.items"/>
         </member>
@@ -1084,9 +1087,6 @@
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Finances.PaiementsListViewModel.SelectedDate">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.PaiementsListViewModel.selectedDate"/>
-        </member>
-        <member name="P:SyndicApp.Mobile.ViewModels.Finances.PaiementsListViewModel.SearchText">
-            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.PaiementsListViewModel.searchText"/>
         </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Finances.PaiementsListViewModel.loadCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Finances.PaiementsListViewModel.LoadCommand"/>.</summary>

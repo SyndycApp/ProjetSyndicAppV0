@@ -1,71 +1,24 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.Maui.Controls;
-using SyndicApp.Mobile.ViewModels.Finances;
+﻿using SyndicApp.Mobile.ViewModels.Finances;
 
-namespace SyndicApp.Mobile.Views.Finances
+namespace SyndicApp.Mobile.Views.Finances;
+
+public partial class PaiementDetailsPage : ContentPage
 {
-    public partial class PaiementDetailsPage : ContentPage
+    public PaiementDetailsPage() : this(ServiceHelper.GetRequiredService<PaiementDetailsViewModel>()) { }
+
+    public PaiementDetailsPage(PaiementDetailsViewModel vm)
     {
-        private readonly PaiementDetailsViewModel _viewModel;
+        InitializeComponent();
+        BindingContext = vm;
+    }
 
-        public PaiementDetailsPage(PaiementDetailsViewModel viewModel)
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        if (BindingContext is PaiementDetailsViewModel vm)
         {
-            InitializeComponent();
-            BindingContext = _viewModel = viewModel;
-        }
-
-        protected override async void OnAppearing()
-        {
-            base.OnAppearing();
-            await _viewModel.LoadAsync();
-        }
-
-        // ===== Drawer =====
-
-        private async Task OpenDrawerAsync()
-        {
-            Backdrop.InputTransparent = false;
-            await Task.WhenAll(
-                Backdrop.FadeTo(1, 150),
-                Drawer.TranslateTo(0, 0, 150, Easing.CubicOut)
-            );
-        }
-
-        private async Task CloseDrawerAsync()
-        {
-            await Task.WhenAll(
-                Backdrop.FadeTo(0, 150),
-                Drawer.TranslateTo(-1000, 0, 150, Easing.CubicIn)
-            );
-            Backdrop.InputTransparent = true;
-        }
-
-        private async void OpenDrawer_Clicked(object sender, EventArgs e)
-        {
-            await OpenDrawerAsync();
-        }
-
-        private async void CloseDrawer_Clicked(object sender, EventArgs e)
-        {
-            await CloseDrawerAsync();
-        }
-
-        private async void Backdrop_Tapped(object sender, EventArgs e)
-        {
-            await CloseDrawerAsync();
-        }
-
-        private async void OnMenuItemClicked(object sender, EventArgs e)
-        {
-            if (sender is Button btn &&
-                btn.CommandParameter is string route &&
-                !string.IsNullOrWhiteSpace(route))
-            {
-                await Shell.Current.GoToAsync(route);
-            }
-
-            await CloseDrawerAsync();
+            _ = vm.LoadAsync();
         }
     }
 }

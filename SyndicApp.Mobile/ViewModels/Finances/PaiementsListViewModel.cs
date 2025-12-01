@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Maui.Storage;
 using SyndicApp.Mobile.Api;
 using SyndicApp.Mobile.Models;
 
@@ -15,10 +16,7 @@ namespace SyndicApp.Mobile.ViewModels.Finances
         private readonly IAuthApi _authApi;
         private readonly IAppelsApi _appelsApi;
 
-        public PaiementsListViewModel(
-          IPaiementsApi paiementsApi,
-          IAuthApi authApi,
-          IAppelsApi appelsApi)
+        public PaiementsListViewModel(IPaiementsApi paiementsApi, IAuthApi authApi, IAppelsApi appelsApi)
         {
             _paiementsApi = paiementsApi;
             _authApi = authApi;
@@ -26,92 +24,65 @@ namespace SyndicApp.Mobile.ViewModels.Finances
 
             Items = new();
             Users = new();
+
+            var role = Preferences.Get("user_role", "").ToLower();
+            IsSyndic = role.Contains("syndic");
         }
 
+        // ROLE
+        [ObservableProperty] private bool isSyndic;
+
+        // LISTE
         [ObservableProperty] private List<PaiementDto> items;
 
+        // FILTRES
         [ObservableProperty] private List<UserDto>? users;
         [ObservableProperty] private UserDto? selectedUser;
         [ObservableProperty] private DateTime? selectedDate;
-        [ObservableProperty] private string? searchText;
 
+
+        // ===== LOAD =====
         [RelayCommand]
         public async Task LoadAsync()
         {
-            // 1) Charger les paiements
             var data = await _paiementsApi.GetAllAsync();
-            var list = data?.OrderByDescending(p => p.DatePaiement).ToList()
-                       ?? new List<PaiementDto>();
 
-            // 1bis) Enrichir avec la description de l'appel (si API dispo)
-            foreach (var p in list)
-            {
-                if (p.AppelDeFondsId != Guid.Empty)
-                {
-                    try
-                    {
-                        var desc = await _appelsApi.GetDescriptionAsync(p.AppelDeFondsId.ToString());
-                        if (!string.IsNullOrWhiteSpace(desc))
-                            p.AppelDescription = desc;
-                    }
-                    catch
-                    {
-                        // En cas d'erreur on laisse l'ID, pas de crash
-                        if (string.IsNullOrWhiteSpace(p.AppelDescription))
-                            p.AppelDescription = p.AppelDeFondsId.ToString();
-                    }
-                }
-            }
+            Items = data?
+                .OrderByDescending(x => x.DatePaiement)
+                .ToList()
+                ?? new List<PaiementDto>();
 
-            Items = list;
-
-            // 2) Charger la liste des utilisateurs (inchangé)
-            try
-            {
-                var allUsers = await _authApi.GetAllAsync();
-                if (allUsers?.Success == true && allUsers.Data != null)
+            // load users
+            var allUsers = await _authApi.GetAllAsync();
+            Users = allUsers?.Data?
+                .Select(u => new UserDto
                 {
-                    Users = allUsers.Data
-                        .Select(u => new UserDto
-                        {
-                            Id = u.Id,
-                            Email = u.Email ?? string.Empty,
-                            FullName = !string.IsNullOrWhiteSpace(u.FullName)
-                                ? u.FullName!
-                                : (u.Email ?? u.Id.ToString()),
-                            Roles = u.Roles ?? new List<string>()
-                        })
-                        .OrderBy(u => u.FullName)
-                        .ToList();
-                }
-                else
-                {
-                    Users = new List<UserDto>();
-                }
-            }
-            catch
-            {
-                Users = new List<UserDto>();
-            }
+                    Id = u.Id,
+                    Email = u.Email ?? "",
+                    FullName = string.IsNullOrWhiteSpace(u.FullName) ? u.Email : u.FullName,
+                    Roles = u.Roles ?? new List<string>()
+                })
+                .OrderBy(u => u.FullName)
+                .ToList();
         }
 
 
+        // ===== FILTER =====
         [RelayCommand]
         public async Task FilterAsync()
         {
-            var data = await _paiementsApi.GetAllAsync() ?? new List<PaiementDto>();
+            var data = await _paiementsApi.GetAllAsync() ?? new();
 
-            var filtered = data.Where(x =>
-                    (string.IsNullOrWhiteSpace(SearchText) ||
-                     (x.NomCompletUser?.Contains(SearchText, StringComparison.OrdinalIgnoreCase) ?? false))
-                    && (SelectedUser == null || x.UserId == SelectedUser.Id)
-                    && (!SelectedDate.HasValue || x.DatePaiement.Date == SelectedDate.Value.Date))
-                .OrderByDescending(p => p.DatePaiement)
+            Items = data.Where(x =>
+                    (SelectedUser == null || x.UserId == SelectedUser.Id) &&
+                    (!SelectedDate.HasValue || x.DatePaiement.Date == SelectedDate.Value.Date)
+                )
+                .OrderByDescending(x => x.DatePaiement)
                 .ToList();
-
-            Items = filtered;
         }
 
+
+        // ===== NAV =====
         [RelayCommand]
         public Task GoToCreate()
             => Shell.Current.GoToAsync("paiement-create");

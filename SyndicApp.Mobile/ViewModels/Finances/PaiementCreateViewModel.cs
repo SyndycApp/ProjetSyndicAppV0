@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Maui.Controls;
+using Refit;
 using SyndicApp.Mobile.Api;
 using SyndicApp.Mobile.Models;
 
@@ -15,7 +17,10 @@ namespace SyndicApp.Mobile.ViewModels.Finances
         private readonly IAppelsApi _appelsApi;
         private readonly IAuthApi _authApi;
 
-        public PaiementCreateViewModel(IPaiementsApi paiementsApi, IAppelsApi appelsApi, IAuthApi authApi)
+        public PaiementCreateViewModel(
+            IPaiementsApi paiementsApi,
+            IAppelsApi appelsApi,
+            IAuthApi authApi)
         {
             _paiementsApi = paiementsApi;
             _appelsApi = appelsApi;
@@ -40,7 +45,10 @@ namespace SyndicApp.Mobile.ViewModels.Finances
         {
             // Appels de fonds
             var appelsList = await _appelsApi.GetAllAsync();
-            Appels = appelsList?.OrderByDescending(a => a.DateEmission).ToList() ?? new List<AppelDeFondsDto>();
+            Appels = appelsList?
+                        .OrderByDescending(a => a.DateEmission)
+                        .ToList()
+                     ?? new List<AppelDeFondsDto>();
 
             // Utilisateurs
             var allUsers = await _authApi.GetAllAsync();
@@ -49,7 +57,7 @@ namespace SyndicApp.Mobile.ViewModels.Finances
                 Users = allUsers.Data
                     .Select(u => new UserDto
                     {
-                        Id = u.Id,
+                        Id = u.Id, // type peu importe, on gère plus bas
                         Email = u.Email ?? string.Empty,
                         FullName = !string.IsNullOrWhiteSpace(u.FullName)
                             ? u.FullName!
@@ -70,7 +78,8 @@ namespace SyndicApp.Mobile.ViewModels.Finances
         {
             if (SelectedAppel == null || SelectedUser == null)
             {
-                await Shell.Current.DisplayAlert("Erreur",
+                await Shell.Current.DisplayAlert(
+                    "Erreur",
                     "Veuillez sélectionner l'appel de fonds et l'utilisateur.",
                     "OK");
                 return;
@@ -78,7 +87,8 @@ namespace SyndicApp.Mobile.ViewModels.Finances
 
             if (Montant <= 0)
             {
-                await Shell.Current.DisplayAlert("Erreur",
+                await Shell.Current.DisplayAlert(
+                    "Erreur",
                     "Le montant doit être supérieur à 0.",
                     "OK");
                 return;
@@ -86,12 +96,14 @@ namespace SyndicApp.Mobile.ViewModels.Finances
 
             try
             {
+                // ✅ On passe TOUJOURS par Guid.Parse(ToString())
                 var appelId = Guid.Parse(SelectedAppel.Id.ToString()!);
                 var userId = Guid.Parse(SelectedUser.Id.ToString()!);
+
                 var request = new PaiementCreateRequest
                 {
-                    AppelDeFondsId = appelId,  
-                    UserId = userId,         
+                    AppelDeFondsId = appelId,   // Guid
+                    UserId = userId,            // Guid
                     Montant = Montant,
                     DatePaiement = DatePaiement
                 };
@@ -103,7 +115,10 @@ namespace SyndicApp.Mobile.ViewModels.Finances
             }
             catch (ApiException ex)
             {
-                var details = string.IsNullOrWhiteSpace(ex.Content) ? ex.Message : ex.Content;
+                var details = string.IsNullOrWhiteSpace(ex.Content)
+                    ? ex.Message
+                    : ex.Content;
+
                 await Shell.Current.DisplayAlert("Erreur API (400)", details, "OK");
             }
             catch (Exception ex)
@@ -111,6 +126,5 @@ namespace SyndicApp.Mobile.ViewModels.Finances
                 await Shell.Current.DisplayAlert("Erreur", ex.Message, "OK");
             }
         }
-
     }
 }
