@@ -5,15 +5,21 @@ namespace SyndicApp.Mobile.Views.Incidents
 {
     public partial class InterventionDetailsPage : ContentPage
     {
-        public InterventionDetailsPage()
+        public InterventionDetailsPage(InterventionDetailsViewModel vm)
         {
             InitializeComponent();
-            BindingContext ??= ServiceHelper.Get<InterventionDetailsViewModel>();
+            BindingContext = vm;
         }
 
+        private async void Back_Clicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("..");
+        }
+        
         protected override async void OnAppearing()
         {
             base.OnAppearing();
+
             if (BindingContext is InterventionDetailsViewModel vm)
                 await vm.LoadAsync();
         }

@@ -42,7 +42,6 @@ namespace SyndicApp.Mobile.Views.Layout
             //   Drawer.TranslationX = -1000 (fermé)
             //   Backdrop.Opacity = 0, InputTransparent = true
         }
-
         // ========= OUVERTURE / FERMETURE =========
 
         private async Task OpenDrawerAsync()

@@ -6,7 +6,6 @@
     xmlns:vm="clr-namespace:SyndicApp.Mobile.ViewModels.Personnel"
     x:DataType="vm:PrestataireCreateViewModel"
     Shell.NavBarIsVisible="False"
-    Title="Créer prestataire"
     BackgroundColor="White">
 
     <ContentPage.Resources>
@@ -22,20 +21,20 @@
 
     <Grid RowDefinitions="Auto,*">
 
-        <!-- Topbar simple -->
+        <!-- TOPBAR -->
         <Grid BackgroundColor="{StaticResource TopbarColor}" Padding="12,8">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
+            <!-- RETOUR -->
             <Button Grid.Column="0"
                     Text="←"
                     FontSize="22"
                     BackgroundColor="Transparent"
                     TextColor="{StaticResource HeaderTextOnDark}"
-                    Command="{Binding CancelCommand}" />
+                    Clicked="Back_Clicked" />
 
             <Label Grid.Column="1"
                    Text="Créer un prestataire"
@@ -45,6 +44,7 @@
                    TextColor="{StaticResource HeaderTextOnDark}"/>
         </Grid>
 
+        <!-- FORMULAIRE -->
         <ScrollView Grid.Row="1">
             <VerticalStackLayout Padding="16" Spacing="12">
 
@@ -70,16 +70,19 @@
                 <Label Text="Notes" />
                 <Editor Text="{Binding Notes}" AutoSize="TextChanges" />
 
+                <!-- ENREGISTRER -->
                 <Button Text="Enregistrer"
                         Margin="0,20,0,0"
                         BackgroundColor="#2563EB"
                         TextColor="White"
                         Command="{Binding SaveCommand}" />
 
+                <!-- ANNULER -->
                 <Button Text="Annuler"
                         BackgroundColor="Transparent"
                         TextColor="#2563EB"
-                        Command="{Binding CancelCommand}" />
+                        Clicked="Back_Clicked" />
+
             </VerticalStackLayout>
         </ScrollView>
     </Grid>

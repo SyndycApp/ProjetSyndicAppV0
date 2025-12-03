@@ -208,6 +208,12 @@
                                 CommandParameter="//devis-travaux"
                                 Clicked="OnMenuItemClicked"/>
 
+                        <Button Text="Prestataires"     
+                                Style="{StaticResource MenuButtonStyle}" 
+                                CommandParameter="//prestataires"    
+                                 Clicked="OnMenuItemClicked"/>
+        
+
                         <!-- LOGOUT -->
                         <BoxView HeightRequest="20"/>
                         <Button Text="Déconnexion"

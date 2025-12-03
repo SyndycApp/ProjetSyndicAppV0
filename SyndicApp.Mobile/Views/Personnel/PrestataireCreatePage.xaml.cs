@@ -10,5 +10,10 @@ namespace SyndicApp.Mobile.Views.Personnel
             InitializeComponent();
             BindingContext ??= ServiceHelper.Get<PrestataireCreateViewModel>();
         }
+
+        private async void Back_Clicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("..");
+        }
     }
 }

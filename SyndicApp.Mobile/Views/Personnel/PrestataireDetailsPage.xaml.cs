@@ -14,8 +14,14 @@ namespace SyndicApp.Mobile.Views.Personnel
         protected override async void OnAppearing()
         {
             base.OnAppearing();
+
             if (BindingContext is PrestataireDetailsViewModel vm)
                 await vm.LoadAsync();
+        }
+
+        private async void Back_Clicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("..");
         }
     }
 }
