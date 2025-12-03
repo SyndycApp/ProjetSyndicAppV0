@@ -5,16 +5,18 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:layout="clr-namespace:SyndicApp.Mobile.Views.Layout"
     Shell.NavBarIsVisible="False"
-    Title="Lots"
     BackgroundColor="White">
 
     <layout:RoleDrawerLayout>
         <layout:RoleDrawerLayout.MainContent>
 
-            <Grid BackgroundColor="White">
+            <!-- PAGE FULL -->
+            <Grid RowDefinitions="Auto,*"
+                  BackgroundColor="White">
+
+                <!-- HEADER (ne scrolle pas) -->
                 <VerticalStackLayout Padding="16" Spacing="12">
 
-                    <!-- Titre + bouton "+" (syndic uniquement, géré dans le code-behind) -->
                     <Grid ColumnDefinitions="*,Auto">
                         <Label Text="Liste des lots"
                                FontSize="22"
@@ -30,74 +32,79 @@
                                 Clicked="OnAddLotClicked" />
                     </Grid>
 
-                    <!-- Liste des lots -->
-                    <CollectionView ItemsSource="{Binding Items}"
-                                    SelectionMode="None">
-                        <CollectionView.EmptyView>
-                            <Label Text="Aucun lot"
-                                   HorizontalOptions="Center"
-                                   VerticalOptions="Center" />
-                        </CollectionView.EmptyView>
-
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Frame Margin="0,6"
-                                       Padding="14"
-                                       CornerRadius="12"
-                                       HasShadow="False"
-                                       BorderColor="#E5E7EB">
-                                    <Grid ColumnDefinitions="*,Auto">
-                                        <VerticalStackLayout Spacing="2">
-                                            <Label Text="{Binding NumeroLot}"
-                                                   FontAttributes="Bold"
-                                                   FontSize="16" />
-                                            <Label Text="{Binding Type}"
-                                                   FontSize="12"
-                                                   TextColor="#6B7280" />
-
-                                            <!-- Statut occupation -->
-                                            <Label Text="{Binding StatutOccupation}"
-                                                   FontSize="12">
-                                                <Label.Triggers>
-                                                    <DataTrigger TargetType="Label"
-                                                                 Binding="{Binding EstOccupe}"
-                                                                 Value="True">
-                                                        <Setter Property="TextColor" Value="#16A34A" />
-                                                    </DataTrigger>
-                                                    <DataTrigger TargetType="Label"
-                                                                 Binding="{Binding EstOccupe}"
-                                                                 Value="False">
-                                                        <Setter Property="TextColor" Value="#6B7280" />
-                                                    </DataTrigger>
-                                                </Label.Triggers>
-                                            </Label>
-
-                                            <!-- Occupant -->
-                                            <Label Text="{Binding OccupantDisplay}"
-                                                   FontSize="11"
-                                                   TextColor="#6B7280" />
-                                        </VerticalStackLayout>
-
-                                        <Label Grid.Column="1"
-                                               Text="›"
-                                               FontSize="22"
-                                               VerticalOptions="Center"
-                                               TextColor="#9CA3AF" />
-                                    </Grid>
-
-                                    <!-- Tap = ouvrir détail -->
-                                    <Frame.GestureRecognizers>
-                                        <TapGestureRecognizer
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},
-                                                              Path=BindingContext.OpenDetailsAsyncCommand}"
-                                            CommandParameter="{Binding Id}" />
-                                    </Frame.GestureRecognizers>
-                                </Frame>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-
                 </VerticalStackLayout>
+
+                <!-- LISTE SCROLLABLE -->
+                <CollectionView Grid.Row="1"
+                                ItemsSource="{Binding Items}"
+                                SelectionMode="None"
+                                Margin="16,0">
+
+                    <CollectionView.EmptyView>
+                        <Label Text="Aucun lot"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+                    </CollectionView.EmptyView>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Margin="0,6"
+                                   Padding="14"
+                                   CornerRadius="12"
+                                   HasShadow="False"
+                                   BorderColor="#E5E7EB">
+
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <VerticalStackLayout Spacing="2">
+                                        <Label Text="{Binding NumeroLot}"
+                                               FontAttributes="Bold"
+                                               FontSize="16" />
+
+                                        <Label Text="{Binding Type}"
+                                               FontSize="12"
+                                               TextColor="#6B7280" />
+
+                                        <Label Text="{Binding StatutOccupation}"
+                                               FontSize="12">
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label"
+                                                             Binding="{Binding EstOccupe}"
+                                                             Value="True">
+                                                    <Setter Property="TextColor" Value="#16A34A" />
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label"
+                                                             Binding="{Binding EstOccupe}"
+                                                             Value="False">
+                                                    <Setter Property="TextColor" Value="#6B7280" />
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+
+                                        <Label Text="{Binding OccupantDisplay}"
+                                               FontSize="11"
+                                               TextColor="#6B7280" />
+                                    </VerticalStackLayout>
+
+                                    <Label Grid.Column="1"
+                                           Text="›"
+                                           FontSize="22"
+                                           VerticalOptions="Center"
+                                           TextColor="#9CA3AF" />
+                                </Grid>
+
+                                <!-- Tap : ouvrir détails -->
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}},
+                                                          Path=BindingContext.OpenDetailsAsyncCommand}"
+                                        CommandParameter="{Binding Id}" />
+                                </Frame.GestureRecognizers>
+
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
             </Grid>
 
         </layout:RoleDrawerLayout.MainContent>

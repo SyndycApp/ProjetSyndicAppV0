@@ -547,7 +547,6 @@ C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\assets\arm64-v8a\zh-HK\Microsoft.Maui.Controls.resources.dll
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\assets\arm64-v8a\_Microsoft.Android.Resource.Designer.dll
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\__environment__.txt
-C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\typemaps.arm64-v8a.ll
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\AndroidManifest.xml
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\AndroidManifest.xml
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\src\mono\MonoRuntimeProvider.java
@@ -555,7 +554,6 @@ C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\assets\machine.config
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\bin\mono.android.jar
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\static.flag
-C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\environment.arm64-v8a.ll
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\src\androidx\activity\ktx\R.java
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\src\androidx\activity\R.java
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\src\androidx\annotation\experimental\R.java
@@ -918,13 +916,6 @@ C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\bin\packaged_resources
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\src\com\companyname\syndicapp\mobile\R.java
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\_CompileJava.FileList.txt
-C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\compressed_assemblies.arm64-v8a.ll
-C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\typemaps.arm64-v8a.o
-C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\environment.arm64-v8a.o
-C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\compressed_assemblies.arm64-v8a.o
-C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\marshal_methods.arm64-v8a.o
-C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\jni_remap.arm64-v8a.o
-C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\app_shared_libraries\arm64-v8a\libxamarin-app.so
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\bin\classes.dex
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\bin\classes2.dex
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\stamp\_CleanIntermediateIfNeeded.stamp
@@ -1408,3 +1399,16 @@ C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\bin\Debug\
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\bin\Debug\net9.0-android\Microsoft.VisualStudio.DesignTools.TapContract.dll
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\bin\Debug\net9.0-android\Microsoft.VisualStudio.DesignTools.XamlTapContract.dll
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\SyndicAp.50C67D6C.Up2Date
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\assets\x86_64\Microsoft.Maui.Controls.HotReload.Forms.dll
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\assets\x86_64\Microsoft.VisualStudio.DesignTools.MobileTapContracts.dll
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\assets\x86_64\Microsoft.VisualStudio.DesignTools.TapContract.dll
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\assets\x86_64\Microsoft.VisualStudio.DesignTools.XamlTapContract.dll
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\typemaps.arm64-v8a.ll
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\environment.arm64-v8a.ll
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\compressed_assemblies.arm64-v8a.ll
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\typemaps.arm64-v8a.o
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\environment.arm64-v8a.o
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\compressed_assemblies.arm64-v8a.o
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\marshal_methods.arm64-v8a.o
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\jni_remap.arm64-v8a.o
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\app_shared_libraries\arm64-v8a\libxamarin-app.so
