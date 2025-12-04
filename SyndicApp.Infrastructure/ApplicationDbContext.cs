@@ -119,14 +119,13 @@ namespace SyndicApp.Infrastructure
 
                 b.Property(a => a.UserId).HasColumnName("UserId").IsRequired();
 
-                b.HasOne<ApplicationUser>()      // relation sans nav
+                b.HasOne<ApplicationUser>()
                  .WithMany()
                  .HasForeignKey(a => a.UserId)
                  .HasPrincipalKey(u => u.Id)
                  .HasConstraintName("FK_AffectationsLots_AspNetUsers_UserId")
                  .OnDelete(DeleteBehavior.Cascade);
 
-                // neutralise toute prop fantôme potentielle
                 b.Ignore("ApplicationUserId");
                 b.Ignore("ApplicationUserId1");
                 b.Ignore("ApplicationUserId2");
@@ -231,7 +230,6 @@ namespace SyndicApp.Infrastructure
                  .OnDelete(DeleteBehavior.Restrict);
             });
 
-
             // ================= Incidents =================
             modelBuilder.Entity<Incident>(b =>
             {
@@ -241,54 +239,45 @@ namespace SyndicApp.Infrastructure
                 b.Property(x => x.Description).IsRequired();
                 b.Property(x => x.TypeIncident).HasMaxLength(100);
 
-                // Enums (stockés en int)
                 b.Property(x => x.Statut).IsRequired();
                 b.Property(x => x.Urgence).IsRequired();
 
                 b.Property(x => x.DateDeclaration).IsRequired();
 
-                // Index utiles
                 b.HasIndex(x => new { x.ResidenceId, x.Statut });
                 b.HasIndex(x => x.DateDeclaration);
                 b.HasIndex(x => x.DeclareParId);
 
-                // Residence OBLIGATOIRE (éviter cascades multi)
                 b.HasOne(x => x.Residence)
-                 .WithMany(r => r.Incidents)      // si la nav n’existe pas sur Residence, mets .WithMany()
+                 .WithMany(r => r.Incidents)
                  .HasForeignKey(x => x.ResidenceId)
                  .OnDelete(DeleteBehavior.Restrict);
 
-                // Lot OPTIONNEL (Guid?) => SetNull pour éviter suppressions en chaîne
                 b.HasOne(x => x.Lot)
-                 .WithMany(l => l.Incidents)      // ou .WithMany() si pas de nav inverse
+                 .WithMany(l => l.Incidents)
                  .HasForeignKey(x => x.LotId)
                  .OnDelete(DeleteBehavior.SetNull);
 
-                // Auteur : FK vers AspNetUsers (sans nav)
                 b.HasOne<ApplicationUser>()
                  .WithMany()
                  .HasForeignKey(x => x.DeclareParId)
                  .OnDelete(DeleteBehavior.Restrict);
 
-                // Interventions (0..n) – FK sur Intervention.IncidentId
                 b.HasMany(x => x.Interventions)
                  .WithOne(i => i.Incident)
                  .HasForeignKey(i => i.IncidentId)
                  .OnDelete(DeleteBehavior.SetNull);
 
-                // Devis (0..n) – FK sur DevisTravaux.IncidentId
                 b.HasMany(x => x.Devis)
                  .WithOne(d => d.Incident)
                  .HasForeignKey(d => d.IncidentId)
                  .OnDelete(DeleteBehavior.SetNull);
 
-                // Historique (1..n)
                 b.HasMany(x => x.Historique)
                  .WithOne(h => h.Incident)
                  .HasForeignKey(h => h.IncidentId)
                  .OnDelete(DeleteBehavior.Cascade);
 
-                // Documents (many-to-many) avec table de jonction nommée
                 b.HasMany(x => x.Documents)
                  .WithMany()
                  .UsingEntity<Dictionary<string, object>>(
@@ -318,41 +307,35 @@ namespace SyndicApp.Infrastructure
                 b.Property(x => x.Description).IsRequired();
 
                 b.Property(x => x.MontantHT).HasPrecision(18, 2);
-                b.Property(x => x.TauxTVA).HasPrecision(5, 4); // ex: 0.2000
+                b.Property(x => x.TauxTVA).HasPrecision(5, 4);
                 b.Property(x => x.DateEmission).IsRequired();
                 b.Property(x => x.Statut).IsRequired();
 
-                // Index
                 b.HasIndex(x => new { x.ResidenceId, x.Statut });
                 b.HasIndex(x => x.DateEmission);
                 b.HasIndex(x => x.ValideParId);
                 b.HasIndex(x => x.DateDecision);
 
-                // Residence OBLIGATOIRE
                 b.HasOne(x => x.Residence)
-                 .WithMany(r => r.DevisTravaux)   // si pas de nav sur Residence, mets .WithMany()
+                 .WithMany(r => r.DevisTravaux)
                  .HasForeignKey(x => x.ResidenceId)
                  .OnDelete(DeleteBehavior.Restrict);
 
-                // Incident optionnel
                 b.HasOne(x => x.Incident)
                  .WithMany(i => i.Devis)
                  .HasForeignKey(x => x.IncidentId)
                  .OnDelete(DeleteBehavior.SetNull);
 
-                // Interventions (0..n)
                 b.HasMany(x => x.Interventions)
                  .WithOne(i => i.DevisTravaux)
                  .HasForeignKey(i => i.DevisTravauxId)
                  .OnDelete(DeleteBehavior.SetNull);
 
-                // Historique (1..n)
                 b.HasMany(x => x.Historique)
                  .WithOne(h => h.DevisTravaux)
                  .HasForeignKey(h => h.DevisTravauxId)
                  .OnDelete(DeleteBehavior.Cascade);
 
-                // Documents (many-to-many)
                 b.HasMany(x => x.Documents)
                  .WithMany()
                  .UsingEntity<Dictionary<string, object>>(
@@ -383,37 +366,31 @@ namespace SyndicApp.Infrastructure
                 b.Property(x => x.CoutReel).HasPrecision(18, 2);
                 b.Property(x => x.Statut).IsRequired();
 
-                // Index
                 b.HasIndex(x => new { x.ResidenceId, x.Statut });
                 b.HasIndex(x => x.DatePrevue);
                 b.HasIndex(x => x.DateRealisation);
                 b.HasIndex(x => x.EmployeId);
 
-                // Residence OBLIGATOIRE
                 b.HasOne(x => x.Residence)
-                 .WithMany(r => r.Interventions)  // si pas de nav, mets .WithMany()
+                 .WithMany(r => r.Interventions)
                  .HasForeignKey(x => x.ResidenceId)
                  .OnDelete(DeleteBehavior.Restrict);
 
-                // Devis optionnel (souvent présent si "Accepté")
                 b.HasOne(x => x.DevisTravaux)
                  .WithMany(d => d.Interventions)
                  .HasForeignKey(x => x.DevisTravauxId)
                  .OnDelete(DeleteBehavior.SetNull);
 
-                // Incident optionnel
                 b.HasOne(x => x.Incident)
                  .WithMany(i => i.Interventions)
                  .HasForeignKey(x => x.IncidentId)
                  .OnDelete(DeleteBehavior.SetNull);
 
-                // Employé interne optionnel
                 b.HasOne(x => x.Employe)
                  .WithMany(e => e.Interventions)
                  .HasForeignKey(x => x.EmployeId)
                  .OnDelete(DeleteBehavior.SetNull);
 
-                // Documents (many-to-many)
                 b.HasMany(x => x.Documents)
                  .WithMany()
                  .UsingEntity<Dictionary<string, object>>(
@@ -433,7 +410,6 @@ namespace SyndicApp.Infrastructure
                         join.HasIndex("DocumentId");
                     });
 
-                // Historique (1..n)
                 b.HasMany(x => x.Historique)
                  .WithOne(h => h.Intervention)
                  .HasForeignKey(h => h.InterventionId)
@@ -453,19 +429,17 @@ namespace SyndicApp.Infrastructure
                 b.Property(p => p.Email).HasMaxLength(200);
                 b.Property(p => p.Telephone).HasMaxLength(50);
 
-                // FK optionnelle vers AspNetUsers
                 b.HasOne<ApplicationUser>()
                  .WithMany()
                  .HasForeignKey(p => p.UserId)
                  .OnDelete(DeleteBehavior.SetNull);
             });
 
-
-
-            // ================= Historiques Incidents/Devis/Interventions =================
+            // ================= Historiques =================
             modelBuilder.Entity<IncidentHistorique>(b =>
             {
                 b.ToTable("IncidentsHistoriques");
+
                 b.Property(x => x.Action).HasMaxLength(250).IsRequired();
                 b.Property(x => x.Commentaire).HasMaxLength(1000);
 
@@ -482,6 +456,7 @@ namespace SyndicApp.Infrastructure
             modelBuilder.Entity<DevisHistorique>(b =>
             {
                 b.ToTable("DevisHistoriques");
+
                 b.Property(x => x.Action).HasMaxLength(250).IsRequired();
                 b.Property(x => x.Commentaire).HasMaxLength(1000);
 
@@ -498,6 +473,7 @@ namespace SyndicApp.Infrastructure
             modelBuilder.Entity<InterventionHistorique>(b =>
             {
                 b.ToTable("InterventionsHistoriques");
+
                 b.Property(x => x.Action).HasMaxLength(250).IsRequired();
                 b.Property(x => x.Commentaire).HasMaxLength(1000);
 
@@ -524,7 +500,7 @@ namespace SyndicApp.Infrastructure
                  .OnDelete(DeleteBehavior.NoAction);
 
                 b.HasOne(d => d.Residence)
-                 .WithMany(r => r.Documents)      // <- mets r => r.Documents si tu as cette collection
+                 .WithMany(r => r.Documents)
                  .HasForeignKey(d => d.ResidenceId)
                  .OnDelete(DeleteBehavior.NoAction);
 
@@ -534,7 +510,6 @@ namespace SyndicApp.Infrastructure
                  .OnDelete(DeleteBehavior.SetNull);
             });
 
-            // ================= Annonces =================
             modelBuilder.Entity<Annonce>(b =>
             {
                 b.HasOne(a => a.Categorie)
@@ -543,7 +518,7 @@ namespace SyndicApp.Infrastructure
                  .OnDelete(DeleteBehavior.Cascade);
 
                 b.HasOne(a => a.Residence)
-                 .WithMany(r => r.Annonces)       // <- mets r => r.Annonces si la prop existe, sinon WithMany()
+                 .WithMany(r => r.Annonces)
                  .HasForeignKey(a => a.ResidenceId)
                  .OnDelete(DeleteBehavior.NoAction);
 
@@ -553,38 +528,31 @@ namespace SyndicApp.Infrastructure
                  .OnDelete(DeleteBehavior.Cascade);
             });
 
-            // Locaux commerciaux
             modelBuilder.Entity<LocalCommercial>(b =>
             {
                 b.ToTable("LocauxCommerciaux");
 
-                // Propriétaire (AspNetUsers) – sans navigation
                 b.HasOne<ApplicationUser>()
                  .WithMany()
                  .HasForeignKey(l => l.ProprietaireId)
-                 .OnDelete(DeleteBehavior.NoAction);   // évite les cascades multiples
+                 .OnDelete(DeleteBehavior.NoAction);
 
-                // Locataire (AspNetUsers) – sans navigation
                 b.HasOne<ApplicationUser>()
                  .WithMany()
                  .HasForeignKey(l => l.LocataireId)
-                 .OnDelete(DeleteBehavior.NoAction);   // idem
+                 .OnDelete(DeleteBehavior.NoAction);
 
-                // Activité
                 b.HasOne(l => l.Activite)
                  .WithMany()
                  .HasForeignKey(l => l.ActiviteId)
                  .OnDelete(DeleteBehavior.Cascade);
 
-                // Lot
                 b.HasOne(l => l.Lot)
                  .WithMany()
                  .HasForeignKey(l => l.LotId)
                  .OnDelete(DeleteBehavior.Cascade);
             });
 
-
-            // ================= Notifications =================
             modelBuilder.Entity<Notification>(b =>
             {
                 b.HasOne<ApplicationUser>()
@@ -593,7 +561,6 @@ namespace SyndicApp.Infrastructure
                  .OnDelete(DeleteBehavior.Cascade);
             });
 
-            // Auto-applique les IEntityTypeConfiguration<> si présentes
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         }
     }

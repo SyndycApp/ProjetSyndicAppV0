@@ -4,6 +4,16 @@
         <name>SyndicApp.Mobile</name>
     </assembly>
     <members>
+        <member name="T:SyndicApp.Mobile.Converters.EqualsZeroConverter">
+            <summary>
+            Retourne TRUE si la valeur == 0
+            </summary>
+        </member>
+        <member name="T:SyndicApp.Mobile.Converters.GreaterThanZeroConverter">
+            <summary>
+            Retourne TRUE si la valeur > 0
+            </summary>
+        </member>
         <member name="M:SyndicApp.Mobile.Services.TokenStore.GetUserId">
             <summary>
             Retourne l'UserId :
@@ -681,19 +691,11 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.Appel">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.appel"/>
         </member>
-        <member name="P:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.Progress">
-            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.progress"/>
-        </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.IsBusy">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.isBusy"/>
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.IsSyndic">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.isSyndic"/>
-        </member>
-        <member name="M:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.OnAppelChanged(SyndicApp.Mobile.Models.AppelDeFondsDto)">
-            <summary>Executes the logic for when <see cref="P:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.Appel"/> just changed.</summary>
-            <param name="value">The new property value that was set.</param>
-            <remarks>This method is invoked right after the value of <see cref="P:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.Appel"/> is changed.</remarks>
         </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.loadCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.LoadCommand"/>.</summary>
@@ -720,8 +722,6 @@
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.DeleteAsync"/>.</summary>
         </member>
         <member name="T:SyndicApp.Mobile.ViewModels.Finances.AppelEditViewModel">
-            <inheritdoc/>
-            <inheritdoc/>
             <inheritdoc/>
             <inheritdoc/>
             <inheritdoc/>
@@ -780,18 +780,6 @@
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Finances.AppelEditViewModel.SaveCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Finances.AppelEditViewModel.SaveAsync"/>.</summary>
-        </member>
-        <member name="F:SyndicApp.Mobile.ViewModels.Finances.AppelEditViewModel.cloturerCommand">
-            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Finances.AppelEditViewModel.CloturerCommand"/>.</summary>
-        </member>
-        <member name="P:SyndicApp.Mobile.ViewModels.Finances.AppelEditViewModel.CloturerCommand">
-            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Finances.AppelEditViewModel.CloturerAsync"/>.</summary>
-        </member>
-        <member name="F:SyndicApp.Mobile.ViewModels.Finances.AppelEditViewModel.deleteCommand">
-            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Finances.AppelEditViewModel.DeleteCommand"/>.</summary>
-        </member>
-        <member name="P:SyndicApp.Mobile.ViewModels.Finances.AppelEditViewModel.DeleteCommand">
-            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Finances.AppelEditViewModel.DeleteAsync"/>.</summary>
         </member>
         <member name="T:SyndicApp.Mobile.ViewModels.Finances.AppelsListViewModel">
             <inheritdoc/>
@@ -2356,9 +2344,6 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Appel">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Appel" generated properties.</summary>
         </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Progress">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Progress" generated properties.</summary>
-        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.MontantTotal">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "MontantTotal" generated properties.</summary>
         </member>
@@ -2761,9 +2746,6 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Appel">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Appel" generated properties.</summary>
         </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Progress">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Progress" generated properties.</summary>
-        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.MontantTotal">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "MontantTotal" generated properties.</summary>
         </member>
@@ -3160,10 +3142,10 @@
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAppelsApi.GetByIdAsync(System.String)">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAppelsApi.CreateAsync(SyndicApp.Mobile.Models.AppelDeFondsDto)">
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAppelsApi.CreateAsync(SyndicApp.Mobile.Models.CreateAppelDeFondsRequest)">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAppelsApi.UpdateAsync(System.String,SyndicApp.Mobile.Models.AppelDeFondsDto)">
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAppelsApi.UpdateAsync(System.String,SyndicApp.Mobile.Models.UpdateAppelDeFondsRequest)">
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAppelsApi.CloturerAsync(System.String)">
@@ -3181,10 +3163,10 @@
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAppelsApi.SyndicApp#Mobile#Api#IAppelsApi#GetByIdAsync(System.String)">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAppelsApi.SyndicApp#Mobile#Api#IAppelsApi#CreateAsync(SyndicApp.Mobile.Models.AppelDeFondsDto)">
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAppelsApi.SyndicApp#Mobile#Api#IAppelsApi#CreateAsync(SyndicApp.Mobile.Models.CreateAppelDeFondsRequest)">
             <inheritdoc />
         </member>
-        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAppelsApi.SyndicApp#Mobile#Api#IAppelsApi#UpdateAsync(System.String,SyndicApp.Mobile.Models.AppelDeFondsDto)">
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAppelsApi.SyndicApp#Mobile#Api#IAppelsApi#UpdateAsync(System.String,SyndicApp.Mobile.Models.UpdateAppelDeFondsRequest)">
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIAppelsApi.SyndicApp#Mobile#Api#IAppelsApi#CloturerAsync(System.String)">

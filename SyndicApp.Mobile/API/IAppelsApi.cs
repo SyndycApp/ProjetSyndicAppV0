@@ -9,15 +9,20 @@ namespace SyndicApp.Mobile.Api
         Task<List<AppelDeFondsDto>> GetAllAsync();
 
         [Get("/api/Appels/{id}")]
-        Task<AppelDeFondsDto> GetByIdAsync(string id);                
+        Task<AppelDeFondsDto> GetByIdAsync(string id);
 
+
+        // ✔ Le backend attend CreateAppelDeFondsDto
         [Post("/api/Appels")]
-        Task<AppelDeFondsDto> CreateAsync([Body] AppelDeFondsDto body);
+        Task<CreateResultDto> CreateAsync([Body] CreateAppelDeFondsRequest body);
 
+
+        // ✔ Le backend attend UpdateAppelDeFondsDto
         [Put("/api/Appels/{id}")]
-        Task UpdateAsync(string id, [Body] AppelDeFondsDto body);
+        Task UpdateAsync(string id, [Body] UpdateAppelDeFondsRequest body);
 
-        // 204 → pas de body
+
+        // 204 OK
         [Put("/api/Appels/{id}/cloturer")]
         Task CloturerAsync(string id);
 
@@ -28,3 +33,4 @@ namespace SyndicApp.Mobile.Api
         Task<string> GetDescriptionAsync(string id);
     }
 }
+

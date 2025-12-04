@@ -1,9 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
 using SyndicApp.Mobile.Api;
 using SyndicApp.Mobile.Models;
@@ -24,8 +20,7 @@ namespace SyndicApp.Mobile.ViewModels.Finances
             _api = api;
             _residencesApi = residencesApi;
 
-            var role = Preferences.Get("user_role", string.Empty)?.ToLowerInvariant() ?? string.Empty;
-            IsSyndic = role.Contains("syndic");
+            IsSyndic = Preferences.Get("user_role", "").ToLowerInvariant().Contains("syndic");
         }
 
         [RelayCommand]
@@ -37,21 +32,16 @@ namespace SyndicApp.Mobile.ViewModels.Finances
             {
                 IsBusy = true;
 
-                var list = await _api.GetAllAsync() ?? new List<AppelDeFondsDto>();
+                var list = await _api.GetAllAsync() ?? new();
                 Appels = list;
 
-                var residences = await _residencesApi.GetAllAsync() ?? new List<ResidenceDto>();
-                var lookup = residences.ToDictionary(
-                    r => r.Id.ToString(),
-                    r => r.Nom ?? string.Empty);
+                var residences = await _residencesApi.GetAllAsync() ?? new();
+                var lookup = residences.ToDictionary(r => r.Id.ToString(), r => r.Nom ?? string.Empty);
 
                 foreach (var a in list)
                 {
-                    if (!string.IsNullOrWhiteSpace(a.ResidenceId)
-                        && lookup.TryGetValue(a.ResidenceId, out var nom))
-                    {
+                    if (lookup.TryGetValue(a.ResidenceId.ToString(), out var nom))
                         a.ResidenceNom = nom;
-                    }
                 }
             }
             finally
@@ -65,7 +55,7 @@ namespace SyndicApp.Mobile.ViewModels.Finances
         {
             if (!IsSyndic)
             {
-                await Shell.Current.DisplayAlert("Accès restreint", "Seul le syndic peut créer un appel de fonds.", "OK");
+                await Shell.Current.DisplayAlert("Accès refusé", "Seul le syndic peut créer un appel.", "OK");
                 return;
             }
 
@@ -73,7 +63,7 @@ namespace SyndicApp.Mobile.ViewModels.Finances
         }
 
         [RelayCommand]
-        public async Task OpenDetailsAsync(AppelDeFondsDto a)
-            => await Shell.Current.GoToAsync($"appel-details?id={a.Id}");
+        public async Task OpenDetailsAsync(AppelDeFondsDto dto)
+            => await Shell.Current.GoToAsync($"appel-details?id={dto.Id}");
     }
 }

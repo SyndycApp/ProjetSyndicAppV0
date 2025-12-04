@@ -2,17 +2,23 @@
 {
     public class PaiementDto
     {
+        [JsonPropertyName("id")]
         public Guid Id { get; set; }
+
+        [JsonPropertyName("montant")]
         public decimal Montant { get; set; }
+
+        [JsonPropertyName("datePaiement")]
         public DateTime DatePaiement { get; set; }
+
+        [JsonPropertyName("appelDeFondsId")]
         public Guid AppelDeFondsId { get; set; }
+
+        [JsonPropertyName("userId")]
         public Guid UserId { get; set; }
 
+        [JsonPropertyName("nomCompletUser")]
         public string? NomCompletUser { get; set; }
-        public string? AppelDescription { get; set; }
-
-        // 🔹 Ajout d'un statut calculé (pour l'affichage)
-        public string Statut => Montant > 0 ? "Payé" : "Non payé";
     }
 
     public class PaiementCreateRequest

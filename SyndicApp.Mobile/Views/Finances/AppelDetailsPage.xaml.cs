@@ -8,9 +8,13 @@ public partial class AppelDetailsPage : ContentPage
     {
         InitializeComponent();
         BindingContext = vm;
+
+        // Chargement automatique des données
         Loaded += async (_, __) => await vm.LoadAsync();
     }
 
     private async void OnBackClicked(object? sender, EventArgs e)
-        => await Shell.Current.GoToAsync("..");
+    {
+        await Shell.Current.GoToAsync("..");
+    }
 }

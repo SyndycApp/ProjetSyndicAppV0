@@ -1,18 +1,16 @@
 using SyndicApp.Domain.Entities.Common;
-using SyndicApp.Domain.Entities.Finances;
 using System;
 
-namespace SyndicApp.Domain.Entities.Finances;
-
-public class Paiement : BaseEntity
+namespace SyndicApp.Domain.Entities.Finances
 {
-    public decimal Montant { get; set; }
-    public DateTime DatePaiement { get; set; }
+    public class Paiement : BaseEntity
+    {
+        public decimal Montant { get; set; }
+        public DateTime DatePaiement { get; set; }
 
-    public Guid AppelDeFondsId { get; set; }
-    public AppelDeFonds AppelDeFonds { get; set; } = null!;
+        public Guid AppelDeFondsId { get; set; }
+        public AppelDeFonds AppelDeFonds { get; set; }
 
-    public Guid UserId { get; set; }
+        public Guid UserId { get; set; }
+    }
 }
-
-

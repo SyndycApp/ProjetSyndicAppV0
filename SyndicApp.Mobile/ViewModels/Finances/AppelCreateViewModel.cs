@@ -39,6 +39,9 @@ namespace SyndicApp.Mobile.ViewModels.Finances
             _ = LoadResidencesAsync();
         }
 
+        // ============================================================
+        // LOAD RESIDENCES
+        // ============================================================
         [RelayCommand]
         public async Task LoadResidencesAsync()
         {
@@ -62,6 +65,9 @@ namespace SyndicApp.Mobile.ViewModels.Finances
             }
         }
 
+        // ============================================================
+        // CREATE APPEL DE FONDS
+        // ============================================================
         [RelayCommand]
         private async Task CreateAsync()
         {
@@ -98,24 +104,32 @@ namespace SyndicApp.Mobile.ViewModels.Finances
             {
                 IsBusy = true;
 
+                // RÉCUPÉRE L’ID DE LA RÉSIDENCE
                 var nom = SelectedResidence.Nom ?? string.Empty;
                 var residenceGuid = await _residencesApi.LookupIdAsync(nom);
                 ResidenceId = residenceGuid.ToString();
 
-                var payload = new AppelDeFondsDto
+                // PAYLOAD FINAL
+                var payload = new CreateAppelDeFondsRequest
                 {
                     Description = Description,
                     DateEmission = DateEmission,
-                    ResidenceId = ResidenceId,
+                    ResidenceId = Guid.Parse(ResidenceId),
                     MontantTotal = montant
                 };
 
+                // APPEL API
                 var created = await _api.CreateAsync(payload);
 
-                if (!string.IsNullOrWhiteSpace(created?.Id))
+                // 🔥 CORRECTION : created.Id est un Guid, pas une string
+                if (created?.Id != Guid.Empty)
+                {
                     await Shell.Current.GoToAsync($"appel-details?id={created.Id}");
+                }
                 else
+                {
                     await Shell.Current.GoToAsync("//appels");
+                }
             }
             catch (ApiException ex)
             {
@@ -132,6 +146,9 @@ namespace SyndicApp.Mobile.ViewModels.Finances
             }
         }
 
+        // ============================================================
+        // PARSE MONTANT
+        // ============================================================
         private static bool TryParseDecimal(string? input, out decimal value)
         {
             input ??= string.Empty;
