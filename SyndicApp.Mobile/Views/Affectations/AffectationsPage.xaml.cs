@@ -17,14 +17,11 @@ namespace SyndicApp.Mobile.Views.Affectations
         {
             base.OnAppearing();
 
-            // Gestion rôle : seul le syndic voit le bouton "+"
+            // Rôle : seul le syndic peut créer
             try
             {
                 var role = Preferences.Get("user_role", null)?.Trim() ?? string.Empty;
-                var roleLower = role.ToLowerInvariant();
-                bool isSyndic = roleLower.Contains("syndic");
-
-                BtnAddAffectation.IsVisible = isSyndic;
+                BtnAddAffectation.IsVisible = role.ToLower().Contains("syndic");
             }
             catch
             {
@@ -39,53 +36,23 @@ namespace SyndicApp.Mobile.Views.Affectations
                 }
                 catch (Exception ex)
                 {
-                    await DisplayAlert("Erreur",
-                        $"Impossible de charger les affectations.\n\n{ex.Message}",
-                        "OK");
+                    await DisplayAlert("Erreur", $"Impossible de charger : {ex.Message}", "OK");
                 }
             }
         }
 
-        // + Nouvelle affectation
         private async void OnAddAffectationClicked(object sender, EventArgs e)
         {
-            try
-            {
-                await Shell.Current.GoToAsync("affectation-create");
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Erreur navigation",
-                    $"Impossible d’ouvrir la page de création.\n\n{ex.Message}",
-                    "OK");
-            }
+            await Shell.Current.GoToAsync("affectation-create");
         }
 
-        // Détails : on récupère juste une propriété Id (Guid) sur l’objet de la ligne
         private async void OnDetailsClicked(object sender, EventArgs e)
         {
-            try
+            if (sender is Button btn && btn.BindingContext is object item)
             {
-                if (sender is Button btn && btn.BindingContext is object item)
-                {
-                    var idProp = item.GetType().GetProperty("Id");
-                    if (idProp?.GetValue(item) is Guid id)
-                    {
-                        await Shell.Current.GoToAsync($"affectation-details?id={id:D}");
-                    }
-                    else
-                    {
-                        await DisplayAlert("Erreur",
-                            "Impossible de récupérer l'identifiant de l'affectation.",
-                            "OK");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                await DisplayAlert("Erreur navigation",
-                    $"Impossible d’ouvrir le détail.\n\n{ex.Message}",
-                    "OK");
+                var idProp = item.GetType().GetProperty("Id");
+                if (idProp?.GetValue(item) is Guid id)
+                    await Shell.Current.GoToAsync($"affectation-details?id={id}");
             }
         }
     }

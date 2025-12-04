@@ -12,7 +12,7 @@ public interface IAuthApi
     Task<UserDto> RegisterAsync([Body] RegisterDto dto);
 
     [Get("/api/Auth")]
-    Task<AuthListResponse> GetAllAsync();
+    Task<Result<List<UserDto>>> GetAllAsync();
 
     [Post("/api/Auth/register-from-prestataire-account")]
     Task<UserDto> RegisterFromPrestataireAccountAsync([Body] CreatePrestataireAccountRequest dto);

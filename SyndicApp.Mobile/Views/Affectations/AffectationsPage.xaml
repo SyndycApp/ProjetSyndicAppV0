@@ -4,28 +4,23 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:layout="clr-namespace:SyndicApp.Mobile.Views.Layout"
-    xmlns:vm="clr-namespace:SyndicApp.Mobile.ViewModels.Affectations"
     xmlns:converters="clr-namespace:SyndicApp.Mobile.Converters"
     Title="Affectations"
     Shell.NavBarIsVisible="False"
     BackgroundColor="White">
 
-    <!-- RESSOURCES -->
     <ContentPage.Resources>
-        <!-- Convertit bool -> Oui / Non -->
         <converters:BoolToOuiNonConverter x:Key="BoolToOuiNonConverter" />
     </ContentPage.Resources>
-
-    <!-- Pas de x:DataType pour éviter les warnings XC00xx -->
 
     <layout:RoleDrawerLayout>
         <layout:RoleDrawerLayout.MainContent>
 
-            <Grid Padding="16" RowDefinitions="Auto,Auto,*">
+            <Grid Padding="16"
+                  RowDefinitions="Auto,Auto,*">
 
-                <!-- Titre + bouton AJOUT -->
-                <Grid RowDefinitions="Auto"
-                      ColumnDefinitions="*,Auto">
+                <!-- HEADER -->
+                <Grid ColumnDefinitions="*,Auto">
                     <Label Text="Affectations des lots"
                            FontSize="22"
                            FontAttributes="Bold" />
@@ -40,15 +35,12 @@
                             Clicked="OnAddAffectationClicked" />
                 </Grid>
 
-                <!-- Filtres -->
+                <!-- FILTRE UTILISATEUR UNIQUEMENT -->
                 <Grid Row="1"
-                      ColumnDefinitions="*,*,Auto"
-                      RowDefinitions="Auto,Auto"
-                      Margin="0,8,0,8">
+                      ColumnDefinitions="*,Auto"
+                      Margin="0,12,0,12">
 
-                    <!-- Utilisateur -->
-                    <VerticalStackLayout Grid.Row="1"
-                                         Grid.Column="0"
+                    <VerticalStackLayout Grid.Column="0"
                                          Spacing="4">
                         <Label Text="Utilisateur"
                                FontSize="12"
@@ -60,25 +52,7 @@
                                 BackgroundColor="White" />
                     </VerticalStackLayout>
 
-                    <!-- Lot -->
-                    <VerticalStackLayout Grid.Row="1"
-                                         Grid.Column="1"
-                                         Spacing="4">
-                        <Label Text="Lot"
-                               FontSize="12"
-                               TextColor="#6B7280" />
-                        <Picker ItemsSource="{Binding Lots}"
-                                ItemDisplayBinding="{Binding NumeroLot}"
-                                SelectedItem="{Binding SelectedLot}"
-                                Title="Tous"
-                                HorizontalOptions="FillAndExpand"
-                                TextColor="Black"
-                                BackgroundColor="White" />
-                    </VerticalStackLayout>
-
-                    <!-- Bouton Filtrer -->
-                    <VerticalStackLayout Grid.Row="1"
-                                         Grid.Column="2"
+                    <VerticalStackLayout Grid.Column="1"
                                          Spacing="4"
                                          HorizontalOptions="End">
                         <Label Text=" " />
@@ -91,12 +65,14 @@
                                 Padding="14,10"
                                 Command="{Binding FilterCommand}" />
                     </VerticalStackLayout>
+
                 </Grid>
 
-                <!-- Liste -->
+                <!-- LISTE AFFECTATIONS -->
                 <CollectionView Grid.Row="2"
                                 ItemsSource="{Binding Items}"
                                 SelectionMode="None">
+
                     <CollectionView.EmptyView>
                         <Grid Padding="24" VerticalOptions="Center">
                             <Label Text="Aucune affectation trouvée."
@@ -113,10 +89,11 @@
                                    HasShadow="False"
                                    BackgroundColor="White"
                                    BorderColor="#E5E7EB">
-                                <Grid RowDefinitions="Auto,Auto"
+
+                                <Grid RowDefinitions="Auto,Auto,Auto"
                                       ColumnDefinitions="*,Auto">
 
-                                    <!-- Ligne 1 : lot + user + statut -->
+                                    <!-- ROW 0 : LOT / USER / STATUT -->
                                     <VerticalStackLayout Grid.Row="0"
                                                          Grid.Column="0"
                                                          Spacing="2">
@@ -128,34 +105,39 @@
                                     <Label Grid.Row="0"
                                            Grid.Column="1"
                                            Text="{Binding Statut}"
-                                           HorizontalTextAlignment="End"
-                                           FontAttributes="Bold" />
+                                           FontAttributes="Bold"
+                                           HorizontalTextAlignment="End" />
 
-                                    <!-- Dates -->
+                                    <!-- ROW 1 : DATES -->
                                     <Grid Grid.Row="1"
                                           Grid.ColumnSpan="2"
                                           ColumnDefinitions="*,*"
-                                          Margin="0,6,0,0">
+                                          Margin="0,8,0,0">
                                         <Label Grid.Column="0"
-                                               Text="{Binding DateDebut, StringFormat='Début : {0:dd/MM/yyyy}'}"
+                                               Text="{Binding DateDebut,
+                                              StringFormat='Début : {0:dd/MM/yyyy}'}"
                                                Opacity="0.7" />
                                         <Label Grid.Column="1"
-                                               Text="{Binding DateFin, StringFormat='Fin : {0:dd/MM/yyyy}'}"
-                                               Opacity="0.7"
-                                               HorizontalTextAlignment="End" />
+                                               Text="{Binding DateFin,
+                                              StringFormat='Fin : {0:dd/MM/yyyy}'}"
+                                               HorizontalTextAlignment="End"
+                                               Opacity="0.7" />
                                     </Grid>
 
-                                    <!-- Propriétaire + bouton détails -->
-                                    <Grid Grid.Row="1"
+                                    <!-- ROW 2 : PROPRIÉTAIRE + BOUTON DÉTAILS -->
+                                    <Grid Grid.Row="2"
                                           Grid.ColumnSpan="2"
                                           ColumnDefinitions="Auto,Auto,*,Auto"
-                                          Margin="0,40,0,0">
+                                          Margin="0,14,0,0">
+
                                         <Label Grid.Column="0"
                                                Text="Propriétaire :"
                                                Opacity="0.7" />
+
                                         <Label Grid.Column="1"
                                                Text="{Binding EstProprietaire,
-                                                              Converter={StaticResource BoolToOuiNonConverter}}" />
+                                                      Converter={StaticResource BoolToOuiNonConverter}}" />
+
                                         <Label Grid.Column="2" />
 
                                         <Button Grid.Column="3"
@@ -168,10 +150,13 @@
                                                 Padding="10,6"
                                                 Clicked="OnDetailsClicked" />
                                     </Grid>
+
                                 </Grid>
+
                             </Frame>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
+
                 </CollectionView>
 
             </Grid>
