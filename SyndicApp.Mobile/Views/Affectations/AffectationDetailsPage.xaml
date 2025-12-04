@@ -46,7 +46,16 @@
 
             <ScrollView>
                 <VerticalStackLayout Padding="16" Spacing="14">
+  
 
+                           <!-- Bouton retour -->
+                     <Button Text="← Retour"
+                             Clicked="OnBackClicked"
+                             BackgroundColor="Transparent"
+                             TextColor="#2563EB"
+                             FontSize="16"
+                             HorizontalOptions="Start"
+                             Padding="0,0,0,10" />                   
                     <Label Text="Détails de l'affectation"
                            FontSize="22"
                            FontAttributes="Bold"

@@ -12,6 +12,11 @@ namespace SyndicApp.Mobile.Views.Affectations
             BindingContext = vm;
         }
 
+        private async void OnBackClicked(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("..");
+        }
+        
         protected override async void OnAppearing()
         {
             base.OnAppearing();
