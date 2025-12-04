@@ -681,11 +681,19 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.Appel">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.appel"/>
         </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.Progress">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.progress"/>
+        </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.IsBusy">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.isBusy"/>
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.IsSyndic">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.isSyndic"/>
+        </member>
+        <member name="M:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.OnAppelChanged(SyndicApp.Mobile.Models.AppelDeFondsDto)">
+            <summary>Executes the logic for when <see cref="P:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.Appel"/> just changed.</summary>
+            <param name="value">The new property value that was set.</param>
+            <remarks>This method is invoked right after the value of <see cref="P:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.Appel"/> is changed.</remarks>
         </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.loadCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Finances.AppelDetailsViewModel.LoadCommand"/>.</summary>
@@ -2348,6 +2356,9 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Appel">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Appel" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Progress">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Progress" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.MontantTotal">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "MontantTotal" generated properties.</summary>
         </member>
@@ -2749,6 +2760,9 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Appel">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Appel" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Progress">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Progress" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.MontantTotal">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "MontantTotal" generated properties.</summary>

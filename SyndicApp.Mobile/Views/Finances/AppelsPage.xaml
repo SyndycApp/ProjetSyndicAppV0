@@ -46,7 +46,7 @@
                            VerticalOptions="Center" />
 
                     <Button Grid.Column="1"
-                            Text="+ Ajouter"
+                            Text="+"
                             FontAttributes="Bold"
                             BackgroundColor="{StaticResource TopbarColor}"
                             TextColor="White"

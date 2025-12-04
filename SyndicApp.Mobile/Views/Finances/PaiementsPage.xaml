@@ -27,7 +27,7 @@
                            FontSize="20" />
 
                     <Button Grid.Column="1"
-                            Text="+ Ajouter"
+                            Text="+"
                             Command="{Binding GoToCreateCommand}"
                             BackgroundColor="{StaticResource TopbarColor}"
                             TextColor="White"

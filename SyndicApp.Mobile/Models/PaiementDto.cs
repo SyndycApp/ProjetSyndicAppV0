@@ -9,8 +9,10 @@
         public Guid UserId { get; set; }
 
         public string? NomCompletUser { get; set; }
-
         public string? AppelDescription { get; set; }
+
+        // 🔹 Ajout d'un statut calculé (pour l'affichage)
+        public string Statut => Montant > 0 ? "Payé" : "Non payé";
     }
 
     public class PaiementCreateRequest

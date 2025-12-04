@@ -4,9 +4,7 @@
     x:Name="Page"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:conv="clr-namespace:SyndicApp.Mobile.Converters"
     xmlns:viewmodels="clr-namespace:SyndicApp.Mobile.ViewModels.Finances"
-    xmlns:models="clr-namespace:SyndicApp.Mobile.Models"
     xmlns:layouts="clr-namespace:SyndicApp.Mobile.Views.Layout"
     x:DataType="viewmodels:AppelDetailsViewModel"
     Shell.NavBarIsVisible="False"
@@ -31,19 +29,18 @@
             <Setter Property="Padding" Value="16,8" />
             <Setter Property="FontAttributes" Value="Bold" />
         </Style>
-
-        <conv:ProgressConverter x:Key="ProgressConverter" />
     </ContentPage.Resources>
 
     <layouts:RoleDrawerLayout>
         <layouts:RoleDrawerLayout.MainContent>
-            <Grid RowDefinitions="Auto,*"
-                  BackgroundColor="White">
 
-                <!-- Header local -->
+            <Grid RowDefinitions="Auto,*" BackgroundColor="White">
+
+                <!-- Header -->
                 <Grid Grid.Row="0"
                       Padding="12,8"
                       ColumnDefinitions="Auto,*,Auto">
+
                     <Button Text="←"
                             FontSize="20"
                             BackgroundColor="Transparent"
@@ -54,51 +51,76 @@
                            Text="Détail de l'appel"
                            HorizontalTextAlignment="Center"
                            VerticalOptions="Center"
-                           FontAttributes="Bold"
-                           TextColor="{StaticResource BodyText}" />
+                           FontAttributes="Bold" />
+
                 </Grid>
 
+                <!-- MAIN CONTENT -->
                 <ScrollView Grid.Row="1">
-                    <VerticalStackLayout Padding="16" Spacing="12">
+                    <VerticalStackLayout Padding="16" Spacing="14">
+
+                        <!-- Titre -->
                         <Label Text="{Binding Appel.Description}"
                                FontSize="24"
                                FontAttributes="Bold" />
 
+                        <!-- CARD APPEL -->
                         <Frame Padding="16" BorderColor="#E2E8F0" CornerRadius="14">
                             <Grid ColumnDefinitions="*,Auto"
                                   RowDefinitions="Auto,Auto,Auto">
+
                                 <Label Text="{Binding Appel.DateEmission, StringFormat='{0:dd/MM/yyyy}'}" />
+
+                                <!-- PROGRESS BAR CORRIGÉE -->
                                 <ProgressBar Grid.Row="1"
-                                             Progress="{Binding Appel.MontantPaye, Converter={StaticResource ProgressConverter}, ConverterParameter={Binding Appel.MontantTotal}}" />
+                                             Progress="{Binding Progress}" />
+
                                 <Grid Grid.Row="2"
                                       ColumnDefinitions="*,*,*"
                                       Margin="0,10,0,0">
+
                                     <VerticalStackLayout>
                                         <Label Text="Montant total" FontSize="12" />
-                                        <Label Text="{Binding Appel.MontantTotal, StringFormat='{0:N2} €'}" FontAttributes="Bold" />
+                                        <Label Text="{Binding Appel.MontantTotal, StringFormat='{0:N2} €'}"
+                                               FontAttributes="Bold" />
                                     </VerticalStackLayout>
+
                                     <VerticalStackLayout Grid.Column="1">
                                         <Label Text="Payé" FontSize="12" />
-                                        <Label Text="{Binding Appel.MontantPaye, StringFormat='{0:N2} €'}" FontAttributes="Bold" />
+                                        <Label Text="{Binding Appel.MontantPaye, StringFormat='{0:N2} €'}"
+                                               FontAttributes="Bold" />
                                     </VerticalStackLayout>
+
                                     <VerticalStackLayout Grid.Column="2">
                                         <Label Text="Restant" FontSize="12" />
-                                        <Label Text="{Binding Appel.MontantReste, StringFormat='{0:N2} €'}" FontAttributes="Bold" />
+                                        <Label Text="{Binding Appel.MontantReste, StringFormat='{0:N2} €'}"
+                                               FontAttributes="Bold" />
                                     </VerticalStackLayout>
+
                                 </Grid>
                             </Grid>
                         </Frame>
 
+                        <!-- PAIEMENTS -->
                         <Label Text="Paiements" FontAttributes="Bold" />
-                        <CollectionView ItemsSource="{Binding Appel.Paiements}" SelectionMode="None">
+
+                        <CollectionView ItemsSource="{Binding Appel.Paiements}"
+                                        SelectionMode="None">
                             <CollectionView.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid ColumnDefinitions="Auto,*,Auto" Padding="4,10">
-                                        <Label Text="€" FontSize="18" Margin="0,-2,8,0" />
+                                    <Grid ColumnDefinitions="Auto,*,Auto"
+                                          Padding="4,10">
+
+                                        <Label Text="€" FontSize="18"
+                                               Margin="0,-2,8,0" />
+
                                         <VerticalStackLayout>
                                             <Label Text="{Binding Statut}" FontAttributes="Bold" />
-                                            <Label Text="{Binding DatePaiement, StringFormat='{0:dd/MM/yyyy}'}" FontSize="12" />
+                                            <Label Text="{Binding DatePaiement, StringFormat='{0:dd/MM/yyyy}'}" />
+                                            <Label Text="{Binding Montant, StringFormat='{0:N2} €'}" />
+
                                         </VerticalStackLayout>
+
                                         <Label Grid.Column="2"
                                                Text="{Binding Montant, StringFormat='{0:N2} €'}"
                                                FontAttributes="Bold"
@@ -108,11 +130,12 @@
                             </CollectionView.ItemTemplate>
                         </CollectionView>
 
-                        <!-- Actions (Syndic only) -->
+                        <!-- ACTIONS SYNDIC -->
                         <Grid ColumnDefinitions="*,*,*"
                               Margin="0,12,0,0"
                               ColumnSpacing="12"
                               IsVisible="{Binding IsSyndic}">
+
                             <Button Text="Clôturer"
                                     Style="{StaticResource PrimaryActionButton}"
                                     Command="{Binding CloturerCommand}" />
@@ -129,15 +152,21 @@
                                     Command="{Binding DeleteCommand}" />
                         </Grid>
 
+                        <!-- DESCRIPTION -->
                         <Label Text="Description"
                                FontAttributes="Bold"
                                Margin="0,10,0,0" />
-                        <Frame Padding="12" BorderColor="#E2E8F0" CornerRadius="10">
+                        <Frame Padding="12"
+                               BorderColor="#E2E8F0"
+                               CornerRadius="10">
                             <Label Text="{Binding Appel.Description}" />
                         </Frame>
+
                     </VerticalStackLayout>
                 </ScrollView>
+
             </Grid>
+
         </layouts:RoleDrawerLayout.MainContent>
     </layouts:RoleDrawerLayout>
 </ContentPage>

@@ -13,19 +13,52 @@ namespace SyndicApp.Mobile.ViewModels.Finances
     {
         private readonly IAppelsApi _api;
 
-        [ObservableProperty] private string id = string.Empty;
-        [ObservableProperty] private AppelDeFondsDto? appel;
-        [ObservableProperty] private bool isBusy;
-        [ObservableProperty] private bool isSyndic;
+        [ObservableProperty]
+        private string id = string.Empty;
+
+        [ObservableProperty]
+        private AppelDeFondsDto? appel;
+
+        [ObservableProperty]
+        private double progress;
+
+        // 🔥 États
+        [ObservableProperty]
+        private bool isBusy;
+
+        [ObservableProperty]
+        private bool isSyndic;
 
         public AppelDetailsViewModel(IAppelsApi api)
         {
             _api = api;
 
-            var role = Preferences.Get("user_role", string.Empty)?.ToLowerInvariant() ?? string.Empty;
+            var role = Preferences.Get("user_role", string.Empty)?.ToLowerInvariant() ?? "";
             IsSyndic = role.Contains("syndic");
         }
 
+        // 🔥 Méthode générée automatiquement par CommunityToolkit : OnAppelChanged
+        // 🔥 Calcul automatique du pourcentage quand Appel change
+        partial void OnAppelChanged(AppelDeFondsDto? value)
+        {
+            if (value == null)
+            {
+                Progress = 0;
+                return;
+            }
+
+            // 🔥 Empêche division par zéro + convertit en double
+            if (value.MontantTotal <= 0)
+            {
+                Progress = 0;
+                return;
+            }
+
+            Progress = (double)value.MontantPaye / (double)value.MontantTotal;
+        }
+
+
+        // 🔥 Charger les données
         [RelayCommand]
         public async Task LoadAsync()
         {
@@ -34,7 +67,7 @@ namespace SyndicApp.Mobile.ViewModels.Finances
             try
             {
                 IsBusy = true;
-                Appel = await _api.GetByIdAsync(Id);
+                Appel = await _api.GetByIdAsync(Id);  // 👈 déclenche OnAppelChanged
             }
             finally
             {
@@ -42,34 +75,30 @@ namespace SyndicApp.Mobile.ViewModels.Finances
             }
         }
 
+        // 🔥 Modifier
         [RelayCommand]
         public async Task EditAsync()
         {
             if (!IsSyndic)
             {
-                await Shell.Current.DisplayAlert("Accès restreint", "Seul le syndic peut modifier un appel de fonds.", "OK");
+                await Shell.Current.DisplayAlert("Accès restreint", "Seul le syndic peut modifier.", "OK");
                 return;
             }
 
             await Shell.Current.GoToAsync($"appel-edit?id={Id}");
         }
 
+        // 🔥 Clôturer
         [RelayCommand]
         public async Task CloturerAsync()
         {
-            if (IsBusy || string.IsNullOrWhiteSpace(Id)) return;
-
-            if (!IsSyndic)
-            {
-                await Shell.Current.DisplayAlert("Accès restreint", "Seul le syndic peut clôturer un appel de fonds.", "OK");
-                return;
-            }
+            if (!IsSyndic || string.IsNullOrWhiteSpace(Id)) return;
 
             try
             {
                 IsBusy = true;
                 await _api.CloturerAsync(Id);
-                Appel = await _api.GetByIdAsync(Id);
+                Appel = await _api.GetByIdAsync(Id); 
             }
             finally
             {
@@ -77,16 +106,11 @@ namespace SyndicApp.Mobile.ViewModels.Finances
             }
         }
 
+        // 🔥 Supprimer
         [RelayCommand]
         public async Task DeleteAsync()
         {
-            if (string.IsNullOrWhiteSpace(Id)) return;
-
-            if (!IsSyndic)
-            {
-                await Shell.Current.DisplayAlert("Accès restreint", "Seul le syndic peut supprimer un appel de fonds.", "OK");
-                return;
-            }
+            if (!IsSyndic || string.IsNullOrWhiteSpace(Id)) return;
 
             var ok = await Shell.Current.DisplayAlert("Suppression", "Supprimer cet appel ?", "Oui", "Non");
             if (!ok) return;

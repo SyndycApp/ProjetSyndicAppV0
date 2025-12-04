@@ -16,72 +16,86 @@
                 <VerticalStackLayout Padding="16"
                                      Spacing="16">
 
+                    <!-- TITRE -->
                     <Label Text="Nouvelle affectation"
                            FontSize="22"
                            FontAttributes="Bold" />
 
-                    <!-- Utilisateur -->
+                    <!-- UTILISATEUR -->
                     <VerticalStackLayout Spacing="4">
                         <Label Text="Utilisateur"
                                FontSize="12"
                                TextColor="#6B7280" />
+
                         <Picker ItemsSource="{Binding Users}"
                                 ItemDisplayBinding="{Binding Label}"
                                 SelectedItem="{Binding SelectedUser}"
                                 Title="Choisir un utilisateur"
-                                TextColor="White"
-                                BackgroundColor="#2563EB" />
+                                BackgroundColor="#F3F4F6"
+                                TextColor="#111827" />
                     </VerticalStackLayout>
 
-                    <!-- Lot -->
+                    <!-- LOT -->
                     <VerticalStackLayout Spacing="4">
                         <Label Text="Lot"
                                FontSize="12"
                                TextColor="#6B7280" />
+
                         <Picker ItemsSource="{Binding Lots}"
                                 ItemDisplayBinding="{Binding NumeroLot}"
                                 SelectedItem="{Binding SelectedLot}"
                                 Title="Choisir un lot"
-                                TextColor="White"
-                                BackgroundColor="#2563EB" />
+                                BackgroundColor="#F3F4F6"
+                                TextColor="#111827" />
                     </VerticalStackLayout>
 
-                    <!-- Dates -->
+                    <!-- DATES -->
                     <Grid ColumnDefinitions="*,*"
                           ColumnSpacing="12">
-                        <VerticalStackLayout Grid.Column="0"
-                                             Spacing="4">
+
+                        <!-- DATE DÉBUT -->
+                        <VerticalStackLayout Grid.Column="0" Spacing="4">
                             <Label Text="Date de début"
                                    FontSize="12"
                                    TextColor="#6B7280" />
-                            <DatePicker Date="{Binding DateDebut}" />
+
+                            <DatePicker Date="{Binding DateDebut}"
+                                        BackgroundColor="#F3F4F6"
+                                        TextColor="#111827" />
                         </VerticalStackLayout>
 
-                        <VerticalStackLayout Grid.Column="1"
-                                             Spacing="4">
+                        <!-- DATE FIN -->
+                        <VerticalStackLayout Grid.Column="1" Spacing="4">
                             <Label Text="Date de fin (optionnelle)"
                                    FontSize="12"
                                    TextColor="#6B7280" />
+
                             <DatePicker Date="{Binding DateFin}"
-                                        IsEnabled="{Binding HasDateFin}" />
+                                        IsEnabled="{Binding HasDateFin}"
+                                        BackgroundColor="#F3F4F6"
+                                        TextColor="#111827" />
                         </VerticalStackLayout>
+
                     </Grid>
 
-                    <!-- Propriétaire -->
+                    <!-- PROPRIÉTAIRE -->
                     <Grid ColumnDefinitions="Auto,*"
                           Margin="0,8,0,0">
                         <Label Grid.Column="0"
                                Text="Propriétaire"
                                VerticalOptions="Center" />
+
                         <Switch Grid.Column="1"
                                 HorizontalOptions="Start"
                                 IsToggled="{Binding EstProprietaire}" />
                     </Grid>
 
-                    <!-- Boutons -->
+                    <!-- BOUTONS -->
                     <Grid ColumnDefinitions="*,*"
                           Margin="0,24,0,0"
                           ColumnSpacing="12">
+
+                        <!-- ANNULER -->
                         <Button Grid.Column="0"
                                 Text="Annuler"
                                 BackgroundColor="Transparent"
@@ -92,7 +106,7 @@
                                 Padding="14,10"
                                 Clicked="OnCancelClicked" />
 
-                        <!-- ICI : x:Name ajouté -->
+                        <!-- ENREGISTRER -->
                         <Button x:Name="BtnSave"
                                 Grid.Column="1"
                                 Text="Enregistrer"
