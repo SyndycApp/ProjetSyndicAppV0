@@ -15,6 +15,26 @@ namespace SyndicApp.Infrastructure.Services.Finances
         private readonly ApplicationDbContext _db;
         public PaiementService(ApplicationDbContext db) => _db = db;
 
+        public async Task<List<PaiementDto>> GetByAppelIdAsync(Guid appelId)
+        {
+            return await _db.Paiements
+                .Where(p => p.AppelDeFondsId == appelId)
+                .Select(p => new PaiementDto
+                {
+                    Id = p.Id,
+                    Montant = p.Montant,
+                    DatePaiement = p.DatePaiement,
+                    AppelDeFondsId = p.AppelDeFondsId,
+                    UserId = p.UserId,
+                    NomCompletUser = _db.Users
+                        .Where(u => u.Id == p.UserId)
+                        .Select(u => u.FullName)
+                        .FirstOrDefault()
+                })
+                .ToListAsync();
+        }
+
+
         public async Task<IReadOnlyList<PaiementDto>> GetAllAsync(CancellationToken ct = default)
         {
             return await _db.Paiements.AsNoTracking()

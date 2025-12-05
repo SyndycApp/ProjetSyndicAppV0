@@ -9,17 +9,16 @@ namespace SyndicApp.Mobile.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is decimal montantPaye &&
-                parameter is AppelDeFondsDto appel &&
-                appel.MontantTotal > 0)
+            if (value is decimal montantPaye && parameter is AppelDeFondsDto appel)
             {
+                if (appel.MontantTotal <= 0) return 0;
                 return (double)(montantPaye / appel.MontantTotal);
             }
 
-            return 0.0;
+            return 0;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>
-            throw new NotImplementedException();
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+            => throw new NotImplementedException();
     }
 }

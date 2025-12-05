@@ -19,11 +19,8 @@ namespace SyndicApp.Mobile.Api
         [Post("/api/Paiements")]
         Task<PaiementDto> CreateAsync([Body] PaiementCreateRequest request);
 
-        // (plus tard si besoin)
-        // [Delete("/api/Paiements/{id}")]
-        // Task DeleteAsync(Guid id);
-        //
-        // [Put("/api/Paiements/{id}")]
-        // Task UpdateAsync(Guid id, [Body] PaiementUpdateRequest body);
+        [Get("/api/Paiements/by-appel/{appelId}")]
+        Task<List<PaiementDto>> GetByAppelIdAsync(string appelId);
+        
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SyndicApp.Application.DTOs.Finances;
 using SyndicApp.Application.Interfaces.Finances;
+using SyndicApp.Infrastructure.Services.Finances;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -25,6 +26,13 @@ namespace SyndicApp.API.Controllers
         {
             var p = await _svc.GetByIdAsync(id, ct);
             return p is null ? NotFound() : Ok(p);
+        }
+
+        [HttpGet("by-appel/{appelId:guid}")]
+        public async Task<IActionResult> GetByAppel(Guid appelId)
+        {
+            var paiements = await _svc.GetByAppelIdAsync(appelId);
+            return Ok(paiements);
         }
 
         [HttpPost]

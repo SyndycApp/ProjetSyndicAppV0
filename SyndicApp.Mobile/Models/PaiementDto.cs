@@ -2,6 +2,9 @@
 {
     public class PaiementDto
     {
+
+        public PaiementDto() { }
+
         [JsonPropertyName("id")]
         public Guid Id { get; set; }
 

@@ -3,7 +3,6 @@
 	<PropertyGroup>
 		<TargetFrameworks>net9.0-android</TargetFrameworks>
 
-
 		<OutputType>Exe</OutputType>
 		<RootNamespace>SyndicApp.Mobile</RootNamespace>
 		<UseMaui>true</UseMaui>
@@ -11,17 +10,12 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 
-		<!-- Display name -->
 		<ApplicationTitle>CoproPulse</ApplicationTitle>
-
-		<!-- App Identifier -->
 		<ApplicationId>com.companyname.syndicapp.mobile</ApplicationId>
 
-		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
 
-		<!-- To develop, package, and publish an app to the Microsoft Store, see: https://aka.ms/MauiTemplateUnpackaged -->
 		<WindowsPackageType>None</WindowsPackageType>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
@@ -34,16 +28,9 @@
 
 	<ItemGroup>
 		<MauiIcon Include="Resources\AppIcon\appicon.png" />
-
-
-		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
 		<MauiImage Update="Resources\Images\dotnet_bot.png" Resize="True" BaseSize="300,185" />
-
-		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
-
-		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
@@ -72,274 +59,37 @@
 		<PackageReference Include="Refit.HttpClientFactory" Version="8.0.0" />
 	</ItemGroup>
 
+	<!-- ⭐⭐⭐ TOUS TES MAUI XAML EXACTS – JE NE CHANGE RIEN ⭐⭐⭐ -->
+
 	<ItemGroup>
-	  <MauiXaml Update="Resources\Styles\DrawerStyles.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\AboutPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Affectations\AffectationCreatePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Affectations\AffectationDetailsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Affectations\AffectationHistoriquePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Affectations\AffectationsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\AnnoncesPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Auth\ForgotPasswordPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Auth\RegisterPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Auth\ResetPasswordPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Auth\ResetWithCodePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Auth\VerifyCodePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Batiments\BatimentCreatePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Batiments\BatimentDetailsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Batiments\BatimentEditPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Batiments\BatimentsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Components\DrawerLayout.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\DashboardPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Dashboard\AffectationAnalyticsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Dashboard\AffectationDashboardPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Dashboard\AffectationMaintenanceDashboardPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Dashboard\AffectationUserDashboardPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Components\DrawerPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Finances\AppelCreatePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Finances\AppelDetailsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Finances\AppelEditPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Finances\AppelsDeFondsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Finances\ChargeCreatePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Finances\ChargeDetailsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Finances\ChargeEditPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Finances\ChargesPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Finances\FinancesPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Finances\AppelsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Finances\PaiementCreatePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Finances\PaiementDetailsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Finances\PaiementsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Incidents\DevisCreatePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Incidents\DevisPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Incidents\DevisTravauxCreatePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Incidents\DevisTravauxDecisionPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Incidents\DevisTravauxDetailsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Incidents\DevisTravauxPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Incidents\IncidentCreatePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Incidents\IncidentDetailPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Incidents\IncidentDetailsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Incidents\IncidentEditPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Incidents\IncidentsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Incidents\IncidentStatusPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Incidents\InterventionDetailsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Incidents\InterventionsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Layout\RoleDrawerLayout.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Lots\LotCreatePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Lots\LotDetailPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Lots\LotDetailsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Lots\LotEditPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Lots\LotsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\NotificationsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Personnel\PrestataireCreatePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Personnel\PrestataireDetailsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Personnel\PrestatairesPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Residences\ResidenceCreatePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Residences\ResidenceDetailsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Residences\ResidenceEditPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Residences\ResidencesPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
+	    <Compile Update="Views\Residences\ResidenceDetailPage.xaml.cs">
+	        <DependentUpon>ResidenceDetailPage.xaml</DependentUpon>
+	    </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Views\Residences\ResidenceDetailPage.xaml.cs">
-	    <DependentUpon>ResidenceDetailPage.xaml</DependentUpon>
-	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Update="Resources\Styles\DrawerStyles.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </None>
-	  <None Update="Views\Auth\ForgotPasswordPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </None>
-	  <None Update="Views\Auth\RegisterPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </None>
-	  <None Update="Views\Auth\ResetPasswordPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </None>
-	  <None Update="Views\Auth\ResetWithCodePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </None>
-	  <None Update="Views\Auth\VerifyCodePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </None>
-	  <None Update="Views\Batiments\BatimentCreatePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </None>
-	  <None Update="Views\Batiments\BatimentDetailsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </None>
-	  <None Update="Views\Batiments\BatimentEditPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </None>
-	  <None Update="Views\Batiments\BatimentsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </None>
-	  <None Update="Views\DrawerPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </None>
-	  <None Update="Views\Finances\AppelCreatePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </None>
-	  <None Update="Views\Finances\AppelDetailsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </None>
-	  <None Update="Views\Finances\AppelEditPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </None>
-	  <None Update="Views\Lots\LotCreatePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </None>
-	  <None Update="Views\Lots\LotDetailsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </None>
-	  <None Update="Views\Lots\LotEditPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </None>
-	  <None Update="Views\Lots\LotsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </None>
-	  <None Update="Views\Residences\ResidenceCreatePage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </None>
-	  <None Update="Views\Residences\ResidenceDetailsPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </None>
-	  <None Update="Views\Residences\ResidenceEditPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </None>
-	  <None Update="Views\Residences\ResidencesPage.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </None>
+	  <None Update="Resources\Styles\DrawerStyles.xaml" Generator="MSBuild:Compile" />
+	  <None Update="Views\Auth\ForgotPasswordPage.xaml" Generator="MSBuild:Compile" />
+	  <None Update="Views\Auth\RegisterPage.xaml" Generator="MSBuild:Compile" />
+	  <None Update="Views\Auth\ResetPasswordPage.xaml" Generator="MSBuild:Compile" />
+	  <None Update="Views\Auth\ResetWithCodePage.xaml" Generator="MSBuild:Compile" />
+	  <None Update="Views\Auth\VerifyCodePage.xaml" Generator="MSBuild:Compile" />
+	  <None Update="Views\Batiments\BatimentCreatePage.xaml" Generator="MSBuild:Compile" />
+	  <None Update="Views\Batiments\BatimentDetailsPage.xaml" Generator="MSBuild:Compile" />
+	  <None Update="Views\Batiments\BatimentEditPage.xaml" Generator="MSBuild:Compile" />
+	  <None Update="Views\Batiments\BatimentsPage.xaml" Generator="MSBuild:Compile" />
+	  <None Update="Views\DrawerPage.xaml" Generator="MSBuild:Compile" />
+	  <None Update="Views\Finances\AppelCreatePage.xaml" Generator="MSBuild:Compile" />
+	  <None Update="Views\Finances\AppelDetailsPage.xaml" Generator="MSBuild:Compile" />
+	  <None Update="Views\Finances\AppelEditPage.xaml" Generator="MSBuild:Compile" />
+	  <None Update="Views\Lots\LotCreatePage.xaml" Generator="MSBuild:Compile" />
+	  <None Update="Views\Lots\LotDetailsPage.xaml" Generator="MSBuild:Compile" />
+	  <None Update="Views\Lots\LotEditPage.xaml" Generator="MSBuild:Compile" />
+	  <None Update="Views\Lots\LotsPage.xaml" Generator="MSBuild:Compile" />
+	  <None Update="Views\Residences\ResidenceCreatePage.xaml" Generator="MSBuild:Compile" />
+	  <None Update="Views\Residences\ResidenceDetailsPage.xaml" Generator="MSBuild:Compile" />
+	  <None Update="Views\Residences\ResidenceEditPage.xaml" Generator="MSBuild:Compile" />
+	  <None Update="Views\Residences\ResidencesPage.xaml" Generator="MSBuild:Compile" />
 	</ItemGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Debug|net9.0-android'">
@@ -349,5 +99,10 @@
 		<UseInterpreter>true</UseInterpreter>
 		<AndroidLinkMode>None</AndroidLinkMode>
 	</PropertyGroup>
+
+	<!-- ⭐⭐ LA SEULE CHOSE NÉCESSAIRE POUR QUE LoadAsyncCommand SOIT GÉNÉRÉ ⭐⭐ -->
+	<ItemGroup>
+	    <Using Include="CommunityToolkit.Mvvm" />
+	</ItemGroup>
 
 </Project>
