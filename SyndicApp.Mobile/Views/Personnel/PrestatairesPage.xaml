@@ -16,13 +16,12 @@
 
             <Grid Padding="16" RowDefinitions="Auto,*">
 
-                <!-- ENTÊTE SIMPLIFIÉE → le bouton ☰ est dans RoleDrawerLayout -->
+                <!-- ENTÊTE -->
                 <Grid ColumnDefinitions="*,Auto" Padding="0,0,0,12">
                     <Label Text="Prestataires"
                            FontAttributes="Bold"
                            FontSize="22" />
 
-                    <!-- Bouton ajouter -->
                     <Button Grid.Column="1"
                             Text="+"
                             FontSize="22"
@@ -54,15 +53,17 @@
                                 <Grid RowDefinitions="Auto,Auto,Auto"
                                       ColumnDefinitions="*,Auto">
 
+                                    <!-- NOM + NOMBRE D'INTERVENTIONS -->
                                     <Label Grid.Row="0" Grid.Column="0"
                                            Text="{Binding Nom}"
-                                           FontAttributes="Bold"/>
+                                           FontAttributes="Bold" />
 
                                     <Label Grid.Row="0" Grid.Column="1"
                                            Text="{Binding NbInterventions, StringFormat='{0} int.'}"
                                            Opacity="0.7"
-                                           HorizontalTextAlignment="End"/>
+                                           HorizontalTextAlignment="End" />
 
+                                    <!-- TYPE SERVICE + TELEPHONE -->
                                     <Grid Grid.Row="1"
                                           Grid.ColumnSpan="2"
                                           ColumnDefinitions="*,*"
@@ -73,26 +74,38 @@
                                                HorizontalTextAlignment="End" />
                                     </Grid>
 
+                                    <!-- EMAIL + BOUTON DETAILS STYLE VIOLET -->
                                     <Grid Grid.Row="2"
                                           Grid.ColumnSpan="2"
                                           ColumnDefinitions="*,Auto"
                                           Margin="0,10,0,0">
+
                                         <Label Text="{Binding Email}" Opacity="0.7" />
 
                                         <Button Grid.Column="1"
                                                 Text="Détails"
+                                                BackgroundColor="Transparent"
+                                                TextColor="#2563EB"
+                                                BorderColor="#2563EB"
+                                                BorderWidth="1"
+                                                CornerRadius="10"
+                                                Padding="10,6"
                                                 Command="{Binding BindingContext.GoToDetailsCommand, Source={x:Reference DrawerLayout}}"
                                                 CommandParameter="{Binding Id}" />
+
                                     </Grid>
 
                                 </Grid>
+
                             </Frame>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
+
                 </CollectionView>
 
             </Grid>
 
         </layout:RoleDrawerLayout.MainContent>
     </layout:RoleDrawerLayout>
+
 </ContentPage>

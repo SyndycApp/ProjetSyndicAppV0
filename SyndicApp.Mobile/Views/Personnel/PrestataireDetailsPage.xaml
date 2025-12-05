@@ -16,22 +16,34 @@
             <ScrollView>
                 <VerticalStackLayout Padding="16" Spacing="16">
 
-                    <!-- Bouton retour -->
-                    <Button Text="←"
-                            FontSize="22"
-                            BackgroundColor="Transparent"
-                            TextColor="Black"
-                            Clicked="Back_Clicked" />
+                    <!-- HEADER : flèche + titre -->
+                    <Grid ColumnDefinitions="Auto,*"
+                          VerticalOptions="Center"
+                          Padding="0,0,0,8">
 
-                    <!-- TITRE -->
-                    <Label Text="Détails prestataire"
-                           FontSize="22"
-                           FontAttributes="Bold" />
+                        <!-- Flèche retour -->
+                        <Button Text="←"
+                                FontSize="22"
+                                BackgroundColor="Transparent"
+                                TextColor="Black"
+                                Clicked="Back_Clicked"
+                                Padding="0"
+                                HorizontalOptions="Start"
+                                VerticalOptions="Center" />
+
+                        <!-- Titre -->
+                        <Label Text="Détails prestataire"
+                               Grid.Column="1"
+                               FontSize="22"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center"
+                               Margin="12,0,0,0" />
+                    </Grid>
 
                     <ActivityIndicator IsRunning="{Binding IsBusy}"
                                        IsVisible="{Binding IsBusy}" />
 
-                    <!-- INFOS -->
+                    <!-- INFOS PRESTATAIRE -->
                     <Frame CornerRadius="14"
                            Padding="14"
                            BorderColor="#E5E7EB">
@@ -74,6 +86,7 @@
 
                 </VerticalStackLayout>
             </ScrollView>
+
         </layout:RoleDrawerLayout.MainContent>
     </layout:RoleDrawerLayout>
 </ContentPage>
