@@ -61,6 +61,7 @@ namespace SyndicApp.Mobile.ViewModels.Incidents
 
             var inc = await _incidentsApi.GetByIdAsync(guid);
 
+            // -------- Copy infos incident --------
             Titre = inc.Titre;
             Description = inc.Description;
             TypeIncident = inc.TypeIncident;
@@ -76,19 +77,34 @@ namespace SyndicApp.Mobile.ViewModels.Incidents
                 ? (!string.IsNullOrWhiteSpace(user.FullName)
                     ? user.FullName
                     : (user.Email ?? user.Id.ToString()))
-                : inc.DeclareParId.ToString();
+                : inc.DeclareParId?.ToString();
 
             // -------- Lot --------
-            var lot = await _lotsApi.GetByIdAsync(inc.LotId);
-            LotNumero = lot.NumeroLot;
+            if (inc.LotId != null)
+            {
+                var lot = await _lotsApi.GetByIdAsync(inc.LotId.Value);
+                LotNumero = lot?.NumeroLot ?? "—";
+            }
+            else
+            {
+                LotNumero = "—";
+            }
 
-            // -------- Résidence --------
-            var residence = await _residencesApi.GetByIdAsync(inc.ResidenceId.ToString());
-            ResidenceNom = residence.Nom;
-            ResidenceAdresseComplete =
-                $"{residence.Adresse}, {residence.Ville} {residence.CodePostal}";
+            if (inc.ResidenceId != null)
+            {
+                var residence = await _residencesApi.GetByIdAsync(inc.ResidenceId.Value.ToString());
+                ResidenceNom = residence?.Nom;
+                ResidenceAdresseComplete =
+                    residence != null
+                        ? $"{residence.Adresse}, {residence.Ville} {residence.CodePostal}"
+                        : "—";
+            }
+            else
+            {
+                ResidenceNom = "—";
+                ResidenceAdresseComplete = "—";
+            }
 
-            // -------- Historique --------
             Historique.Clear();
             if (inc.Historique != null)
             {
@@ -121,8 +137,7 @@ namespace SyndicApp.Mobile.ViewModels.Incidents
             var confirm = await Shell.Current.DisplayAlert(
                 "Confirmation",
                 "Êtes-vous sûr de vouloir supprimer cet incident ?",
-                "Oui",
-                "Non");
+                "Oui", "Non");
 
             if (!confirm) return;
 

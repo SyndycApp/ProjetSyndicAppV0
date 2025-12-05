@@ -20,8 +20,6 @@
         <Color x:Key="Divider">#E5E7EB</Color>
         <Color x:Key="Chip">#F3F4F6</Color>
 
-        <converters:BoolToOuiNonConverter x:Key="BoolToOuiNonConverter" />
-
         <Style TargetType="Label">
             <Setter Property="TextColor" Value="{StaticResource BodyText}" />
         </Style>
@@ -67,15 +65,13 @@
         </Style>
     </ContentPage.Resources>
 
-    <!-- Utilisation du drawer global -->
     <layout:RoleDrawerLayout x:Name="DrawerLayout">
 
         <layout:RoleDrawerLayout.MainContent>
 
-            <!-- CONTENU DE LA PAGE -->
             <Grid Padding="16" RowDefinitions="Auto,Auto,*">
 
-                <!-- Titre + CTA -->
+                <!-- TITRE + ADD -->
                 <Grid Row="0" ColumnDefinitions="*,Auto">
                     <Label Text="Incidents" Style="{StaticResource TitleLabelStyle}" />
                     <Button Grid.Column="1"
@@ -84,13 +80,11 @@
                             Command="{Binding GoToCreateCommand}" />
                 </Grid>
 
-                <!-- Filtres -->
-                <Grid Row="1"
-                      RowDefinitions="Auto,Auto"
-                      ColumnDefinitions="*,*">
+                <!-- 🔵 FILTRE UTILISATEUR + BOUTON FILTRER -->
+                <Grid Row="1" ColumnDefinitions="*,Auto">
 
-                    <!-- Ligne 1 -->
-                    <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="4">
+                    <!-- Filtre Utilisateur -->
+                    <VerticalStackLayout Grid.Column="0" Spacing="4">
                         <Label Text="Utilisateur" Style="{StaticResource FieldLabelStyle}" />
                         <Picker ItemsSource="{Binding Users}"
                                 ItemDisplayBinding="{Binding FullName}"
@@ -98,48 +92,16 @@
                                 Title="Tous les utilisateurs" />
                     </VerticalStackLayout>
 
-                    <VerticalStackLayout Grid.Row="0" Grid.Column="1" Spacing="4">
-                        <Label Text="Résidence" Style="{StaticResource FieldLabelStyle}" />
-                        <Picker ItemsSource="{Binding Residences}"
-                                ItemDisplayBinding="{Binding Nom}"
-                                SelectedItem="{Binding SelectedResidence}"
-                                Title="Toutes les résidences" />
-                    </VerticalStackLayout>
-
-                    <!-- Ligne 2 -->
-                    <VerticalStackLayout Grid.Row="1" Grid.Column="0" Spacing="4">
-                        <Label Text="Lot" Style="{StaticResource FieldLabelStyle}" />
-                        <Picker ItemsSource="{Binding Lots}"
-                                ItemDisplayBinding="{Binding NumeroLot}"
-                                SelectedItem="{Binding SelectedLot}"
-                                Title="Tous les lots" />
-                    </VerticalStackLayout>
-
-                    <Grid Grid.Row="1" Grid.Column="1" ColumnDefinitions="*,Auto">
-                        <VerticalStackLayout Grid.Column="0" Spacing="4">
-                            <Label Text="Urgence" Style="{StaticResource FieldLabelStyle}" />
-                            <Picker ItemsSource="{Binding Urgences}"
-                                    SelectedItem="{Binding SelectedUrgence}"
-                                    Title="Toutes" />
-                        </VerticalStackLayout>
-
-                        <HorizontalStackLayout Grid.Column="1"
-                                               Spacing="6"
-                                               HorizontalOptions="End"
-                                               VerticalOptions="End">
-                            <Button Text="Vider"
-                                    Style="{StaticResource OutlineButtonStyle}"
-                                    Command="{Binding ClearFiltersCommand}" />
-
-                            <Button Text="Filtrer"
-                                    Style="{StaticResource OutlineButtonStyle}"
-                                    Command="{Binding FilterCommand}" />
-                        </HorizontalStackLayout>
-                    </Grid>
+                    <!-- Bouton Filtrer -->
+                    <Button Grid.Column="1"
+                            Margin="10,25,0,0"
+                            Text="Filtrer"
+                            Style="{StaticResource OutlineButtonStyle}"
+                            Command="{Binding FilterCommand}" />
 
                 </Grid>
 
-                <!-- LISTE -->
+                <!-- LISTE INCIDENTS -->
                 <CollectionView Grid.Row="2"
                                 ItemsSource="{Binding Items}"
                                 SelectionMode="None">
@@ -168,8 +130,8 @@
 
                                         <Border Grid.Column="1"
                                                 BackgroundColor="{StaticResource Chip}"
-                                                StrokeThickness="0"
                                                 Padding="8,2"
+                                                StrokeThickness="0"
                                                 HorizontalOptions="End"
                                                 VerticalOptions="Center"
                                                 StrokeShape="RoundRectangle 10">
@@ -179,7 +141,6 @@
                                                    HorizontalTextAlignment="Center"
                                                    VerticalTextAlignment="Center" />
                                         </Border>
-
                                     </Grid>
 
                                     <!-- Utilisateur -->
@@ -188,8 +149,9 @@
                                            FontSize="13"
                                            Text="{Binding DeclarantNomComplet, StringFormat='Déclaré par : {0}'}" />
 
-                                    <!-- Description + bouton Détails -->
+                                    <!-- Description + Détails -->
                                     <Grid Grid.Row="2" Grid.ColumnSpan="2" Margin="0,10,0,0" ColumnDefinitions="*,Auto">
+
                                         <Label Grid.Column="0"
                                                FontSize="12"
                                                Opacity="0.8"
@@ -202,6 +164,7 @@
                                                 Style="{StaticResource OutlineButtonStyle}"
                                                 Command="{Binding BindingContext.GoToDetailsCommand, Source={x:Reference RootPage}}"
                                                 CommandParameter="{Binding Id}" />
+
                                     </Grid>
 
                                 </Grid>
@@ -214,5 +177,6 @@
             </Grid>
 
         </layout:RoleDrawerLayout.MainContent>
+
     </layout:RoleDrawerLayout>
 </ContentPage>

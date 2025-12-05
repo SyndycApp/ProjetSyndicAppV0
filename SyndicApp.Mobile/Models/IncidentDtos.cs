@@ -13,9 +13,9 @@ namespace SyndicApp.Mobile.Models
         public string Statut { get; set; } = "Ouvert";
         public DateTime DateDeclaration { get; set; }
 
-        public Guid ResidenceId { get; set; }
-        public Guid LotId { get; set; }
-        public Guid DeclareParId { get; set; }
+        public Guid? ResidenceId { get; set; }
+        public Guid? LotId { get; set; }
+        public Guid? DeclareParId { get; set; }
 
         // Champs calculés pour l’affichage
         public string? ResidenceNom { get; set; }
