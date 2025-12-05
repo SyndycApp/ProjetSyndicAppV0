@@ -28,63 +28,58 @@ namespace SyndicApp.Mobile.ViewModels.Finances
             _authApi = authApi;
         }
 
-        // PARAM ID
+        // ID venant de la navigation
         [ObservableProperty] private string? paiementId;
 
         // Paiement
         [ObservableProperty] private decimal montant;
         [ObservableProperty] private DateTime datePaiement;
-
-        // User
         [ObservableProperty] private string? userFullName;
-        [ObservableProperty] private string? userRole;
-        [ObservableProperty] private string? userAdresse;
 
-        // Appel
+        // Appel de fonds
         [ObservableProperty] private string? appelDescription;
         [ObservableProperty] private decimal montantTotal;
+        [ObservableProperty] private decimal montantPaye;
         [ObservableProperty] private decimal montantReste;
-        [ObservableProperty] private int nbPaiements;
         [ObservableProperty] private DateTime dateEmission;
+        [ObservableProperty] private int nbPaiements;
+        [ObservableProperty] private Guid residenceId;
+        [ObservableProperty] private string? residenceNom;
 
         // Résidence
-        [ObservableProperty] private string? residenceNom;
-        [ObservableProperty] private string? residenceAdresseComplete;
+        [ObservableProperty] private string? residenceAdresse;
+        [ObservableProperty] private string? residenceVille;
+        [ObservableProperty] private string? residenceCodePostal;
 
-        // ===== LOAD =====
+        // Load details
         [RelayCommand]
         public async Task LoadAsync()
         {
             if (string.IsNullOrWhiteSpace(PaiementId)) return;
             if (!Guid.TryParse(PaiementId, out var id)) return;
 
+            // ====== Paiement ======
             var paiement = await _paiementsApi.GetByIdAsync(id);
-
             Montant = paiement.Montant;
             DatePaiement = paiement.DatePaiement;
             UserFullName = paiement.NomCompletUser;
 
-            // User
-            var users = await _authApi.GetAllAsync();
-            var u = users?.Data?.FirstOrDefault(x => x.Id == paiement.UserId);
-            if (u != null)
-            {
-                UserRole = u.Roles?.FirstOrDefault();
-                UserAdresse = u.Email; // placeholder
-            }
-
-            // Appel
+            // ====== Appel de Fonds ======
             var appel = await _appelsApi.GetByIdAsync(paiement.AppelDeFondsId.ToString());
             AppelDescription = appel.Description;
             MontantTotal = appel.MontantTotal;
+            MontantPaye = appel.MontantPaye;
             MontantReste = appel.MontantReste;
-            NbPaiements = appel.NbPaiements;
             DateEmission = appel.DateEmission;
+            ResidenceId = appel.ResidenceId;
+            NbPaiements = appel.NbPaiements;
             ResidenceNom = appel.ResidenceNom;
 
-            // Résidence
-            var res = await _residencesApi.GetByIdAsync(appel.ResidenceId.ToString());
-            ResidenceAdresseComplete = $"{res.Adresse}, {res.Ville} {res.CodePostal}";
+            // ====== Résidence ======
+            var residence = await _residencesApi.GetByIdAsync(ResidenceId.ToString());
+            ResidenceAdresse = residence.Adresse;
+            ResidenceVille = residence.Ville;
+            ResidenceCodePostal = residence.CodePostal;
         }
 
         [RelayCommand]

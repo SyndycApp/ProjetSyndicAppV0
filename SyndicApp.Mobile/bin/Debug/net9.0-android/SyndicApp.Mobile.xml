@@ -1019,32 +1019,38 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.UserFullName">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.userFullName"/>
         </member>
-        <member name="P:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.UserRole">
-            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.userRole"/>
-        </member>
-        <member name="P:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.UserAdresse">
-            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.userAdresse"/>
-        </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.AppelDescription">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.appelDescription"/>
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.MontantTotal">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.montantTotal"/>
         </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.MontantPaye">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.montantPaye"/>
+        </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.MontantReste">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.montantReste"/>
-        </member>
-        <member name="P:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.NbPaiements">
-            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.nbPaiements"/>
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.DateEmission">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.dateEmission"/>
         </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.NbPaiements">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.nbPaiements"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.ResidenceId">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.residenceId"/>
+        </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.ResidenceNom">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.residenceNom"/>
         </member>
-        <member name="P:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.ResidenceAdresseComplete">
-            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.residenceAdresseComplete"/>
+        <member name="P:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.ResidenceAdresse">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.residenceAdresse"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.ResidenceVille">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.residenceVille"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.ResidenceCodePostal">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.residenceCodePostal"/>
         </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.loadCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Finances.PaiementDetailsViewModel.LoadCommand"/>.</summary>
@@ -1102,7 +1108,7 @@
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Finances.PaiementsListViewModel.GoToDetailsCommand"/>.</summary>
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Finances.PaiementsListViewModel.GoToDetailsCommand">
-            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Finances.PaiementsListViewModel.GoToDetails(System.Guid)"/>.</summary>
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Finances.PaiementsListViewModel.GoToDetailsAsync(System.Guid)"/>.</summary>
         </member>
         <member name="T:SyndicApp.Mobile.ViewModels.Incidents.DevisTravauxCreateViewModel">
             <inheritdoc/>
@@ -2394,20 +2400,20 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.UserFullName">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "UserFullName" generated properties.</summary>
         </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.UserRole">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "UserRole" generated properties.</summary>
-        </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.UserAdresse">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "UserAdresse" generated properties.</summary>
-        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.AppelDescription">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "AppelDescription" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ResidenceNom">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ResidenceNom" generated properties.</summary>
         </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ResidenceAdresseComplete">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ResidenceAdresseComplete" generated properties.</summary>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ResidenceAdresse">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ResidenceAdresse" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ResidenceVille">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ResidenceVille" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ResidenceCodePostal">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ResidenceCodePostal" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.SelectedDate">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "SelectedDate" generated properties.</summary>
@@ -2435,6 +2441,9 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.MontantTTC">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "MontantTTC" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ResidenceAdresseComplete">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ResidenceAdresseComplete" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IncidentTitre">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IncidentTitre" generated properties.</summary>
@@ -2799,20 +2808,20 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.UserFullName">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "UserFullName" generated properties.</summary>
         </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.UserRole">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "UserRole" generated properties.</summary>
-        </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.UserAdresse">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "UserAdresse" generated properties.</summary>
-        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.AppelDescription">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "AppelDescription" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ResidenceNom">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ResidenceNom" generated properties.</summary>
         </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ResidenceAdresseComplete">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ResidenceAdresseComplete" generated properties.</summary>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ResidenceAdresse">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ResidenceAdresse" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ResidenceVille">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ResidenceVille" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ResidenceCodePostal">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ResidenceCodePostal" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.SelectedDate">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "SelectedDate" generated properties.</summary>
@@ -2840,6 +2849,9 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.MontantTTC">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "MontantTTC" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ResidenceAdresseComplete">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ResidenceAdresseComplete" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IncidentTitre">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IncidentTitre" generated properties.</summary>

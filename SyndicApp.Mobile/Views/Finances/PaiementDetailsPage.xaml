@@ -6,39 +6,210 @@
     xmlns:viewmodels="clr-namespace:SyndicApp.Mobile.ViewModels.Finances"
     xmlns:layouts="clr-namespace:SyndicApp.Mobile.Views.Layout"
     x:DataType="viewmodels:PaiementDetailsViewModel"
-    BackgroundColor="White"
-    Shell.NavBarIsVisible="False"
-    Title="Détails Paiement">
+    BackgroundColor="#FAFAFA"
+    Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+
+        <Style TargetType="Frame">
+            <Setter Property="BackgroundColor" Value="White" />
+            <Setter Property="CornerRadius" Value="18" />
+            <Setter Property="Padding" Value="18" />
+            <Setter Property="Margin" Value="0,10" />
+            <Setter Property="HasShadow" Value="True" />
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="#111827" />
+        </Style>
+
+    </ContentPage.Resources>
+
 
     <layouts:RoleDrawerLayout>
-
         <layouts:RoleDrawerLayout.MainContent>
 
             <ScrollView Padding="16">
+
                 <VerticalStackLayout Spacing="16">
 
-                    <Label Text="Détails du paiement"
-                           FontAttributes="Bold"
-                           FontSize="20" />
+                    <!-- =============================== -->
+                    <!-- Titre dynamique avec utilisateur -->
+                    <!-- =============================== -->
+                    <Label FontAttributes="Bold"
+                           FontSize="19"
+                           Margin="0,0,0,10">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Détails du paiement de " />
+                                <Span Text="{Binding UserFullName}"
+                                      FontAttributes="Bold"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
 
-                    <Frame Padding="14" CornerRadius="12" HasShadow="False">
-                        <VerticalStackLayout>
-                            <Label Text="Utilisateur" FontAttributes="Bold" />
-                            <Label Text="{Binding UserFullName}" />
-                        </VerticalStackLayout>
-                    </Frame>
 
-                    <Frame Padding="14" CornerRadius="12" HasShadow="False">
-                        <VerticalStackLayout>
-                            <Label Text="Montant" FontAttributes="Bold" />
-                            <Label Text="{Binding Montant, StringFormat='{0:F2} DH'}" />
+                    <!-- ====================== -->
+                    <!--   UNIQUE MAIN CARD     -->
+                    <!-- ====================== -->
+
+                    <Frame>
+
+                        <VerticalStackLayout Spacing="18">
+
+
+                            <!-- ======================== -->
+                            <!--      1️⃣ MONTANT         -->
+                            <!-- ======================== -->
+
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Montant : "
+                                              FontAttributes="Bold"/>
+                                        <Span Text="{Binding Montant, StringFormat='{0:F2} DH'}"
+                                              FontAttributes="Bold"
+                                              TextColor="#2563EB"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Date du paiement : "
+                                              FontAttributes="Bold"/>
+                                        <Span Text="{Binding DatePaiement, StringFormat='{0:dd MMMM yyyy}'}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+
+                            <!-- ======================== -->
+                            <!--   🚫 UTILISATEUR RETIRÉ   -->
+                            <!-- ======================== -->
+                            <!-- Rien ici → demandé par toi -->
+
+
+                            <!-- ======================== -->
+                            <!--     APPEL DE FONDS       -->
+                            <!-- ======================== -->
+
+                            <Label Text="Appel de fonds"
+                                   FontAttributes="Bold"
+                                   FontSize="18"
+                                   Margin="0,20,0,0"/>
+
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Description : " FontAttributes="Bold"/>
+                                        <Span Text="{Binding AppelDescription}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Montant total : " FontAttributes="Bold"/>
+                                        <Span Text="{Binding MontantTotal, StringFormat='{0:F2} DH'}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Montant payé : " FontAttributes="Bold"/>
+                                        <Span Text="{Binding MontantPaye, StringFormat='{0:F2} DH'}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Montant restant : " FontAttributes="Bold"/>
+                                        <Span Text="{Binding MontantReste, StringFormat='{0:F2} DH'}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Date d'émission : " FontAttributes="Bold"/>
+                                        <Span Text="{Binding DateEmission, StringFormat='{0:dd MMMM yyyy}'}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Nombre de paiements : " FontAttributes="Bold"/>
+                                        <Span Text="{Binding NbPaiements}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+
+                            <!-- ======================== -->
+                            <!--      RÉSIDENCE           -->
+                            <!-- ======================== -->
+
+                            <Label Text="Résidence"
+                                   FontAttributes="Bold"
+                                   FontSize="18"
+                                   Margin="0,20,0,0"/>
+
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Nom : " FontAttributes="Bold"/>
+                                        <Span Text="{Binding ResidenceNom}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Adresse : " FontAttributes="Bold"/>
+                                        <Span Text="{Binding ResidenceAdresse}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Ville : " FontAttributes="Bold"/>
+                                        <Span Text="{Binding ResidenceVille}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="Code postal : " FontAttributes="Bold"/>
+                                        <Span Text="{Binding ResidenceCodePostal}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
                         </VerticalStackLayout>
+
                     </Frame>
 
                 </VerticalStackLayout>
+
             </ScrollView>
 
         </layouts:RoleDrawerLayout.MainContent>
 
     </layouts:RoleDrawerLayout>
+
 </ContentPage>

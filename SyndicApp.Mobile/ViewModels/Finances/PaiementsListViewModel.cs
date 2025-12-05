@@ -88,7 +88,10 @@ namespace SyndicApp.Mobile.ViewModels.Finances
             => Shell.Current.GoToAsync("paiement-create");
 
         [RelayCommand]
-        public Task GoToDetails(Guid id)
-            => Shell.Current.GoToAsync($"paiement-details?id={id}");
+        public async Task GoToDetailsAsync(Guid id)
+        {
+            await Shell.Current.GoToAsync($"paiement-details?id={id}");
+        }
+
     }
 }
