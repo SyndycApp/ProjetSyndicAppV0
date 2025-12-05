@@ -70,6 +70,12 @@
                                        FontAttributes="Bold" />
                                 <Label Text="{Binding Charge.DateCharge, StringFormat='Date : {0:dd/MM/yyyy}'}" />
                                 <Label Text="{Binding Charge.ResidenceNom, StringFormat='Résidence : {0}'}" />
+                                <Label Text="{Binding Charge.ResidenceAdresse, StringFormat='Adresse : {0}'}" />
+                                <Label Text="{Binding Charge.ResidenceVille, StringFormat='Ville : {0}'}" />
+                                <Label Text="{Binding Charge.ResidenceCodePostal, StringFormat='Code postal : {0}'}" />
+                                <Label Text="{Binding Charge.NbBatiments, StringFormat='Nombre bâtiments : {0}'}" />
+                                <Label Text="{Binding Charge.NbLots, StringFormat='Nombre lots : {0}'}" />
+                                <Label Text="{Binding Charge.NbIncidents, StringFormat='Incidents : {0}'}" />
                             </VerticalStackLayout>
                         </Frame>
 

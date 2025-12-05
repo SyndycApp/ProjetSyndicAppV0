@@ -15,36 +15,45 @@
         <layouts:RoleDrawerLayout.MainContent>
 
             <ScrollView Padding="16">
-                <VerticalStackLayout Spacing="14">
+    <VerticalStackLayout Spacing="14">
 
-                    <Label Text="Créer un paiement"
-                           FontSize="20"
-                           FontAttributes="Bold" />
+        <Label Text="Créer un paiement"
+               FontSize="20"
+               FontAttributes="Bold"
+               TextColor="Black" />
 
-                    <Picker Title="Appel de fonds"
-                            ItemsSource="{Binding Appels}"
-                            ItemDisplayBinding="{Binding Description}"
-                            SelectedItem="{Binding SelectedAppel}" />
+        <Picker Title="Appel de fonds"
+                ItemsSource="{Binding Appels}"
+                ItemDisplayBinding="{Binding Description}"
+                SelectedItem="{Binding SelectedAppel}"
+                TextColor="Black"
+                TitleColor="Gray" />
 
-                    <Picker Title="Utilisateur"
-                            ItemsSource="{Binding Users}"
-                            ItemDisplayBinding="{Binding FullName}"
-                            SelectedItem="{Binding SelectedUser}" />
+        <Picker Title="Utilisateur"
+                ItemsSource="{Binding Users}"
+                ItemDisplayBinding="{Binding FullName}"
+                SelectedItem="{Binding SelectedUser}"
+                TextColor="Black"
+                TitleColor="Gray" />
 
-                    <Entry Placeholder="Montant"
-                           Keyboard="Numeric"
-                           Text="{Binding Montant}" />
+        <Entry Placeholder="Montant"
+               Keyboard="Numeric"
+               Text="{Binding Montant}"
+               TextColor="Black"
+               PlaceholderColor="Gray" />
 
-                    <DatePicker Date="{Binding DatePaiement}" />
+        <DatePicker Date="{Binding DatePaiement}"
+                    TextColor="Black" />
 
-                    <Button Text="Enregistrer"
-                            Command="{Binding SaveCommand}"
-                            BackgroundColor="#2563EB"
-                            TextColor="White"
-                            CornerRadius="12" />
+        <Button Text="Enregistrer"
+                Command="{Binding SaveCommand}"
+                BackgroundColor="#2563EB"
+                TextColor="White"
+                CornerRadius="12" />
 
-                </VerticalStackLayout>
-            </ScrollView>
+    </VerticalStackLayout>
+</ScrollView>
+
 
         </layouts:RoleDrawerLayout.MainContent>
 

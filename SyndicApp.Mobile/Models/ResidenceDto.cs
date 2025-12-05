@@ -7,6 +7,10 @@ public class ResidenceDto
     public string? Adresse { get; set; }
     public string? Ville { get; set; }
     public string? CodePostal { get; set; }
+
+    public int NbBatiments { get; set; }
+    public int NbLots { get; set; }
+    public int NbIncidents { get; set; }
 }
 
 public  class ResidenceCreateDto

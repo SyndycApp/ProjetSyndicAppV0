@@ -13,6 +13,7 @@ namespace SyndicApp.Mobile.ViewModels.Finances
     public partial class ChargeDetailsViewModel : ObservableObject
     {
         private readonly IChargesApi _chargesApi;
+        private readonly IResidencesApi _residencesApi;
 
         [ObservableProperty]
         private string id = string.Empty;
@@ -29,7 +30,7 @@ namespace SyndicApp.Mobile.ViewModels.Finances
 
         public bool CanManageCharges => IsSyndic;
 
-        public ChargeDetailsViewModel(IChargesApi chargesApi)
+        public ChargeDetailsViewModel(IChargesApi chargesApi, IResidencesApi residencesApi)
         {
             _chargesApi = chargesApi;
 
@@ -38,6 +39,7 @@ namespace SyndicApp.Mobile.ViewModels.Finances
                                   ?? string.Empty;
 
             IsSyndic = role.Contains("syndic");
+            _residencesApi = residencesApi;
         }
 
         [RelayCommand]
@@ -48,8 +50,28 @@ namespace SyndicApp.Mobile.ViewModels.Finances
             try
             {
                 IsBusy = true;
+
                 var guid = Guid.Parse(Id);
-                Charge = await _chargesApi.GetByIdAsync(guid);
+                var chargeData = await _chargesApi.GetByIdAsync(guid);
+
+                if (chargeData != null && chargeData.ResidenceId != Guid.Empty)
+                {
+                    var res = await _residencesApi.GetByIdAsync(chargeData.ResidenceId.ToString());
+
+                    if (res != null)
+                    {
+                        chargeData.ResidenceNom = res.Nom ?? "";
+                        chargeData.ResidenceAdresse = res.Adresse ?? "";
+                        chargeData.ResidenceVille = res.Ville ?? "";
+                        chargeData.ResidenceCodePostal = res.CodePostal ?? "";
+                        chargeData.NbBatiments = res.NbBatiments;
+                        chargeData.NbLots = res.NbLots;
+                        chargeData.NbIncidents = res.NbIncidents;
+                    }
+                }
+
+                // Obligatoire pour MAUI : déclenche OnPropertyChanged
+                Charge = chargeData;
             }
             finally
             {
