@@ -61,7 +61,7 @@ namespace SyndicApp.Mobile.ViewModels.Incidents
 
             var inc = await _incidentsApi.GetByIdAsync(guid);
 
-            // -------- Copy infos incident --------
+
             Titre = inc.Titre;
             Description = inc.Description;
             TypeIncident = inc.TypeIncident;
@@ -69,7 +69,7 @@ namespace SyndicApp.Mobile.ViewModels.Incidents
             Statut = inc.Statut;
             DateDeclaration = inc.DateDeclaration;
 
-            // -------- Déclarant --------
+
             var usersResp = await _authApi.GetAllAsync();
             var user = usersResp?.Data?.FirstOrDefault(u => u.Id == inc.DeclareParId);
 
@@ -79,7 +79,7 @@ namespace SyndicApp.Mobile.ViewModels.Incidents
                     : (user.Email ?? user.Id.ToString()))
                 : inc.DeclareParId?.ToString();
 
-            // -------- Lot --------
+
             if (inc.LotId != null)
             {
                 var lot = await _lotsApi.GetByIdAsync(inc.LotId.Value);
