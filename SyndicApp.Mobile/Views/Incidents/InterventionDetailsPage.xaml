@@ -16,19 +16,35 @@
             <ScrollView>
                 <VerticalStackLayout Padding="16" Spacing="16">
 
-                    <Button Text="←"
+                    <!-- 🔵 HEADER : flèche + titre -->
+                    <Grid ColumnDefinitions="Auto,*,Auto">
+                        <Button 
+                            Grid.Column="0"
+                            Text="←"
                             FontSize="22"
                             BackgroundColor="Transparent"
                             TextColor="Black"
-                            Clicked="Back_Clicked"/>
+                            Clicked="Back_Clicked"
+                            Padding="0"
+                            />
 
-                    <Label Text="Détails intervention"
-                           FontSize="22"
-                           FontAttributes="Bold" />
+                        <Label 
+                            Grid.Column="1"
+                            Text="Détails intervention"
+                            FontSize="22"
+                            FontAttributes="Bold"
+                            HorizontalTextAlignment="Center"
+                            VerticalOptions="Center"
+                            />
 
-                    <ActivityIndicator IsRunning="{Binding IsBusy}"
-                                       IsVisible="{Binding IsBusy}" />
+                        <Label Grid.Column="2" Text="" /> 
+                    </Grid>
 
+                    <ActivityIndicator 
+                        IsRunning="{Binding IsBusy}"
+                        IsVisible="{Binding IsBusy}" />
+
+                    <!-- DESCRIPTION -->
                     <Frame Padding="14" BorderColor="#E5E7EB" CornerRadius="14">
                         <VerticalStackLayout Spacing="8">
 
@@ -37,11 +53,12 @@
 
                             <BoxView HeightRequest="1" BackgroundColor="#E5E7EB" />
 
-                            <Label Text="Statut :" FontAttributes="Bold" />
+                            <Label Text="Statut" FontAttributes="Bold" />
                             <Label Text="{Binding Item.Statut}" />
                         </VerticalStackLayout>
                     </Frame>
 
+                    <!-- DATES -->
                     <Frame Padding="14" BorderColor="#E5E7EB" CornerRadius="14">
                         <VerticalStackLayout>
                             <Label Text="Dates" FontAttributes="Bold" />
@@ -50,6 +67,7 @@
                         </VerticalStackLayout>
                     </Frame>
 
+                    <!-- COUTS -->
                     <Frame Padding="14" BorderColor="#E5E7EB" CornerRadius="14">
                         <VerticalStackLayout Spacing="6">
                             <Label Text="Coûts" FontAttributes="Bold" />
@@ -58,15 +76,44 @@
                         </VerticalStackLayout>
                     </Frame>
 
+                    <!-- ACTIONS -->
                     <Frame Padding="14" BorderColor="#E5E7EB" CornerRadius="14">
                         <VerticalStackLayout Spacing="12">
                             <Label Text="Actions" FontAttributes="Bold" />
 
                             <HorizontalStackLayout Spacing="10">
-                                <Button Text="Démarrer" Command="{Binding StartCommand}" BackgroundColor="#2563EB" TextColor="White"/>
-                                <Button Text="Terminer" Command="{Binding CompleteCommand}" BorderWidth="1" BorderColor="#2563EB" TextColor="#2563EB"/>
-                                <Button Text="Annuler" Command="{Binding CancelCommand}" BackgroundColor="#DC2626" TextColor="White"/>
+
+                                <Button 
+                                    Text="Démarrer"
+                                    Command="{Binding StartCommand}"
+                                    BackgroundColor="#2563EB"
+                                    TextColor="White"
+                                    CornerRadius="10"
+                                    Padding="14,6"
+                                    />
+
+                                <!-- 🔵 STYLE IDENTIQUE A “Détails” -->
+                                <Button 
+                                    Text="Terminer"
+                                    Command="{Binding CompleteCommand}"
+                                    BackgroundColor="Transparent"
+                                    TextColor="#2563EB"
+                                    BorderColor="#2563EB"
+                                    BorderWidth="1"
+                                    CornerRadius="10"
+                                    Padding="10,6"
+                                    />
+
+                                <Button 
+                                    Text="Annuler"
+                                    Command="{Binding CancelCommand}"
+                                    BackgroundColor="#DC2626"
+                                    TextColor="White"
+                                    CornerRadius="10"
+                                    Padding="14,6"
+                                    />
                             </HorizontalStackLayout>
+
                         </VerticalStackLayout>
                     </Frame>
 

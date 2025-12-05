@@ -65,9 +65,15 @@
                                     <Label Text="{Binding DateRealisation, StringFormat='Réalisation : {0:dd/MM/yyyy HH\\:mm}'}"
                                            Opacity="0.7"/>
 
-                                    <Button Text="Détails"
-                                            Command="{Binding BindingContext.GoToDetailsCommand, Source={x:Reference DrawerLayout}}"
-                                            CommandParameter="{Binding Id}" />
+                                   <Button Text="Détails"
+                                           BackgroundColor="Transparent"
+                                           TextColor="#2563EB"
+                                           BorderColor="#2563EB"
+                                           BorderWidth="1"
+                                           CornerRadius="10"
+                                           Padding="10,6"
+                                           Command="{Binding BindingContext.GoToDetailsCommand, Source={x:Reference DrawerLayout}}"
+                                           CommandParameter="{Binding Id}" />
                                 </VerticalStackLayout>
 
                             </Frame>
