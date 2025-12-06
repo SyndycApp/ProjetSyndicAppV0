@@ -23,11 +23,17 @@ namespace SyndicApp.Infrastructure.Services.Residences
                 {
                     Id = b.Id,
                     Nom = b.Nom,
-                    ResidenceId = b.ResidenceId
+                    ResidenceId = b.ResidenceId,
+                    NbLots = _db.Lots.Count(l => EF.Property<Guid?>(l, "BatimentId") == b.Id),
+                    NbEtages = b.NbEtages,
+                    Bloc = b.Bloc,
+                    ResponsableNom = b.ResponsableNom,
+                    HasAscenseur = b.HasAscenseur,
+                    AnneeConstruction = b.AnneeConstruction,
+                    CodeAcces = b.CodeAcces
                 })
                 .ToListAsync(ct);
         }
-
 
         public async Task<IReadOnlyList<BatimentDto>> GetByResidenceAsync(Guid residenceId, CancellationToken ct = default)
         {
@@ -38,14 +44,22 @@ namespace SyndicApp.Infrastructure.Services.Residences
                     Id = b.Id,
                     Nom = b.Nom,
                     ResidenceId = b.ResidenceId,
-                    NbLots = _db.Lots.Count(l => EF.Property<Guid?>(l, "BatimentId") == b.Id)
+                    NbLots = _db.Lots.Count(l => EF.Property<Guid?>(l, "BatimentId") == b.Id),
+                    NbEtages = b.NbEtages,
+                    Bloc = b.Bloc,
+                    ResponsableNom = b.ResponsableNom,
+                    HasAscenseur = b.HasAscenseur,
+                    AnneeConstruction = b.AnneeConstruction,
+                    CodeAcces = b.CodeAcces
                 })
                 .ToListAsync(ct);
         }
 
         public async Task<BatimentDto?> GetByIdAsync(Guid id, CancellationToken ct = default)
         {
-            var b = await _db.Batiments.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id, ct);
+            var b = await _db.Batiments.AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == id, ct);
+
             if (b is null) return null;
 
             return new BatimentDto
@@ -53,7 +67,13 @@ namespace SyndicApp.Infrastructure.Services.Residences
                 Id = b.Id,
                 Nom = b.Nom,
                 ResidenceId = b.ResidenceId,
-                NbLots = await _db.Lots.CountAsync(l => EF.Property<Guid?>(l, "BatimentId") == b.Id, ct)
+                NbLots = await _db.Lots.CountAsync(l => EF.Property<Guid?>(l, "BatimentId") == b.Id, ct),
+                NbEtages = b.NbEtages,
+                Bloc = b.Bloc,
+                ResponsableNom = b.ResponsableNom,
+                HasAscenseur = b.HasAscenseur,
+                AnneeConstruction = b.AnneeConstruction,
+                CodeAcces = b.CodeAcces
             };
         }
 
@@ -62,9 +82,21 @@ namespace SyndicApp.Infrastructure.Services.Residences
             if (!await _db.Residences.AnyAsync(r => r.Id == dto.ResidenceId, ct))
                 throw new InvalidOperationException("Résidence introuvable.");
 
-            var entity = new Batiment { Nom = dto.Nom?.Trim() ?? string.Empty, ResidenceId = dto.ResidenceId };
+            var entity = new Batiment
+            {
+                Nom = dto.Nom?.Trim() ?? string.Empty,
+                ResidenceId = dto.ResidenceId,
+                NbEtages = dto.NbEtages,
+                Bloc = dto.Bloc,
+                ResponsableNom = dto.ResponsableNom,
+                HasAscenseur = dto.HasAscenseur,
+                AnneeConstruction = dto.AnneeConstruction,
+                CodeAcces = dto.CodeAcces
+            };
+
             _db.Batiments.Add(entity);
             await _db.SaveChangesAsync(ct);
+
             return entity.Id;
         }
 
@@ -78,6 +110,12 @@ namespace SyndicApp.Infrastructure.Services.Residences
 
             entity.Nom = dto.Nom?.Trim() ?? entity.Nom;
             entity.ResidenceId = dto.ResidenceId;
+            entity.NbEtages = dto.NbEtages;
+            entity.Bloc = dto.Bloc;
+            entity.ResponsableNom = dto.ResponsableNom;
+            entity.HasAscenseur = dto.HasAscenseur;
+            entity.AnneeConstruction = dto.AnneeConstruction;
+            entity.CodeAcces = dto.CodeAcces;
 
             await _db.SaveChangesAsync(ct);
             return true;
@@ -89,21 +127,39 @@ namespace SyndicApp.Infrastructure.Services.Residences
                 from b in _db.Batiments.AsNoTracking()
                 join l in _db.Lots.AsNoTracking()
                     on b.Id equals EF.Property<Guid?>(l, "BatimentId")
-                join a in _db.AffectationsLots.AsNoTracking().Where(x => x.DateFin == null)
+                join a in _db.AffectationsLots.AsNoTracking()
+                        .Where(x => x.DateFin == null)
                     on l.Id equals a.LotId
                 where a.UserId == userId
-                group new { b, l } by new { b.Id, b.Nom, b.ResidenceId } into g
+                group new { b, l } by new
+                {
+                    b.Id,
+                    b.Nom,
+                    b.ResidenceId,
+                    b.NbEtages,
+                    b.Bloc,
+                    b.ResponsableNom,
+                    b.HasAscenseur,
+                    b.AnneeConstruction,
+                    b.CodeAcces
+                }
+                into g
                 select new BatimentDto
                 {
                     Id = g.Key.Id,
                     Nom = g.Key.Nom,
                     ResidenceId = g.Key.ResidenceId,
-                    NbLots = g.Count()
+                    NbLots = g.Count(),
+                    NbEtages = g.Key.NbEtages,
+                    Bloc = g.Key.Bloc,
+                    ResponsableNom = g.Key.ResponsableNom,
+                    HasAscenseur = g.Key.HasAscenseur,
+                    AnneeConstruction = g.Key.AnneeConstruction,
+                    CodeAcces = g.Key.CodeAcces
                 };
 
             return await query.ToListAsync(ct);
         }
-
 
         public async Task<Guid?> ResolveIdByNameAsync(string nom, CancellationToken ct = default)
         {
@@ -111,20 +167,18 @@ namespace SyndicApp.Infrastructure.Services.Residences
 
             var normalized = nom.Trim();
 
-            // Base query
-            var query = _db.Batiments.AsNoTracking().Where(b => b.Nom != null && b.Nom.Trim() == normalized);
+            var matches = await _db.Batiments.AsNoTracking()
+                .Where(b => b.Nom == normalized)
+                .Select(b => b.Id)
+                .Take(2)
+                .ToListAsync(ct);
 
-            // Optionnel : restreindre à une résidence pour éviter les ambiguïtés
-            //if (residenceId is Guid rid && rid != Guid.Empty)
-            //    query = query.Where(b => b.ResidenceId == rid);
-
-            // Gestion d'ambiguïté : s’il y a plusieurs, on ne renvoie rien (ou on pourrait lever une exception)
-            var matches = await query.Select(b => b.Id).Take(2).ToListAsync(ct);
             if (matches.Count == 1) return matches[0];
-            if (matches.Count > 1) return null; // Ambigu : même nom (et même résidence si filtrée)
+            if (matches.Count > 1) return null;
 
-            return null; // Aucun résultat
+            return null;
         }
+
         public async Task<bool> DeleteAsync(Guid id, CancellationToken ct = default)
         {
             var entity = await _db.Batiments.FirstOrDefaultAsync(x => x.Id == id, ct);
@@ -132,6 +186,7 @@ namespace SyndicApp.Infrastructure.Services.Residences
 
             _db.Batiments.Remove(entity);
             await _db.SaveChangesAsync(ct);
+
             return true;
         }
     }

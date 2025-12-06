@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SyndicApp.Infrastructure;
 
@@ -11,9 +12,11 @@ using SyndicApp.Infrastructure;
 namespace SyndicApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251206114015_AddNbEtagesToBatiment")]
+    partial class AddNbEtagesToBatiment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1278,22 +1281,8 @@ namespace SyndicApp.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("AnneeConstruction")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Bloc")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CodeAcces")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("HasAscenseur")
-                        .HasColumnType("bit");
 
                     b.Property<int>("NbEtages")
                         .HasColumnType("int");
@@ -1307,10 +1296,6 @@ namespace SyndicApp.Infrastructure.Migrations
 
                     b.Property<Guid?>("ResidenceId1")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ResponsableNom")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");

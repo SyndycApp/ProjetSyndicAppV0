@@ -4,48 +4,83 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:layout="clr-namespace:SyndicApp.Mobile.Views.Layout"
-    Title="Détails bâtiment"
     Shell.NavBarIsVisible="False"
     BackgroundColor="White">
 
     <layout:RoleDrawerLayout>
         <layout:RoleDrawerLayout.MainContent>
 
-            <Grid BackgroundColor="White">
-                <ScrollView>
-                    <VerticalStackLayout Padding="16" Spacing="12">
+            <ScrollView>
+                <VerticalStackLayout Padding="16" Spacing="20">
 
-                        <Label Text="{Binding Batiment.Nom}"
-                               FontSize="20"
-                               FontAttributes="Bold" />
+                    <!-- Titre -->
+                    <Label Text="{Binding Batiment.Nom}"
+                           FontSize="26"
+                           FontAttributes="Bold"
+                           TextColor="#111827" />
 
-                        <Label Text="{Binding Batiment.ResidenceNom}"
-                               TextColor="#374151" />
+                    <Label Text="{Binding Batiment.ResidenceNom}"
+                           FontSize="16"
+                           TextColor="#6B7280" />
 
-                        <!-- Boutons d'action -->
-                        <Grid ColumnDefinitions="*,*,*"
-                              Margin="0,12,0,0"
-                              ColumnSpacing="10">
 
-                            <!-- visibles syndic seulement -->
-                            <Button x:Name="BtnEdit"
-                                    Text="Modifier"
-                                    Command="{Binding EditCommand}" />
+                    <!-- Zone info bâtiment -->
+                    <Border Stroke="#E5E7EB" StrokeThickness="1" Background="#F9FAFB" Padding="16" StrokeShape="RoundRectangle 12">
+                        <VerticalStackLayout Spacing="10">
 
-                            <Button x:Name="BtnDelete"
-                                    Grid.Column="1"
-                                    Text="Supprimer"
-                                    TextColor="Red"
-                                    Command="{Binding DeleteCommand}" />
+                            <Label Text="Informations"
+                                   FontSize="20"
+                                   FontAttributes="Bold"
+                                   TextColor="#1F2937" />
 
-                            <Button Grid.Column="2"
-                                    Text="Retour"
-                                    Clicked="Back_Clicked" />
-                        </Grid>
+                            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto" ColumnSpacing="8">
 
-                    </VerticalStackLayout>
-                </ScrollView>
-            </Grid>
+                                <Label Text="Résidence :" TextColor="#6B7280"/>
+                                <Label Grid.Column="1" Text="{Binding Batiment.ResidenceNom}" TextColor="#111827"/>
+
+                                <Label Grid.Row="1" Text="Lots :" TextColor="#6B7280"/>
+                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding Batiment.NbLots}" TextColor="#111827"/>
+
+                                <Label Grid.Row="2" Text="Étages :" TextColor="#6B7280"/>
+                                <Label Grid.Row="2" Grid.Column="1" Text="{Binding Batiment.NbEtages}" TextColor="#111827"/>
+
+                                <Label Grid.Row="3" Text="Responsable :" TextColor="#6B7280"/>
+                                <Label Grid.Row="3" Grid.Column="1" Text="{Binding Batiment.ResponsableNom}" TextColor="#111827"/>
+                            </Grid>
+
+                        </VerticalStackLayout>
+                    </Border>
+
+
+                    <!-- Boutons d'action -->
+                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="14">
+
+                        <Button x:Name="BtnEdit"
+                                Text="Modifier"
+                                BackgroundColor="#4F46E5"
+                                TextColor="White"
+                                CornerRadius="12"
+                                Command="{Binding EditCommand}" />
+
+                        <Button x:Name="BtnDelete"
+                                Text="Supprimer"
+                                Grid.Column="1"
+                                BackgroundColor="#FEE2E2"
+                                TextColor="#DC2626"
+                                CornerRadius="12"
+                                Command="{Binding DeleteCommand}" />
+
+                        <Button Grid.Column="2"
+                                Text="Retour"
+                                BackgroundColor="#E5E7EB"
+                                TextColor="#111827"
+                                CornerRadius="12"
+                                Clicked="Back_Clicked" />
+
+                    </Grid>
+
+                </VerticalStackLayout>
+            </ScrollView>
 
         </layout:RoleDrawerLayout.MainContent>
     </layout:RoleDrawerLayout>
