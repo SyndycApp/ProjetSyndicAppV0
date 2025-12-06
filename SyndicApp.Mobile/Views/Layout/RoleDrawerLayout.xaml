@@ -212,6 +212,33 @@
                                 Style="{StaticResource MenuButtonStyle}" 
                                 CommandParameter="//prestataires"    
                                  Clicked="OnMenuItemClicked"/>
+
+                         <BoxView HeightRequest="1" BackgroundColor="#E5E7EB" />
+                <Label Text="Messagerie" FontAttributes="Bold"/>
+
+                <Button Text="Conversations"
+                        Style="{StaticResource MenuButtonStyle}"
+                        CommandParameter="//messages/conversations"
+                        Clicked="OnMenuItemClicked"/>
+
+                <Button Text="Messages"
+                        Style="{StaticResource MenuButtonStyle}"
+                        CommandParameter="//messages"
+                        Clicked="OnMenuItemClicked"/>
+
+                <!-- PERSONNEL -->
+                <BoxView HeightRequest="1" BackgroundColor="#E5E7EB" />
+                <Label Text="Personnel" FontAttributes="Bold"/>
+
+                <Button Text="Employés"
+                        Style="{StaticResource MenuButtonStyle}"
+                        CommandParameter="//personnel/employes"
+                        Clicked="OnMenuItemClicked"/>
+
+                <Button Text="Plannings et Présences"
+                        Style="{StaticResource MenuButtonStyle}"
+                        CommandParameter="//personnel/plannings"
+                        Clicked="OnMenuItemClicked"/>         
         
 
                         <!-- LOGOUT -->

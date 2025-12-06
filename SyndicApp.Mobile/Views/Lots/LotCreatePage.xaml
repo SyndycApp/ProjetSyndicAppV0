@@ -10,60 +10,78 @@
 
     <ContentPage.Resources>
         <Color x:Key="BodyText">#111827</Color>
+        <Color x:Key="EntryBg">#F3F4F6</Color>
+        <Color x:Key="EntryBorder">#E5E7EB</Color>
+
         <Style TargetType="Label">
             <Setter Property="TextColor" Value="{StaticResource BodyText}" />
         </Style>
+
+        <Style TargetType="Entry">
+            <Setter Property="TextColor" Value="#111827" />
+            <Setter Property="BackgroundColor" Value="{StaticResource EntryBg}" />
+            <Setter Property="PlaceholderColor" Value="#9CA3AF" />
+            <Setter Property="HeightRequest" Value="44" />
+            <Setter Property="Margin" Value="0,4,0,10" />
+        </Style>
+
+        <Style TargetType="Picker">
+            <Setter Property="TextColor" Value="#111827" />
+            <Setter Property="BackgroundColor" Value="{StaticResource EntryBg}" />
+            <Setter Property="HeightRequest" Value="44" />
+            <Setter Property="Margin" Value="0,4,0,10" />
+            <Setter Property="FontSize" Value="16" />
+        </Style>
     </ContentPage.Resources>
+
 
     <layout:RoleDrawerLayout>
         <layout:RoleDrawerLayout.MainContent>
 
-            <Grid BackgroundColor="White">
-                <ScrollView>
-                    <VerticalStackLayout Padding="16" Spacing="14">
+            <ScrollView>
+                <VerticalStackLayout Padding="16" Spacing="12">
 
-                        <Label Text="Numéro du lot" FontAttributes="Bold" />
-                        <Entry Text="{Binding NumeroLot}"
-                               Placeholder="Ex: A12"
-                               PlaceholderColor="#9CA3AF" />
+                    <Label Text="Numéro du lot" FontAttributes="Bold" />
+                    <Entry Text="{Binding NumeroLot}" Placeholder="Ex: A12" />
 
-                        <Label Text="Type" FontAttributes="Bold" />
-                        <Entry Text="{Binding Type}"
-                               Placeholder="Appartement, Garage..."
-                               PlaceholderColor="#9CA3AF" />
+                    <Label Text="Type" FontAttributes="Bold" />
+                    <Entry Text="{Binding Type}" Placeholder="Appartement, Garage..." />
 
-                        <Label Text="Surface" FontAttributes="Bold" />
-                        <Entry Keyboard="Numeric"
-                               Text="{Binding Surface}"
-                               Placeholder="m²"
-                               PlaceholderColor="#9CA3AF" />
+                    <Label Text="Surface (m²)" FontAttributes="Bold" />
+                    <Entry Keyboard="Numeric" Text="{Binding Surface}" Placeholder="Surface en m²" />
 
-                        <Label Text="Résidence" FontAttributes="Bold" />
-                        <Picker ItemsSource="{Binding Residences}"
-                                ItemDisplayBinding="{Binding Nom}"
-                                SelectedItem="{Binding SelectedResidence}"
-                                SelectedIndexChanged="ResidenceChanged" />
+                    <Label Text="Résidence" FontAttributes="Bold" />
+                    <Picker ItemsSource="{Binding Residences}"
+                            ItemDisplayBinding="{Binding Nom}"
+                            SelectedItem="{Binding SelectedResidence}"
+                            SelectedIndexChanged="ResidenceChanged" />
 
-                        <Label Text="Bâtiment" FontAttributes="Bold" />
-                        <Picker ItemsSource="{Binding Batiments}"
-                                ItemDisplayBinding="{Binding Nom}"
-                                SelectedItem="{Binding SelectedBatiment}" />
+                    <Label Text="Bâtiment" FontAttributes="Bold" />
+                    <Picker ItemsSource="{Binding Batiments}"
+                            ItemDisplayBinding="{Binding Nom}"
+                            SelectedItem="{Binding SelectedBatiment}" />
 
-                        <Grid ColumnDefinitions="*,*"
-                              ColumnSpacing="12"
-                              Margin="0,16,0,0">
-                            <Button Text="Annuler"
-                                    Command="{Binding CancelCommand}" />
-                            <Button Grid.Column="1"
-                                    Text="Créer"
-                                    BackgroundColor="#2563EB"
-                                    TextColor="White"
-                                    Command="{Binding CreateCommand}" />
-                        </Grid>
 
-                    </VerticalStackLayout>
-                </ScrollView>
-            </Grid>
+                    <!-- BOUTONS -->
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="14" Margin="0,20,0,0">
+
+                        <Button Text="Annuler"
+                                BackgroundColor="#E5E7EB"
+                                TextColor="#111827"
+                                CornerRadius="12"
+                                Command="{Binding CancelCommand}" />
+
+                        <Button Grid.Column="1"
+                                Text="Créer"
+                                BackgroundColor="#2563EB"
+                                TextColor="White"
+                                CornerRadius="12"
+                                Command="{Binding CreateCommand}" />
+
+                    </Grid>
+
+                </VerticalStackLayout>
+            </ScrollView>
 
         </layout:RoleDrawerLayout.MainContent>
     </layout:RoleDrawerLayout>

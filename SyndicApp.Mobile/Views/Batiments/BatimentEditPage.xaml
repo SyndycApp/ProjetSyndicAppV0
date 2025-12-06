@@ -8,87 +8,143 @@
     Shell.NavBarIsVisible="False"
     BackgroundColor="White">
 
+    <ContentPage.Resources>
+
+        <Color x:Key="BodyText">#111827</Color>
+        <Color x:Key="EntryBg">#F3F4F6</Color>
+        <Color x:Key="EntryBorder">#E5E7EB</Color>
+
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
+        </Style>
+
+        <!-- Style ENTRY -->
+        <Style TargetType="Entry">
+            <Setter Property="TextColor" Value="#111827"/>
+            <Setter Property="PlaceholderColor" Value="#9CA3AF"/>
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="HeightRequest" Value="44"/>
+            <Setter Property="Margin" Value="0,4,0,12"/>
+        </Style>
+
+        <!-- Style PICKER -->
+        <Style TargetType="Picker">
+            <Setter Property="TextColor" Value="#111827"/>
+            <Setter Property="BackgroundColor" Value="{StaticResource EntryBg}"/>
+            <Setter Property="HeightRequest" Value="44"/>
+            <Setter Property="Margin" Value="0,4,0,12"/>
+        </Style>
+
+    </ContentPage.Resources>
+
+
     <layout:RoleDrawerLayout>
         <layout:RoleDrawerLayout.MainContent>
 
             <ScrollView>
-                <VerticalStackLayout Padding="16" Spacing="14">
+                <VerticalStackLayout Padding="16" Spacing="12">
+
 
                     <!-- NOM -->
                     <Label Text="Nom du bâtiment" FontAttributes="Bold"/>
-                    <Entry Text="{Binding Nom}"
-                           Placeholder="Bloc A / Tour 1"
-                           TextColor="#111827"
-                           PlaceholderColor="#9CA3AF"/>
+                    <Border Stroke="{StaticResource EntryBorder}"
+                            StrokeThickness="1"
+                            BackgroundColor="{StaticResource EntryBg}"
+                            StrokeShape="RoundRectangle 8">
+                        <Entry Text="{Binding Nom}" Placeholder="Bloc A / Tour 1"/>
+                    </Border>
+
 
                     <!-- BLOC -->
                     <Label Text="Bloc" FontAttributes="Bold"/>
-                    <Entry Text="{Binding Bloc}"
-                           Placeholder="A / B / C..."
-                           TextColor="#111827"
-                           PlaceholderColor="#9CA3AF"/>
+                    <Border Stroke="{StaticResource EntryBorder}"
+                            StrokeThickness="1"
+                            BackgroundColor="{StaticResource EntryBg}"
+                            StrokeShape="RoundRectangle 8">
+                        <Entry Text="{Binding Bloc}" Placeholder="A / B / C..."/>
+                    </Border>
+
 
                     <!-- RÉSIDENCE -->
                     <Label Text="Résidence" FontAttributes="Bold"/>
                     <Picker ItemsSource="{Binding Residences}"
-                            TextColor="#111827"
                             ItemDisplayBinding="{Binding Nom}"
-                            SelectedItem="{Binding SelectedResidence}"/>
+                            SelectedItem="{Binding SelectedResidence}" />
+
 
                     <!-- NB ÉTAGES -->
                     <Label Text="Nombre d'étages" FontAttributes="Bold"/>
-                    <Entry Text="{Binding NbEtages}"
-                           Keyboard="Numeric"
-                           TextColor="#111827"
-                           Placeholder="Ex : 5"/>
+                    <Border Stroke="{StaticResource EntryBorder}"
+                            StrokeThickness="1"
+                            BackgroundColor="{StaticResource EntryBg}"
+                            StrokeShape="RoundRectangle 8">
+                        <Entry Text="{Binding NbEtages}"
+                               Keyboard="Numeric"
+                               Placeholder="Ex : 5"/>
+                    </Border>
+
 
                     <!-- RESPONSABLE -->
                     <Label Text="Responsable" FontAttributes="Bold"/>
-                    <Entry Text="{Binding ResponsableNom}"
-                           Placeholder="Nom du responsable"
-                           TextColor="#111827"
-                           PlaceholderColor="#9CA3AF"/>
+                    <Border Stroke="{StaticResource EntryBorder}"
+                            StrokeThickness="1"
+                            BackgroundColor="{StaticResource EntryBg}"
+                            StrokeShape="RoundRectangle 8">
+                        <Entry Text="{Binding ResponsableNom}"
+                               Placeholder="Nom du responsable"/>
+                    </Border>
+
 
                     <!-- ASCENSEUR -->
                     <Label Text="Ascenseur" FontAttributes="Bold"/>
                     <Switch IsToggled="{Binding HasAscenseur}"/>
 
-                    <!-- ANNÉE DE CONSTRUCTION -->
+
+                    <!-- ANNÉE -->
                     <Label Text="Année de construction" FontAttributes="Bold"/>
-                    <Entry Text="{Binding AnneeConstruction}"
-                           Keyboard="Numeric"
-                           Placeholder="Ex : 1998"
-                           TextColor="#111827"/>
+                    <Border Stroke="{StaticResource EntryBorder}"
+                            StrokeThickness="1"
+                            BackgroundColor="{StaticResource EntryBg}"
+                            StrokeShape="RoundRectangle 8">
+                        <Entry Text="{Binding AnneeConstruction}"
+                               Keyboard="Numeric"
+                               Placeholder="Ex : 1998"/>
+                    </Border>
+
 
                     <!-- CODE ACCÈS -->
                     <Label Text="Code d’accès" FontAttributes="Bold"/>
-                    <Entry Text="{Binding CodeAcces}"
-                           Placeholder="1523A / #4590"
-                           TextColor="#111827"
-                           PlaceholderColor="#9CA3AF"/>
+                    <Border Stroke="{StaticResource EntryBorder}"
+                            StrokeThickness="1"
+                            BackgroundColor="{StaticResource EntryBg}"
+                            StrokeShape="RoundRectangle 8">
+                        <Entry Text="{Binding CodeAcces}"
+                               Placeholder="1523A / #4590"/>
+                    </Border>
 
-                    <!-- BOUTONS -->
+
+                    <!-- BUTTONS -->
                     <Grid ColumnDefinitions="*,*,*" ColumnSpacing="14" Margin="0,20,0,0">
 
                         <Button Text="Enregistrer"
                                 BackgroundColor="#2563EB"
                                 TextColor="White"
                                 CornerRadius="12"
-                                Command="{Binding SaveCommand}"/>
+                                Command="{Binding SaveCommand}" />
 
                         <Button Grid.Column="1"
                                 Text="Annuler"
                                 BackgroundColor="#E5E7EB"
                                 TextColor="#111827"
                                 CornerRadius="12"
-                                Command="{Binding CancelCommand}"/>
+                                Command="{Binding CancelCommand}" />
 
                         <Button Grid.Column="2"
                                 Text="Retour"
                                 BackgroundColor="#F3F4F6"
                                 TextColor="#111827"
                                 CornerRadius="12"
-                                Clicked="Back_Clicked"/>
+                                Clicked="Back_Clicked" />
 
                     </Grid>
 
@@ -97,4 +153,5 @@
 
         </layout:RoleDrawerLayout.MainContent>
     </layout:RoleDrawerLayout>
+
 </ContentPage>

@@ -2,159 +2,84 @@
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:layout="clr-namespace:SyndicApp.Mobile.Views.Layout"
     x:Class="SyndicApp.Mobile.Views.Residences.ResidenceEditPage"
     Title="Modifier la résidence"
     Shell.NavBarIsVisible="False"
     BackgroundColor="White">
 
     <ContentPage.Resources>
-        <Color x:Key="TopbarColor">#2563EB</Color>
-        <Color x:Key="HeaderTextOnDark">#FFFFFF</Color>
+
         <Color x:Key="BodyText">#111827</Color>
-        <Color x:Key="Divider">#E5E7EB</Color>
-        <Color x:Key="Chip">#F3F4F6</Color>
+        <Color x:Key="EntryBg">#F3F4F6</Color>
+        <Color x:Key="EntryBorder">#E5E7EB</Color>
 
         <Style TargetType="Label">
             <Setter Property="TextColor" Value="{StaticResource BodyText}" />
         </Style>
 
-        <Style x:Key="MenuButtonStyle" TargetType="Button">
-            <Setter Property="BackgroundColor" Value="Transparent" />
-            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
-            <Setter Property="CornerRadius" Value="8" />
-            <Setter Property="Padding" Value="12,8" />
-            <Setter Property="HorizontalOptions" Value="Start" />
+        <Style TargetType="Entry">
+            <Setter Property="TextColor" Value="#111827"/>
+            <Setter Property="PlaceholderColor" Value="#9CA3AF"/>
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="HeightRequest" Value="44"/>
+            <Setter Property="Margin" Value="0,4,0,12"/>
         </Style>
 
-        <Style x:Key="LogoutButtonStyle"
-               TargetType="Button"
-               BasedOn="{StaticResource MenuButtonStyle}">
-            <Setter Property="BackgroundColor" Value="{StaticResource Chip}" />
-        </Style>
     </ContentPage.Resources>
 
-    <Grid x:Name="Root" RowDefinitions="Auto,*" BackgroundColor="White">
 
-        <!-- TOPBAR -->
-        <Grid BackgroundColor="{StaticResource TopbarColor}" Padding="12,8">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+    <layout:RoleDrawerLayout>
+        <layout:RoleDrawerLayout.MainContent>
 
-            <Button Grid.Column="0"
-                    Text="☰"
-                    FontSize="22"
-                    BackgroundColor="Transparent"
-                    TextColor="{StaticResource HeaderTextOnDark}"
-                    Clicked="OpenDrawer_Clicked"/>
-
-            <Label Grid.Column="1"
-                   Text="Modifier résidence"
-                   HorizontalTextAlignment="Center"
-                   VerticalOptions="Center"
-                   FontAttributes="Bold"
-                   TextColor="{StaticResource HeaderTextOnDark}"/>
-        </Grid>
-
-        <!-- CONTENU -->
-        <Grid Grid.Row="1" BackgroundColor="White">
             <ScrollView>
                 <VerticalStackLayout Padding="16" Spacing="14">
 
                     <Label Text="Nom" FontAttributes="Bold"/>
-                    <Entry Text="{Binding Nom}"
-                           TextColor="#111827"
-                           PlaceholderColor="#9CA3AF"
-                           Placeholder="Résidence Al Amal"/>
+                    <Border Stroke="{StaticResource EntryBorder}" StrokeThickness="1"
+                           Background="{StaticResource EntryBg}" StrokeShape="RoundRectangle 8">
+                        <Entry Text="{Binding Nom}" Placeholder="Résidence Al Amal"/>
+                    </Border>
 
                     <Label Text="Adresse" FontAttributes="Bold"/>
-                    <Entry Text="{Binding Adresse}"
-                           TextColor="#111827"
-                           PlaceholderColor="#9CA3AF"
-                           Placeholder="Rue ..."/>
+                    <Border Stroke="{StaticResource EntryBorder}" StrokeThickness="1"
+                           Background="{StaticResource EntryBg}" StrokeShape="RoundRectangle 8">
+                        <Entry Text="{Binding Adresse}" Placeholder="Rue ..."/>
+                    </Border>
 
                     <Label Text="Ville" FontAttributes="Bold"/>
-                    <Entry Text="{Binding Ville}"
-                           TextColor="#111827"
-                           PlaceholderColor="#9CA3AF"
-                           Placeholder="Casablanca"/>
+                    <Border Stroke="{StaticResource EntryBorder}" StrokeThickness="1"
+                           Background="{StaticResource EntryBg}" StrokeShape="RoundRectangle 8">
+                        <Entry Text="{Binding Ville}" Placeholder="Casablanca"/>
+                    </Border>
 
                     <Label Text="Code Postal" FontAttributes="Bold"/>
-                    <Entry Text="{Binding CodePostal}"
-                           Keyboard="Numeric"
-                           TextColor="#111827"
-                           PlaceholderColor="#9CA3AF"
-                           Placeholder="20000"/>
+                    <Border Stroke="{StaticResource EntryBorder}" StrokeThickness="1"
+                           Background="{StaticResource EntryBg}" StrokeShape="RoundRectangle 8">
+                        <Entry Text="{Binding CodePostal}" Keyboard="Numeric" Placeholder="20000"/>
+                    </Border>
 
-                    <!-- Boutons -->
-                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,20,0,0">
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="14" Margin="0,20,0,0">
+
                         <Button Text="Enregistrer"
+                                BackgroundColor="#2563EB"
+                                TextColor="White"
+                                CornerRadius="12"
                                 Command="{Binding SaveCommand}" />
+
                         <Button Grid.Column="1"
                                 Text="Annuler"
-                                BackgroundColor="{StaticResource Chip}"
+                                BackgroundColor="#E5E7EB"
                                 TextColor="#111827"
-                                Clicked="Back_Clicked"/>
+                                CornerRadius="12"
+                                Clicked="Back_Clicked" />
+
                     </Grid>
 
                 </VerticalStackLayout>
             </ScrollView>
-        </Grid>
 
-        <!-- OVERLAY -->
-        <BoxView x:Name="Backdrop"
-                 Grid.RowSpan="2"
-                 BackgroundColor="#66000000"
-                 Opacity="0"
-                 InputTransparent="True">
-            <BoxView.GestureRecognizers>
-                <TapGestureRecognizer Tapped="Backdrop_Tapped"/>
-            </BoxView.GestureRecognizers>
-        </BoxView>
+        </layout:RoleDrawerLayout.MainContent>
+    </layout:RoleDrawerLayout>
 
-        <!-- DRAWER -->
-        <Border x:Name="Drawer"
-                Grid.RowSpan="2"
-                BackgroundColor="White"
-                StrokeThickness="0"
-                TranslationX="-1000"
-                Padding="0">
-
-            <Grid RowDefinitions="Auto,*">
-
-                <Grid BackgroundColor="{StaticResource TopbarColor}" Padding="16">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Label Text="Navigation"
-                           TextColor="{StaticResource HeaderTextOnDark}"
-                           FontAttributes="Bold"
-                           VerticalOptions="Center"/>
-
-                    <Button Grid.Column="1"
-                            Text="→"
-                            FontSize="22"
-                            BackgroundColor="Transparent"
-                            TextColor="{StaticResource HeaderTextOnDark}"
-                            Clicked="CloseDrawer_Clicked"/>
-                </Grid>
-
-                <!-- même menu que détails -->
-                <ScrollView Grid.Row="1" BackgroundColor="White">
-                    <VerticalStackLayout Padding="16" Spacing="10">
-                        <Label Text="Tableau de bord" FontAttributes="Bold"/>
-                        <Button Text="Dashboard"
-                                Style="{StaticResource MenuButtonStyle}"
-                                CommandParameter="//syndic-dashboard"
-                                Clicked="OnMenuItemClicked"/>
-
-                        <!-- ... reste de ton gros menu identique ... -->
-                    </VerticalStackLayout>
-                </ScrollView>
-            </Grid>
-        </Border>
-    </Grid>
 </ContentPage>

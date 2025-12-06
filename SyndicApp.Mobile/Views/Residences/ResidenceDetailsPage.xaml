@@ -2,90 +2,46 @@
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:layouts="clr-namespace:SyndicApp.Mobile.Views.Layout"
     xmlns:models="clr-namespace:SyndicApp.Mobile.Models"
     x:Class="SyndicApp.Mobile.Views.Residences.ResidenceDetailsPage"
+    x:Name="RootPage"
     Title="Détails résidence"
-    Shell.NavBarIsVisible="False"
-    BackgroundColor="White">
+    BackgroundColor="White"
+    Shell.NavBarIsVisible="False">
 
-    <!-- ===== RESSOURCES ===== -->
+    <!-- ==== RESSOURCES ==== -->
     <ContentPage.Resources>
-        <Color x:Key="TopbarColor">#2563EB</Color>
-        <Color x:Key="HeaderTextOnDark">#FFFFFF</Color>
+
         <Color x:Key="BodyText">#111827</Color>
-        <Color x:Key="Divider">#E5E7EB</Color>
         <Color x:Key="Chip">#F3F4F6</Color>
 
         <Style TargetType="Label">
             <Setter Property="TextColor" Value="{StaticResource BodyText}" />
         </Style>
 
-        <Style x:Key="MenuButtonStyle" TargetType="Button">
-            <Setter Property="BackgroundColor" Value="Transparent" />
-            <Setter Property="TextColor" Value="{StaticResource BodyText}" />
-            <Setter Property="CornerRadius" Value="8" />
-            <Setter Property="Padding" Value="12,8" />
-            <Setter Property="HorizontalOptions" Value="Start" />
-        </Style>
-
-        <Style x:Key="LogoutButtonStyle"
-               TargetType="Button"
-               BasedOn="{StaticResource MenuButtonStyle}">
-            <Setter Property="BackgroundColor" Value="{StaticResource Chip}" />
-        </Style>
     </ContentPage.Resources>
 
-    <Grid x:Name="Root" RowDefinitions="Auto,*">
+    <!-- ==== LAYOUT AVEC ROLE DRAWER ==== -->
+    <layouts:RoleDrawerLayout>
+        <layouts:RoleDrawerLayout.MainContent>
 
-        <!-- TOPBAR -->
-        <Grid BackgroundColor="{StaticResource TopbarColor}" Padding="12,8">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-
-            <Button Grid.Column="0"
-                    Text="☰"
-                    FontSize="22"
-                    BackgroundColor="Transparent"
-                    TextColor="{StaticResource HeaderTextOnDark}"
-                    Clicked="OpenDrawer_Clicked"/>
-
-            <Label Grid.Column="1"
-                   Text="Détail résidence"
-                   HorizontalTextAlignment="Center"
-                   VerticalOptions="Center"
-                   FontAttributes="Bold"
-                   TextColor="{StaticResource HeaderTextOnDark}"/>
-
-            <!-- Poubelle en haut à droite -->
-           <ImageButton x:Name="DeleteButton"
-                        Grid.Column="2"
-                        Source="trash_black.png"
-                        BackgroundColor="Transparent"
-                        WidthRequest="28"
-                        HeightRequest="28"
-                        Padding="4"
-                        Clicked="Delete_Clicked"/>
-        </Grid>
-
-        <!-- CONTENU -->
-        <Grid Grid.Row="1" BackgroundColor="White">
             <ScrollView>
-                <VerticalStackLayout Spacing="12" Padding="16">
+                <VerticalStackLayout Padding="16" Spacing="14">
 
+                    <!-- ====== TITRE ====== -->
                     <Label Text="{Binding Residence.Nom}"
-                           FontSize="20"
+                           FontSize="22"
                            FontAttributes="Bold" />
 
-                    <Label Text="{Binding Residence.Adresse}" TextColor="#374151" />
-                    <Label Text="{Binding Residence.Ville}" TextColor="#374151" />
-                    <Label Text="{Binding Residence.CodePostal}" TextColor="#374151" />
+                    <Label Text="{Binding Residence.Adresse}" TextColor="#374151"/>
+                    <Label Text="{Binding Residence.Ville}" TextColor="#374151"/>
+                    <Label Text="{Binding Residence.CodePostal}" TextColor="#374151"/>
 
+                    <!-- ====== LOTS ====== -->
                     <Label Text="Lots de la résidence"
                            FontAttributes="Bold"
-                           Margin="0,16,0,4" />
+                           Margin="0,16,0,4"/>
 
                     <CollectionView ItemsSource="{Binding Lots}">
                         <CollectionView.EmptyView>
@@ -96,88 +52,59 @@
 
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="models:LotDto">
-                                <Frame Padding="10"
-                                       Margin="0,4,0,0"
+                                <Frame Margin="0,6,0,0"
+                                       Padding="12"
                                        HasShadow="False"
                                        BackgroundColor="{StaticResource Chip}"
                                        CornerRadius="10">
+
                                     <VerticalStackLayout Spacing="4">
-                                        <Label Text="{Binding NumeroLot}" FontAttributes="Bold" />
-                                        <Label Text="{Binding Type}" FontSize="12" TextColor="#6B7280"/>
+                                        <Label Text="{Binding NumeroLot}"
+                                               FontAttributes="Bold" />
+
+                                        <Label Text="{Binding Type}"
+                                               FontSize="12"
+                                               TextColor="#6B7280"/>
+
                                         <Label Text="{Binding Surface, StringFormat='Surface : {0} m²'}"
-                                               FontSize="12" TextColor="#6B7280"/>
+                                               FontSize="12"
+                                               TextColor="#6B7280"/>
                                     </VerticalStackLayout>
+
                                 </Frame>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
 
-                    <!-- Boutons bas : Modifier / Retour -->
-                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,12,0,0">
-                        <Button Text="Modifier" Command="{Binding EditCommand}" />
+                    <!-- ===== BOUTONS ===== -->
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,20,0,0">
+                        <Button Text="Modifier"
+                                BackgroundColor="#2563EB"
+                                TextColor="White"
+                                CornerRadius="12"
+                                Command="{Binding EditCommand}" />
+
                         <Button Grid.Column="1"
                                 Text="Retour"
+                                BackgroundColor="#E5E7EB"
+                                TextColor="#111827"
+                                CornerRadius="12"
                                 Clicked="Back_Clicked" />
                     </Grid>
 
+                    <!-- ===== SUPPRESSION ===== -->
+                    <Button x:Name="DeleteButton"
+                            Text="Supprimer"
+                            BackgroundColor="#DC2626"
+                            TextColor="White"
+                            CornerRadius="12"
+                            Margin="0,10,0,0"
+                            Clicked="Delete_Clicked"/>
+
                 </VerticalStackLayout>
             </ScrollView>
-        </Grid>
 
-        <!-- OVERLAY -->
-        <BoxView x:Name="Backdrop"
-                 Grid.RowSpan="2"
-                 BackgroundColor="#66000000"
-                 Opacity="0"
-                 InputTransparent="True">
-            <BoxView.GestureRecognizers>
-                <TapGestureRecognizer Tapped="Backdrop_Tapped"/>
-            </BoxView.GestureRecognizers>
-        </BoxView>
+        </layouts:RoleDrawerLayout.MainContent>
+    </layouts:RoleDrawerLayout>
 
-        <!-- DRAWER -->
-        <Border x:Name="Drawer"
-                Grid.RowSpan="2"
-                BackgroundColor="White"
-                StrokeThickness="0"
-                TranslationX="-1000"
-                Padding="0">
-
-            <Grid RowDefinitions="Auto,*">
-
-                <Grid BackgroundColor="{StaticResource TopbarColor}" Padding="16">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Label Text="Navigation"
-                           TextColor="{StaticResource HeaderTextOnDark}"
-                           FontAttributes="Bold"
-                           VerticalOptions="Center"/>
-
-                    <Button Grid.Column="1"
-                            Text="→"
-                            FontSize="22"
-                            BackgroundColor="Transparent"
-                            TextColor="{StaticResource HeaderTextOnDark}"
-                            Clicked="CloseDrawer_Clicked"/>
-                </Grid>
-
-                <!-- Ton gros menu -->
-                <ScrollView Grid.Row="1" BackgroundColor="White">
-                    <VerticalStackLayout Padding="16" Spacing="10">
-                        <!-- ici tu gardes exactement ton menu complet -->
-                        <Label Text="Tableau de bord" FontAttributes="Bold"/>
-                        <Button Text="Dashboard"
-                                Style="{StaticResource MenuButtonStyle}"
-                                CommandParameter="//syndic-dashboard"
-                                Clicked="OnMenuItemClicked"/>
-
-                        <!-- ... tout le reste de ton drawer ... -->
-                    </VerticalStackLayout>
-                </ScrollView>
-            </Grid>
-        </Border>
-    </Grid>
 </ContentPage>

@@ -1,19 +1,20 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.Maui.Controls;
+﻿using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
 using SyndicApp.Mobile.ViewModels.Residences;
+using System;
 
 namespace SyndicApp.Mobile.Views.Residences
 {
     public partial class ResidenceEditPage : ContentPage
     {
-        private bool _isOpen;
+        private readonly ResidenceEditViewModel _vm;
 
         public ResidenceEditPage(ResidenceEditViewModel vm)
         {
             InitializeComponent();
+            _vm = vm;
             BindingContext = vm;
+
             Loaded += async (_, __) => await vm.LoadAsync();
         }
 
@@ -21,72 +22,15 @@ namespace SyndicApp.Mobile.Views.Residences
         {
             base.OnAppearing();
 
-            // 🔐 Restriction : seul le Syndic peut modifier
             var role = Preferences.Get("user_role", string.Empty)?.ToLowerInvariant();
             if (role != "syndic")
             {
-                Shell.Current.DisplayAlert(
-                    "Accès refusé",
+                Shell.Current.DisplayAlert("Accès refusé",
                     "Seul le Syndic peut modifier une résidence.",
                     "OK");
 
                 Shell.Current.GoToAsync("..");
                 return;
-            }
-
-            var width = Width > 0
-                ? Width
-                : Application.Current?.Windows[0]?.Page?.Width ?? 360;
-
-            Drawer.WidthRequest = width;
-            Drawer.TranslationX = -width;
-            Backdrop.InputTransparent = true;
-            Backdrop.Opacity = 0;
-            _isOpen = false;
-        }
-
-        protected override void OnSizeAllocated(double width, double height)
-        {
-            base.OnSizeAllocated(width, height);
-            if (width > 0)
-            {
-                Drawer.WidthRequest = width;
-                if (!_isOpen)
-                    Drawer.TranslationX = -width;
-            }
-        }
-
-        private async void OpenDrawer_Clicked(object sender, EventArgs e)
-        {
-            if (_isOpen) return;
-            _isOpen = true;
-
-            Backdrop.InputTransparent = false;
-            await Backdrop.FadeTo(1, 160, Easing.CubicOut);
-            await Drawer.TranslateTo(0, 0, 220, Easing.CubicOut);
-        }
-
-        private async void CloseDrawer_Clicked(object sender, EventArgs e) => await CloseDrawerAsync();
-        private async void Backdrop_Tapped(object sender, TappedEventArgs e) => await CloseDrawerAsync();
-
-        private async Task CloseDrawerAsync()
-        {
-            if (!_isOpen) return;
-            _isOpen = false;
-
-            await Drawer.TranslateTo(-Drawer.Width, 0, 220, Easing.CubicIn);
-            await Backdrop.FadeTo(0, 140, Easing.CubicIn);
-            Backdrop.InputTransparent = true;
-        }
-
-        private async void OnMenuItemClicked(object sender, EventArgs e)
-        {
-            if (sender is Button b &&
-                b.CommandParameter is string route &&
-                !string.IsNullOrWhiteSpace(route))
-            {
-                await CloseDrawerAsync();
-                await Shell.Current.GoToAsync(route);
             }
         }
 
