@@ -376,6 +376,24 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.Nom">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.nom"/>
         </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.Bloc">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.bloc"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.NbEtages">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.nbEtages"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.ResponsableNom">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.responsableNom"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.HasAscenseur">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.hasAscenseur"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.AnneeConstruction">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.anneeConstruction"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.CodeAcces">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.codeAcces"/>
+        </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.Residences">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentCreateViewModel.residences"/>
         </member>
@@ -444,6 +462,24 @@
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.Nom">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.nom"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.Bloc">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.bloc"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.NbEtages">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.nbEtages"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.ResponsableNom">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.responsableNom"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.HasAscenseur">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.hasAscenseur"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.AnneeConstruction">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.anneeConstruction"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.CodeAcces">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.codeAcces"/>
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.Residences">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Batiments.BatimentEditViewModel.residences"/>
@@ -2250,6 +2286,24 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Nom">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Nom" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Bloc">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Bloc" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.NbEtages">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "NbEtages" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ResponsableNom">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ResponsableNom" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.HasAscenseur">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "HasAscenseur" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.AnneeConstruction">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "AnneeConstruction" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CodeAcces">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CodeAcces" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Residences">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Residences" generated properties.</summary>
         </member>
@@ -2657,6 +2711,24 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Nom">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Nom" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Bloc">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Bloc" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.NbEtages">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "NbEtages" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ResponsableNom">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ResponsableNom" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.HasAscenseur">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "HasAscenseur" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.AnneeConstruction">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "AnneeConstruction" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CodeAcces">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CodeAcces" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Residences">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Residences" generated properties.</summary>

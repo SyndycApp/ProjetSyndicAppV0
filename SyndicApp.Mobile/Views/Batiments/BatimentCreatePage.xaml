@@ -11,37 +11,92 @@
     <layout:RoleDrawerLayout>
         <layout:RoleDrawerLayout.MainContent>
 
-            <Grid BackgroundColor="White">
-                <ScrollView>
-                    <VerticalStackLayout Padding="16" Spacing="14">
+            <ScrollView>
+                <VerticalStackLayout Padding="16" Spacing="14">
 
-                        <Label Text="Nom" FontAttributes="Bold" />
-                        <Entry Text="{Binding Nom}"
-                               Placeholder="Bloc A / Tour 1"
-                               TextColor="#111827"
-                               PlaceholderColor="#9CA3AF" />
+                    <!-- NOM -->
+                    <Label Text="Nom du bâtiment" FontAttributes="Bold"/>
+                    <Entry Text="{Binding Nom}"
+                           Placeholder="Ex : Bloc A / Tour 1"
+                           TextColor="#111827"
+                           PlaceholderColor="#9CA3AF"/>
 
-                        <Label Text="Résidence" FontAttributes="Bold" />
-                        <Picker ItemsSource="{Binding Residences}"
+
+                    <!-- BLOC -->
+                    <Label Text="Bloc" FontAttributes="Bold"/>
+                    <Entry Text="{Binding Bloc}"
+                           Placeholder="A / B / C..."
+                           TextColor="#111827"
+                           PlaceholderColor="#9CA3AF"/>
+
+
+                    <!-- RÉSIDENCE -->
+                    <Label Text="Résidence" FontAttributes="Bold"/>
+                    <Picker ItemsSource="{Binding Residences}"
+                            TextColor="#111827"
+                            ItemDisplayBinding="{Binding Nom}"
+                            SelectedItem="{Binding SelectedResidence}"/>
+
+
+                    <!-- NB ÉTAGES -->
+                    <Label Text="Nombre d'étages" FontAttributes="Bold"/>
+                    <Entry Text="{Binding NbEtages}"
+                           Keyboard="Numeric"
+                           Placeholder="Ex : 5"
+                           TextColor="#111827"
+                           PlaceholderColor="#9CA3AF"/>
+
+
+                    <!-- RESPONSABLE -->
+                    <Label Text="Responsable" FontAttributes="Bold"/>
+                    <Entry Text="{Binding ResponsableNom}"
+                           Placeholder="Nom du responsable"
+                           TextColor="#111827"
+                           PlaceholderColor="#9CA3AF"/>
+
+
+                    <!-- ASCENSEUR -->
+                    <Label Text="Ascenseur" FontAttributes="Bold"/>
+                    <Switch IsToggled="{Binding HasAscenseur}"/>
+
+
+                    <!-- ANNÉE DE CONSTRUCTION -->
+                    <Label Text="Année de construction" FontAttributes="Bold"/>
+                    <Entry Text="{Binding AnneeConstruction}"
+                           Keyboard="Numeric"
+                           Placeholder="Ex : 1998"
+                           TextColor="#111827"
+                           PlaceholderColor="#9CA3AF"/>
+
+
+                    <!-- CODE ACCÈS -->
+                    <Label Text="Code d’accès" FontAttributes="Bold"/>
+                    <Entry Text="{Binding CodeAcces}"
+                           Placeholder="Ex : 1523A / #4590"
+                           TextColor="#111827"
+                           PlaceholderColor="#9CA3AF"/>
+
+
+                    <!-- BOUTONS -->
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="14" Margin="0,20,0,0">
+
+                        <Button Text="Annuler"
+                                CornerRadius="12"
+                                BackgroundColor="#E5E7EB"
                                 TextColor="#111827"
-                                ItemDisplayBinding="{Binding Nom}"
-                                SelectedItem="{Binding SelectedResidence}" />
+                                Command="{Binding CancelCommand}"/>
 
-                        <Grid ColumnDefinitions="*,*"
-                              ColumnSpacing="12"
-                              Margin="0,16,0,0">
-                            <Button Text="Annuler"
-                                    Command="{Binding CancelCommand}" />
-                            <Button Grid.Column="1"
-                                    Text="Créer"
-                                    BackgroundColor="#2563EB"
-                                    TextColor="White"
-                                    Command="{Binding CreateCommand}" />
-                        </Grid>
+                        <Button Grid.Column="1"
+                                Text="Créer"
+                                CornerRadius="12"
+                                BackgroundColor="#2563EB"
+                                TextColor="White"
+                                Command="{Binding CreateCommand}"/>
 
-                    </VerticalStackLayout>
-                </ScrollView>
-            </Grid>
+                    </Grid>
+
+                </VerticalStackLayout>
+            </ScrollView>
 
         </layout:RoleDrawerLayout.MainContent>
     </layout:RoleDrawerLayout>

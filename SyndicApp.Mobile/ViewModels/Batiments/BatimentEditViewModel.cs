@@ -4,6 +4,7 @@ using Refit;
 using SyndicApp.Mobile.Api;
 using SyndicApp.Mobile.Models;
 using System.Collections.ObjectModel;
+using System.Reflection.Metadata;
 
 namespace SyndicApp.Mobile.ViewModels.Batiments;
 
@@ -14,7 +15,14 @@ public partial class BatimentEditViewModel : ObservableObject
     private readonly IResidencesApi _residencesApi;
 
     [ObservableProperty] string id = string.Empty;
+
     [ObservableProperty] string nom = string.Empty;
+    [ObservableProperty] string bloc = string.Empty;
+    [ObservableProperty] int nbEtages;
+    [ObservableProperty] string responsableNom = string.Empty;
+    [ObservableProperty] bool hasAscenseur;
+    [ObservableProperty] int anneeConstruction;
+    [ObservableProperty] string codeAcces = string.Empty;
 
     [ObservableProperty] ObservableCollection<ResidenceDto> residences = new();
     [ObservableProperty] ResidenceDto? selectedResidence;
@@ -31,13 +39,22 @@ public partial class BatimentEditViewModel : ObservableObject
         if (!Guid.TryParse(Id, out var guid))
             return;
 
+        // Charger résidences
         var res = await _residencesApi.GetAllAsync();
         Residences = new ObservableCollection<ResidenceDto>(res);
 
+        // Charger bâtiment actuel
         var dto = await _batimentsApi.GetByIdAsync(guid);
-        Nom = dto.Nom ?? string.Empty;
+        if (dto is null) return;
 
-        // Sélectionne l'item correspondant pour affichage
+        Nom = dto.Nom ?? string.Empty;
+        Bloc = dto.Bloc ?? string.Empty;
+        NbEtages = dto.NbEtages;
+        ResponsableNom = dto.ResponsableNom ?? string.Empty;
+        HasAscenseur = dto.HasAscenseur;
+        AnneeConstruction = dto.AnneeConstruction;
+        CodeAcces = dto.CodeAcces ?? string.Empty;
+
         SelectedResidence = Residences.FirstOrDefault(r => r.Id == dto.ResidenceId);
     }
 
@@ -52,6 +69,7 @@ public partial class BatimentEditViewModel : ObservableObject
             await Shell.Current.DisplayAlert("Validation", "Le nom du bâtiment est obligatoire.", "OK");
             return;
         }
+
         if (SelectedResidence is null)
         {
             await Shell.Current.DisplayAlert("Validation", "Choisis une résidence.", "OK");
@@ -60,13 +78,18 @@ public partial class BatimentEditViewModel : ObservableObject
 
         try
         {
-            // Résoudre l'Id par le nom
             var residenceId = await _residencesApi.LookupIdAsync(SelectedResidence.Nom!);
 
             await _batimentsApi.UpdateAsync(guid, new BatimentUpdateDto
             {
                 Nom = Nom.Trim(),
-                ResidenceId = residenceId
+                ResidenceId = residenceId,
+                Bloc = Bloc,
+                NbEtages = NbEtages,
+                ResponsableNom = ResponsableNom,
+                HasAscenseur = HasAscenseur,
+                AnneeConstruction = AnneeConstruction,
+                CodeAcces = CodeAcces
             });
 
             await Shell.Current.DisplayAlert("Succès", "Bâtiment modifié.", "OK");
@@ -74,8 +97,7 @@ public partial class BatimentEditViewModel : ObservableObject
         }
         catch (ApiException ex)
         {
-            await Shell.Current.DisplayAlert("Erreur API",
-                string.IsNullOrWhiteSpace(ex.Content) ? ex.Message : ex.Content, "OK");
+            await Shell.Current.DisplayAlert("Erreur API", ex.Content ?? ex.Message, "OK");
         }
         catch (Exception ex)
         {

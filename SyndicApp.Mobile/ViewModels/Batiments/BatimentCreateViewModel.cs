@@ -1,12 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using IntelliJ.Lang.Annotations;
 using Refit;
 using SyndicApp.Mobile.Api;
 using SyndicApp.Mobile.Common.Messages;
 using SyndicApp.Mobile.Models;
 using System.Collections.ObjectModel;
+using System.Reflection.Metadata;
 
 namespace SyndicApp.Mobile.ViewModels.Batiments;
 
@@ -16,6 +16,12 @@ public partial class BatimentCreateViewModel : ObservableObject
     private readonly IResidencesApi _residencesApi;
 
     [ObservableProperty] string nom = string.Empty;
+    [ObservableProperty] string bloc = string.Empty;
+    [ObservableProperty] int nbEtages;
+    [ObservableProperty] string responsableNom = string.Empty;
+    [ObservableProperty] bool hasAscenseur;
+    [ObservableProperty] int anneeConstruction;
+    [ObservableProperty] string codeAcces = string.Empty;
 
     [ObservableProperty] ObservableCollection<ResidenceDto> residences = new();
     [ObservableProperty] ResidenceDto? selectedResidence;
@@ -32,6 +38,7 @@ public partial class BatimentCreateViewModel : ObservableObject
     public async Task LoadResidencesAsync()
     {
         if (IsBusy) return;
+
         try
         {
             IsBusy = true;
@@ -52,6 +59,7 @@ public partial class BatimentCreateViewModel : ObservableObject
             await Shell.Current.DisplayAlert("Validation", "Le nom du bâtiment est obligatoire.", "OK");
             return;
         }
+
         if (SelectedResidence is null)
         {
             await Shell.Current.DisplayAlert("Validation", "Choisis une résidence.", "OK");
@@ -60,17 +68,24 @@ public partial class BatimentCreateViewModel : ObservableObject
 
         try
         {
-            // 1) On résout l'Id par le nom (nouvelle API)
+            // ID résidence
             var residenceId = await _residencesApi.LookupIdAsync(SelectedResidence.Nom!);
 
-            // 2) On crée le bâtiment
+            // ENVOI COMPLET
             await _batimentsApi.CreateAsync(new BatimentCreateDto
             {
                 Nom = Nom.Trim(),
-                ResidenceId = residenceId
+                ResidenceId = residenceId,
+                NbEtages = NbEtages,
+                Bloc = Bloc,
+                ResponsableNom = ResponsableNom,
+                HasAscenseur = HasAscenseur,
+                AnneeConstruction = AnneeConstruction,
+                CodeAcces = CodeAcces
             });
 
             WeakReferenceMessenger.Default.Send(new BatimentChangedMessage(true));
+
             await Shell.Current.DisplayAlert("Succès", "Bâtiment créé.", "OK");
             await Shell.Current.GoToAsync("//batiments");
         }

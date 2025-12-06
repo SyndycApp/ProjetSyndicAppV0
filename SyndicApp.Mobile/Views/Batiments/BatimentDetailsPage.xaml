@@ -13,7 +13,7 @@
             <ScrollView>
                 <VerticalStackLayout Padding="16" Spacing="20">
 
-                    <!-- Titre -->
+                    <!-- TITRE -->
                     <Label Text="{Binding Batiment.Nom}"
                            FontSize="26"
                            FontAttributes="Bold"
@@ -24,35 +24,65 @@
                            TextColor="#6B7280" />
 
 
-                    <!-- Zone info bâtiment -->
-                    <Border Stroke="#E5E7EB" StrokeThickness="1" Background="#F9FAFB" Padding="16" StrokeShape="RoundRectangle 12">
-                        <VerticalStackLayout Spacing="10">
+                    <!-- INFOS -->
+                    <Border Stroke="#E5E7EB"
+                            StrokeThickness="1"
+                            Background="#F9FAFB"
+                            Padding="16"
+                            StrokeShape="RoundRectangle 12">
+
+                        <VerticalStackLayout Spacing="14">
 
                             <Label Text="Informations"
                                    FontSize="20"
                                    FontAttributes="Bold"
                                    TextColor="#1F2937" />
 
-                            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto" ColumnSpacing="8">
+                            <Grid ColumnDefinitions="120,*"
+                                  RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+                                  ColumnSpacing="0">
 
-                                <Label Text="Résidence :" TextColor="#6B7280"/>
-                                <Label Grid.Column="1" Text="{Binding Batiment.ResidenceNom}" TextColor="#111827"/>
+                                <!-- Bloc -->
+                                <Label Text="Bloc :" TextColor="#6B7280" />
+                                <Label Grid.Column="1" Text="{Binding Batiment.Bloc}" TextColor="#111827" />
 
-                                <Label Grid.Row="1" Text="Lots :" TextColor="#6B7280"/>
-                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding Batiment.NbLots}" TextColor="#111827"/>
+                                <!-- Résidence -->
+                                <Label Grid.Row="1" Text="Résidence :" TextColor="#6B7280" />
+                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding Batiment.ResidenceNom}" TextColor="#111827" />
 
-                                <Label Grid.Row="2" Text="Étages :" TextColor="#6B7280"/>
-                                <Label Grid.Row="2" Grid.Column="1" Text="{Binding Batiment.NbEtages}" TextColor="#111827"/>
+                                <!-- Lots -->
+                                <Label Grid.Row="2" Text="Lots :" TextColor="#6B7280" />
+                                <Label Grid.Row="2" Grid.Column="1" Text="{Binding Batiment.NbLots}" TextColor="#111827" />
 
-                                <Label Grid.Row="3" Text="Responsable :" TextColor="#6B7280"/>
-                                <Label Grid.Row="3" Grid.Column="1" Text="{Binding Batiment.ResponsableNom}" TextColor="#111827"/>
+                                <!-- Étages -->
+                                <Label Grid.Row="3" Text="Étages :" TextColor="#6B7280" />
+                                <Label Grid.Row="3" Grid.Column="1" Text="{Binding Batiment.NbEtages}" TextColor="#111827" />
+
+                                <!-- Responsable -->
+                                <Label Grid.Row="4" Text="Responsable :" TextColor="#6B7280" />
+                                <Label Grid.Row="4" Grid.Column="1" Text="{Binding Batiment.ResponsableNom}" TextColor="#111827" />
+
+                                <!-- Ascenseur -->
+                                <Label Grid.Row="5" Text="Ascenseur :" TextColor="#6B7280" />
+                                <Label Grid.Row="5" Grid.Column="1"
+                                       Text="{Binding Batiment.HasAscenseur, Converter={StaticResource BoolToOuiNonConverter}}"
+                                       TextColor="#111827"/>
+
+                                <!-- Année construction -->
+                                <Label Grid.Row="6" Text="Construction :" TextColor="#6B7280" />
+                                <Label Grid.Row="6" Grid.Column="1" Text="{Binding Batiment.AnneeConstruction}" TextColor="#111827" />
+
+                                <!-- Code accès -->
+                                <Label Grid.Row="7" Text="Code accès :" TextColor="#6B7280" />
+                                <Label Grid.Row="7" Grid.Column="1" Text="{Binding Batiment.CodeAcces}" TextColor="#111827" />
+
                             </Grid>
 
                         </VerticalStackLayout>
                     </Border>
 
 
-                    <!-- Boutons d'action -->
+                    <!-- BOUTONS -->
                     <Grid ColumnDefinitions="*,*,*" ColumnSpacing="14">
 
                         <Button x:Name="BtnEdit"
