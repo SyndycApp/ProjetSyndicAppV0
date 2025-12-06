@@ -36,7 +36,7 @@ public static class MauiProgram
         builder.UseMicrocharts();
 
         // Choisis la bonne URL :        
-        const string BaseUrl = "http://192.168.31.157:5041";
+        const string BaseUrl = "http://192.168.1.194:5041";
 
 
         // Refit JSON insensible à la casse
@@ -97,6 +97,8 @@ public static class MauiProgram
         builder.Services.AddRefitClient<IPrestatairesApi>()
             .ConfigureHttpClient(c => c.BaseAddress = new Uri(BaseUrl))
             .AddHttpMessageHandler<AuthHeaderHandler>();
+
+        builder.Services.AddSingleton<RoleService>();
 
         AddSecured<IAccountApi>();   
         AddSecured<IAppelsApi>();
