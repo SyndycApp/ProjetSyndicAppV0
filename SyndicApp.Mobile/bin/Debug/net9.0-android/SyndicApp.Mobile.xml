@@ -544,6 +544,45 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Common.BaseViewModel.Title">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Common.BaseViewModel.title"/>
         </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.Messages">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.messages"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.NewMessage">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.newMessage"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.loadMessagesCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.LoadMessagesCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.LoadMessagesCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.LoadMessages"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.sendMessageCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.SendMessageCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.SendMessageCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.SendMessage"/>.</summary>
+        </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Communication.ConversationsListViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Communication.ConversationsListViewModel.Conversations">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Communication.ConversationsListViewModel.conversations"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Communication.ConversationsListViewModel.IsLoading">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Communication.ConversationsListViewModel.isLoading"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Communication.ConversationsListViewModel.loadConversationsCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Communication.ConversationsListViewModel.LoadConversationsCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Communication.ConversationsListViewModel.LoadConversationsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Communication.ConversationsListViewModel.LoadConversations"/>.</summary>
+        </member>
         <member name="T:SyndicApp.Mobile.ViewModels.Dashboard.AffectationAnalyticsViewModel">
             <inheritdoc/>
             <inheritdoc/>
@@ -2316,6 +2355,18 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Title">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Title" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Messages">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Messages" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.NewMessage">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "NewMessage" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Conversations">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Conversations" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsLoading">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsLoading" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CreatedPerMonthChart">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CreatedPerMonthChart" generated properties.</summary>
         </member>
@@ -2741,6 +2792,18 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Title">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Title" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Messages">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Messages" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.NewMessage">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "NewMessage" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Conversations">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Conversations" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsLoading">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsLoading" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CreatedPerMonthChart">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CreatedPerMonthChart" generated properties.</summary>
@@ -3420,6 +3483,27 @@
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIChargesApi.SyndicApp#Mobile#Api#IChargesApi#DeleteAsync(System.Guid)">
             <inheritdoc />
         </member>
+        <member name="T:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIConversationsApi">
+            <inheritdoc />
+        </member>
+        <member name="P:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIConversationsApi.Client">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIConversationsApi.#ctor(System.Net.Http.HttpClient,Refit.IRequestBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIConversationsApi.GetConversationsAsync">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIConversationsApi.CreateConversationAsync(SyndicApp.Mobile.Models.CreateConversationRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIConversationsApi.SyndicApp#Mobile#Api#Communication#IConversationsApi#GetConversationsAsync">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIConversationsApi.SyndicApp#Mobile#Api#Communication#IConversationsApi#CreateConversationAsync(SyndicApp.Mobile.Models.CreateConversationRequest)">
+            <inheritdoc />
+        </member>
         <member name="T:Refit.Implementation.Generated.SyndicAppMobileApiIDevisTravauxApi">
             <inheritdoc />
         </member>
@@ -3628,6 +3712,33 @@
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiILotsApi.SyndicApp#Mobile#Api#ILotsApi#ResolveManyAsync(System.String,System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi">
+            <inheritdoc />
+        </member>
+        <member name="P:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.Client">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.#ctor(System.Net.Http.HttpClient,Refit.IRequestBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.GetMessagesAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.GetMessagesPagedAsync(System.Guid,System.Int32,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.SendMessageAsync(SyndicApp.Mobile.Models.SendMessageRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.SyndicApp#Mobile#Api#Communication#IMessagesApi#GetMessagesAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.SyndicApp#Mobile#Api#Communication#IMessagesApi#GetMessagesPagedAsync(System.Guid,System.Int32,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.SyndicApp#Mobile#Api#Communication#IMessagesApi#SendMessageAsync(SyndicApp.Mobile.Models.SendMessageRequest)">
             <inheritdoc />
         </member>
         <member name="T:Refit.Implementation.Generated.SyndicAppMobileApiIPaiementsApi">

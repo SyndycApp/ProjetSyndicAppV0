@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    x:Class="SyndicApp.Mobile.Views.Communication.ChatPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:SyndicApp.Mobile.ViewModels.Communication"
+    xmlns:layout="clr-namespace:SyndicApp.Mobile.Views.Layout"
+    x:DataType="vm:ChatViewModel"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="#F3F4F6">
+
+    <layout:RoleDrawerLayout x:Name="DrawerLayout">
+
+        <layout:RoleDrawerLayout.MainContent>
+
+            <Grid RowDefinitions="Auto,*,Auto">
+
+                <!-- HEADER -->
+                <Grid BackgroundColor="#2563EB"
+                      Padding="16"
+                      ColumnDefinitions="Auto,*">
+
+                    <ImageButton Source="arrow_back_white.png"
+                                 HeightRequest="24"
+                                 WidthRequest="24"
+                                 BackgroundColor="Transparent"
+                                 Clicked="OnBackClicked"/>
+
+                    <Label Grid.Column="1"
+                           Text="{Binding Title}"
+                           TextColor="White"
+                           FontSize="20"
+                           VerticalOptions="Center"/>
+                </Grid>
+
+                <!-- MESSAGES -->
+                <CollectionView Grid.Row="1"
+                                x:Name="MessagesList"
+                                ItemsSource="{Binding Messages}"
+                                Margin="10"
+                                VerticalOptions="FillAndExpand">
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="5">
+
+                                <Frame HasShadow="False"
+                                       Padding="12"
+                                       CornerRadius="14"
+                                       MaximumWidthRequest="280"
+                                       BackgroundColor="{Binding UserId, Converter={StaticResource BubbleColorConverter}}"
+                                       HorizontalOptions="{Binding UserId, Converter={StaticResource BubbleAlignmentConverter}}">
+
+                                    <VerticalStackLayout Spacing="4">
+                                        <Label Text="{Binding Contenu}"
+                                               TextColor="Black"
+                                               FontSize="16"/>
+
+                                        <Label Text="{Binding CreatedAt, StringFormat='{0:HH:mm}'}"
+                                               FontSize="12"
+                                               TextColor="#6B7280"
+                                               HorizontalTextAlignment="End"/>
+                                    </VerticalStackLayout>
+
+                                </Frame>
+
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+
+                <!-- BARRE D’ENVOI -->
+                <Grid Grid.Row="2"
+                      BackgroundColor="White"
+                      Padding="10"
+                      ColumnDefinitions="*,Auto"
+                      HeightRequest="60"
+                      VerticalOptions="End">
+
+                    <Entry Text="{Binding NewMessage}"
+                           Placeholder="Votre message..."
+                           FontSize="16"
+                           BackgroundColor="#F3F4F6"
+                           HeightRequest="40"
+                           Padding="10"
+                           CornerRadius="10"/>
+
+                    <ImageButton Grid.Column="1"
+                                 Source="send_icon.png"
+                                 HeightRequest="36"
+                                 WidthRequest="36"
+                                 BackgroundColor="Transparent"
+                                 Command="{Binding SendMessageCommand}"/>
+                </Grid>
+
+            </Grid>
+
+        </layout:RoleDrawerLayout.MainContent>
+
+    </layout:RoleDrawerLayout>
+
+</ContentPage>

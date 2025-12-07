@@ -1,12 +1,15 @@
 ﻿using Microcharts.Maui;
 using Refit;
 using SyndicApp.Mobile.Api;
+using SyndicApp.Mobile.Api.Communication;
 using SyndicApp.Mobile.Converters;
 using SyndicApp.Mobile.Handlers;
 using SyndicApp.Mobile.Services;
+using SyndicApp.Mobile.Services.Communication;
 using SyndicApp.Mobile.ViewModels.Affectations;
 using SyndicApp.Mobile.ViewModels.Auth;
 using SyndicApp.Mobile.ViewModels.Batiments;
+using SyndicApp.Mobile.ViewModels.Communication;
 using SyndicApp.Mobile.ViewModels.Dashboard;
 using SyndicApp.Mobile.ViewModels.Finances;
 using SyndicApp.Mobile.ViewModels.Incidents;
@@ -17,6 +20,7 @@ using SyndicApp.Mobile.Views;
 using SyndicApp.Mobile.Views.Affectations;
 using SyndicApp.Mobile.Views.Auth;
 using SyndicApp.Mobile.Views.Batiments;
+using SyndicApp.Mobile.Views.Communication;
 using SyndicApp.Mobile.Views.Dashboard;
 using SyndicApp.Mobile.Views.Finances;
 using SyndicApp.Mobile.Views.Incidents;
@@ -98,6 +102,14 @@ public static class MauiProgram
             .ConfigureHttpClient(c => c.BaseAddress = new Uri(BaseUrl))
             .AddHttpMessageHandler<AuthHeaderHandler>();
 
+        builder.Services.AddSingleton<ChatHubService>(sp =>
+        {
+            var tokenStore = sp.GetRequiredService<TokenStore>();
+            var token = tokenStore.GetToken();
+
+            return new ChatHubService(BaseUrl, token);
+        });
+
         builder.Services.AddSingleton<RoleService>();
 
         AddSecured<IAccountApi>();   
@@ -114,6 +126,8 @@ public static class MauiProgram
         AddSecured<IDevisTravauxApi>();
         AddSecured<IInterventionsApi>();
         AddSecured<IPrestatairesApi>();
+        AddSecured<IConversationsApi>();
+        AddSecured<IMessagesApi>();
 
         // VMs
         builder.Services.AddTransient<LoginViewModel>();
@@ -167,6 +181,8 @@ public static class MauiProgram
         builder.Services.AddTransient<PrestatairesListViewModel>();
         builder.Services.AddTransient<PrestataireCreateViewModel>();
         builder.Services.AddTransient<PrestataireDetailsViewModel>();
+        builder.Services.AddTransient<ChatViewModel>();
+        builder.Services.AddTransient<ConversationsListViewModel>();
 
 
         // Converters (si DI utilisé)
@@ -227,6 +243,8 @@ public static class MauiProgram
         builder.Services.AddTransient<PrestatairesPage>();
         builder.Services.AddTransient<PrestataireCreatePage>();
         builder.Services.AddTransient<PrestataireDetailsPage>();
+        builder.Services.AddTransient<ChatPage>();
+        builder.Services.AddTransient<ConversationsPage>();
 
 
         var app = builder.Build();

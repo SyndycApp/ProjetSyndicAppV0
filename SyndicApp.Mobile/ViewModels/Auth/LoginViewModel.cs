@@ -72,6 +72,8 @@ public partial class LoginViewModel : ViewModels.Common.BaseViewModel
                 return;
             }
 
+            App.UserId = me.Id.ToString();
+
             var role = me.Roles?.FirstOrDefault()?.Trim();
             if (!string.IsNullOrEmpty(role))
             {

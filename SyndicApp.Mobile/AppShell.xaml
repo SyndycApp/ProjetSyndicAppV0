@@ -9,6 +9,7 @@
     xmlns:finances="clr-namespace:SyndicApp.Mobile.Views.Finances"
     xmlns:viewsRes="clr-namespace:SyndicApp.Mobile.Views.Residences"
     xmlns:layout="clr-namespace:SyndicApp.Mobile.Views"
+    xmlns:viewsCom="clr-namespace:SyndicApp.Mobile.Views.Communication"
     xmlns:viewsBat="clr-namespace:SyndicApp.Mobile.Views.Batiments"
     xmlns:viewsLot="clr-namespace:SyndicApp.Mobile.Views.Lots"
     xmlns:viewsALot="clr-namespace:SyndicApp.Mobile.Views.Affectations"
@@ -73,6 +74,16 @@
         Title="SyndicApp"
         ContentTemplate="{DataTemplate layout:DrawerPage}" />
 
+    <!-- ======= MESSAGERIE ======= -->
+<ShellContent
+    Route="conversations"
+    Title="Conversations"
+    ContentTemplate="{DataTemplate viewsCom:ConversationsPage}" />
+
+<ShellContent
+    Route="chat"
+    Title="Chat"
+    ContentTemplate="{DataTemplate viewsCom:ChatPage}" />
     <!-- ======= Dashboards Affectations (racine) ======= -->
     <ShellContent
         Route="affectation-dashboard"

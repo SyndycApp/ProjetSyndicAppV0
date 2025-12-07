@@ -213,18 +213,19 @@
                                 CommandParameter="//prestataires"    
                                  Clicked="OnMenuItemClicked"/>
 
-                         <BoxView HeightRequest="1" BackgroundColor="#E5E7EB" />
-                <Label Text="Messagerie" FontAttributes="Bold"/>
+                        <BoxView HeightRequest="1" BackgroundColor="#E5E7EB" />
+                        <Label Text="Messagerie" FontAttributes="Bold"/>
 
-                <Button Text="Conversations"
-                        Style="{StaticResource MenuButtonStyle}"
-                        CommandParameter="//messages/conversations"
-                        Clicked="OnMenuItemClicked"/>
+                        <Button Text="Conversations"
+                                Style="{StaticResource MenuButtonStyle}"
+                                CommandParameter="//conversations"
+                                Clicked="OnMenuItemClicked"/>
 
-                <Button Text="Messages"
-                        Style="{StaticResource MenuButtonStyle}"
-                        CommandParameter="//messages"
-                        Clicked="OnMenuItemClicked"/>
+                        <!-- Page de chat seule, rarement appelée directement, mais on la met quand même -->
+                        <Button Text="Messages"
+                                Style="{StaticResource MenuButtonStyle}"
+                                CommandParameter="//chat"
+                                Clicked="OnMenuItemClicked"/>
 
                 <!-- PERSONNEL -->
                 <BoxView HeightRequest="1" BackgroundColor="#E5E7EB" />
