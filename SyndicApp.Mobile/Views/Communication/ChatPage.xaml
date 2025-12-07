@@ -15,7 +15,7 @@
 
             <Grid RowDefinitions="Auto,*,Auto">
 
-                <!-- HEADER -->
+                <!-- ===================== HEADER ===================== -->
                 <Grid BackgroundColor="#2563EB"
                       Padding="16"
                       ColumnDefinitions="Auto,*">
@@ -33,7 +33,7 @@
                            VerticalOptions="Center"/>
                 </Grid>
 
-                <!-- MESSAGES -->
+                <!-- ===================== LISTE DES MESSAGES ===================== -->
                 <CollectionView Grid.Row="1"
                                 x:Name="MessagesList"
                                 ItemsSource="{Binding Messages}"
@@ -45,22 +45,25 @@
                             <Grid Padding="5">
 
                                 <Frame HasShadow="False"
-                                       Padding="12"
                                        CornerRadius="14"
                                        MaximumWidthRequest="280"
                                        BackgroundColor="{Binding UserId, Converter={StaticResource BubbleColorConverter}}"
                                        HorizontalOptions="{Binding UserId, Converter={StaticResource BubbleAlignmentConverter}}">
 
-                                    <VerticalStackLayout Spacing="4">
-                                        <Label Text="{Binding Contenu}"
-                                               TextColor="Black"
-                                               FontSize="16"/>
+                                    <Grid Padding="12">
+                                        <VerticalStackLayout Spacing="4">
 
-                                        <Label Text="{Binding CreatedAt, StringFormat='{0:HH:mm}'}"
-                                               FontSize="12"
-                                               TextColor="#6B7280"
-                                               HorizontalTextAlignment="End"/>
-                                    </VerticalStackLayout>
+                                            <Label Text="{Binding Contenu}"
+                                                   TextColor="Black"
+                                                   FontSize="16"/>
+
+                                            <Label Text="{Binding CreatedAt, StringFormat='{0:HH:mm}'}"
+                                                   FontSize="12"
+                                                   TextColor="#6B7280"
+                                                   HorizontalTextAlignment="End"/>
+
+                                        </VerticalStackLayout>
+                                    </Grid>
 
                                 </Frame>
 
@@ -70,28 +73,36 @@
 
                 </CollectionView>
 
-                <!-- BARRE D’ENVOI -->
+                <!-- ===================== ZONE DE SAISIE ===================== -->
                 <Grid Grid.Row="2"
                       BackgroundColor="White"
                       Padding="10"
                       ColumnDefinitions="*,Auto"
-                      HeightRequest="60"
-                      VerticalOptions="End">
+                      HeightRequest="60">
 
-                    <Entry Text="{Binding NewMessage}"
-                           Placeholder="Votre message..."
-                           FontSize="16"
-                           BackgroundColor="#F3F4F6"
-                           HeightRequest="40"
-                           Padding="10"
-                           CornerRadius="10"/>
+                    <!-- Champ de texte -->
+                    <Border Stroke="#E5E7EB"
+                            StrokeThickness="1"
+                            Background="#F3F4F6"
+                            Padding="10"
+                            StrokeShape="RoundRectangle 10"
+                            HeightRequest="40">
 
+                        <Entry Text="{Binding NewMessage}"
+                               Placeholder="Votre message..."
+                               FontSize="16"
+                               BackgroundColor="Transparent"
+                               ReturnType="Send"/>
+                    </Border>
+
+                    <!-- Bouton envoyer -->
                     <ImageButton Grid.Column="1"
                                  Source="send_icon.png"
                                  HeightRequest="36"
                                  WidthRequest="36"
                                  BackgroundColor="Transparent"
                                  Command="{Binding SendMessageCommand}"/>
+
                 </Grid>
 
             </Grid>

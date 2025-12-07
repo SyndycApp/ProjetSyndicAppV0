@@ -1,10 +1,11 @@
-﻿using SyndicApp.Mobile.ViewModels.Communication;
+﻿using SyndicApp.Mobile.Models;
+using SyndicApp.Mobile.ViewModels.Communication;
 
 namespace SyndicApp.Mobile.Views.Communication;
 
 public partial class ConversationsPage : ContentPage
 {
-    private ConversationsListViewModel ViewModel => BindingContext as ConversationsListViewModel;
+    ConversationsListViewModel Vm => BindingContext as ConversationsListViewModel;
 
     public ConversationsPage(ConversationsListViewModel vm)
     {
@@ -15,6 +16,17 @@ public partial class ConversationsPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await ViewModel.LoadConversationsCommand.ExecuteAsync(null);
+        await Vm.LoadConversationsAsync();
+    }
+
+    private async void OnConversationSelected(object sender, SelectionChangedEventArgs e)
+    {
+        if (e.CurrentSelection.FirstOrDefault() is not ConversationDto item)
+            return;
+
+        // DÉSELECTION → pour revoir le highlight correctement
+        ((CollectionView)sender).SelectedItem = null;
+
+        await Shell.Current.GoToAsync($"chat?conversationId={item.Id}");
     }
 }

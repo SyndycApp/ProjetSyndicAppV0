@@ -19,6 +19,7 @@
 
             <!-- Converter global -->
             <converters:ProgressConverter x:Key="ProgressConverter" />
+            <converters:FirstLetterConverter x:Key="FirstLetterConverter"/>
 
         </ResourceDictionary>
     </Application.Resources>

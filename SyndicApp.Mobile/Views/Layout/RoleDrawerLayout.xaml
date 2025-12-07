@@ -221,12 +221,6 @@
                                 CommandParameter="//conversations"
                                 Clicked="OnMenuItemClicked"/>
 
-                        <!-- Page de chat seule, rarement appelée directement, mais on la met quand même -->
-                        <Button Text="Messages"
-                                Style="{StaticResource MenuButtonStyle}"
-                                CommandParameter="//chat"
-                                Clicked="OnMenuItemClicked"/>
-
                 <!-- PERSONNEL -->
                 <BoxView HeightRequest="1" BackgroundColor="#E5E7EB" />
                 <Label Text="Personnel" FontAttributes="Bold"/>

@@ -16,25 +16,50 @@ public partial class ChatPage : ContentPage
     {
         base.OnAppearing();
 
-        // Charger les messages
-        await ViewModel.LoadMessagesCommand.ExecuteAsync(null);
+        try
+        {
+            // Charge les messages
+            await ViewModel.LoadMessagesCommand.ExecuteAsync(null);
 
-        // Scroll automatique vers le bas
-        ScrollToBottom();
+            // Scroll auto
+            ScrollToBottom();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erreur OnAppearing ChatPage : {ex}");
+        }
     }
 
+    /// <summary>
+    /// Scroll automatiquement vers le dernier message.
+    /// </summary>
     private void ScrollToBottom()
     {
-        if (MessagesList.ItemsSource is not null &&
-            MessagesList.ItemsSource.Cast<object>().Any())
+        try
         {
-            var last = MessagesList.ItemsSource.Cast<object>().Last();
-            MessagesList.ScrollTo(last, position: ScrollToPosition.End, animate: true);
+            var items = MessagesList?.ItemsSource?.Cast<object>().ToList();
+
+            if (items != null && items.Any())
+            {
+                var last = items.Last();
+                MessagesList.ScrollTo(last, position: ScrollToPosition.End, animate: true);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erreur ScrollToBottom() : {ex}");
         }
     }
 
     private async void OnBackClicked(object sender, EventArgs e)
     {
-        await Shell.Current.GoToAsync(".."); // Retour à la liste des conversations
+        try
+        {
+            await Shell.Current.GoToAsync("..", true);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erreur retour ChatPage : {ex}");
+        }
     }
 }

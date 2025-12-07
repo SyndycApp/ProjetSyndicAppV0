@@ -4,12 +4,13 @@ using SyndicApp.Mobile.Views;
 using SyndicApp.Mobile.Views.Affectations;
 using SyndicApp.Mobile.Views.Auth;
 using SyndicApp.Mobile.Views.Batiments;
-using SyndicApp.Mobile.Views.Finances;
-using SyndicApp.Mobile.Views.Lots;
-using SyndicApp.Mobile.Views.Residences;
-using SyndicApp.Mobile.Views.Incidents;
-using SyndicApp.Mobile.Views.Personnel;
+using SyndicApp.Mobile.Views.Communication;
 using SyndicApp.Mobile.Views.Dashboard;
+using SyndicApp.Mobile.Views.Finances;
+using SyndicApp.Mobile.Views.Incidents;
+using SyndicApp.Mobile.Views.Lots;
+using SyndicApp.Mobile.Views.Personnel;
+using SyndicApp.Mobile.Views.Residences;
 
 public partial class AppShell : Shell
 {
@@ -77,5 +78,8 @@ public partial class AppShell : Shell
 
         Routing.RegisterRoute("prestataire-create", typeof(PrestataireCreatePage));
         Routing.RegisterRoute("prestataire-details", typeof(PrestataireDetailsPage));
+
+        Routing.RegisterRoute("chat", typeof(ChatPage));
+        Routing.RegisterRoute("conversations", typeof(ConversationsPage));
     }
 }
