@@ -24,7 +24,7 @@ public partial class ConversationsPage : ContentPage
         if (e.CurrentSelection.FirstOrDefault() is not ConversationDto item)
             return;
 
-        // DÉSELECTION → pour revoir le highlight correctement
+        // IMPORTANT : désélectionner pour permettre un second clic
         ((CollectionView)sender).SelectedItem = null;
 
         await Shell.Current.GoToAsync($"chat?conversationId={item.Id}");

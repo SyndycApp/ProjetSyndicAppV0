@@ -27,12 +27,4 @@ public partial class ConversationsListViewModel : ObservableObject
         foreach (var c in data)
             Conversations.Add(c);
     }
-
-    [RelayCommand]
-    public async Task ItemTappedAsync(ConversationDto item)
-    {
-        if (item == null) return;
-
-        await Shell.Current.GoToAsync($"chat?conversationId={item.Id}");
-    }
 }

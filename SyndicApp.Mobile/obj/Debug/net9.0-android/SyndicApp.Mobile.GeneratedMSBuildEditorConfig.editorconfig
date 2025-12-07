@@ -395,3 +395,51 @@ build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Views.Residences.ResidencesPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\Residences\ResidencesPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\Residences\ResidencesPage.xaml
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Resources/Images/send_icon_files/ansi-1f6vhsjh.css]
+build_metadata.AdditionalFiles.GenKind = Css
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Resources.Images.send_icon_files.ansi-1f6vhsjh.css
+build_metadata.AdditionalFiles.TargetPath = Resources\Images\send_icon_files\ansi-1f6vhsjh.css
+build_metadata.AdditionalFiles.RelativePath = Resources\Images\send_icon_files\ansi-1f6vhsjh.css
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Resources/Images/send_icon_files/conversation-small-jxsnd7hw.css]
+build_metadata.AdditionalFiles.GenKind = Css
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Resources.Images.send_icon_files.conversation-small-jxsnd7hw.css
+build_metadata.AdditionalFiles.TargetPath = Resources\Images\send_icon_files\conversation-small-jxsnd7hw.css
+build_metadata.AdditionalFiles.RelativePath = Resources\Images\send_icon_files\conversation-small-jxsnd7hw.css
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Resources/Images/send_icon_files/main-DTGyIITo.css]
+build_metadata.AdditionalFiles.GenKind = Css
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Resources.Images.send_icon_files.main-DTGyIITo.css
+build_metadata.AdditionalFiles.TargetPath = Resources\Images\send_icon_files\main-DTGyIITo.css
+build_metadata.AdditionalFiles.RelativePath = Resources\Images\send_icon_files\main-DTGyIITo.css
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Resources/Images/send_icon_files/map-with-entities-agzjn7l5.css]
+build_metadata.AdditionalFiles.GenKind = Css
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Resources.Images.send_icon_files.map-with-entities-agzjn7l5.css
+build_metadata.AdditionalFiles.TargetPath = Resources\Images\send_icon_files\map-with-entities-agzjn7l5.css
+build_metadata.AdditionalFiles.RelativePath = Resources\Images\send_icon_files\map-with-entities-agzjn7l5.css
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Resources/Images/send_icon_files/product-variants-pcfu1bfm.css]
+build_metadata.AdditionalFiles.GenKind = Css
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Resources.Images.send_icon_files.product-variants-pcfu1bfm.css
+build_metadata.AdditionalFiles.TargetPath = Resources\Images\send_icon_files\product-variants-pcfu1bfm.css
+build_metadata.AdditionalFiles.RelativePath = Resources\Images\send_icon_files\product-variants-pcfu1bfm.css
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Resources/Images/send_icon_files/root-mc2lf0mv.css]
+build_metadata.AdditionalFiles.GenKind = Css
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Resources.Images.send_icon_files.root-mc2lf0mv.css
+build_metadata.AdditionalFiles.TargetPath = Resources\Images\send_icon_files\root-mc2lf0mv.css
+build_metadata.AdditionalFiles.RelativePath = Resources\Images\send_icon_files\root-mc2lf0mv.css
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Resources/Images/send_icon_files/table-components-gjyj5koo.css]
+build_metadata.AdditionalFiles.GenKind = Css
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Resources.Images.send_icon_files.table-components-gjyj5koo.css
+build_metadata.AdditionalFiles.TargetPath = Resources\Images\send_icon_files\table-components-gjyj5koo.css
+build_metadata.AdditionalFiles.RelativePath = Resources\Images\send_icon_files\table-components-gjyj5koo.css
+
+[C:/Users/elala/Desktop/SyndicAppV0/ProjetSyndicAppV0/SyndicApp.Mobile/Resources/Images/send_icon_files/writing-block-editor-epnjizjq.css]
+build_metadata.AdditionalFiles.GenKind = Css
+build_metadata.AdditionalFiles.ManifestResourceName = SyndicApp.Mobile.Resources.Images.send_icon_files.writing-block-editor-epnjizjq.css
+build_metadata.AdditionalFiles.TargetPath = Resources\Images\send_icon_files\writing-block-editor-epnjizjq.css
+build_metadata.AdditionalFiles.RelativePath = Resources\Images\send_icon_files\writing-block-editor-epnjizjq.css

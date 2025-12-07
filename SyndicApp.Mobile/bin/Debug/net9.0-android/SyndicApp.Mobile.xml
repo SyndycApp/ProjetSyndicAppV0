@@ -566,7 +566,6 @@
         <member name="T:SyndicApp.Mobile.ViewModels.Communication.ConversationsListViewModel">
             <inheritdoc/>
             <inheritdoc/>
-            <inheritdoc/>
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Communication.ConversationsListViewModel.Conversations">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Communication.ConversationsListViewModel.conversations"/>
@@ -576,12 +575,6 @@
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Communication.ConversationsListViewModel.LoadConversationsCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Communication.ConversationsListViewModel.LoadConversationsAsync"/>.</summary>
-        </member>
-        <member name="F:SyndicApp.Mobile.ViewModels.Communication.ConversationsListViewModel.itemTappedCommand">
-            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Communication.ConversationsListViewModel.ItemTappedCommand"/>.</summary>
-        </member>
-        <member name="P:SyndicApp.Mobile.ViewModels.Communication.ConversationsListViewModel.ItemTappedCommand">
-            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Communication.ConversationsListViewModel.ItemTappedAsync(SyndicApp.Mobile.Models.ConversationDto)"/>.</summary>
         </member>
         <member name="T:SyndicApp.Mobile.ViewModels.Dashboard.AffectationAnalyticsViewModel">
             <inheritdoc/>
