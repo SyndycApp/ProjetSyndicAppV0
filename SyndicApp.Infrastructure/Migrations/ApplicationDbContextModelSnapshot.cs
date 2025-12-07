@@ -469,6 +469,17 @@ namespace SyndicApp.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETUTCDATE()");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("ReadAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("UserId")
@@ -1236,7 +1247,7 @@ namespace SyndicApp.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("ApplicationUserId3")
+                    b.Property<Guid?>("ApplicationUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
@@ -1263,7 +1274,7 @@ namespace SyndicApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ApplicationUserId3");
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("LotId");
 
@@ -2018,7 +2029,7 @@ namespace SyndicApp.Infrastructure.Migrations
                 {
                     b.HasOne("SyndicApp.Infrastructure.Identity.ApplicationUser", null)
                         .WithMany("AffectationsLots")
-                        .HasForeignKey("ApplicationUserId3");
+                        .HasForeignKey("ApplicationUserId");
 
                     b.HasOne("SyndicApp.Domain.Entities.Residences.Lot", "Lot")
                         .WithMany("Affectations")

@@ -60,7 +60,7 @@ namespace SyndicApp.Infrastructure
         public DbSet<Document> Documents => Set<Document>();
         public DbSet<CategorieDocument> CategoriesDocuments => Set<CategorieDocument>();
 
-        // Communication
+        // Communication (MESSAGERIE)
         public DbSet<Conversation> Conversations => Set<Conversation>();
         public DbSet<Message> Messages => Set<Message>();
         public DbSet<UserConversation> UserConversations => Set<UserConversation>();
@@ -125,22 +125,21 @@ namespace SyndicApp.Infrastructure
                  .HasPrincipalKey(u => u.Id)
                  .HasConstraintName("FK_AffectationsLots_AspNetUsers_UserId")
                  .OnDelete(DeleteBehavior.Cascade);
-
-                b.Ignore("ApplicationUserId");
-                b.Ignore("ApplicationUserId1");
-                b.Ignore("ApplicationUserId2");
             });
 
-            // ================= Messagerie =================
+            // ==================== MESSAGERIE ====================
             modelBuilder.Entity<UserConversation>(b =>
             {
+                // Clé composite
                 b.HasKey(uc => new { uc.UserId, uc.ConversationId });
 
+                // Relation avec AspNetUsers
                 b.HasOne<ApplicationUser>()
                  .WithMany()
                  .HasForeignKey(uc => uc.UserId)
                  .OnDelete(DeleteBehavior.Cascade);
 
+                // Relation Conversation
                 b.HasOne(uc => uc.Conversation)
                  .WithMany(c => c.UserConversations)
                  .HasForeignKey(uc => uc.ConversationId)
@@ -149,15 +148,21 @@ namespace SyndicApp.Infrastructure
 
             modelBuilder.Entity<Message>(b =>
             {
+                // Relation Conversation
                 b.HasOne(m => m.Conversation)
                  .WithMany(c => c.Messages)
                  .HasForeignKey(m => m.ConversationId)
                  .OnDelete(DeleteBehavior.Cascade);
 
+                // Relation avec AspNetUsers
                 b.HasOne<ApplicationUser>()
                  .WithMany()
                  .HasForeignKey(m => m.UserId)
                  .OnDelete(DeleteBehavior.Cascade);
+
+                // Valeur par défaut CreatedAt
+                b.Property(m => m.CreatedAt)
+                 .HasDefaultValueSql("GETUTCDATE()");
             });
 
             // ================= Assemblées =================

@@ -1,16 +1,18 @@
 using SyndicApp.Domain.Entities.Common;
 using System;
 
-namespace SyndicApp.Domain.Entities.Communication;
-
-public class Message
+namespace SyndicApp.Domain.Entities.Communication
 {
-    public Guid Id { get; set; }
-    public Guid ConversationId { get; set; }
-    public Conversation Conversation { get; set; } = null!;
+    public class Message : BaseEntity
+    {
+        public Guid ConversationId { get; set; }
+        public Conversation Conversation { get; set; } = null!;
 
-    public Guid UserId { get; set; }            
-    public string Contenu { get; set; } = string.Empty;
-    public DateTime CreatedAt { get; set; }
+        public Guid UserId { get; set; }
+        public bool IsRead { get; set; } = false;
+        public DateTime? ReadAt { get; set; }
+        public string Contenu { get; set; } = string.Empty;
+
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    }
 }
-
