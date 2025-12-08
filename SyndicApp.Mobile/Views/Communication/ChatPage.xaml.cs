@@ -10,6 +10,11 @@ public partial class ChatPage : ContentPage
     {
         InitializeComponent();
         BindingContext = vm;
+
+        this.Dispatcher.Dispatch(() =>
+    {
+        MessagesList.ItemsSource = vm.Messages;
+    });
     }
 
     protected override async void OnAppearing()

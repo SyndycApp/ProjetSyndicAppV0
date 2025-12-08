@@ -9,4 +9,11 @@
         public string Contenu { get; set; }
         public DateTime CreatedAt { get; set; }
     }
+
+    public class CreateMessageDto
+    {
+        public Guid ConversationId { get; set; }
+        public string Contenu { get; set; } = string.Empty;
+    }
+
 }

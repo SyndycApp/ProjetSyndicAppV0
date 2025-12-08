@@ -12,7 +12,7 @@ namespace SyndicApp.Mobile.Converters
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-            => throw new NotImplementedException();
+            => null;
     }
 
     public class BubbleColorConverter : IValueConverter
@@ -20,10 +20,15 @@ namespace SyndicApp.Mobile.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var userId = value?.ToString();
-            return userId == App.UserId ? "#DCF8C6" : "White"; // vert WhatsApp
+
+            if (string.IsNullOrEmpty(App.UserId))
+                return "White";   // fallback
+
+            return userId == App.UserId ? "#DCF8C6" : "#FFFFFF";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-            => throw new NotImplementedException();
+            => null;
     }
+
 }

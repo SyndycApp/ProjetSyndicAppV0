@@ -20,6 +20,8 @@
             <!-- Converter global -->
             <converters:ProgressConverter x:Key="ProgressConverter" />
             <converters:FirstLetterConverter x:Key="FirstLetterConverter"/>
+            <converters:BubbleColorConverter x:Key="BubbleColorConverter" />
+            <converters:BubbleAlignmentConverter x:Key="BubbleAlignmentConverter" />
 
         </ResourceDictionary>
     </Application.Resources>

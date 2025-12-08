@@ -6,6 +6,11 @@ public partial class App : Application
     public App()
     {
         InitializeComponent();
+
+        Microsoft.Maui.Controls.Application.Current.Dispatcher.Dispatch(() =>
+        {
+            Console.WriteLine("🔵 App.UserId = " + UserId);
+        });
     }
 
     protected override Window CreateWindow(IActivationState? activationState)
