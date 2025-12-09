@@ -558,6 +558,9 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.NewMessage">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.newMessage"/>
         </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.NomDestinataire">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.nomDestinataire"/>
+        </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.loadMessagesCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.LoadMessagesCommand"/>.</summary>
         </member>
@@ -2364,6 +2367,9 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.NewMessage">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "NewMessage" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.NomDestinataire">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "NomDestinataire" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Conversations">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Conversations" generated properties.</summary>
         </member>
@@ -2801,6 +2807,9 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.NewMessage">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "NewMessage" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.NomDestinataire">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "NomDestinataire" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Conversations">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Conversations" generated properties.</summary>

@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:SyndicApp.Mobile.ViewModels.Communication"
     xmlns:conv="clr-namespace:SyndicApp.Mobile.Converters"
+    xmlns:models="clr-namespace:SyndicApp.Mobile.Models"
     x:DataType="vm:ChatViewModel"
     Shell.NavBarIsVisible="False"
     BackgroundColor="#F3F4F6">
@@ -19,24 +20,27 @@
 
         <!-- 🔵 HEADER -->
         <Grid BackgroundColor="#2563EB"
-              Padding="16"
-              HeightRequest="60"
-              ColumnDefinitions="40,*">
+      Padding="16"
+      HeightRequest="60"
+      ColumnDefinitions="40,*">
 
-            <ImageButton 
-                Source="arrow_back_white.png"
-                WidthRequest="28"
-                HeightRequest="28"
-                BackgroundColor="Transparent"
-                Clicked="OnBackClicked"/>
+    <!-- Bouton retour -->
+    <ImageButton 
+        Source="arrow_back_white.png"
+        WidthRequest="28"
+        HeightRequest="28"
+        BackgroundColor="Transparent"
+        Clicked="OnBackClicked"/>
 
-            <Label Grid.Column="1"
-                   Text="{Binding Title}"
-                   FontSize="22"
-                   TextColor="White"
-                   VerticalOptions="Center"
-                   FontAttributes="Bold"/>
-        </Grid>
+    <!-- NOM DU DESTINATAIRE -->
+    <Label Grid.Column="1"
+           Text="{Binding NomDestinataire}"
+           FontSize="20"
+           TextColor="black"
+           VerticalOptions="Center"
+           FontAttributes="Bold"
+           LineBreakMode="TailTruncation"/>
+</Grid>
 
 
         <!-- 🟩 LISTE DES MESSAGES (STACKLAYOUT + BINDABLELAYOUT) -->
@@ -46,42 +50,43 @@
                     VerticalOptions="FillAndExpand">
 
             <VerticalStackLayout x:Name="MessagesStack"
-                                 Spacing="8"
-                                 BindableLayout.ItemsSource="{Binding Messages}">
+                     Spacing="8"
+                     BindableLayout.ItemsSource="{Binding Messages}">
 
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate>
+    <BindableLayout.ItemTemplate>
+        <DataTemplate x:DataType="models:MessageDto">
 
-                        <Frame 
-                            CornerRadius="14"
-                            HasShadow="False"
-                            Padding="10"
-                            MaximumWidthRequest="280"
-                            BackgroundColor="{Binding UserId, Converter={StaticResource BubbleColorConverter}}"
-                            HorizontalOptions="{Binding UserId, Converter={StaticResource BubbleAlignmentConverter}}">
+            <Frame 
+                CornerRadius="14"
+                HasShadow="False"
+                Padding="10"
+                BackgroundColor="{Binding UserId, Converter={StaticResource BubbleColorConverter}}"
+                HorizontalOptions="{Binding UserId, Converter={StaticResource BubbleAlignmentConverter}}"
+                MaximumWidthRequest="280">
 
-                            <VerticalStackLayout Spacing="4">
+                <VerticalStackLayout Spacing="4">
 
-                                <Label 
-                                    Text="{Binding Contenu}"
-                                    TextColor="Black"
-                                    FontSize="16"
-                                    LineBreakMode="WordWrap"/>
+                    <Label 
+                        Text="{Binding Contenu}"
+                        TextColor="Black"
+                        FontSize="16"
+                        LineBreakMode="WordWrap"/>
 
-                                <Label 
-                                    Text="{Binding CreatedAt, StringFormat='{0:HH:mm}'}"
-                                    FontSize="12"
-                                    TextColor="#6B7280"
-                                    HorizontalTextAlignment="End"/>
+                    <Label 
+                        Text="{Binding CreatedAt, StringFormat='{0:HH:mm}'}"
+                        FontSize="12"
+                        TextColor="#6B7280"
+                        HorizontalTextAlignment="End"/>
 
-                            </VerticalStackLayout>
+                </VerticalStackLayout>
 
-                        </Frame>
+            </Frame>
 
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
+        </DataTemplate>
+    </BindableLayout.ItemTemplate>
 
-            </VerticalStackLayout>
+</VerticalStackLayout>
+
 
         </ScrollView>
 
@@ -99,12 +104,16 @@
                 HeightRequest="48"
                 VerticalOptions="Center">
 
-                <Entry 
-                    Text="{Binding NewMessage}"
-                    Placeholder="Écrire un message…"
-                    FontSize="16"
-                    TextColor="Black"
-                    BackgroundColor="Transparent"/>
+                <Entry Text="{Binding NewMessage}"
+                       Placeholder="Écrire un message…"
+                       FontSize="16"
+                       TextColor="Black"
+                       PlaceholderColor="#9CA3AF"
+                       BackgroundColor="Transparent"
+                       VerticalTextAlignment="Center"
+                       HorizontalTextAlignment="Start"
+                       Margin="5,0"
+                       HeightRequest="40"/>
             </Frame>
 
             <ImageButton 

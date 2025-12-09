@@ -4,60 +4,87 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:SyndicApp.Mobile.ViewModels.Communication"
+    xmlns:conv="clr-namespace:SyndicApp.Mobile.Converters"
     xmlns:layout="clr-namespace:SyndicApp.Mobile.Views.Layout"
     x:DataType="vm:ConversationsListViewModel"
     Shell.NavBarIsVisible="False"
     BackgroundColor="White">
 
+    <ContentPage.Resources>
+        <conv:FirstLetterConverter x:Key="FirstLetterConverter" />
+    </ContentPage.Resources>
+
     <layout:RoleDrawerLayout>
 
         <layout:RoleDrawerLayout.MainContent>
 
-            <VerticalStackLayout Padding="16">
+            <!-- OBLIGATOIRE : le wrapper Grid donne une hauteur réelle -->
+            <Grid RowDefinitions="Auto,*">
 
+                <!-- Titre -->
                 <Label Text="Conversations"
                        FontAttributes="Bold"
                        FontSize="26"
-                       Margin="0,0,0,12" />
+                       TextColor="#111827"
+                       Margin="16,16,0,12"
+                       Grid.Row="0"/>
 
-                <!-- 🚨 LA SEULE SOLUTION FIABLE -->
+                <!-- Liste dans un container qui prend toute la hauteur -->
                 <CollectionView
-                        x:Name="ConvList"
-                        ItemsSource="{Binding Conversations}"
-                        SelectionMode="Single"
-                        SelectionChanged="OnConversationSelected">
+                    x:Name="ConvList"
+                    Grid.Row="1"
+                    ItemsSource="{Binding Conversations}"
+                    VerticalOptions="FillAndExpand"
+                    SelectionMode="Single"
+                    SelectionChanged="OnConversationSelected">
 
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
 
                             <Grid Padding="12"
-                                  BackgroundColor="#F9FAFB"
                                   ColumnDefinitions="60,*"
-                                  Margin="0,0,0,12"
-                                  HeightRequest="70">
+                                  BackgroundColor="#F9FAFB"
+                                  Margin="10,0,10,12"
+                                  HeightRequest="80"
+                                  VerticalOptions="Center">
 
                                 <!-- Avatar -->
-                                <Frame WidthRequest="48"
-                                       HeightRequest="48"
-                                       CornerRadius="24"
+                                <Frame WidthRequest="50"
+                                       HeightRequest="50"
+                                       CornerRadius="25"
                                        BackgroundColor="#2563EB"
-                                       VerticalOptions="Center">
-                                    <Label Text="{Binding Participants[1].NomComplet}"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Center">
+
+                                    <Label Text="{Binding OtherParticipant.NomComplet, Converter={StaticResource FirstLetterConverter}}"
+                                           FontSize="22"
+                                           FontAttributes="Bold"
                                            TextColor="White"
                                            HorizontalOptions="Center"
                                            VerticalOptions="Center"/>
                                 </Frame>
 
-                                <!-- Info -->
-                                <VerticalStackLayout Grid.Column="1" Padding="10,0">
-                                    <Label Text="{Binding Participants[1].NomComplet}"
-                                           FontSize="18"
-                                           FontAttributes="Bold"/>
+                                <!-- Nom + Dernier message -->
+<VerticalStackLayout Grid.Column="1"
+                     Padding="12,0"
+                     Spacing="4"
+                     VerticalOptions="Center"
+                     ZIndex="10"
+                     InputTransparent="False">
 
-                                    <Label Text="{Binding DernierMessage.Contenu}"
-                                           MaxLines="1"
-                                           TextColor="#6B7280"/>
-                                </VerticalStackLayout>
+    <Label Text="{Binding OtherParticipant.NomComplet}"
+           FontSize="18"
+           FontAttributes="Bold"
+           TextColor="#111827"
+           ZIndex="10"/>
+
+    <Label Text="{Binding DernierMessage.Contenu}"
+           FontSize="14"
+           TextColor="#6B7280"
+           MaxLines="1"
+           ZIndex="10"/>
+</VerticalStackLayout>
+
 
                             </Grid>
 
@@ -66,7 +93,7 @@
 
                 </CollectionView>
 
-            </VerticalStackLayout>
+            </Grid>
 
         </layout:RoleDrawerLayout.MainContent>
 

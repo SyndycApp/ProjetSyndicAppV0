@@ -40,6 +40,9 @@ public partial class ChatViewModel : ObservableObject
     [ObservableProperty]
     private string newMessage;
 
+    [ObservableProperty]
+    private string nomDestinataire;
+
 
     [RelayCommand]
     public async Task LoadMessagesAsync()
@@ -57,6 +60,15 @@ public partial class ChatViewModel : ObservableObject
             Messages.Add(msg);
 
         Console.WriteLine($"[DEBUG] Messages count AFTER LOAD = {Messages.Count}");
+
+        var currentUserId = Guid.Parse(App.UserId);
+
+        var otherUser = list.FirstOrDefault(m => m.UserId != currentUserId);
+
+
+        NomDestinataire = otherUser != null
+            ? otherUser.NomExpediteur
+            : "Conversation";
     }
 
 
