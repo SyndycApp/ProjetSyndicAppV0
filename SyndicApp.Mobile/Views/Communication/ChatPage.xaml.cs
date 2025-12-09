@@ -10,11 +10,6 @@ public partial class ChatPage : ContentPage
     {
         InitializeComponent();
         BindingContext = vm;
-
-        this.Dispatcher.Dispatch(() =>
-    {
-        MessagesList.ItemsSource = vm.Messages;
-    });
     }
 
     protected override async void OnAppearing()
@@ -23,10 +18,11 @@ public partial class ChatPage : ContentPage
 
         try
         {
-            // Charge les messages
             await ViewModel.LoadMessagesCommand.ExecuteAsync(null);
 
-            // Scroll auto
+            // Laisse le XAML créer les views
+            await Task.Delay(50);
+
             ScrollToBottom();
         }
         catch (Exception ex)
@@ -35,26 +31,31 @@ public partial class ChatPage : ContentPage
         }
     }
 
-    /// <summary>
-    /// Scroll automatiquement vers le dernier message.
-    /// </summary>
     private void ScrollToBottom()
     {
-        try
-        {
-            var items = MessagesList?.ItemsSource?.Cast<object>().ToList();
+    try
+    {
+        if (MessagesStack == null || MessagesStack.Children.Count == 0)
+            return;
 
-            if (items != null && items.Any())
-            {
-                var last = items.Last();
-                MessagesList.ScrollTo(last, position: ScrollToPosition.End, animate: true);
-            }
-        }
-        catch (Exception ex)
+        var last = MessagesStack.Children.Last() as View;
+        if (last == null)
+            return;
+
+        MainThread.BeginInvokeOnMainThread(async () =>
         {
-            Console.WriteLine($"Erreur ScrollToBottom() : {ex}");
-        }
+            // On lit la position Y de la vue
+            var y = last.Y;
+
+            await MessagesScrollView.ScrollToAsync(0, y, true);
+        });
     }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Erreur ScrollToBottom() : {ex}");
+    }
+    }
+
 
     private async void OnBackClicked(object sender, EventArgs e)
     {

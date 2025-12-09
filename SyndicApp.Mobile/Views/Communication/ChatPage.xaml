@@ -3,127 +3,121 @@
     x:Class="SyndicApp.Mobile.Views.Communication.ChatPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:layout="clr-namespace:SyndicApp.Mobile.Views.Layout"
     xmlns:vm="clr-namespace:SyndicApp.Mobile.ViewModels.Communication"
     xmlns:conv="clr-namespace:SyndicApp.Mobile.Converters"
     x:DataType="vm:ChatViewModel"
     Shell.NavBarIsVisible="False"
     BackgroundColor="#F3F4F6">
 
+    <!-- ✅ Converters requis -->
     <ContentPage.Resources>
         <conv:BubbleAlignmentConverter x:Key="BubbleAlignmentConverter"/>
         <conv:BubbleColorConverter x:Key="BubbleColorConverter"/>
     </ContentPage.Resources>
 
-    <layout:RoleDrawerLayout>
+    <Grid RowDefinitions="Auto,*,Auto">
 
-        <layout:RoleDrawerLayout.MainContent>
+        <!-- 🔵 HEADER -->
+        <Grid BackgroundColor="#2563EB"
+              Padding="16"
+              HeightRequest="60"
+              ColumnDefinitions="40,*">
 
-            <Grid RowDefinitions="Auto,*,Auto">
+            <ImageButton 
+                Source="arrow_back_white.png"
+                WidthRequest="28"
+                HeightRequest="28"
+                BackgroundColor="Transparent"
+                Clicked="OnBackClicked"/>
 
-                <!-- HEADER -->
-                <Grid BackgroundColor="#2563EB"
-                      Padding="16"
-                      HeightRequest="60"
-                      ColumnDefinitions="40,*">
-
-                    <ImageButton 
-                        Source="arrow_back_white.png"
-                        WidthRequest="28"
-                        HeightRequest="28"
-                        BackgroundColor="Transparent"
-                        Clicked="OnBackClicked"/>
-
-                    <Label Grid.Column="1"
-                           Text="{Binding Title}"
-                           FontSize="22"
-                           TextColor="White"
-                           VerticalOptions="Center"
-                           FontAttributes="Bold"/>
-                </Grid>
+            <Label Grid.Column="1"
+                   Text="{Binding Title}"
+                   FontSize="22"
+                   TextColor="White"
+                   VerticalOptions="Center"
+                   FontAttributes="Bold"/>
+        </Grid>
 
 
-                <!-- LISTE DES MESSAGES -->
-                <CollectionView 
+        <!-- 🟩 LISTE DES MESSAGES (STACKLAYOUT + BINDABLELAYOUT) -->
+        <ScrollView x:Name="MessagesScrollView"
                     Grid.Row="1"
-                    x:Name="MessagesList"
-                    ItemsSource="{Binding Messages}"
-                    Margin="10"
+                    Padding="10"
                     VerticalOptions="FillAndExpand">
 
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
+            <VerticalStackLayout x:Name="MessagesStack"
+                                 Spacing="8"
+                                 BindableLayout.ItemsSource="{Binding Messages}">
 
-                            <Grid Padding="5">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
 
-                                <Frame 
-                                    CornerRadius="14"
-                                    HasShadow="False"
-                                    MaximumWidthRequest="260"
-                                    BackgroundColor="{Binding UserId, Converter={StaticResource BubbleColorConverter}}"
-                                    HorizontalOptions="{Binding UserId, Converter={StaticResource BubbleAlignmentConverter}}">
+                        <Frame 
+                            CornerRadius="14"
+                            HasShadow="False"
+                            Padding="10"
+                            MaximumWidthRequest="280"
+                            BackgroundColor="{Binding UserId, Converter={StaticResource BubbleColorConverter}}"
+                            HorizontalOptions="{Binding UserId, Converter={StaticResource BubbleAlignmentConverter}}">
 
-                                    <VerticalStackLayout Spacing="4" Padding="10">
-                                        
-                                        <Label 
-                                            Text="{Binding Contenu}"
-                                            TextColor="Black"
-                                            FontSize="16"/>
+                            <VerticalStackLayout Spacing="4">
 
-                                        <Label 
-                                            Text="{Binding CreatedAt, StringFormat='{0:HH:mm}'}"
-                                            FontSize="12"
-                                            TextColor="#6B7280"
-                                            HorizontalTextAlignment="End"/>
+                                <Label 
+                                    Text="{Binding Contenu}"
+                                    TextColor="Black"
+                                    FontSize="16"
+                                    LineBreakMode="WordWrap"/>
 
-                                    </VerticalStackLayout>
-                                </Frame>
+                                <Label 
+                                    Text="{Binding CreatedAt, StringFormat='{0:HH:mm}'}"
+                                    FontSize="12"
+                                    TextColor="#6B7280"
+                                    HorizontalTextAlignment="End"/>
 
-                            </Grid>
+                            </VerticalStackLayout>
 
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
+                        </Frame>
 
-                </CollectionView>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+
+            </VerticalStackLayout>
+
+        </ScrollView>
 
 
-                <!-- BARRE D'ÉCRITURE -->
-                <Grid Grid.Row="2"
-                      Padding="12"
-                      BackgroundColor="White"
-                      ColumnDefinitions="*,Auto">
+        <!-- 🟦 BARRE D'ÉCRITURE -->
+        <Grid Grid.Row="2"
+              Padding="12"
+              BackgroundColor="White"
+              ColumnDefinitions="*,Auto">
 
-                    <Frame 
-                        CornerRadius="20"
-                        BackgroundColor="#F0F0F0"
-                        Padding="10"
-                        HeightRequest="48"
-                        VerticalOptions="Center">
+            <Frame 
+                CornerRadius="20"
+                BackgroundColor="#F0F0F0"
+                Padding="12"
+                HeightRequest="48"
+                VerticalOptions="Center">
 
-                        <Entry 
-                            Text="{Binding NewMessage}"
-                            Placeholder="Écrire un message…"
-                            FontSize="16"
-                            TextColor="Black"
-                            BackgroundColor="Transparent"/>
-                    </Frame>
+                <Entry 
+                    Text="{Binding NewMessage}"
+                    Placeholder="Écrire un message…"
+                    FontSize="16"
+                    TextColor="Black"
+                    BackgroundColor="Transparent"/>
+            </Frame>
 
-                    <ImageButton 
-                        Grid.Column="1"
-                        Source="send_icon.png"
-                        WidthRequest="44"
-                        HeightRequest="44"
-                        BackgroundColor="Transparent"
-                        Margin="8,0,0,0"
-                        VerticalOptions="Center"
-                        Command="{Binding SendMessageCommand}"/>
+            <ImageButton 
+                Grid.Column="1"
+                Source="send_icon.png"
+                WidthRequest="44"
+                HeightRequest="44"
+                BackgroundColor="Transparent"
+                Margin="8,0,0,0"
+                VerticalOptions="Center"
+                Command="{Binding SendMessageCommand}"/>
+        </Grid>
 
-                </Grid>
-
-            </Grid>
-
-        </layout:RoleDrawerLayout.MainContent>
-
-    </layout:RoleDrawerLayout>
+    </Grid>
 
 </ContentPage>

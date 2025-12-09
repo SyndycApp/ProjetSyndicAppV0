@@ -22,10 +22,13 @@ namespace SyndicApp.Mobile.Converters
             var userId = value?.ToString();
 
             if (string.IsNullOrEmpty(App.UserId))
-                return "White";   // fallback
+                return "#E5E7EB"; // gris clair visible
 
-            return userId == App.UserId ? "#DCF8C6" : "#FFFFFF";
+            return userId == App.UserId
+                ? "#DCF8C6"       // bulle moi
+                : "#E5E7EB";      // bulle autre → gris et plus visible
         }
+
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
             => null;

@@ -1,0 +1,12 @@
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Domain\bin\Debug\net9.0\SyndicApp.Domain.deps.json
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Domain\bin\Debug\net9.0\SyndicApp.Domain.dll
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Domain\bin\Debug\net9.0\SyndicApp.Domain.pdb
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Domain\obj\Debug\net9.0\SyndicApp.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Domain\obj\Debug\net9.0\SyndicApp.Domain.AssemblyInfoInputs.cache
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Domain\obj\Debug\net9.0\SyndicApp.Domain.AssemblyInfo.cs
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Domain\obj\Debug\net9.0\SyndicApp.Domain.csproj.CoreCompileInputs.cache
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Domain\obj\Debug\net9.0\SyndicApp.Domain.sourcelink.json
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Domain\obj\Debug\net9.0\SyndicApp.Domain.dll
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Domain\obj\Debug\net9.0\refint\SyndicApp.Domain.dll
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Domain\obj\Debug\net9.0\SyndicApp.Domain.pdb
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Domain\obj\Debug\net9.0\ref\SyndicApp.Domain.dll

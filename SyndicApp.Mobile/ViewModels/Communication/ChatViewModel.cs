@@ -48,18 +48,17 @@ public partial class ChatViewModel : ObservableObject
             return;
 
         var list = await _api.GetMessagesAsync(ConversationId);
+
         Console.WriteLine($"[DEBUG] App.UserId = {App.UserId}");
-        Console.WriteLine($"[DEBUG] Messages count = {Messages.Count}");
-        foreach (var m in Messages)
-            Console.WriteLine($"MSG => {m.Contenu} / From {m.UserId}");
+        Console.WriteLine($"[DEBUG] Messages count BEFORE CLEAR = {Messages.Count}");
 
         Messages.Clear();
         foreach (var msg in list.OrderBy(m => m.CreatedAt))
             Messages.Add(msg);
 
-        Messages = new ObservableCollection<MessageDto>(Messages);
-
+        Console.WriteLine($"[DEBUG] Messages count AFTER LOAD = {Messages.Count}");
     }
+
 
 
     [RelayCommand]
