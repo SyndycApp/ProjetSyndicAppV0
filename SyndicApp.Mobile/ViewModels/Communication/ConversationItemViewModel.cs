@@ -17,15 +17,26 @@ namespace SyndicApp.Mobile.ViewModels.Communication
                 if (string.IsNullOrWhiteSpace(DisplayName))
                     return "?";
 
-                // retire espaces, tabulations, caractères invisibles
-                var clean = DisplayName.Trim();
+                // Nettoyage
+                var parts = DisplayName
+                    .Trim()
+                    .Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-                if (clean.Length == 0)
+                if (parts.Length == 0)
                     return "?";
 
-                return clean[0].ToString().ToUpper();
+                // 1 mot → 1 lettre
+                if (parts.Length == 1)
+                    return parts[0][0].ToString().ToUpper();
+
+                // Plusieurs mots → initiales du premier + dernier
+                string first = parts[0][0].ToString().ToUpper();
+                string last = parts[^1][0].ToString().ToUpper();
+
+                return first + last;
             }
         }
+
 
         public ConversationItemViewModel(ConversationDto dto, string name)
         {

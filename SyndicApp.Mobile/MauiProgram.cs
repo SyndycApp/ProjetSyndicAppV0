@@ -40,7 +40,7 @@ public static class MauiProgram
         builder.UseMicrocharts();
 
         // Choisis la bonne URL :        
-        const string BaseUrl = "http://192.168.11.169:5041";
+        const string BaseUrl = "http://192.168.31.157:5041";
 
 
         // Refit JSON insensible à la casse
