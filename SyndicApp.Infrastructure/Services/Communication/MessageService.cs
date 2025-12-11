@@ -32,6 +32,8 @@ namespace SyndicApp.Infrastructure.Services.Communication
                 UserId = m.UserId,
                 Contenu = m.Contenu,
                 CreatedAt = m.CreatedAt,
+                IsRead = m.IsRead,    
+                ReadAt = m.ReadAt,
                 NomExpediteur = "" 
             };
         }
@@ -51,6 +53,8 @@ namespace SyndicApp.Infrastructure.Services.Communication
                 UserId = m.UserId,
                 Contenu = m.Contenu,
                 CreatedAt = m.CreatedAt,
+                IsRead = m.IsRead,             
+                ReadAt = m.ReadAt,
                 NomExpediteur = users.FirstOrDefault(u => u.Id == m.UserId)?.FullName ?? "Utilisateur"
             }).ToList();
         }
@@ -76,13 +80,30 @@ namespace SyndicApp.Infrastructure.Services.Communication
             };
         }
 
+        public async Task MarkMessagesAsReadAsync(Guid conversationId, Guid userId)
+        {
+            var messages = await _db.Messages
+                .Where(m => m.ConversationId == conversationId && m.UserId != userId && !m.IsRead)
+                .ToListAsync();
+
+            foreach (var m in messages)
+            {
+                m.IsRead = true;
+                m.ReadAt = DateTime.UtcNow;
+            }
+
+            await _db.SaveChangesAsync();
+        }
+
         public async Task<MessageDto> SendMessageAsync(Guid userId, SendMessageRequest request)
         {
             var message = new Message
             {
                 ConversationId = request.ConversationId,
                 UserId = userId,
-                Contenu = request.Contenu
+                Contenu = request.Contenu,
+                IsRead = false,
+                ReadAt = null
             };
 
             _db.Messages.Add(message);
@@ -97,7 +118,9 @@ namespace SyndicApp.Infrastructure.Services.Communication
                 UserId = userId,
                 Contenu = message.Contenu,
                 CreatedAt = message.CreatedAt,
-                NomExpediteur = user?.FullName ?? "Utilisateur"
+                NomExpediteur = user?.FullName ?? "Utilisateur",
+                IsRead = message.IsRead,
+                ReadAt = message.ReadAt
             };
         }
 

@@ -63,7 +63,17 @@ namespace SyndicApp.API.Controllers.Communication
             var result = await _messageService.GetMessagesPaged(conversationId, page, pageSize);
             return Ok(result);
         }
-        
+
+
+        [HttpPost("{conversationId:guid}/read")]
+        public async Task<IActionResult> MarkAsRead(Guid conversationId)
+        {
+            var userId = User.GetUserId();
+            await _messageService.MarkMessagesAsReadAsync(conversationId, userId);
+            return Ok();
+        }
+
+
         // ==============================
         // 4️⃣ ENVOYER UN MESSAGE
         // ==============================

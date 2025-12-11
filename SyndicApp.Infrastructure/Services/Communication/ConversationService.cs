@@ -84,6 +84,8 @@ namespace SyndicApp.Infrastructure.Services.Communication
                         UserId = lastMessage.UserId,
                         Contenu = lastMessage.Contenu,
                         CreatedAt = lastMessage.CreatedAt,
+                        IsRead = lastMessage.IsRead,       
+                        ReadAt = lastMessage.ReadAt,
                         NomExpediteur = participants
                             .FirstOrDefault(p => p.UserId == lastMessage.UserId)
                             ?.NomComplet ?? "Utilisateur"
@@ -97,7 +99,6 @@ namespace SyndicApp.Infrastructure.Services.Communication
 
         public async Task<ConversationDto> CreateConversationAsync(Guid creatorId, CreateConversationRequest request)
         {
-            // 🔥 Assurer qu'il y a au moins 2 participants
             if (!request.ParticipantsIds.Contains(creatorId))
                 request.ParticipantsIds.Add(creatorId);
 
@@ -134,7 +135,8 @@ namespace SyndicApp.Infrastructure.Services.Communication
                 Id = conversation.Id,
                 Sujet = conversation.Sujet,
                 DateCreation = conversation.DateCreation,
-                Participants = participants
+                Participants = participants,
+                DernierMessage = null // 🔥 IMPORTANT : nouvel objet = aucun message envoyé
             };
         }
     }

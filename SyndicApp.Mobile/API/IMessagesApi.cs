@@ -15,6 +15,9 @@ namespace SyndicApp.Mobile.Api.Communication
             int pageSize
         );
 
+        [Post("/api/messages/{conversationId}/read")]
+        Task MarkConversationAsReadAsync(Guid conversationId);
+
         [Post("/api/messages")]
         Task<MessageDto> SendMessageAsync([Body] SendMessageRequest req);
     }

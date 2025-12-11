@@ -22,6 +22,12 @@
 
         [JsonPropertyName("createdAt")]
         public DateTime CreatedAt { get; set; }
+
+        [JsonPropertyName("isRead")]
+        public bool IsRead { get; set; }
+
+        [JsonPropertyName("readAt")]
+        public DateTime? ReadAt { get; set; }
     }
 
 

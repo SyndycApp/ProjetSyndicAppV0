@@ -91,9 +91,8 @@
                                        WidthRequest="22"
                                        HeightRequest="22"
                                        VerticalOptions="Center"
-                                       Source="{Binding DernierMessage.EstVu,
+                                       Source="{Binding EstVu,
                                             Converter={StaticResource MessageSeenIconConverter}}"/>
-
                             </Grid>
 
                         </DataTemplate>

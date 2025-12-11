@@ -10,6 +10,7 @@ namespace SyndicApp.Application.Interfaces.Communication
     public interface IMessageService
     {
         Task<List<MessageDto>> GetMessagesAsync(Guid conversationId, Guid userId);
+        Task MarkMessagesAsReadAsync(Guid conversationId, Guid userId);
 
         Task<PagedMessagesDto> GetMessagesPaged(Guid conversationId, int page, int pageSize);
         Task<MessageDto> SendMessageAsync(

@@ -14,82 +14,96 @@
     <ContentPage.Resources>
         <conv:BubbleAlignmentConverter x:Key="BubbleAlignmentConverter"/>
         <conv:BubbleColorConverter x:Key="BubbleColorConverter"/>
+        <conv:MessageSeenIconConverter x:Key="MessageSeenIconConverter"/>
     </ContentPage.Resources>
 
     <Grid RowDefinitions="Auto,*,Auto">
 
         <!-- 🔵 HEADER -->
         <Grid BackgroundColor="#2563EB"
-      Padding="16"
-      HeightRequest="60"
-      ColumnDefinitions="40,*">
+              Padding="16"
+              HeightRequest="60"
+              ColumnDefinitions="40,*">
 
-    <!-- Bouton retour -->
-    <ImageButton 
-        Source="arrow_back_white.png"
-        WidthRequest="28"
-        HeightRequest="28"
-        BackgroundColor="Transparent"
-        Clicked="OnBackClicked"/>
+            <ImageButton 
+                Source="arrow_back_white.png"
+                WidthRequest="28"
+                HeightRequest="28"
+                BackgroundColor="Transparent"
+                Clicked="OnBackClicked"/>
 
-    <!-- NOM DU DESTINATAIRE -->
-    <Label Grid.Column="1"
-           Text="{Binding NomDestinataire}"
-           FontSize="20"
-           TextColor="black"
-           VerticalOptions="Center"
-           FontAttributes="Bold"
-           LineBreakMode="TailTruncation"/>
-</Grid>
+            <Label Grid.Column="1"
+                   Text="{Binding NomDestinataire}"
+                   FontSize="20"
+                   TextColor="black"
+                   VerticalOptions="Center"
+                   FontAttributes="Bold"
+                   LineBreakMode="TailTruncation"/>
+        </Grid>
 
-
-        <!-- 🟩 LISTE DES MESSAGES (STACKLAYOUT + BINDABLELAYOUT) -->
+        <!-- 🟩 LISTE DES MESSAGES -->
         <ScrollView x:Name="MessagesScrollView"
                     Grid.Row="1"
                     Padding="10"
                     VerticalOptions="FillAndExpand">
 
             <VerticalStackLayout x:Name="MessagesStack"
-                     Spacing="8"
-                     BindableLayout.ItemsSource="{Binding Messages}">
+                                 Spacing="8"
+                                 BindableLayout.ItemsSource="{Binding Messages}">
 
-    <BindableLayout.ItemTemplate>
-        <DataTemplate x:DataType="models:MessageDto">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="models:MessageDto">
 
-            <Frame 
-                CornerRadius="14"
-                HasShadow="False"
-                Padding="10"
-                BackgroundColor="{Binding UserId, Converter={StaticResource BubbleColorConverter}}"
-                HorizontalOptions="{Binding UserId, Converter={StaticResource BubbleAlignmentConverter}}"
-                MaximumWidthRequest="280">
+                        <Grid ColumnDefinitions="*,Auto">
 
-                <VerticalStackLayout Spacing="4">
+                            <!-- 🗨️ BUBBLE -->
+                            <Frame 
+                                Grid.Column="0"
+                                CornerRadius="14"
+                                HasShadow="False"
+                                Padding="10"
+                                BackgroundColor="{Binding UserId, Converter={StaticResource BubbleColorConverter}}"
+                                HorizontalOptions="{Binding UserId, Converter={StaticResource BubbleAlignmentConverter}}"
+                                MaximumWidthRequest="280">
 
-                    <Label 
-                        Text="{Binding Contenu}"
-                        TextColor="Black"
-                        FontSize="16"
-                        LineBreakMode="WordWrap"/>
+                                <VerticalStackLayout Spacing="4">
 
-                    <Label 
-                        Text="{Binding CreatedAt, StringFormat='{0:HH:mm}'}"
-                        FontSize="12"
-                        TextColor="#6B7280"
-                        HorizontalTextAlignment="End"/>
+                                    <Label 
+                                        Text="{Binding Contenu}"
+                                        TextColor="Black"
+                                        FontSize="16"
+                                        LineBreakMode="WordWrap"/>
 
-                </VerticalStackLayout>
+                                    <Grid ColumnDefinitions="*,Auto" Margin="0">
 
-            </Frame>
+                                        <!-- Heure -->
+                                        <Label 
+                                            Text="{Binding CreatedAt, StringFormat='{0:HH:mm}'}"
+                                            FontSize="12"
+                                            TextColor="#6B7280"
+                                            HorizontalTextAlignment="Start"
+                                            Grid.Column="0"/>
 
-        </DataTemplate>
-    </BindableLayout.ItemTemplate>
+                                        <!-- ✔✔ Tick vu / non vu (seulement pour messages envoyés)-->
+                                        <Image 
+                                            Grid.Column="1"
+                                            WidthRequest="18"
+                                            HeightRequest="18"
+                                            IsVisible="{Binding UserId, Converter={StaticResource BubbleAlignmentConverter}, ConverterParameter=IsSender}"
+                                            Source="{Binding IsRead, Converter={StaticResource MessageSeenIconConverter}}"/>
+                                    </Grid>
 
-</VerticalStackLayout>
+                                </VerticalStackLayout>
 
+                            </Frame>
+                        </Grid>
+
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+
+            </VerticalStackLayout>
 
         </ScrollView>
-
 
         <!-- 🟦 BARRE D'ÉCRITURE -->
         <Grid Grid.Row="2"

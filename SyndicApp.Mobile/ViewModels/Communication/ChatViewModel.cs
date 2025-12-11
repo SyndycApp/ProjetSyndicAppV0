@@ -52,6 +52,8 @@ public partial class ChatViewModel : ObservableObject
 
         var list = await _api.GetMessagesAsync(ConversationId);
 
+        await _api.MarkConversationAsReadAsync(ConversationId);
+
         Console.WriteLine($"[DEBUG] App.UserId = {App.UserId}");
         Console.WriteLine($"[DEBUG] Messages count BEFORE CLEAR = {Messages.Count}");
 

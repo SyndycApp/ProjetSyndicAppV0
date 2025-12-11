@@ -14,6 +14,8 @@ namespace SyndicApp.Application.DTOs.Communication
 
         public string NomExpediteur { get; set; } = string.Empty;
 
+        public bool IsRead { get; set; }       
+        public DateTime? ReadAt { get; set; }
         public string Contenu { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; }
     }

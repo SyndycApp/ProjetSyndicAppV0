@@ -17,7 +17,6 @@ namespace SyndicApp.Mobile.ViewModels.Communication
                 if (string.IsNullOrWhiteSpace(DisplayName))
                     return "?";
 
-                // Nettoyage
                 var parts = DisplayName
                     .Trim()
                     .Split(' ', StringSplitOptions.RemoveEmptyEntries);
@@ -25,18 +24,13 @@ namespace SyndicApp.Mobile.ViewModels.Communication
                 if (parts.Length == 0)
                     return "?";
 
-                // 1 mot → 1 lettre
                 if (parts.Length == 1)
                     return parts[0][0].ToString().ToUpper();
 
-                // Plusieurs mots → initiales du premier + dernier
-                string first = parts[0][0].ToString().ToUpper();
-                string last = parts[^1][0].ToString().ToUpper();
-
-                return first + last;
+                return parts[0][0].ToString().ToUpper() +
+                       parts[^1][0].ToString().ToUpper();
             }
         }
-
 
         public ConversationItemViewModel(ConversationDto dto, string name)
         {
@@ -45,6 +39,10 @@ namespace SyndicApp.Mobile.ViewModels.Communication
         }
 
         public MessageDto DernierMessage => Conversation.DernierMessage;
+
+        public bool EstVu => Conversation.DernierMessage?.IsRead ?? false;
+
         public Guid Id => Conversation.Id;
     }
+
 }

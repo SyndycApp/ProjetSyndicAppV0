@@ -3750,6 +3750,9 @@
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.GetMessagesPagedAsync(System.Guid,System.Int32,System.Int32)">
             <inheritdoc />
         </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.MarkConversationAsReadAsync(System.Guid)">
+            <inheritdoc />
+        </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.SendMessageAsync(SyndicApp.Mobile.Models.SendMessageRequest)">
             <inheritdoc />
         </member>
@@ -3757,6 +3760,9 @@
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.SyndicApp#Mobile#Api#Communication#IMessagesApi#GetMessagesPagedAsync(System.Guid,System.Int32,System.Int32)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.SyndicApp#Mobile#Api#Communication#IMessagesApi#MarkConversationAsReadAsync(System.Guid)">
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.SyndicApp#Mobile#Api#Communication#IMessagesApi#SendMessageAsync(SyndicApp.Mobile.Models.SendMessageRequest)">
