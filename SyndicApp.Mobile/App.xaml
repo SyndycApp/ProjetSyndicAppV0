@@ -8,6 +8,7 @@
     <Application.Resources>
         <ResourceDictionary>
 
+            
             <!-- Thèmes / couleurs globales -->
             <Color x:Key="PrimaryColor">#1E63E9</Color>
             <Color x:Key="ErrorColor">#B3261E</Color>
@@ -17,6 +18,11 @@
                 <Setter Property="FontAttributes" Value="Bold" />
             </Style>
 
+            <Style x:Key="KpiValueStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="26"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor" Value="#111827"/>
+            </Style>
             <Style x:Key="Card" TargetType="Frame">
                 <Setter Property="CornerRadius" Value="12" />
                 <Setter Property="Padding" Value="12" />
@@ -37,6 +43,11 @@
                 <Setter Property="BackgroundColor" Value="#F9FAFB"/>
                 <Setter Property="HasShadow" Value="True"/>
                 <Setter Property="BorderColor" Value="#E5E7EB"/>
+            </Style>
+            <Style x:Key="KpiTitleStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="TextColor" Value="#6B7280"/>
+                <Setter Property="FontAttributes" Value="None"/>
             </Style>
 
             <!-- Converter global -->

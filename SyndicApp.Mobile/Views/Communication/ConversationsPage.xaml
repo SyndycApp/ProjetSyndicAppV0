@@ -4,9 +4,14 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:SyndicApp.Mobile.ViewModels.Communication"
+    xmlns:converters="clr-namespace:SyndicApp.Mobile.Converters"
     x:DataType="vm:ConversationsListViewModel"
     Shell.NavBarIsVisible="False"
     BackgroundColor="White">
+
+    <ContentPage.Resources>
+        <converters:MessageSeenIconConverter x:Key="MessageSeenIconConverter" />
+    </ContentPage.Resources>
 
     <Grid RowDefinitions="Auto,*">
 
@@ -26,30 +31,29 @@
                 <DataTemplate x:DataType="vm:ConversationItemViewModel">
 
                     <Grid Padding="12"
-                          ColumnDefinitions="60,*"
-                          BackgroundColor="#F9FAFB"
+                          ColumnDefinitions="60,*,Auto"
+                          BackgroundColor="#ffffffff"
                           Margin="10"
                           HeightRequest="80">
 
                         <!-- AVATAR -->
                         <Frame WidthRequest="50"
-       HeightRequest="50"
-       CornerRadius="25"
-       BackgroundColor="#2563EB"
-       VerticalOptions="Center"
-       HorizontalOptions="Center"
-       Padding="0">
+                               HeightRequest="50"
+                               CornerRadius="25"
+                               BackgroundColor="#2563EB"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"
+                               Padding="0">
 
-    <Label Text="{Binding DisplayInitial}"
-           FontSize="22"
-           FontAttributes="Bold"
-           TextColor="White"
-           HorizontalOptions="Fill"
-           VerticalOptions="Fill"
-           HorizontalTextAlignment="Center"
-           VerticalTextAlignment="Center" />
-</Frame>
-
+                            <Label Text="{Binding DisplayInitial}"
+                                   FontSize="22"
+                                   FontAttributes="Bold"
+                                   TextColor="White"
+                                   HorizontalOptions="Fill"
+                                   VerticalOptions="Fill"
+                                   HorizontalTextAlignment="Center"
+                                   VerticalTextAlignment="Center" />
+                        </Frame>
 
                         <!-- INFOS -->
                         <VerticalStackLayout Grid.Column="1"
@@ -64,13 +68,20 @@
                                    TextColor="#111827"/>
 
                             <!-- DERNIER MESSAGE -->
-                            <Label Text="{Binding DernierMessage.Contenu, TargetNullValue='(Aucun message)'}"
+                            <Label Text="{Binding DernierMessage.Contenu, 
+                                          TargetNullValue='(Aucun message)'}"
                                    FontSize="14"
                                    TextColor="#6B7280"
                                    MaxLines="1"/>
-
                         </VerticalStackLayout>
 
+                        <!-- ICONE VU / NON VU -->
+                        <Image Grid.Column="2"
+                               WidthRequest="22"
+                               HeightRequest="22"
+                               VerticalOptions="Center"
+                               Source="{Binding DernierMessage.EstVu, 
+                                                Converter={StaticResource MessageSeenIconConverter}}"/>
                     </Grid>
 
                 </DataTemplate>
