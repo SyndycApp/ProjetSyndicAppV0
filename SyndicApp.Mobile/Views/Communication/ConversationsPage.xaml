@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:SyndicApp.Mobile.ViewModels.Communication"
     xmlns:converters="clr-namespace:SyndicApp.Mobile.Converters"
+    xmlns:layout="clr-namespace:SyndicApp.Mobile.Views.Layout"
     x:DataType="vm:ConversationsListViewModel"
     Shell.NavBarIsVisible="False"
     BackgroundColor="White">
@@ -13,82 +14,97 @@
         <converters:MessageSeenIconConverter x:Key="MessageSeenIconConverter" />
     </ContentPage.Resources>
 
-    <Grid RowDefinitions="Auto,*">
+    <!-- ========================= DRAWER WRAPPER ========================= -->
+    <layout:RoleDrawerLayout x:Name="DrawerLayout">
 
-        <Label Text="Conversations"
-               FontAttributes="Bold"
-               FontSize="26"
-               TextColor="#111827"
-               Margin="16,16,0,12"/>
+        <!-- ========================= MAIN CONTENT ========================= -->
+        <layout:RoleDrawerLayout.MainContent>
 
-        <CollectionView
-            Grid.Row="1"
-            ItemsSource="{Binding Conversations}"
-            SelectionMode="Single"
-            SelectionChanged="OnConversationSelected">
+            <Grid RowDefinitions="Auto,*">
 
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="vm:ConversationItemViewModel">
+                <!-- HEADER -->
+                <Grid ColumnDefinitions="50,*" Padding="12,16,12,12">
 
-                    <Grid Padding="12"
-                          ColumnDefinitions="60,*,Auto"
-                          BackgroundColor="#ffffffff"
-                          Margin="10"
-                          HeightRequest="80">
+                    <!-- TITLE -->
+                    <Label Grid.Column="1"
+                           Text="Conversations"
+                           FontAttributes="Bold"
+                           FontSize="26"
+                           TextColor="#111827"
+                           VerticalOptions="Center" />
+                </Grid>
 
-                        <!-- AVATAR -->
-                        <Frame WidthRequest="50"
-                               HeightRequest="50"
-                               CornerRadius="25"
-                               BackgroundColor="#2563EB"
-                               VerticalOptions="Center"
-                               HorizontalOptions="Center"
-                               Padding="0">
+                <!-- LISTE DES CONVERSATIONS -->
+                <CollectionView
+                    Grid.Row="1"
+                    ItemsSource="{Binding Conversations}"
+                    SelectionMode="Single"
+                    SelectionChanged="OnConversationSelected">
 
-                            <Label Text="{Binding DisplayInitial}"
-                                   FontSize="22"
-                                   FontAttributes="Bold"
-                                   TextColor="White"
-                                   HorizontalOptions="Fill"
-                                   VerticalOptions="Fill"
-                                   HorizontalTextAlignment="Center"
-                                   VerticalTextAlignment="Center" />
-                        </Frame>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="vm:ConversationItemViewModel">
 
-                        <!-- INFOS -->
-                        <VerticalStackLayout Grid.Column="1"
-                                             Padding="12,0"
-                                             Spacing="4"
-                                             VerticalOptions="Center">
+                            <Grid Padding="12"
+                                  ColumnDefinitions="60,*,Auto"
+                                  BackgroundColor="#FFFFFFFF"
+                                  Margin="10"
+                                  HeightRequest="80">
 
-                            <!-- NOM -->
-                            <Label Text="{Binding DisplayName}"
-                                   FontSize="18"
-                                   FontAttributes="Bold"
-                                   TextColor="#111827"/>
+                                <!-- AVATAR -->
+                                <Frame WidthRequest="50"
+                                       HeightRequest="50"
+                                       CornerRadius="25"
+                                       BackgroundColor="#2563EB"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Center"
+                                       Padding="0">
 
-                            <!-- DERNIER MESSAGE -->
-                            <Label Text="{Binding DernierMessage.Contenu, 
-                                          TargetNullValue='(Aucun message)'}"
-                                   FontSize="14"
-                                   TextColor="#6B7280"
-                                   MaxLines="1"/>
-                        </VerticalStackLayout>
+                                    <Label Text="{Binding DisplayInitial}"
+                                           FontSize="22"
+                                           FontAttributes="Bold"
+                                           TextColor="White"
+                                           HorizontalOptions="Fill"
+                                           VerticalOptions="Fill"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"/>
+                                </Frame>
 
-                        <!-- ICONE VU / NON VU -->
-                        <Image Grid.Column="2"
-                               WidthRequest="22"
-                               HeightRequest="22"
-                               VerticalOptions="Center"
-                               Source="{Binding DernierMessage.EstVu, 
-                                                Converter={StaticResource MessageSeenIconConverter}}"/>
-                    </Grid>
+                                <!-- INFOS -->
+                                <VerticalStackLayout Grid.Column="1"
+                                                     Padding="12,0"
+                                                     Spacing="4"
+                                                     VerticalOptions="Center">
 
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
+                                    <Label Text="{Binding DisplayName}"
+                                           FontSize="18"
+                                           FontAttributes="Bold"
+                                           TextColor="#111827"/>
 
-        </CollectionView>
+                                    <Label Text="{Binding DernierMessage.Contenu, TargetNullValue='(Aucun message)'}"
+                                           FontSize="14"
+                                           TextColor="#6B7280"
+                                           MaxLines="1"/>
+                                </VerticalStackLayout>
 
-    </Grid>
+                                <!-- ICONE VU / NON VU -->
+                                <Image Grid.Column="2"
+                                       WidthRequest="22"
+                                       HeightRequest="22"
+                                       VerticalOptions="Center"
+                                       Source="{Binding DernierMessage.EstVu,
+                                            Converter={StaticResource MessageSeenIconConverter}}"/>
+
+                            </Grid>
+
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+
+            </Grid>
+
+        </layout:RoleDrawerLayout.MainContent>
+
+    </layout:RoleDrawerLayout>
 
 </ContentPage>
