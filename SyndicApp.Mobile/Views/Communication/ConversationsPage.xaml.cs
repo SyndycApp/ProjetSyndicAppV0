@@ -1,5 +1,4 @@
-﻿using SyndicApp.Mobile.Models;
-using SyndicApp.Mobile.ViewModels.Communication;
+﻿using SyndicApp.Mobile.ViewModels.Communication;
 
 namespace SyndicApp.Mobile.Views.Communication;
 
@@ -16,21 +15,14 @@ public partial class ConversationsPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        Console.WriteLine("=== 📌 ConversationsPage.OnAppearing ===");
-        await Vm.LoadConversationsAsync();
-        Console.WriteLine($"🟣 UI After Load → ConvList.Count = {Vm.Conversations.Count}");
-
-        Console.WriteLine("UI Loaded → ConvList visible? " + (ConvList?.Height));
-
-        Console.WriteLine("=== 📌 ConversationsPage END ===");
+        await Vm.LoadConversationsAsync(); 
     }
 
     private async void OnConversationSelected(object sender, SelectionChangedEventArgs e)
     {
-        if (e.CurrentSelection.FirstOrDefault() is not ConversationDto item)
+        if (e.CurrentSelection.FirstOrDefault() is not ConversationItemViewModel item)
             return;
 
-        // IMPORTANT : désélectionner pour permettre un second clic
         ((CollectionView)sender).SelectedItem = null;
 
         await Shell.Current.GoToAsync($"chat?conversationId={item.Id}");

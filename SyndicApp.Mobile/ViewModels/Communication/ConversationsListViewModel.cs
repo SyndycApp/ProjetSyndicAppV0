@@ -2,45 +2,58 @@
 using CommunityToolkit.Mvvm.Input;
 using SyndicApp.Mobile.Api.Communication;
 using SyndicApp.Mobile.Models;
+using Microsoft.Maui.Storage;
 using System.Collections.ObjectModel;
 
-namespace SyndicApp.Mobile.ViewModels.Communication;
-
-public partial class ConversationsListViewModel : ObservableObject
+namespace SyndicApp.Mobile.ViewModels.Communication
 {
-    private readonly IConversationsApi _api;
-
-    public ConversationsListViewModel(IConversationsApi api)
+    public partial class ConversationsListViewModel : ObservableObject
     {
-        _api = api;
-        Conversations = new ObservableCollection<ConversationDto>();
-    }
+        private readonly IConversationsApi _api;
 
-    [ObservableProperty]
-    private ObservableCollection<ConversationDto> conversations;
-
-    [RelayCommand]
-    public async Task LoadConversationsAsync()
-    {
-        Console.WriteLine("=== 📌 LoadConversationsAsync START ===");
-
-        var data = await _api.GetConversationsAsync();
-
-        Console.WriteLine($"🔵 API Returned: {data?.Count()} conversations");
-
-        int index = 0;
-        foreach (var c in data)
+        public ConversationsListViewModel(IConversationsApi api)
         {
-            Console.WriteLine($"   → #{index++} {c.OtherParticipant?.NomComplet} / DernierMsg: {c.DernierMessage?.Contenu}");
+            _api = api;
+            Conversations = new ObservableCollection<ConversationItemViewModel>();
         }
 
-        // Mise à jour UI
-        Conversations.Clear();
-        foreach (var c in data)
-            Conversations.Add(c);
+        [ObservableProperty]
+        private ObservableCollection<ConversationItemViewModel> conversations;
 
-        Console.WriteLine($"🟢 Conversations ObservableCollection Count = {Conversations.Count}");
-        Console.WriteLine("=== 📌 LoadConversationsAsync END ===");
+        private string GetOtherName(ConversationDto conv)
+        {
+            var myId = Preferences.Get("userId", "").Trim();
+
+            var other = conv.Participants
+                .FirstOrDefault(p => p.UserId.ToString().Trim() != myId);
+
+            return other?.NomComplet ?? "Utilisateur";
+        }
+
+        [RelayCommand]
+        public async Task LoadConversationsAsync()
+        {
+            try
+            {
+                var list = await _api.GetConversationsAsync();
+
+                // 🔥 Toujours modifier ObservableCollection dans le MainThread
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    Conversations.Clear();
+
+                    foreach (var c in list)
+                    {
+                        var name = GetOtherName(c);
+                        Conversations.Add(new ConversationItemViewModel(c, name));
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("❌ ERROR LoadConversationsAsync : " + ex);
+            }
+        }
+
     }
-
 }

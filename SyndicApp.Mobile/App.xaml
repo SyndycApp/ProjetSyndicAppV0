@@ -17,6 +17,28 @@
                 <Setter Property="FontAttributes" Value="Bold" />
             </Style>
 
+            <Style x:Key="Card" TargetType="Frame">
+                <Setter Property="CornerRadius" Value="12" />
+                <Setter Property="Padding" Value="12" />
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="Shadow">
+                    <Setter.Value>
+                        <Shadow Brush="#00000022"
+                    Offset="0,4"
+                    Radius="10" />
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            
+            <Style x:Key="KpiCardStyle" TargetType="Frame">
+                <Setter Property="CornerRadius" Value="12"/>
+                <Setter Property="Padding" Value="16"/>
+                <Setter Property="BackgroundColor" Value="#F9FAFB"/>
+                <Setter Property="HasShadow" Value="True"/>
+                <Setter Property="BorderColor" Value="#E5E7EB"/>
+            </Style>
+
             <!-- Converter global -->
             <converters:ProgressConverter x:Key="ProgressConverter" />
             <converters:FirstLetterConverter x:Key="FirstLetterConverter"/>

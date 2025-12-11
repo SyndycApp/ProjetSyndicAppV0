@@ -5,6 +5,7 @@ using Refit;
 using SyndicApp.Mobile.Api;
 using SyndicApp.Mobile.Models;
 using SyndicApp.Mobile.Services;
+using Microsoft.Maui.Storage;
 
 namespace SyndicApp.Mobile.ViewModels.Auth;
 
@@ -60,58 +61,36 @@ public partial class LoginViewModel : ViewModels.Common.BaseViewModel
                 return;
             }
 
-            UserDto me;
-            try
-            {
-                me = await _accountApi.MeAsync();
-            }
-            catch (ApiException ex) when (ex.StatusCode == HttpStatusCode.Unauthorized)
-            {
-                HasError = true;
-                ErrorMessage = "Email ou mot de passe incorrect, ou token non transmis.";
-                return;
-            }
+            // 👉 Récupération du profil utilisateur
+            var me = await _accountApi.MeAsync();
 
+            // 👉 Stockage UserId global
             App.UserId = me.Id.ToString();
+            Preferences.Set("userId", me.Id.ToString());
 
+            Console.WriteLine("🔥 Stockage UserId = " + me.Id);
+
+            // 👉 Rôle utilisateur
             var role = me.Roles?.FirstOrDefault()?.Trim();
             if (!string.IsNullOrEmpty(role))
-            {
                 _tokenStore.SaveRole(role);
-            }
 
-            // ========= REDIRECTION SELON LE RÔLE =========
+            // 👉 Redirection
             var route = GetHomeRouteForRole(role);
             await Shell.Current.GoToAsync(route);
         }
         catch (ApiException ex)
         {
-            if ((int)ex.StatusCode is >= 400 and < 500)
+            if ((int)ex.StatusCode >= 400 && (int)ex.StatusCode < 500)
             {
                 HasError = true;
                 ErrorMessage = "Email ou mot de passe incorrect.";
             }
             else
             {
-                await Shell.Current.DisplayAlert(
-                    $"Erreur {(int)ex.StatusCode}",
-                    ex.Content ?? "Erreur serveur",
-                    "OK");
+                await Shell.Current.DisplayAlert("Erreur API",
+                    ex.Content ?? "Erreur serveur", "OK");
             }
-        }
-        catch (HttpRequestException httpEx)
-        {
-            HasError = true;
-            ErrorMessage = "Impossible de contacter l'API.";
-            await Shell.Current.DisplayAlert(
-                "Réseau",
-                $"Vérifie la BaseUrl (côté app) et que l'API écoute sur 0.0.0.0:5041.\n\nDétail : {httpEx.Message}",
-                "OK");
-        }
-        catch (TaskCanceledException)
-        {
-            HasError = true;
-            ErrorMessage = "Temps d’attente dépassé. API injoignable depuis l’appareil.";
         }
         catch (Exception ex)
         {
@@ -130,28 +109,15 @@ public partial class LoginViewModel : ViewModels.Common.BaseViewModel
 
         var r = role.Trim().ToLowerInvariant();
 
-        if (r.Contains("syndic"))
-            return "//syndic-dashboard";
+        if (r.Contains("syndic")) return "//syndic-dashboard";
+        if (r.Contains("copro")) return "//affectation-user-dashboard";
+        if (r.Contains("gardien")) return "//affectation-maintenance-dashboard";
+        if (r.Contains("locataire")) return "//affectation-user-dashboard";
+        if (r.Contains("prestataire")) return "//prestataires";
 
-        if (r.Contains("copro"))
-            return "//affectation-user-dashboard";
-
-        if (r.Contains("gardien") || r.Contains("maintenance"))
-            return "//affectation-maintenance-dashboard";
-
-        if (r.Contains("locataire"))
-            return "//affectation-user-dashboard";
-
-        if (r.Contains("prestataire"))
-            return "//prestataires";
-
-        // fallback
         return "//syndic-dashboard";
     }
 
-    [RelayCommand]
-    public Task GoToRegisterAsync() => Shell.Current.GoToAsync("//register");
-
-    [RelayCommand]
-    public Task GoToForgotPasswordAsync() => Shell.Current.GoToAsync("//forgot");
+    [RelayCommand] public Task GoToRegisterAsync() => Shell.Current.GoToAsync("//register");
+    [RelayCommand] public Task GoToForgotPasswordAsync() => Shell.Current.GoToAsync("//forgot");
 }

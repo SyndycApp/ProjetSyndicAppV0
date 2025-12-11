@@ -40,7 +40,7 @@ public static class MauiProgram
         builder.UseMicrocharts();
 
         // Choisis la bonne URL :        
-        const string BaseUrl = "http://192.168.11.148:5041";
+        const string BaseUrl = "http://192.168.11.169:5041";
 
 
         // Refit JSON insensible à la casse
@@ -74,7 +74,12 @@ public static class MauiProgram
                    c.BaseAddress = new Uri(BaseUrl);
                    c.Timeout = TimeSpan.FromSeconds(60);
                });
-
+        builder.ConfigureFonts(fonts =>
+        {
+            fonts.AddFont("Poppins-Bold.ttf", "PoppinsBold");
+            fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+            fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+        });
         // Helper protégés (Bearer auto via AuthHeaderHandler)
         void AddSecured<T>() where T : class =>
             builder.Services.AddRefitClient<T>(refitSettings)

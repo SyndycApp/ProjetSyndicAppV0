@@ -7,7 +7,6 @@ using SyndicApp.Infrastructure.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SyndicApp.Infrastructure.Services.Communication
@@ -25,7 +24,7 @@ namespace SyndicApp.Infrastructure.Services.Communication
 
         public async Task<List<ConversationDto>> GetUserConversationsAsync(Guid userId)
         {
-            // 1. Récupération des conversations de l'utilisateur
+            // 1️⃣ Récupération des conversations où l'utilisateur participe
             var conversations = await _db.UserConversations
                 .Where(uc => uc.UserId == userId)
                 .Select(uc => uc.Conversation)
@@ -35,13 +34,13 @@ namespace SyndicApp.Infrastructure.Services.Communication
 
             foreach (var conv in conversations)
             {
-                // 2. Récupérer le dernier message SANS Include()
+                // 2️⃣ Récupérer le dernier message
                 var lastMessage = await _db.Messages
                     .Where(m => m.ConversationId == conv.Id)
                     .OrderByDescending(m => m.CreatedAt)
                     .FirstOrDefaultAsync();
 
-                // 3. Récupérer les participants
+                // 3️⃣ Récupérer les participants
                 var participantIds = await _db.UserConversations
                     .Where(uc => uc.ConversationId == conv.Id)
                     .Select(uc => uc.UserId)
@@ -56,16 +55,32 @@ namespace SyndicApp.Infrastructure.Services.Communication
                     })
                     .ToListAsync();
 
-                // 4. Construire la DTO
+                // 🔥 Si une conversation n'a qu'un seul participant → PROBLÈME UI
+                // On ne la supprime pas, mais on sécurise l'affichage
+                if (participants.Count == 1)
+                {
+                    participants.Add(new ParticipantDto
+                    {
+                        UserId = Guid.Empty,
+                        NomComplet = "Utilisateur"
+                    });
+                }
+
+                // 4️⃣ Construction de la DTO
                 result.Add(new ConversationDto
                 {
                     Id = conv.Id,
                     Sujet = conv.Sujet,
                     DateCreation = conv.DateCreation,
                     Participants = participants,
+
                     DernierMessage = lastMessage == null ? null : new MessageDto
                     {
                         Id = lastMessage.Id,
+
+                        // 🔥🔥 FIX MAJEUR : ConversationId doit être renvoyé !
+                        ConversationId = lastMessage.ConversationId,
+
                         UserId = lastMessage.UserId,
                         Contenu = lastMessage.Contenu,
                         CreatedAt = lastMessage.CreatedAt,
@@ -82,8 +97,12 @@ namespace SyndicApp.Infrastructure.Services.Communication
 
         public async Task<ConversationDto> CreateConversationAsync(Guid creatorId, CreateConversationRequest request)
         {
+            // 🔥 Assurer qu'il y a au moins 2 participants
             if (!request.ParticipantsIds.Contains(creatorId))
                 request.ParticipantsIds.Add(creatorId);
+
+            if (request.ParticipantsIds.Count < 2)
+                throw new Exception("Une conversation doit avoir au moins 2 participants.");
 
             var conversation = new Conversation
             {
@@ -101,20 +120,22 @@ namespace SyndicApp.Infrastructure.Services.Communication
             _db.Conversations.Add(conversation);
             await _db.SaveChangesAsync();
 
+            var participants = await _db.Users
+                .Where(u => request.ParticipantsIds.Contains(u.Id))
+                .Select(u => new ParticipantDto
+                {
+                    UserId = u.Id,
+                    NomComplet = u.FullName
+                })
+                .ToListAsync();
+
             return new ConversationDto
             {
                 Id = conversation.Id,
                 Sujet = conversation.Sujet,
                 DateCreation = conversation.DateCreation,
-                Participants = await _db.Users
-                    .Where(u => request.ParticipantsIds.Contains(u.Id))
-                    .Select(u => new ParticipantDto
-                    {
-                        UserId = u.Id,
-                        NomComplet = u.FullName
-                    }).ToListAsync()
+                Participants = participants
             };
         }
     }
-
 }
