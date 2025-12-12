@@ -81,5 +81,8 @@ public partial class AppShell : Shell
 
         Routing.RegisterRoute("chat", typeof(ChatPage));
         Routing.RegisterRoute("conversations", typeof(ConversationsPage));
+
+        Routing.RegisterRoute("new-conversation", typeof(NewConversationPage));
+
     }
 }

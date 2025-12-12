@@ -121,6 +121,8 @@ builder.Services.AddScoped<IPrestataireService, PrestataireService>();
 
 builder.Services.AddScoped<IConversationService, ConversationService>();
 builder.Services.AddScoped<IMessageService, MessageService>();
+builder.Services.AddScoped<IChatService, ChatService>();
+
 
 // ========== SignalR temps réel ==========
 builder.Services.AddSignalR();  // ✅ ajouté

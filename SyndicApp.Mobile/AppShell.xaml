@@ -13,6 +13,7 @@
     xmlns:viewsBat="clr-namespace:SyndicApp.Mobile.Views.Batiments"
     xmlns:viewsLot="clr-namespace:SyndicApp.Mobile.Views.Lots"
     xmlns:viewsALot="clr-namespace:SyndicApp.Mobile.Views.Affectations"
+    xmlns:views="clr-namespace:SyndicApp.Mobile.Views.Communication"
     xmlns:Incidents="clr-namespace:SyndicApp.Mobile.Views.Incidents"
     xmlns:viewsPers="clr-namespace:SyndicApp.Mobile.Views.Personnel"
     Shell.NavBarIsVisible="False"
@@ -133,5 +134,10 @@
     <ShellContent
         Route="prestataires"
         ContentTemplate="{DataTemplate viewsPers:PrestatairesPage}" />
+
+    <ShellContent
+        Route="chatpage"
+        ContentTemplate="{DataTemplate views:ChatPage}" />
+
 
 </Shell>

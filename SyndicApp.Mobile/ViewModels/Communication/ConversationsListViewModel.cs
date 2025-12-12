@@ -2,7 +2,6 @@
 using CommunityToolkit.Mvvm.Input;
 using SyndicApp.Mobile.Api.Communication;
 using SyndicApp.Mobile.Models;
-using Microsoft.Maui.Storage;
 using System.Collections.ObjectModel;
 
 namespace SyndicApp.Mobile.ViewModels.Communication
@@ -30,6 +29,13 @@ namespace SyndicApp.Mobile.ViewModels.Communication
             return other?.NomComplet ?? "Utilisateur";
         }
 
+
+        [RelayCommand]
+        private async Task NewConversation()
+        {
+            await Shell.Current.GoToAsync("new-conversation");
+        }
+
         [RelayCommand]
         public async Task LoadConversationsAsync()
         {
@@ -37,7 +43,6 @@ namespace SyndicApp.Mobile.ViewModels.Communication
             {
                 var list = await _api.GetConversationsAsync();
 
-                // 🔥 Toujours modifier ObservableCollection dans le MainThread
                 MainThread.BeginInvokeOnMainThread(() =>
                 {
                     Conversations.Clear();

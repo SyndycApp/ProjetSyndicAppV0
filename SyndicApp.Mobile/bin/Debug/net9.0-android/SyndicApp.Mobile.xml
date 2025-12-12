@@ -582,15 +582,51 @@
         <member name="T:SyndicApp.Mobile.ViewModels.Communication.ConversationsListViewModel">
             <inheritdoc/>
             <inheritdoc/>
+            <inheritdoc/>
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Communication.ConversationsListViewModel.Conversations">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Communication.ConversationsListViewModel.conversations"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Communication.ConversationsListViewModel.newConversationCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Communication.ConversationsListViewModel.NewConversationCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Communication.ConversationsListViewModel.NewConversationCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Communication.ConversationsListViewModel.NewConversation"/>.</summary>
         </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Communication.ConversationsListViewModel.loadConversationsCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Communication.ConversationsListViewModel.LoadConversationsCommand"/>.</summary>
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Communication.ConversationsListViewModel.LoadConversationsCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Communication.ConversationsListViewModel.LoadConversationsAsync"/>.</summary>
+        </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Communication.NewConversationViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Communication.NewConversationViewModel.Users">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Communication.NewConversationViewModel.users"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Communication.NewConversationViewModel.loadCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Communication.NewConversationViewModel.LoadCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Communication.NewConversationViewModel.LoadCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Communication.NewConversationViewModel.LoadAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Communication.NewConversationViewModel.openCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Communication.NewConversationViewModel.OpenCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Communication.NewConversationViewModel.OpenCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Communication.NewConversationViewModel.OpenAsync(SyndicApp.Mobile.Models.ChatUserDto)"/>.</summary>
+        </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Communication.UserItemViewModel">
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Communication.UserItemViewModel.UserId">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Communication.UserItemViewModel.userId"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Communication.UserItemViewModel.NomComplet">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Communication.UserItemViewModel.nomComplet"/>
         </member>
         <member name="T:SyndicApp.Mobile.ViewModels.Dashboard.AffectationAnalyticsViewModel">
             <inheritdoc/>
@@ -2382,6 +2418,12 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Conversations">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Conversations" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.UserId">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "UserId" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.NomComplet">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "NomComplet" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CreatedPerMonthChart">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CreatedPerMonthChart" generated properties.</summary>
         </member>
@@ -2825,6 +2867,12 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Conversations">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Conversations" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.UserId">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "UserId" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.NomComplet">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "NomComplet" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CreatedPerMonthChart">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CreatedPerMonthChart" generated properties.</summary>
@@ -3502,6 +3550,27 @@
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIChargesApi.SyndicApp#Mobile#Api#IChargesApi#DeleteAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="T:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIChatApi">
+            <inheritdoc />
+        </member>
+        <member name="P:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIChatApi.Client">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIChatApi.#ctor(System.Net.Http.HttpClient,Refit.IRequestBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIChatApi.GetChatUsers">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIChatApi.OpenConversation(SyndicApp.Mobile.Models.OpenConversationRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIChatApi.SyndicApp#Mobile#Api#Communication#IChatApi#GetChatUsers">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIChatApi.SyndicApp#Mobile#Api#Communication#IChatApi#OpenConversation(SyndicApp.Mobile.Models.OpenConversationRequest)">
             <inheritdoc />
         </member>
         <member name="T:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIConversationsApi">

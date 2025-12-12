@@ -12,7 +12,7 @@
         public Guid ConversationId { get; set; }
 
         [JsonPropertyName("userId")]
-        public Guid UserId { get; set; }   // 🔥 OBLIGATOIRE
+        public Guid UserId { get; set; }   
 
         [JsonPropertyName("contenu")]
         public string Contenu { get; set; }

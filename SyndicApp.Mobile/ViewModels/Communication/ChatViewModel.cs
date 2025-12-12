@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 namespace SyndicApp.Mobile.ViewModels.Communication;
 
 [QueryProperty(nameof(ConversationIdString), "conversationId")]
+[QueryProperty(nameof(NomDestinataire), "name")]
 public partial class ChatViewModel : ObservableObject
 {
     private readonly IMessagesApi _api;
@@ -54,25 +55,10 @@ public partial class ChatViewModel : ObservableObject
 
         await _api.MarkConversationAsReadAsync(ConversationId);
 
-        Console.WriteLine($"[DEBUG] App.UserId = {App.UserId}");
-        Console.WriteLine($"[DEBUG] Messages count BEFORE CLEAR = {Messages.Count}");
-
         Messages.Clear();
         foreach (var msg in list.OrderBy(m => m.CreatedAt))
             Messages.Add(msg);
-
-        Console.WriteLine($"[DEBUG] Messages count AFTER LOAD = {Messages.Count}");
-
-        var currentUserId = Guid.Parse(App.UserId);
-
-        var otherUser = list.FirstOrDefault(m => m.UserId != currentUserId);
-
-
-        NomDestinataire = otherUser != null
-            ? otherUser.NomExpediteur
-            : "Conversation";
     }
-
 
 
     [RelayCommand]

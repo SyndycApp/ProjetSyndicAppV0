@@ -6,12 +6,22 @@ namespace SyndicApp.Infrastructure.Identity.Extensions
     {
         public static Guid GetUserId(this ClaimsPrincipal user)
         {
-            var id = user.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (user == null)
+                return Guid.Empty;
+            string[] keys =
+            {
+                "uid",                          
+                ClaimTypes.NameIdentifier,      
+                "sub"                           
+            };
+            foreach (var key in keys)
+            {
+                var val = user.FindFirst(key)?.Value;
+                if (!string.IsNullOrWhiteSpace(val) && Guid.TryParse(val, out var guid))
+                    return guid;
+            }
 
-            if (string.IsNullOrEmpty(id))
-                throw new Exception("User ID claim manquant dans le token.");
-
-            return Guid.Parse(id);
+            return Guid.Empty;
         }
     }
 }

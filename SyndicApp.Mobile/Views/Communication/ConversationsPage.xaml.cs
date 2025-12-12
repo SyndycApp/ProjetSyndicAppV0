@@ -18,13 +18,16 @@ public partial class ConversationsPage : ContentPage
         await Vm.LoadConversationsAsync(); 
     }
 
-    private async void OnConversationSelected(object sender, SelectionChangedEventArgs e)
-    {
-        if (e.CurrentSelection.FirstOrDefault() is not ConversationItemViewModel item)
-            return;
+   private async void OnConversationSelected(object sender, SelectionChangedEventArgs e)
+{
+    if (e.CurrentSelection.FirstOrDefault() is not ConversationItemViewModel item)
+        return;
 
-        ((CollectionView)sender).SelectedItem = null;
+    ((CollectionView)sender).SelectedItem = null;
 
-        await Shell.Current.GoToAsync($"chat?conversationId={item.Id}");
-    }
+    await Shell.Current.GoToAsync(
+        $"chat?conversationId={item.Id}&name={Uri.EscapeDataString(item.DisplayName)}"
+    );
+}
+
 }

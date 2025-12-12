@@ -17,22 +17,39 @@
     <!-- ========================= DRAWER WRAPPER ========================= -->
     <layout:RoleDrawerLayout x:Name="DrawerLayout">
 
-        <!-- ========================= MAIN CONTENT ========================= -->
         <layout:RoleDrawerLayout.MainContent>
 
             <Grid RowDefinitions="Auto,*">
 
-                <!-- HEADER -->
-                <Grid ColumnDefinitions="50,*" Padding="12,16,12,12">
+                <Grid Padding="12,16,12,12"
+      ColumnDefinitions="Auto,*,Auto"
+      VerticalOptions="Center">
 
-                    <!-- TITLE -->
-                    <Label Grid.Column="1"
-                           Text="Conversations"
-                           FontAttributes="Bold"
-                           FontSize="26"
-                           TextColor="#111827"
-                           VerticalOptions="Center" />
-                </Grid>
+    <!-- ESPACE À GAUCHE (menu / vide) -->
+    <BoxView WidthRequest="40"
+             Grid.Column="0" />
+
+    <!-- TITRE -->
+    <Label Grid.Column="1"
+           Text="Conversations"
+           FontAttributes="Bold"
+           FontSize="26"
+           TextColor="#111827"
+           HorizontalOptions="Center"
+           VerticalOptions="Center" />
+
+    <!-- BOUTON + -->
+    <ImageButton Grid.Column="2"
+                 Source="plus.png"
+                 WidthRequest="40"
+                 HeightRequest="40"
+                 BackgroundColor="Transparent"
+                 HorizontalOptions="End"
+                 VerticalOptions="Center"
+                 Command="{Binding NewConversationCommand}" />
+
+</Grid>
+
 
                 <!-- LISTE DES CONVERSATIONS -->
                 <CollectionView

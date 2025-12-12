@@ -39,11 +39,9 @@ public static class MauiProgram
         builder.UseMauiApp<App>();
         builder.UseMicrocharts();
 
-        // Choisis la bonne URL :        
         const string BaseUrl = "http://192.168.31.157:5041";
 
-
-        // Refit JSON insensible à la casse
+        // Refit JSON settings
         var jsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         var refitSettings = new RefitSettings
         {
@@ -54,8 +52,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<TokenStore>();
         builder.Services.AddTransient<AuthHeaderHandler>();
 
-        // --- Clients Refit ---
-        // Public (pas de bearer)
+        // PUBLIC API (pas de Bearer)
         builder.Services.AddRefitClient<IAuthApi>(refitSettings)
                .ConfigureHttpClient(c =>
                {
@@ -63,24 +60,14 @@ public static class MauiProgram
                    c.Timeout = TimeSpan.FromSeconds(60);
                });
 
-        builder.Services.AddRefitClient<IResidencesApi>()
-    .ConfigureHttpClient(c => c.BaseAddress = new Uri(BaseUrl))
-    .AddHttpMessageHandler<AuthHeaderHandler>();
-
-        // Forgot/reset password → généralement PUBLIC (pour lever ta régression)
         builder.Services.AddRefitClient<IPasswordApi>(refitSettings)
                .ConfigureHttpClient(c =>
                {
                    c.BaseAddress = new Uri(BaseUrl);
                    c.Timeout = TimeSpan.FromSeconds(60);
                });
-        builder.ConfigureFonts(fonts =>
-        {
-            fonts.AddFont("Poppins-Bold.ttf", "PoppinsBold");
-            fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-            fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-        });
-        // Helper protégés (Bearer auto via AuthHeaderHandler)
+
+        // Fonction utilitaire pour ajouter un client sécurisé
         void AddSecured<T>() where T : class =>
             builder.Services.AddRefitClient<T>(refitSettings)
                    .ConfigureHttpClient(c =>
@@ -90,35 +77,8 @@ public static class MauiProgram
                    })
                    .AddHttpMessageHandler<AuthHeaderHandler>();
 
-        builder.Services.AddRefitClient<IBatimentsApi>()
-         .ConfigureHttpClient(c => c.BaseAddress = new Uri(BaseUrl))
-         .AddHttpMessageHandler<AuthHeaderHandler>();
-
-        builder.Services.AddRefitClient<IAppelsApi>(refitSettings)
-                        .ConfigureHttpClient(c => c.BaseAddress = new Uri(BaseUrl))
-                        .AddHttpMessageHandler<AuthHeaderHandler>();
-
-        builder.Services
-                .AddRefitClient<IDevisTravauxApi>()
-                .AddHttpMessageHandler<AuthHeaderHandler>()
-                .ConfigureHttpClient(c => c.BaseAddress = new Uri(BaseUrl));
-
-        builder.Services.AddRefitClient<IPrestatairesApi>()
-            .ConfigureHttpClient(c => c.BaseAddress = new Uri(BaseUrl))
-            .AddHttpMessageHandler<AuthHeaderHandler>();
-
-        builder.Services.AddSingleton<ChatHubService>(sp =>
-        {
-            var tokenStore = sp.GetRequiredService<TokenStore>();
-            var token = tokenStore.GetToken();
-
-            return new ChatHubService(BaseUrl, token);
-        });
-
-        builder.Services.AddSingleton<RoleService>();
-
-        AddSecured<IAccountApi>();   
-        AddSecured<IAppelsApi>();
+        // 🔐 APIs sécurisées
+        AddSecured<IChatApi>();
         AddSecured<IResidencesApi>();
         AddSecured<IBatimentsApi>();
         AddSecured<ILotsApi>();
@@ -126,6 +86,7 @@ public static class MauiProgram
         AddSecured<IAffectationsLotsApi>();
         AddSecured<IAffectationLotsApiAlt>();
         AddSecured<IChargesApi>();
+        AddSecured<IAppelsApi>();
         AddSecured<IPaiementsApi>();
         AddSecured<IIncidentsApi>();
         AddSecured<IDevisTravauxApi>();
@@ -133,18 +94,24 @@ public static class MauiProgram
         AddSecured<IPrestatairesApi>();
         AddSecured<IConversationsApi>();
         AddSecured<IMessagesApi>();
+        AddSecured<IAccountApi>();
 
-        // VMs
+        // SignalR ChatHub
+        builder.Services.AddSingleton<ChatHubService>(sp =>
+        {
+            var token = sp.GetRequiredService<TokenStore>().GetToken();
+            return new ChatHubService(BaseUrl, token);
+        });
+
+        builder.Services.AddSingleton<RoleService>();
+
+        // ViewModels
         builder.Services.AddTransient<LoginViewModel>();
         builder.Services.AddTransient<RegisterViewModel>();
         builder.Services.AddTransient<ForgotPasswordViewModel>();
-        builder.Services.AddTransient<SyndicDashboardViewModel>();
         builder.Services.AddTransient<ResetPasswordViewModel>();
         builder.Services.AddTransient<VerifyCodeViewModel>();
-        builder.Services.AddTransient<AppelsListViewModel>();
-        builder.Services.AddTransient<AppelCreateViewModel>();
-        builder.Services.AddTransient<AppelDetailsViewModel>();
-        builder.Services.AddTransient<AppelEditViewModel>();
+        builder.Services.AddTransient<SyndicDashboardViewModel>();
         builder.Services.AddTransient<ResidencesListViewModel>();
         builder.Services.AddTransient<ResidenceCreateViewModel>();
         builder.Services.AddTransient<ResidenceDetailsViewModel>();
@@ -153,10 +120,10 @@ public static class MauiProgram
         builder.Services.AddTransient<BatimentCreateViewModel>();
         builder.Services.AddTransient<BatimentDetailsViewModel>();
         builder.Services.AddTransient<BatimentEditViewModel>();
+        builder.Services.AddTransient<LotsListViewModel>();
         builder.Services.AddTransient<LotDetailsViewModel>();
         builder.Services.AddTransient<LotEditViewModel>();
         builder.Services.AddTransient<LotCreateViewModel>();
-        builder.Services.AddTransient<LotsListViewModel>();
         builder.Services.AddTransient<AffectationsListViewModel>();
         builder.Services.AddTransient<AffectationCreateViewModel>();
         builder.Services.AddTransient<AffectationDetailsViewModel>();
@@ -169,6 +136,10 @@ public static class MauiProgram
         builder.Services.AddTransient<ChargeCreateViewModel>();
         builder.Services.AddTransient<ChargeEditViewModel>();
         builder.Services.AddTransient<ChargeDetailsViewModel>();
+        builder.Services.AddTransient<AppelsListViewModel>();
+        builder.Services.AddTransient<AppelCreateViewModel>();
+        builder.Services.AddTransient<AppelDetailsViewModel>();
+        builder.Services.AddTransient<AppelEditViewModel>();
         builder.Services.AddTransient<PaiementsListViewModel>();
         builder.Services.AddTransient<PaiementCreateViewModel>();
         builder.Services.AddTransient<PaiementDetailsViewModel>();
@@ -188,24 +159,15 @@ public static class MauiProgram
         builder.Services.AddTransient<PrestataireDetailsViewModel>();
         builder.Services.AddTransient<ChatViewModel>();
         builder.Services.AddTransient<ConversationsListViewModel>();
-
-
-        // Converters (si DI utilisé)
-        builder.Services.AddSingleton<ProgressConverter>(); builder.Services.AddTransient<ResetWithCodeViewModel>();
-
+        builder.Services.AddTransient<NewConversationViewModel>();
 
         // Pages
         builder.Services.AddTransient<LoginPage>();
         builder.Services.AddTransient<RegisterPage>();
         builder.Services.AddTransient<ForgotPasswordPage>();
-        builder.Services.AddTransient<SyndicDashboardPage>();        
-        builder.Services.AddTransient<ResetPasswordPage>();
         builder.Services.AddTransient<VerifyCodePage>();
-        builder.Services.AddTransient<ResetWithCodePage>();
-        builder.Services.AddTransient<AppelsPage>();
-        builder.Services.AddTransient<AppelCreatePage>();
-        builder.Services.AddTransient<AppelDetailsPage>();
-        builder.Services.AddTransient<AppelEditPage>();
+        builder.Services.AddTransient<ResetPasswordPage>();
+        builder.Services.AddTransient<SyndicDashboardPage>();
         builder.Services.AddTransient<DrawerPage>();
         builder.Services.AddTransient<ResidencesPage>();
         builder.Services.AddTransient<ResidenceCreatePage>();
@@ -215,10 +177,10 @@ public static class MauiProgram
         builder.Services.AddTransient<BatimentCreatePage>();
         builder.Services.AddTransient<BatimentDetailsPage>();
         builder.Services.AddTransient<BatimentEditPage>();
+        builder.Services.AddTransient<LotsPage>();
+        builder.Services.AddTransient<LotCreatePage>();
         builder.Services.AddTransient<LotDetailsPage>();
         builder.Services.AddTransient<LotEditPage>();
-        builder.Services.AddTransient<LotCreatePage>();
-        builder.Services.AddTransient<LotsPage>();
         builder.Services.AddTransient<AffectationsPage>();
         builder.Services.AddTransient<AffectationCreatePage>();
         builder.Services.AddTransient<AffectationDetailsPage>();
@@ -231,6 +193,10 @@ public static class MauiProgram
         builder.Services.AddTransient<ChargeCreatePage>();
         builder.Services.AddTransient<ChargeEditPage>();
         builder.Services.AddTransient<ChargeDetailsPage>();
+        builder.Services.AddTransient<AppelsPage>();
+        builder.Services.AddTransient<AppelCreatePage>();
+        builder.Services.AddTransient<AppelDetailsPage>();
+        builder.Services.AddTransient<AppelEditPage>();
         builder.Services.AddTransient<PaiementsPage>();
         builder.Services.AddTransient<PaiementCreatePage>();
         builder.Services.AddTransient<PaiementDetailsPage>();
@@ -250,7 +216,7 @@ public static class MauiProgram
         builder.Services.AddTransient<PrestataireDetailsPage>();
         builder.Services.AddTransient<ChatPage>();
         builder.Services.AddTransient<ConversationsPage>();
-
+        builder.Services.AddTransient<NewConversationPage>();
 
         var app = builder.Build();
         ServiceHelper.Services = app.Services;

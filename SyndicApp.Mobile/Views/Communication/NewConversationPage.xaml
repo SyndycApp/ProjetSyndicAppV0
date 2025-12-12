@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SyndicApp.Mobile.Views.Communication.NewConversationPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:SyndicApp.Mobile.ViewModels.Communication"
+    xmlns:layout="clr-namespace:SyndicApp.Mobile.Views.Layout"
+    xmlns:models="clr-namespace:SyndicApp.Mobile.Models"
+    x:DataType="vm:NewConversationViewModel"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="White">
+
+    <!-- ========================= DRAWER WRAPPER ========================= -->
+    <layout:RoleDrawerLayout x:Name="DrawerLayout">
+
+        <!-- ========================= MAIN CONTENT ========================= -->
+        <layout:RoleDrawerLayout.MainContent>
+
+            <Grid RowDefinitions="Auto,*">
+
+                <!-- ================= HEADER ================= -->
+                <Grid Padding="16"
+                      ColumnDefinitions="Auto,*"
+                      BackgroundColor="#2563EB"
+                      HeightRequest="60">
+
+                    <!-- Bouton retour -->
+                    <ImageButton
+                        Source="arrow_back_white.png"
+                        WidthRequest="28"
+                        HeightRequest="28"
+                        BackgroundColor="Transparent"
+                        VerticalOptions="Center"
+                        Clicked="OnBackClicked"/>
+
+                    <!-- Titre -->
+                    <Label Grid.Column="1"
+                           Text="Nouvelle discussion"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           VerticalOptions="Center"/>
+                </Grid>
+
+                <!-- ================= LISTE UTILISATEURS ================= -->
+                <CollectionView
+                    Grid.Row="1"
+                    ItemsSource="{Binding Users}"
+                    SelectionMode="Single"
+                    SelectionChanged="OnUserSelected"
+                    BackgroundColor="White">
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:ChatUserDto">
+
+                            <Grid Padding="12"
+                                  ColumnDefinitions="60,*"
+                                  HeightRequest="80">
+
+                                <!-- Avatar -->
+                                <Frame WidthRequest="50"
+                                       HeightRequest="50"
+                                       CornerRadius="25"
+                                       BackgroundColor="#2563EB"
+                                       VerticalOptions="Center"
+                                       HorizontalOptions="Center"
+                                       Padding="0">
+
+                                    <Label Text="{Binding NomComplet}"
+                                           FontAttributes="Bold"
+                                           FontSize="18"
+                                           TextColor="White"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"
+                                           LineBreakMode="NoWrap"/>
+                                </Frame>
+
+                                <!-- Infos -->
+                                <VerticalStackLayout Grid.Column="1"
+                                                     VerticalOptions="Center"
+                                                     Padding="12,0"
+                                                     Spacing="4">
+
+                                    <Label Text="{Binding NomComplet}"
+                                           FontSize="18"
+                                           FontAttributes="Bold"
+                                           TextColor="#111827"/>
+
+                                    <Label Text="Commencer une discussion"
+                                           FontSize="14"
+                                           TextColor="#6B7280"/>
+                                </VerticalStackLayout>
+
+                            </Grid>
+
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+
+            </Grid>
+
+        </layout:RoleDrawerLayout.MainContent>
+
+    </layout:RoleDrawerLayout>
+
+</ContentPage>
