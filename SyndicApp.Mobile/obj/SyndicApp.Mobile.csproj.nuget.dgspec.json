@@ -82,6 +82,10 @@
               "target": "Package",
               "version": "[2.1.1, )"
             },
+            "Plugin.Maui.Audio": {
+              "target": "Package",
+              "version": "[4.0.0, )"
+            },
             "Polly.Extensions.Http": {
               "target": "Package",
               "version": "[3.0.0, )"

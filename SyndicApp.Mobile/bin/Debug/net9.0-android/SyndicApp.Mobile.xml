@@ -14,6 +14,18 @@
             Retourne TRUE si la valeur > 0
             </summary>
         </member>
+        <member name="T:SyndicApp.Mobile.Models.MessageDto">
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.Models.MessageDto.IsPlaying">
+            <inheritdoc cref="F:SyndicApp.Mobile.Models.MessageDto.isPlaying"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.Models.MessageDto.AudioProgress">
+            <inheritdoc cref="F:SyndicApp.Mobile.Models.MessageDto.audioProgress"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.Models.MessageDto.AudioTime">
+            <inheritdoc cref="F:SyndicApp.Mobile.Models.MessageDto.audioTime"/>
+        </member>
         <member name="M:SyndicApp.Mobile.Services.TokenStore.GetUserId">
             <summary>
             Retourne l'UserId :
@@ -548,9 +560,12 @@
             <inheritdoc/>
             <inheritdoc/>
             <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
         </member>
-        <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.ConversationIdString">
-            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.conversationIdString"/>
+        <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.IsRecording">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.isRecording"/>
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.Messages">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.messages"/>
@@ -560,6 +575,27 @@
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.NomDestinataire">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.nomDestinataire"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.ConversationIdString">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.conversationIdString"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.playAudioCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.PlayAudioCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.PlayAudioCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.PlayAudioAsync(SyndicApp.Mobile.Models.MessageDto)"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.toggleRecordingCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.ToggleRecordingCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.ToggleRecordingCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.ToggleRecordingAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.stopAndSendAudioCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.StopAndSendAudioCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.StopAndSendAudioCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.StopAndSendAudioAsync"/>.</summary>
         </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.loadMessagesCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.LoadMessagesCommand"/>.</summary>
@@ -2280,6 +2316,15 @@
             for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
             </summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsPlaying">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsPlaying" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.AudioProgress">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "AudioProgress" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.AudioTime">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "AudioTime" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IdParam">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IdParam" generated properties.</summary>
         </member>
@@ -2400,8 +2445,8 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Title">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Title" generated properties.</summary>
         </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ConversationIdString">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ConversationIdString" generated properties.</summary>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsRecording">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsRecording" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Messages">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Messages" generated properties.</summary>
@@ -2411,6 +2456,9 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.NomDestinataire">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "NomDestinataire" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ConversationIdString">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ConversationIdString" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.DisplayName">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "DisplayName" generated properties.</summary>
@@ -2730,6 +2778,15 @@
             for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
             </summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsPlaying">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsPlaying" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.AudioProgress">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "AudioProgress" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.AudioTime">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "AudioTime" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IdParam">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IdParam" generated properties.</summary>
         </member>
@@ -2850,8 +2907,8 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Title">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Title" generated properties.</summary>
         </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ConversationIdString">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ConversationIdString" generated properties.</summary>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsRecording">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsRecording" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Messages">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Messages" generated properties.</summary>
@@ -2861,6 +2918,9 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.NomDestinataire">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "NomDestinataire" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ConversationIdString">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ConversationIdString" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.DisplayName">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "DisplayName" generated properties.</summary>
@@ -3567,10 +3627,28 @@
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIChatApi.OpenConversation(SyndicApp.Mobile.Models.OpenConversationRequest)">
             <inheritdoc />
         </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIChatApi.GetMessages(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIChatApi.SendTextMessage(SyndicApp.Mobile.Models.SendMessageRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIChatApi.SendAudioMessage(System.Guid,Refit.StreamPart)">
+            <inheritdoc />
+        </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIChatApi.SyndicApp#Mobile#Api#Communication#IChatApi#GetChatUsers">
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIChatApi.SyndicApp#Mobile#Api#Communication#IChatApi#OpenConversation(SyndicApp.Mobile.Models.OpenConversationRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIChatApi.SyndicApp#Mobile#Api#Communication#IChatApi#GetMessages(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIChatApi.SyndicApp#Mobile#Api#Communication#IChatApi#SendTextMessage(SyndicApp.Mobile.Models.SendMessageRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIChatApi.SyndicApp#Mobile#Api#Communication#IChatApi#SendAudioMessage(System.Guid,Refit.StreamPart)">
             <inheritdoc />
         </member>
         <member name="T:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIConversationsApi">
@@ -3825,6 +3903,9 @@
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.SendMessageAsync(SyndicApp.Mobile.Models.SendMessageRequest)">
             <inheritdoc />
         </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.SendAudioMessageAsync(System.Guid,Refit.StreamPart)">
+            <inheritdoc />
+        </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.SyndicApp#Mobile#Api#Communication#IMessagesApi#GetMessagesAsync(System.Guid)">
             <inheritdoc />
         </member>
@@ -3835,6 +3916,9 @@
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.SyndicApp#Mobile#Api#Communication#IMessagesApi#SendMessageAsync(SyndicApp.Mobile.Models.SendMessageRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.SyndicApp#Mobile#Api#Communication#IMessagesApi#SendAudioMessageAsync(System.Guid,Refit.StreamPart)">
             <inheritdoc />
         </member>
         <member name="T:Refit.Implementation.Generated.SyndicAppMobileApiIPaiementsApi">

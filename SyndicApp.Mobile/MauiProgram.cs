@@ -1,6 +1,8 @@
 ﻿using Microcharts.Maui;
 using Refit;
 using SyndicApp.Mobile.Api;
+using Plugin.Maui.Audio;
+using SyndicApp.Mobile.Services.Communication;
 using SyndicApp.Mobile.Api.Communication;
 using SyndicApp.Mobile.Converters;
 using SyndicApp.Mobile.Handlers;
@@ -39,7 +41,7 @@ public static class MauiProgram
         builder.UseMauiApp<App>();
         builder.UseMicrocharts();
 
-        const string BaseUrl = "http://192.168.31.157:5041";
+        const string BaseUrl = "http://192.168.1.200:5041";
 
         // Refit JSON settings
         var jsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
@@ -217,6 +219,12 @@ public static class MauiProgram
         builder.Services.AddTransient<ChatPage>();
         builder.Services.AddTransient<ConversationsPage>();
         builder.Services.AddTransient<NewConversationPage>();
+
+
+        builder.Services.AddSingleton<AudioRecorderService>();
+        builder.Services.AddSingleton(AudioManager.Current);
+        builder.Services.AddSingleton<AudioPlayerService>();
+
 
         var app = builder.Build();
         ServiceHelper.Services = app.Services;

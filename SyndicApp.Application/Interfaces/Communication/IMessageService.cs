@@ -17,5 +17,11 @@ namespace SyndicApp.Application.Interfaces.Communication
             Guid userId,
             SendMessageRequest request
         );
+        Task<MessageDto> SendAudioMessageAsync(
+           Guid userId,
+           Guid conversationId,
+           Stream audioStream,
+           string fileName,
+           string contentType);
     }
 }

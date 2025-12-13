@@ -20,5 +20,9 @@ namespace SyndicApp.Mobile.Api.Communication
 
         [Post("/api/messages")]
         Task<MessageDto> SendMessageAsync([Body] SendMessageRequest req);
+
+        [Multipart]
+        [Post("/api/chat/message/audio/{conversationId}")]
+        Task<MessageDto> SendAudioMessageAsync(Guid conversationId, [AliasAs("AudioFile")] StreamPart audioFile);
     }
 }

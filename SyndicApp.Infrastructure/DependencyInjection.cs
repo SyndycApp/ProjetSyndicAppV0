@@ -4,13 +4,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using SyndicApp.Infrastructure;
-using SyndicApp.Infrastructure.Identity;
-using System.Text;
 using SyndicApp.Application.Interfaces;
+using SyndicApp.Application.Interfaces.Communication;
 using SyndicApp.Application.Interfaces.Residences;
+using SyndicApp.Infrastructure;
+using SyndicApp.Infrastructure.Files;
+using SyndicApp.Infrastructure.Identity;
 using SyndicApp.Infrastructure.Services;
+using SyndicApp.Infrastructure.Services.Communication;
 using SyndicApp.Infrastructure.Services.Residences;
+using System.Text;
 
 namespace SyndicApp.Infrastructure
 {
@@ -77,6 +80,9 @@ namespace SyndicApp.Infrastructure
             // Tu pourras aussi injecter ici tes services OTP / Email, si besoin.
             services.AddTransient<IEmailSender, SmtpEmailSender>();
             services.AddTransient<IPasswordService, PasswordService>();
+            services.AddScoped<IMessageService, MessageService>();
+            services.AddScoped<IChatService, ChatService>();
+            services.AddScoped<IAudioStorage, LocalAudioStorage>();
 
             return services;
         }

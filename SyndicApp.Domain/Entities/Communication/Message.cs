@@ -11,8 +11,11 @@ namespace SyndicApp.Domain.Entities.Communication
         public Guid UserId { get; set; }
         public bool IsRead { get; set; } = false;
         public DateTime? ReadAt { get; set; }
-        public string Contenu { get; set; } = string.Empty;
+        public string? Contenu { get; set; } = string.Empty;
 
+        public string? AudioPath { get; set; }   // ex: /uploads/audio/xxx.m4a
+
+        public MessageType Type { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }

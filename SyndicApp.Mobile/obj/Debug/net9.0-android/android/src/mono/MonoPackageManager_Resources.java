@@ -35,6 +35,7 @@ public class MonoPackageManager_Resources {
 		"Microsoft.Maui.Graphics.dll",
 		"MonkeyCache.dll",
 		"MonkeyCache.FileStore.dll",
+		"Plugin.Maui.Audio.dll",
 		"Polly.dll",
 		"Polly.Extensions.Http.dll",
 		"Refit.dll",

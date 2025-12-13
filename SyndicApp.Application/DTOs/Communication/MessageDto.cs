@@ -16,7 +16,11 @@ namespace SyndicApp.Application.DTOs.Communication
 
         public bool IsRead { get; set; }       
         public DateTime? ReadAt { get; set; }
-        public string Contenu { get; set; } = string.Empty;
+        public string? Contenu { get; set; } = string.Empty;
+
+        public string? AudioUrl { get; set; }     
+        public MessageType Type { get; set; }
         public DateTime CreatedAt { get; set; }
     }
+
 }

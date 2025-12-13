@@ -172,7 +172,7 @@ else
 
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseStaticFiles();
 app.MapControllers();
 
 // ========== MAPPING DU HUB SIGNALR ==========

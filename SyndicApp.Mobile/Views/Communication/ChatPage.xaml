@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage 
+<ContentPage
     x:Class="SyndicApp.Mobile.Views.Communication.ChatPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -7,116 +7,136 @@
     xmlns:conv="clr-namespace:SyndicApp.Mobile.Converters"
     xmlns:models="clr-namespace:SyndicApp.Mobile.Models"
     x:DataType="vm:ChatViewModel"
+    x:Name="RootPage"
     Shell.NavBarIsVisible="False"
     BackgroundColor="#F3F4F6">
 
-    <!-- ✅ Converters requis -->
+    <!-- ===================== RESOURCES ===================== -->
     <ContentPage.Resources>
-        <conv:BubbleAlignmentConverter x:Key="BubbleAlignmentConverter"/>
-        <conv:BubbleColorConverter x:Key="BubbleColorConverter"/>
-        <conv:MessageSeenIconConverter x:Key="MessageSeenIconConverter"/>
+        <conv:BubbleAlignmentConverter x:Key="BubbleAlignmentConverter" />
+        <conv:BubbleColorConverter x:Key="BubbleColorConverter" />
+        <conv:MessageSeenIconConverter x:Key="MessageSeenIconConverter" />
     </ContentPage.Resources>
 
     <Grid RowDefinitions="Auto,*,Auto">
 
-        <!-- 🔵 HEADER -->
+        <!-- ===================== HEADER ===================== -->
         <Grid BackgroundColor="#2563EB"
               Padding="16"
               HeightRequest="60"
               ColumnDefinitions="40,*">
 
-            <ImageButton 
+            <ImageButton
                 Source="arrow_back_white.png"
                 WidthRequest="28"
                 HeightRequest="28"
                 BackgroundColor="Transparent"
-                Clicked="OnBackClicked"/>
+                Clicked="OnBackClicked" />
 
             <Label Grid.Column="1"
                    Text="{Binding NomDestinataire}"
                    FontSize="20"
-                   TextColor="black"
+                   TextColor="White"
                    VerticalOptions="Center"
                    FontAttributes="Bold"
-                   LineBreakMode="TailTruncation"/>
+                   LineBreakMode="TailTruncation" />
         </Grid>
 
-        <!-- 🟩 LISTE DES MESSAGES -->
-        <ScrollView x:Name="MessagesScrollView"
-                    Grid.Row="1"
+        <!-- ===================== MESSAGES ===================== -->
+        <ScrollView Grid.Row="1"
+                    x:Name="MessagesScrollView"
                     Padding="10"
                     VerticalOptions="FillAndExpand">
 
-            <VerticalStackLayout x:Name="MessagesStack"
-                                 Spacing="8"
-                                 BindableLayout.ItemsSource="{Binding Messages}">
+            <VerticalStackLayout
+                x:Name="MessagesStack"
+                Spacing="8"
+                BindableLayout.ItemsSource="{Binding Messages}">
 
                 <BindableLayout.ItemTemplate>
                     <DataTemplate x:DataType="models:MessageDto">
 
-                        <Grid ColumnDefinitions="*,Auto">
+                        <Frame CornerRadius="14"
+                               Padding="10"
+                               HasShadow="False"
+                               MaximumWidthRequest="280"
+                               BackgroundColor="{Binding UserId, Converter={StaticResource BubbleColorConverter}}"
+                               HorizontalOptions="{Binding UserId, Converter={StaticResource BubbleAlignmentConverter}}">
 
-                            <!-- 🗨️ BUBBLE -->
-                            <Frame 
-                                Grid.Column="0"
-                                CornerRadius="14"
-                                HasShadow="False"
-                                Padding="10"
-                                BackgroundColor="{Binding UserId, Converter={StaticResource BubbleColorConverter}}"
-                                HorizontalOptions="{Binding UserId, Converter={StaticResource BubbleAlignmentConverter}}"
-                                MaximumWidthRequest="280">
+                            <VerticalStackLayout Spacing="6">
 
-                                <VerticalStackLayout Spacing="4">
+                                <!-- ===================== TEXTE ===================== -->
+                                <Label Text="{Binding Contenu}"
+                                       FontSize="16"
+                                       TextColor="Black"
+                                       LineBreakMode="WordWrap"
+                                       IsVisible="{Binding IsText}" />
 
-                                    <Label 
-                                        Text="{Binding Contenu}"
-                                        TextColor="Black"
-                                        FontSize="16"
-                                        LineBreakMode="WordWrap"/>
+                                <!-- ===================== AUDIO ===================== -->
+                                <Grid IsVisible="{Binding IsAudio}"
+                                      ColumnDefinitions="Auto,*"
+                                      RowDefinitions="Auto,Auto"
+                                      VerticalOptions="Center">
 
-                                    <Grid ColumnDefinitions="*,Auto" Margin="0">
+                                    <!-- ▶️ PLAY / PAUSE -->
+                                    <ImageButton
+                                        Source="play_icon.png"
+                                        WidthRequest="32"
+                                        HeightRequest="32"
+                                        BackgroundColor="Transparent"
+                                        Command="{Binding BindingContext.PlayAudioCommand, Source={x:Reference RootPage}}"
+                                        CommandParameter="{Binding .}" />
 
-                                        <!-- Heure -->
-                                        <Label 
-                                            Text="{Binding CreatedAt, StringFormat='{0:HH:mm}'}"
-                                            FontSize="12"
-                                            TextColor="#6B7280"
-                                            HorizontalTextAlignment="Start"
-                                            Grid.Column="0"/>
+                                    <!-- PROGRESS -->
+                                    <ProgressBar Grid.Column="1"
+                                                 HeightRequest="6"
+                                                 VerticalOptions="Center"
+                                                 Progress="{Binding AudioProgress}"
+                                                 IsVisible="{Binding IsPlaying}" />
 
-                                        <!-- ✔✔ Tick vu / non vu (seulement pour messages envoyés)-->
-                                        <Image 
-                                            Grid.Column="1"
-                                            WidthRequest="18"
-                                            HeightRequest="18"
-                                            IsVisible="{Binding UserId, Converter={StaticResource BubbleAlignmentConverter}, ConverterParameter=IsSender}"
-                                            Source="{Binding IsRead, Converter={StaticResource MessageSeenIconConverter}}"/>
-                                    </Grid>
+                                    <!-- TIME -->
+                                    <Label Grid.Row="1"
+                                           Grid.ColumnSpan="2"
+                                           FontSize="11"
+                                           TextColor="#6B7280"
+                                           Text="{Binding AudioTime}"
+                                           IsVisible="{Binding IsPlaying}" />
+                                </Grid>
 
-                                </VerticalStackLayout>
+                                <!-- ===================== META ===================== -->
+                                <Grid ColumnDefinitions="*,Auto">
 
-                            </Frame>
-                        </Grid>
+                                    <Label Text="{Binding CreatedAt, StringFormat='{0:HH:mm}'}"
+                                           FontSize="12"
+                                           TextColor="#6B7280" />
+
+                                    <Image Grid.Column="1"
+                                           WidthRequest="18"
+                                           HeightRequest="18"
+                                           Source="{Binding IsRead, Converter={StaticResource MessageSeenIconConverter}}" />
+                                </Grid>
+
+                            </VerticalStackLayout>
+                        </Frame>
 
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
 
             </VerticalStackLayout>
-
         </ScrollView>
 
-        <!-- 🟦 BARRE D'ÉCRITURE -->
+        <!-- ===================== INPUT BAR ===================== -->
         <Grid Grid.Row="2"
               Padding="12"
               BackgroundColor="White"
-              ColumnDefinitions="*,Auto">
+              ColumnDefinitions="*,Auto,Auto">
 
-            <Frame 
-                CornerRadius="20"
-                BackgroundColor="#F0F0F0"
-                Padding="12"
-                HeightRequest="48"
-                VerticalOptions="Center">
+            <!-- TEXT -->
+            <Frame CornerRadius="20"
+                   BackgroundColor="#F0F0F0"
+                   Padding="12"
+                   HeightRequest="48"
+                   VerticalOptions="Center">
 
                 <Entry Text="{Binding NewMessage}"
                        Placeholder="Écrire un message…"
@@ -124,23 +144,29 @@
                        TextColor="Black"
                        PlaceholderColor="#9CA3AF"
                        BackgroundColor="Transparent"
-                       VerticalTextAlignment="Center"
-                       HorizontalTextAlignment="Start"
-                       Margin="5,0"
-                       HeightRequest="40"/>
+                       VerticalTextAlignment="Center" />
             </Frame>
 
-            <ImageButton 
-                Grid.Column="1"
-                Source="send_icon.png"
-                WidthRequest="44"
-                HeightRequest="44"
-                BackgroundColor="Transparent"
-                Margin="8,0,0,0"
-                VerticalOptions="Center"
-                Command="{Binding SendMessageCommand}"/>
+            <!-- 🎤 MICRO -->
+            <ImageButton Grid.Column="1"
+                         Source="micro.png"
+                         WidthRequest="44"
+                         HeightRequest="44"
+                         BackgroundColor="Transparent"
+                         Margin="8,0,0,0"
+                         VerticalOptions="Center"
+                         Command="{Binding ToggleRecordingCommand}" />
+
+            <!-- ✉️ SEND -->
+            <ImageButton Grid.Column="2"
+                         Source="send_icon.png"
+                         WidthRequest="44"
+                         HeightRequest="44"
+                         BackgroundColor="Transparent"
+                         Margin="8,0,0,0"
+                         VerticalOptions="Center"
+                         Command="{Binding SendMessageCommand}" />
         </Grid>
 
     </Grid>
-
 </ContentPage>
