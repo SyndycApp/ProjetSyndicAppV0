@@ -125,48 +125,49 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <!-- ===================== INPUT BAR ===================== -->
-        <Grid Grid.Row="2"
-              Padding="12"
-              BackgroundColor="White"
-              ColumnDefinitions="*,Auto,Auto">
+       <!-- ===================== INPUT BAR ===================== -->
+<Grid Grid.Row="2"
+      Padding="12"
+      BackgroundColor="White"
+      ColumnDefinitions="*,Auto,Auto">
 
-            <!-- TEXT -->
-            <Frame CornerRadius="20"
-                   BackgroundColor="#F0F0F0"
-                   Padding="12"
-                   HeightRequest="48"
-                   VerticalOptions="Center">
+    <!-- TEXT -->
+    <Frame CornerRadius="20"
+           BackgroundColor="#F0F0F0"
+           Padding="12"
+           VerticalOptions="Center">
 
-                <Entry Text="{Binding NewMessage}"
-                       Placeholder="Écrire un message…"
-                       FontSize="16"
-                       TextColor="Black"
-                       PlaceholderColor="#9CA3AF"
-                       BackgroundColor="Transparent"
-                       VerticalTextAlignment="Center" />
-            </Frame>
+        <Entry Text="{Binding NewMessage}"
+               Placeholder="Écrire un message…"
+               FontSize="16"
+               TextColor="#111827"
+               PlaceholderColor="#9CA3AF"
+               BackgroundColor="Transparent"
+               MinimumHeightRequest="44"
+               VerticalOptions="Center"/>
+    </Frame>
 
-            <!-- 🎤 MICRO -->
-            <ImageButton Grid.Column="1"
-                         Source="micro.png"
-                         WidthRequest="44"
-                         HeightRequest="44"
-                         BackgroundColor="Transparent"
-                         Margin="8,0,0,0"
-                         VerticalOptions="Center"
-                         Command="{Binding ToggleRecordingCommand}" />
+    <!-- 🎤 MICRO -->
+    <ImageButton Grid.Column="1"
+                 Source="micro.png"
+                 WidthRequest="44"
+                 HeightRequest="44"
+                 BackgroundColor="Transparent"
+                 Margin="8,0,0,0"
+                 VerticalOptions="Center"
+                 Command="{Binding ToggleRecordingCommand}"/>
 
-            <!-- ✉️ SEND -->
-            <ImageButton Grid.Column="2"
-                         Source="send_icon.png"
-                         WidthRequest="44"
-                         HeightRequest="44"
-                         BackgroundColor="Transparent"
-                         Margin="8,0,0,0"
-                         VerticalOptions="Center"
-                         Command="{Binding SendMessageCommand}" />
-        </Grid>
+    <!-- ✉️ SEND -->
+    <ImageButton Grid.Column="2"
+                 Source="send_icon.png"
+                 WidthRequest="44"
+                 HeightRequest="44"
+                 BackgroundColor="Transparent"
+                 Margin="8,0,0,0"
+                 VerticalOptions="Center"
+                 Command="{Binding SendMessageCommand}"/>
+</Grid>
+
 
     </Grid>
 </ContentPage>
