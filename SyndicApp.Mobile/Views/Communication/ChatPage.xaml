@@ -45,8 +45,7 @@
         <!-- ===================== MESSAGES ===================== -->
         <ScrollView Grid.Row="1"
                     x:Name="MessagesScrollView"
-                    Padding="10"
-                    VerticalOptions="FillAndExpand">
+                    Padding="10">
 
             <VerticalStackLayout
                 x:Name="MessagesStack"
@@ -65,36 +64,113 @@
 
                             <VerticalStackLayout Spacing="6">
 
-                                <!-- ===================== TEXTE ===================== -->
+                                <!-- TEXTE -->
                                 <Label Text="{Binding Contenu}"
                                        FontSize="16"
                                        TextColor="Black"
-                                       LineBreakMode="WordWrap"
-                                       IsVisible="{Binding IsText}" />
+                                       IsVisible="{Binding IsText}"
+                                       LineBreakMode="WordWrap" />
 
-                                <!-- ===================== AUDIO ===================== -->
+                                <!-- IMAGE -->
+                                <Border IsVisible="{Binding IsImage}"
+                                        HeightRequest="180"
+                                        WidthRequest="240"
+                                        HorizontalOptions="Center"
+                                        Margin="0,4">
+
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="12"/>
+                                    </Border.StrokeShape>
+
+                                    <Image Source="{Binding AbsoluteFileUrl}"
+                                           Aspect="AspectFill"/>
+                                </Border>
+
+                                <!-- DOCUMENT -->
+                                <Frame IsVisible="{Binding IsDocument}"
+                                       Padding="10"
+                                       CornerRadius="10"
+                                       BackgroundColor="#E5E7EB">
+
+                                    <HorizontalStackLayout Spacing="10">
+
+                                        <Image Source="document_icon.png"
+                                               WidthRequest="28"
+                                               HeightRequest="28"/>
+
+                                        <VerticalStackLayout Spacing="2">
+                                            <Label Text="{Binding FileName}"
+                                                   FontSize="14"
+                                                   FontAttributes="Bold"
+                                                   LineBreakMode="TailTruncation"/>
+                                            <Label Text="{Binding ContentType}"
+                                                   FontSize="11"
+                                                   TextColor="#6B7280"/>
+                                        </VerticalStackLayout>
+
+                                        <ImageButton Source="download.png"
+                                                     WidthRequest="32"
+                                                     HeightRequest="32"
+                                                     Padding="6"
+                                                     Aspect="AspectFit"
+                                                     BackgroundColor="Transparent"
+                                                     Command="{Binding BindingContext.OpenFileCommand, Source={x:Reference RootPage}}"
+                                                     CommandParameter="{Binding .}" />
+                                    </HorizontalStackLayout>
+                                </Frame>
+
+                                <!-- LOCATION -->
+                                <Frame IsVisible="{Binding IsLocation}"
+                                       Padding="10"
+                                       CornerRadius="10"
+                                       BackgroundColor="#DBEAFE">
+
+                                    <HorizontalStackLayout Spacing="10">
+
+                                        <Image Source="location_pin.png"
+                                               WidthRequest="26"
+                                               HeightRequest="26"/>
+
+                                        <VerticalStackLayout Spacing="2">
+                                            <Label Text="Localisation"
+                                                   FontSize="14"
+                                                   FontAttributes="Bold"/>
+                                            <Label Text="{Binding Latitude, StringFormat='Lat: {0:F4}'}"
+                                                   FontSize="11"/>
+                                            <Label Text="{Binding Longitude, StringFormat='Lng: {0:F4}'}"
+                                                   FontSize="11"/>
+                                        </VerticalStackLayout>
+
+                                        <ImageButton Source="map_icon.png"
+                                                     WidthRequest="32"
+                                                     HeightRequest="32"
+                                                     Padding="6"
+                                                     Aspect="AspectFit"
+                                                     BackgroundColor="Transparent"
+                                                     Command="{Binding BindingContext.OpenMapCommand, Source={x:Reference RootPage}}"
+                                                     CommandParameter="{Binding .}" />
+                                    </HorizontalStackLayout>
+                                </Frame>
+
+                                <!-- AUDIO -->
                                 <Grid IsVisible="{Binding IsAudio}"
                                       ColumnDefinitions="Auto,*"
-                                      RowDefinitions="Auto,Auto"
-                                      VerticalOptions="Center">
+                                      RowDefinitions="Auto,Auto">
 
-                                    <!-- ▶️ PLAY / PAUSE -->
-                                    <ImageButton
-                                        Source="play_icon.png"
-                                        WidthRequest="32"
-                                        HeightRequest="32"
-                                        BackgroundColor="Transparent"
-                                        Command="{Binding BindingContext.PlayAudioCommand, Source={x:Reference RootPage}}"
-                                        CommandParameter="{Binding .}" />
+                                    <ImageButton Source="play_icon.png"
+                                                 WidthRequest="32"
+                                                 HeightRequest="32"
+                                                 Padding="6"
+                                                 Aspect="AspectFit"
+                                                 BackgroundColor="Transparent"
+                                                 Command="{Binding BindingContext.PlayAudioCommand, Source={x:Reference RootPage}}"
+                                                 CommandParameter="{Binding .}" />
 
-                                    <!-- PROGRESS -->
                                     <ProgressBar Grid.Column="1"
                                                  HeightRequest="6"
-                                                 VerticalOptions="Center"
                                                  Progress="{Binding AudioProgress}"
                                                  IsVisible="{Binding IsPlaying}" />
 
-                                    <!-- TIME -->
                                     <Label Grid.Row="1"
                                            Grid.ColumnSpan="2"
                                            FontSize="11"
@@ -103,13 +179,11 @@
                                            IsVisible="{Binding IsPlaying}" />
                                 </Grid>
 
-                                <!-- ===================== META ===================== -->
+                                <!-- META -->
                                 <Grid ColumnDefinitions="*,Auto">
-
                                     <Label Text="{Binding CreatedAt, StringFormat='{0:HH:mm}'}"
                                            FontSize="12"
                                            TextColor="#6B7280" />
-
                                     <Image Grid.Column="1"
                                            WidthRequest="18"
                                            HeightRequest="18"
@@ -125,49 +199,82 @@
             </VerticalStackLayout>
         </ScrollView>
 
-       <!-- ===================== INPUT BAR ===================== -->
-<Grid Grid.Row="2"
-      Padding="12"
-      BackgroundColor="White"
-      ColumnDefinitions="*,Auto,Auto">
+        <!-- ===================== INPUT BAR ===================== -->
+        <Grid Grid.Row="2"
+              Padding="12"
+              BackgroundColor="White"
+              ColumnDefinitions="*,Auto,Auto,Auto,Auto,Auto">
 
-    <!-- TEXT -->
-    <Frame CornerRadius="20"
-           BackgroundColor="#F0F0F0"
-           Padding="12"
-           VerticalOptions="Center">
+            <Frame CornerRadius="20"
+                   BackgroundColor="#F0F0F0"
+                   Padding="12">
+                <Entry Text="{Binding NewMessage}"
+                       Placeholder="Écrire un message…"
+                       FontSize="16"
+                       TextColor="#111827"
+                       PlaceholderColor="#9CA3AF"
+                       BackgroundColor="Transparent"/>
+            </Frame>
 
-        <Entry Text="{Binding NewMessage}"
-               Placeholder="Écrire un message…"
-               FontSize="16"
-               TextColor="#111827"
-               PlaceholderColor="#9CA3AF"
-               BackgroundColor="Transparent"
-               MinimumHeightRequest="44"
-               VerticalOptions="Center"/>
-    </Frame>
+            <!-- IMAGE -->
+            <ImageButton Grid.Column="1"
+                         Source="image.png"
+                         WidthRequest="44"
+                         HeightRequest="44"
+                         Padding="8"
+                         Aspect="AspectFit"
+                         BackgroundColor="Transparent"
+                         Command="{Binding SendImageCommand}" />
 
-    <!-- 🎤 MICRO -->
-    <ImageButton Grid.Column="1"
-                 Source="micro.png"
-                 WidthRequest="44"
-                 HeightRequest="44"
-                 BackgroundColor="Transparent"
-                 Margin="8,0,0,0"
-                 VerticalOptions="Center"
-                 Command="{Binding ToggleRecordingCommand}"/>
+            <!-- DOCUMENT -->
+            <ImageButton Grid.Column="2"
+                         Source="attachment.png"
+                         WidthRequest="44"
+                         HeightRequest="44"
+                         Padding="8"
+                         Aspect="AspectFit"
+                         BackgroundColor="Transparent"
+                         Command="{Binding SendDocumentCommand}" />
 
-    <!-- ✉️ SEND -->
-    <ImageButton Grid.Column="2"
-                 Source="send_icon.png"
-                 WidthRequest="44"
-                 HeightRequest="44"
-                 BackgroundColor="Transparent"
-                 Margin="8,0,0,0"
-                 VerticalOptions="Center"
-                 Command="{Binding SendMessageCommand}"/>
-</Grid>
+            <!-- LOCATION -->
+            <ImageButton Grid.Column="3"
+                         Source="location_pin.png"
+                         WidthRequest="44"
+                         HeightRequest="44"
+                         Padding="8"
+                         Aspect="AspectFit"
+                         BackgroundColor="Transparent"
+                         Command="{Binding SendLocationCommand}" />
 
+            <!-- MICRO -->
+            <ImageButton Grid.Column="4"
+                         Source="micro.png"
+                         WidthRequest="44"
+                         HeightRequest="44"
+                         Padding="8"
+                         Aspect="AspectFit"
+                         BackgroundColor="Transparent"
+                         Command="{Binding ToggleRecordingCommand}" />
+
+            <!-- SEND -->
+            <Frame Grid.Column="5"
+                   WidthRequest="44"
+                   HeightRequest="44"
+                   CornerRadius="22"
+                   BackgroundColor="#2563EB"
+                   Padding="0"
+                   HasShadow="False">
+
+                <ImageButton Source="send_icon.png"
+                             WidthRequest="44"
+                             HeightRequest="44"
+                             Padding="8"
+                             Aspect="AspectFit"
+                             BackgroundColor="Transparent"
+                             Command="{Binding SendMessageCommand}" />
+            </Frame>
+
+        </Grid>
 
     </Grid>
 </ContentPage>

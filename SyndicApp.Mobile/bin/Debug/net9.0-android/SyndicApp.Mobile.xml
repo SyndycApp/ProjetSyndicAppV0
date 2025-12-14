@@ -563,6 +563,9 @@
             <inheritdoc/>
             <inheritdoc/>
             <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.IsRecording">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.isRecording"/>
@@ -602,6 +605,24 @@
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.LoadMessagesCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.LoadMessagesAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.sendDocumentCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.SendDocumentCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.SendDocumentCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.SendDocumentAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.sendLocationCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.SendLocationCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.SendLocationCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.SendLocationAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.sendImageCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.SendImageCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.SendImageCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.SendImageAsync"/>.</summary>
         </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.sendMessageCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.SendMessageCommand"/>.</summary>
@@ -3636,6 +3657,15 @@
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIChatApi.SendAudioMessage(System.Guid,Refit.StreamPart)">
             <inheritdoc />
         </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIChatApi.SendDocumentAsync(System.Guid,Refit.StreamPart)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIChatApi.SendImageAsync(System.Guid,Refit.StreamPart)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIChatApi.SendLocationAsync(SyndicApp.Mobile.Models.SendLocationDto)">
+            <inheritdoc />
+        </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIChatApi.SyndicApp#Mobile#Api#Communication#IChatApi#GetChatUsers">
             <inheritdoc />
         </member>
@@ -3649,6 +3679,15 @@
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIChatApi.SyndicApp#Mobile#Api#Communication#IChatApi#SendAudioMessage(System.Guid,Refit.StreamPart)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIChatApi.SyndicApp#Mobile#Api#Communication#IChatApi#SendDocumentAsync(System.Guid,Refit.StreamPart)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIChatApi.SyndicApp#Mobile#Api#Communication#IChatApi#SendImageAsync(System.Guid,Refit.StreamPart)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIChatApi.SyndicApp#Mobile#Api#Communication#IChatApi#SendLocationAsync(SyndicApp.Mobile.Models.SendLocationDto)">
             <inheritdoc />
         </member>
         <member name="T:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIConversationsApi">
@@ -3903,6 +3942,15 @@
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.SendMessageAsync(SyndicApp.Mobile.Models.SendMessageRequest)">
             <inheritdoc />
         </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.SendDocumentAsync(System.Guid,Refit.StreamPart)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.SendImageAsync(System.Guid,Refit.StreamPart)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.SendLocationAsync(SyndicApp.Mobile.Models.SendLocationDto)">
+            <inheritdoc />
+        </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.SendAudioMessageAsync(System.Guid,Refit.StreamPart)">
             <inheritdoc />
         </member>
@@ -3916,6 +3964,15 @@
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.SyndicApp#Mobile#Api#Communication#IMessagesApi#SendMessageAsync(SyndicApp.Mobile.Models.SendMessageRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.SyndicApp#Mobile#Api#Communication#IMessagesApi#SendDocumentAsync(System.Guid,Refit.StreamPart)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.SyndicApp#Mobile#Api#Communication#IMessagesApi#SendImageAsync(System.Guid,Refit.StreamPart)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.SyndicApp#Mobile#Api#Communication#IMessagesApi#SendLocationAsync(SyndicApp.Mobile.Models.SendLocationDto)">
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.SyndicApp#Mobile#Api#Communication#IMessagesApi#SendAudioMessageAsync(System.Guid,Refit.StreamPart)">

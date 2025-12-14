@@ -22,6 +22,17 @@ namespace SyndicApp.Mobile.Api.Communication
         Task<MessageDto> SendMessageAsync([Body] SendMessageRequest req);
 
         [Multipart]
+        [Post("/api/chat/message/document/{conversationId}")]
+        Task<MessageDto> SendDocumentAsync(Guid conversationId, [AliasAs("Document")] StreamPart document);
+
+        [Multipart]
+        [Post("/api/chat/message/image/{conversationId}")]
+        Task<MessageDto> SendImageAsync(Guid conversationId, [AliasAs("Image")] StreamPart image);
+
+        [Post("/api/chat/message/location")]
+        Task<MessageDto> SendLocationAsync([Body] SendLocationDto request);
+
+        [Multipart]
         [Post("/api/chat/message/audio/{conversationId}")]
         Task<MessageDto> SendAudioMessageAsync(Guid conversationId, [AliasAs("AudioFile")] StreamPart audioFile);
     }

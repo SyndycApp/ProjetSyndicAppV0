@@ -1,7 +1,13 @@
 ﻿obj\Debug\net9.0-android\resizetizer\r\drawable\arrow_back_white.png
+obj\Debug\net9.0-android\resizetizer\r\drawable\attachment.png
+obj\Debug\net9.0-android\resizetizer\r\drawable\document_icon.png
 obj\Debug\net9.0-android\resizetizer\r\drawable\double_tick_blue.png
 obj\Debug\net9.0-android\resizetizer\r\drawable\double_tick_grey.png
+obj\Debug\net9.0-android\resizetizer\r\drawable\download.png
+obj\Debug\net9.0-android\resizetizer\r\drawable\image.png
+obj\Debug\net9.0-android\resizetizer\r\drawable\location_pin.png
 obj\Debug\net9.0-android\resizetizer\r\drawable\logo.PNG
+obj\Debug\net9.0-android\resizetizer\r\drawable\map_icon.png
 obj\Debug\net9.0-android\resizetizer\r\drawable\micro.png
 obj\Debug\net9.0-android\resizetizer\r\drawable\pause.png
 obj\Debug\net9.0-android\resizetizer\r\drawable\play_icon.png

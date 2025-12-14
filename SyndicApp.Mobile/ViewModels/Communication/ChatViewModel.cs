@@ -151,6 +151,91 @@ public partial class ChatViewModel : ObservableObject
             Messages.Add(msg);
     }
 
+    // 📄 SEND DOCUMENT
+    [RelayCommand]
+    private async Task SendDocumentAsync()
+    {
+        try
+        {
+            var file = await FilePicker.PickAsync();
+            if (file == null) return;
+
+            await using var stream = await file.OpenReadAsync();
+
+            var part = new StreamPart(
+                stream,
+                file.FileName,
+                file.ContentType ?? "application/octet-stream"
+            );
+
+            var message = await _api.SendDocumentAsync(ConversationId, part);
+            Messages.Add(message);
+        }
+        catch
+        {
+            // volontairement silencieux
+        }
+    }
+
+    // 📍 SEND LOCATION
+    [RelayCommand]
+    private async Task SendLocationAsync()
+    {
+        try
+        {
+            var status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+            if (status != PermissionStatus.Granted)
+                return;
+
+            var location = await Geolocation.GetLastKnownLocationAsync()
+                           ?? await Geolocation.GetLocationAsync(
+                               new GeolocationRequest(GeolocationAccuracy.Medium));
+
+            if (location == null) return;
+
+            var message = await _api.SendLocationAsync(new SendLocationDto
+            {
+                ConversationId = ConversationId,
+                Latitude = location.Latitude,
+                Longitude = location.Longitude
+            });
+
+            Messages.Add(message);
+        }
+        catch
+        {
+            // volontairement silencieux
+        }
+    }
+
+
+    // 📸 SEND IMAGE
+    [RelayCommand]
+    private async Task SendImageAsync()
+    {
+        try
+        {
+            var photo = await MediaPicker.PickPhotoAsync();
+            if (photo == null) return;
+
+            await using var stream = await photo.OpenReadAsync();
+
+            var part = new StreamPart(
+                stream,
+                photo.FileName,
+                "image/jpeg"
+            );
+
+            var message = await _api.SendImageAsync(ConversationId, part);
+            Messages.Add(message);
+        }
+        catch
+        {
+            // volontairement silencieux
+        }
+    }
+
+
     [RelayCommand]
     public async Task SendMessageAsync()
     {
