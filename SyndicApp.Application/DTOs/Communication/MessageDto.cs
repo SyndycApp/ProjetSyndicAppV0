@@ -14,13 +14,21 @@ namespace SyndicApp.Application.DTOs.Communication
 
         public string NomExpediteur { get; set; } = string.Empty;
 
-        public bool IsRead { get; set; }       
+       
+        public bool IsRead { get; set; }
         public DateTime? ReadAt { get; set; }
-        public string? Contenu { get; set; } = string.Empty;
-
-        public string? AudioUrl { get; set; }     
-        public MessageType Type { get; set; }
         public DateTime CreatedAt { get; set; }
+        public string? Contenu { get; set; }
+
+        public string? AudioUrl { get; set; }
+        public string? FileUrl { get; set; }        
+        public string? FileName { get; set; }       
+        public string? ContentType { get; set; }    
+
+        public double? Latitude { get; set; }
+        public double? Longitude { get; set; }
+
+        public MessageType Type { get; set; }
     }
 
 }

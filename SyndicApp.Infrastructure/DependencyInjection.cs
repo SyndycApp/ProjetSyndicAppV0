@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using SyndicApp.Application.Interfaces;
 using SyndicApp.Application.Interfaces.Communication;
 using SyndicApp.Application.Interfaces.Residences;
+using SyndicApp.Application.Services.Communication;
 using SyndicApp.Infrastructure;
 using SyndicApp.Infrastructure.Files;
 using SyndicApp.Infrastructure.Identity;
@@ -83,6 +84,10 @@ namespace SyndicApp.Infrastructure
             services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<IChatService, ChatService>();
             services.AddScoped<IAudioStorage, LocalAudioStorage>();
+            services.AddScoped<IFileStorageService, LocalFileStorageService>();
+            services.AddScoped<IImageMessageService, ImageMessageService>();
+            services.AddScoped<IDocumentMessageService, DocumentMessageService>();
+            services.AddScoped<ILocationMessageService, LocationMessageService>();
 
             return services;
         }

@@ -13,13 +13,22 @@ namespace SyndicApp.API.Controllers.Communication
     {
         private readonly IChatService _chatService;
         private readonly IMessageService _messageService;
+        private readonly IImageMessageService _imageService;
+        private readonly IDocumentMessageService _documentService;
+        private readonly ILocationMessageService _locationService;
 
         public ChatController(
             IChatService chatService,
-            IMessageService messageService)
+            IMessageService messageService,
+            IImageMessageService imageService,
+            IDocumentMessageService documentService,
+            ILocationMessageService locationService)
         {
             _chatService = chatService;
             _messageService = messageService;
+            _imageService = imageService;
+            _documentService = documentService;
+            _locationService = locationService;
         }
 
         // =====================================================
@@ -55,6 +64,72 @@ namespace SyndicApp.API.Controllers.Communication
             });
         }
 
+        [HttpPost("message/image/{conversationId}")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> SendImage(
+      Guid conversationId,
+      [FromForm] SendImageRequest request)
+        {
+            var userId = User.GetUserId();
+            if (userId == Guid.Empty)
+                return Unauthorized();
+
+            if (request.Image == null || request.Image.Length == 0)
+                return BadRequest("Image is required");
+
+            var message = await _imageService.SendImageAsync(
+                userId,
+                conversationId,
+                request.Image.OpenReadStream(),
+                request.Image.FileName,
+                request.Image.ContentType
+            );
+
+            return Ok(message);
+        }
+
+        [HttpPost("message/document/{conversationId}")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> SendDocument(
+    Guid conversationId,
+    [FromForm] SendDocumentRequest request)
+        {
+            var userId = User.GetUserId();
+            if (userId == Guid.Empty)
+                return Unauthorized();
+
+            if (request.Document == null || request.Document.Length == 0)
+                return BadRequest("Document is required");
+
+            var message = await _documentService.SendDocumentAsync(
+                userId,
+                conversationId,
+                request.Document.OpenReadStream(),
+                request.Document.FileName,
+                request.Document.ContentType
+            );
+
+            return Ok(message);
+        }
+
+
+        [HttpPost("message/location")]
+        public async Task<IActionResult> SendLocation(
+           [FromBody] SendLocationRequest request)
+        {
+            var userId = User.GetUserId();
+            if (userId == Guid.Empty)
+                return Unauthorized();
+
+            var message = await _locationService.SendLocationAsync(
+                userId,
+                request.ConversationId,
+                request.Latitude,
+                request.Longitude
+            );
+
+            return Ok(message);
+        }
         // =====================================================
         // 📩 GET MESSAGES (LISTE)
         // =====================================================
@@ -120,32 +195,33 @@ namespace SyndicApp.API.Controllers.Communication
         }
 
         // =====================================================
-        // 🎤 ENVOI MESSAGE AUDIO
+        // 🎤 ENVOI MESSAGE AUDIO (FIX SWAGGER)
         // =====================================================
         [HttpPost("message/audio/{conversationId}")]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> SendAudioMessage(
-    Guid conversationId,
-    [FromForm] IFormFile AudioFile
-)
+            Guid conversationId,
+            [FromForm] SendAudioFormRequest request
+        )
         {
             var userId = User.GetUserId();
             if (userId == Guid.Empty)
-                return Unauthorized("UserId missing from token");
+                return Unauthorized();
 
-            if (AudioFile == null || AudioFile.Length == 0)
-                return BadRequest("AudioFile is required");
+            if (request.AudioFile == null || request.AudioFile.Length == 0)
+                return BadRequest("Audio is required");
 
             var message = await _messageService.SendAudioMessageAsync(
                 userId,
                 conversationId,
-                AudioFile.OpenReadStream(),
-                AudioFile.FileName,
-                AudioFile.ContentType
+                request.AudioFile.OpenReadStream(),
+                request.AudioFile.FileName,
+                request.AudioFile.ContentType
             );
 
             return Ok(message);
         }
+
 
     }
 }

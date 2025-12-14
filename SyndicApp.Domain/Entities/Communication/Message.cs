@@ -15,6 +15,13 @@ namespace SyndicApp.Domain.Entities.Communication
 
         public string? AudioPath { get; set; }   // ex: /uploads/audio/xxx.m4a
 
+        public string? FileUrl { get; set; }        // image / doc / audio
+        public string? FileName { get; set; }       // document
+        public string? ContentType { get; set; }    // image/png, application/pdf…
+
+        public double? Latitude { get; set; }       // localisation
+        public double? Longitude { get; set; }
+
         public MessageType Type { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
