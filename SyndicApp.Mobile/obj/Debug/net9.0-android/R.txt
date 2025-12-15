@@ -3192,7 +3192,7 @@ int drawable notification_template_icon_bg 0x7f0700eb
 int drawable notification_template_icon_low_bg 0x7f0700ec
 int drawable notification_tile_bg 0x7f0700ed
 int drawable notify_panel_notification_icon_bg 0x7f0700ee
-int drawable pause 0x7f0700ef
+int drawable pause_icon 0x7f0700ef
 int drawable play_icon 0x7f0700f0
 int drawable plus 0x7f0700f1
 int drawable send_icon 0x7f0700f2

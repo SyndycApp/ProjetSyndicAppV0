@@ -255,6 +255,22 @@ public partial class ChatViewModel : ObservableObject
         });
     }
 
+    [RelayCommand]
+    private void SeekAudio((MessageDto message, double progress) param)
+    {
+        var (message, progress) = param;
+
+        if (_currentAudioMessage != message)
+            return;
+
+        progress = Math.Clamp(progress, 0, 1);
+
+        _player.SeekTo(progress);
+
+        message.AudioProgress = progress;
+    }
+
+
     // =====================================================
     // 📝 TEXTE
     // =====================================================

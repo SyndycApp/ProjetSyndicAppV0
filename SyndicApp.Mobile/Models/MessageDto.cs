@@ -126,10 +126,11 @@
         // =====================
         [JsonIgnore]
         public ObservableCollection<double> Waveform { get; } =
-        new ObservableCollection<double>(
-             Enumerable.Range(0, 25)
-            .Select(_ => Random.Shared.NextDouble())
+              new ObservableCollection<double>(
+              Enumerable.Range(0, 25).Select(i => (double)i)
         );
+
+        [JsonIgnore] public int WaveBarCount => Waveform.Count;
 
         // =====================
         // 🔊 ÉTAT AUDIO (UI)

@@ -574,6 +574,7 @@
             <inheritdoc/>
             <inheritdoc/>
             <inheritdoc/>
+            <inheritdoc/>
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.IsRecording">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.isRecording"/>
@@ -636,6 +637,12 @@
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.SendImageCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.SendImageAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.seekAudioCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.SeekAudioCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.SeekAudioCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IRelayCommand`1"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.SeekAudio(System.ValueTuple{SyndicApp.Mobile.Models.MessageDto,System.Double})"/>.</summary>
         </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.sendMessageCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.SendMessageCommand"/>.</summary>

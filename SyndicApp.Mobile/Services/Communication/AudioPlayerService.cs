@@ -9,9 +9,21 @@ public class AudioPlayerService
     private CancellationTokenSource? _cts;
 
     public bool IsPlaying => _player?.IsPlaying == true;
+    public long Duration => _player?.Duration ?? 0;
 
     public event Action<long, long>? OnProgress;
     public event Action? OnCompleted;
+
+
+
+    public void SeekTo(double progress)
+    {
+        if (_player == null || !_player.IsPlaying || Duration <= 0)
+            return;
+
+        var position = (int)(Duration * progress);
+        _player.SeekTo(position);
+    }
 
     // =====================
     // ▶️ PLAY

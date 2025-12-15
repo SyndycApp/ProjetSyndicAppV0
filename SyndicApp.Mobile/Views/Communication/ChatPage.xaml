@@ -16,6 +16,8 @@
         <conv:BubbleAlignmentConverter x:Key="BubbleAlignmentConverter" />
         <conv:BubbleColorConverter x:Key="BubbleColorConverter" />
         <conv:MessageSeenIconConverter x:Key="MessageSeenIconConverter" />
+        <conv:PlayPauseIconConverter x:Key="PlayPauseIconConverter" />
+        <conv:WaveBarColorConverter x:Key="WaveBarColorConverter" />
     </ContentPage.Resources>
 
     <Grid RowDefinitions="Auto,*,Auto">
@@ -30,6 +32,7 @@
                 Source="arrow_back_white.png"
                 WidthRequest="28"
                 HeightRequest="28"
+                Aspect="AspectFit"
                 BackgroundColor="Transparent"
                 Clicked="OnBackClicked" />
 
@@ -43,13 +46,11 @@
         </Grid>
 
         <!-- ===================== MESSAGES ===================== -->
-        <ScrollView Grid.Row="1"
-                    x:Name="MessagesScrollView"
-                    Padding="10">
+        <ScrollView Grid.Row="1" x:Name="MessagesScrollView" Padding="10">
 
             <VerticalStackLayout
-                x:Name="MessagesStack"
                 Spacing="8"
+                x:Name="MessagesStack"
                 BindableLayout.ItemsSource="{Binding Messages}">
 
                 <BindableLayout.ItemTemplate>
@@ -68,21 +69,22 @@
                                 <Label Text="{Binding Contenu}"
                                        FontSize="16"
                                        TextColor="Black"
-                                       IsVisible="{Binding IsText}"
-                                       LineBreakMode="WordWrap" />
+                                       LineBreakMode="WordWrap"
+                                       IsVisible="{Binding IsText}" />
 
                                 <!-- IMAGE -->
                                 <Border IsVisible="{Binding IsImage}"
                                         HeightRequest="180"
                                         WidthRequest="240"
-                                        HorizontalOptions="Center"
-                                        Margin="0,4">
+                                        Margin="0,4"
+                                        HorizontalOptions="Center">
                                     <Border.StrokeShape>
                                         <RoundRectangle CornerRadius="12"/>
                                     </Border.StrokeShape>
                                     <Image Source="{Binding AbsoluteFileUrl}"
                                            Aspect="AspectFill"/>
                                 </Border>
+
 
                                 <!-- DOCUMENT -->
                                 <Frame IsVisible="{Binding IsDocument}"
@@ -92,11 +94,12 @@
                                     <HorizontalStackLayout Spacing="10">
                                         <Image Source="document_icon.png"
                                                WidthRequest="28"
-                                               HeightRequest="28"/>
-                                        <VerticalStackLayout Spacing="2">
+                                               HeightRequest="28"
+                                               Aspect="AspectFit"/>
+                                        <VerticalStackLayout>
                                             <Label Text="{Binding FileName}"
-                                                   FontSize="14"
                                                    FontAttributes="Bold"
+                                                   FontSize="14"
                                                    LineBreakMode="TailTruncation"/>
                                             <Label Text="{Binding ContentType}"
                                                    FontSize="11"
@@ -142,21 +145,22 @@
                                     </HorizontalStackLayout>
                                 </Frame>
 
-                                <!-- ===================== AUDIO AVEC WAVES ===================== -->
+                                <!-- ===================== AUDIO WAVES ===================== -->
                                 <Grid IsVisible="{Binding IsAudio}"
                                       ColumnDefinitions="Auto,*"
                                       RowDefinitions="Auto,Auto"
                                       ColumnSpacing="10">
 
-                                    <!-- PLAY -->
-                                    <ImageButton Source="play_icon.png"
-                                                 WidthRequest="32"
-                                                 HeightRequest="32"
-                                                 Padding="6"
-                                                 Aspect="AspectFit"
-                                                 BackgroundColor="Transparent"
-                                                 Command="{Binding BindingContext.PlayAudioCommand, Source={x:Reference RootPage}}"
-                                                 CommandParameter="{Binding .}" />
+                                    <!-- PLAY / PAUSE -->
+                                    <ImageButton
+                                        Source="{Binding IsPlaying, Converter={StaticResource PlayPauseIconConverter}}"
+                                        WidthRequest="32"
+                                        HeightRequest="32"
+                                        Padding="6"
+                                        Aspect="AspectFit"
+                                        BackgroundColor="Transparent"
+                                        Command="{Binding BindingContext.PlayAudioCommand, Source={x:Reference RootPage}}"
+                                        CommandParameter="{Binding .}" />
 
                                     <!-- WAVES -->
                                     <HorizontalStackLayout Grid.Column="1"
@@ -167,25 +171,22 @@
                                         <BindableLayout.ItemTemplate>
                                             <DataTemplate>
                                                 <BoxView WidthRequest="3"
+                                                         HeightRequest="18"
                                                          CornerRadius="2"
-                                                         HeightRequest="{Binding ., Converter={StaticResource MultiplyConverter}, ConverterParameter=40}"
                                                          Color="{Binding Source={RelativeSource AncestorType={x:Type models:MessageDto}},
-                                                                 Path=AudioProgress,
-                                                                 Converter={StaticResource WaveBarColorConverter},
-                                                                 ConverterParameter={Binding .}}" />
+                                                                         Path=AudioProgress,
+                                                                         Converter={StaticResource WaveBarColorConverter},
+                                                                         ConverterParameter={Binding .}}" />
                                             </DataTemplate>
                                         </BindableLayout.ItemTemplate>
-
                                     </HorizontalStackLayout>
 
-                                    <!-- TIME -->
                                     <Label Grid.Row="1"
                                            Grid.ColumnSpan="2"
                                            FontSize="11"
                                            TextColor="#6B7280"
                                            Text="{Binding AudioTime}" />
                                 </Grid>
-
                                 <!-- META -->
                                 <Grid ColumnDefinitions="*,Auto">
                                     <Label Text="{Binding CreatedAt, StringFormat='{0:HH:mm}'}"
@@ -274,7 +275,7 @@
                              BackgroundColor="Transparent"
                              Command="{Binding SendMessageCommand}" />
             </Frame>
-
+            
         </Grid>
 
     </Grid>
