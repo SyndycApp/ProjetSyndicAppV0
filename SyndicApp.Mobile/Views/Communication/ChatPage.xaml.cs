@@ -1,4 +1,5 @@
-﻿using SyndicApp.Mobile.ViewModels.Communication;
+﻿using System.Collections.Specialized;
+using SyndicApp.Mobile.ViewModels.Communication;
 
 namespace SyndicApp.Mobile.Views.Communication;
 
@@ -10,6 +11,9 @@ public partial class ChatPage : ContentPage
     {
         InitializeComponent();
         BindingContext = vm;
+
+        // 🔽 AUTO-SCROLL quand un message est ajouté
+        vm.Messages.CollectionChanged += Messages_CollectionChanged;
     }
 
     protected override async void OnAppearing()
@@ -31,31 +35,38 @@ public partial class ChatPage : ContentPage
         }
     }
 
-    private void ScrollToBottom()
+    // 🔔 Nouveau message → scroll automatique
+    private void Messages_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
-    try
-    {
-        if (MessagesStack == null || MessagesStack.Children.Count == 0)
-            return;
-
-        var last = MessagesStack.Children.Last() as View;
-        if (last == null)
-            return;
-
         MainThread.BeginInvokeOnMainThread(async () =>
         {
-            // On lit la position Y de la vue
-            var y = last.Y;
-
-            await MessagesScrollView.ScrollToAsync(0, y, true);
+            await Task.Delay(100); // laisse le layout finir
+            ScrollToBottom();
         });
     }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"Erreur ScrollToBottom() : {ex}");
-    }
-    }
 
+    private void ScrollToBottom()
+    {
+        try
+        {
+            if (MessagesStack == null || MessagesStack.Children.Count == 0)
+                return;
+
+            var last = MessagesStack.Children.Last() as View;
+            if (last == null)
+                return;
+
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                var y = last.Y;
+                await MessagesScrollView.ScrollToAsync(0, y, true);
+            });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erreur ScrollToBottom() : {ex}");
+        }
+    }
 
     private async void OnBackClicked(object sender, EventArgs e)
     {
