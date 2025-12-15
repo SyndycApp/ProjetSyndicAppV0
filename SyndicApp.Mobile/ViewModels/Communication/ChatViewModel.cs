@@ -10,11 +10,8 @@ namespace SyndicApp.Mobile.ViewModels.Communication;
 
 [QueryProperty(nameof(ConversationIdString), "conversationId")]
 [QueryProperty(nameof(NomDestinataire), "name")]
-
 public partial class ChatViewModel : ObservableObject
 {
-    private const string BaseApiUrl = "http://192.168.1.200:5041";
-
     private readonly IMessagesApi _api;
     private readonly ChatHubService _hub;
     private readonly AudioRecorderService _recorder;
@@ -29,13 +26,14 @@ public partial class ChatViewModel : ObservableObject
     private ObservableCollection<MessageDto> messages = new();
 
     [ObservableProperty]
-    private string newMessage;
+    private string newMessage = string.Empty;
 
     [ObservableProperty]
-    private string nomDestinataire;
+    private string nomDestinataire = string.Empty;
 
     [ObservableProperty]
-    private string conversationIdString;
+    private string conversationIdString = string.Empty;
+
 
     public Guid ConversationId => Guid.Parse(ConversationIdString);
 
@@ -50,12 +48,7 @@ public partial class ChatViewModel : ObservableObject
         _recorder = recorder;
         _player = player;
 
-        _hub.OnMessageReceived += msg =>
-        {
-            if (msg.ConversationId == ConversationId)
-                Messages.Add(msg);
-        };
-
+        // 🎧 AUDIO PLAYER — INCHANGÉ
         _player.OnProgress += (current, duration) =>
         {
             if (_currentAudioMessage == null || duration <= 0)
@@ -77,7 +70,32 @@ public partial class ChatViewModel : ObservableObject
         };
     }
 
-    // ▶️ PLAY AUDIO (PAR MESSAGE)
+    // =====================================================
+    // 🔔 SIGNALR — ABONNEMENT APRES RECEPTION DU CONVERSATION ID
+    // =====================================================
+    partial void OnConversationIdStringChanged(string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+            return;
+
+        _hub.OnMessageReceived -= OnMessageReceived;
+        _hub.OnMessageReceived += OnMessageReceived;
+    }
+
+    private void OnMessageReceived(MessageDto msg)
+    {
+        if (msg.ConversationId != ConversationId)
+            return;
+
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            Messages.Add(msg);
+        });
+    }
+
+    // =====================================================
+    // ▶️ PLAY AUDIO (INCHANGÉ)
+    // =====================================================
     [RelayCommand]
     private async Task PlayAudioAsync(MessageDto message)
     {
@@ -86,7 +104,6 @@ public partial class ChatViewModel : ObservableObject
 
         var url = message.AbsoluteAudioUrl;
 
-        // Stop ancien audio
         if (_currentAudioMessage != null && _currentAudioMessage != message)
         {
             _currentAudioMessage.IsPlaying = false;
@@ -107,7 +124,9 @@ public partial class ChatViewModel : ObservableObject
         }
     }
 
-    // 🎤 RECORD
+    // =====================================================
+    // 🎤 RECORD AUDIO (INCHANGÉ)
+    // =====================================================
     [RelayCommand]
     private async Task ToggleRecordingAsync()
     {
@@ -137,105 +156,108 @@ public partial class ChatViewModel : ObservableObject
         var part = new StreamPart(stream, Path.GetFileName(path), "application/octet-stream");
 
         var message = await _api.SendAudioMessageAsync(ConversationId, part);
-        Messages.Add(message);
+
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            Messages.Add(message);
+        });
     }
 
+    // =====================================================
+    // 📩 LOAD MESSAGES
+    // =====================================================
     [RelayCommand]
     public async Task LoadMessagesAsync()
     {
         var list = await _api.GetMessagesAsync(ConversationId);
         await _api.MarkConversationAsReadAsync(ConversationId);
 
-        Messages.Clear();
-        foreach (var msg in list.OrderBy(m => m.CreatedAt))
-            Messages.Add(msg);
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            Messages.Clear();
+            foreach (var msg in list.OrderBy(m => m.CreatedAt))
+                Messages.Add(msg);
+        });
     }
 
-    // 📄 SEND DOCUMENT
+    // =====================================================
+    // 📄 DOCUMENT
+    // =====================================================
     [RelayCommand]
     private async Task SendDocumentAsync()
     {
-        try
+        var file = await FilePicker.PickAsync();
+        if (file == null) return;
+
+        await using var stream = await file.OpenReadAsync();
+
+        var part = new StreamPart(
+            stream,
+            file.FileName,
+            file.ContentType ?? "application/octet-stream"
+        );
+
+        var message = await _api.SendDocumentAsync(ConversationId, part);
+
+        MainThread.BeginInvokeOnMainThread(() =>
         {
-            var file = await FilePicker.PickAsync();
-            if (file == null) return;
-
-            await using var stream = await file.OpenReadAsync();
-
-            var part = new StreamPart(
-                stream,
-                file.FileName,
-                file.ContentType ?? "application/octet-stream"
-            );
-
-            var message = await _api.SendDocumentAsync(ConversationId, part);
             Messages.Add(message);
-        }
-        catch
-        {
-            // volontairement silencieux
-        }
+        });
     }
 
-    // 📍 SEND LOCATION
+    // =====================================================
+    // 📍 LOCATION
+    // =====================================================
     [RelayCommand]
     private async Task SendLocationAsync()
     {
-        try
+        var status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
+        if (status != PermissionStatus.Granted)
+            return;
+
+        var location = await Geolocation.GetLastKnownLocationAsync()
+                       ?? await Geolocation.GetLocationAsync(
+                           new GeolocationRequest(GeolocationAccuracy.Medium));
+
+        if (location == null) return;
+
+        var message = await _api.SendLocationAsync(new SendLocationDto
         {
-            var status = await Permissions.RequestAsync<Permissions.LocationWhenInUse>();
-            if (status != PermissionStatus.Granted)
-                return;
+            ConversationId = ConversationId,
+            Latitude = location.Latitude,
+            Longitude = location.Longitude
+        });
 
-            var location = await Geolocation.GetLastKnownLocationAsync()
-                           ?? await Geolocation.GetLocationAsync(
-                               new GeolocationRequest(GeolocationAccuracy.Medium));
-
-            if (location == null) return;
-
-            var message = await _api.SendLocationAsync(new SendLocationDto
-            {
-                ConversationId = ConversationId,
-                Latitude = location.Latitude,
-                Longitude = location.Longitude
-            });
-
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
             Messages.Add(message);
-        }
-        catch
-        {
-            // volontairement silencieux
-        }
+        });
     }
 
-
-    // 📸 SEND IMAGE
+    // =====================================================
+    // 📸 IMAGE
+    // =====================================================
     [RelayCommand]
     private async Task SendImageAsync()
     {
-        try
+        var photo = await MediaPicker.PickPhotoAsync();
+        if (photo == null) return;
+
+        await using var stream = await photo.OpenReadAsync();
+
+        var part = new StreamPart(stream, photo.FileName, "image/jpeg");
+
+        var message = await _api.SendImageAsync(ConversationId, part);
+
+        MainThread.BeginInvokeOnMainThread(() =>
         {
-            var photo = await MediaPicker.PickPhotoAsync();
-            if (photo == null) return;
-
-            await using var stream = await photo.OpenReadAsync();
-
-            var part = new StreamPart(
-                stream,
-                photo.FileName,
-                "image/jpeg"
-            );
-
-            var message = await _api.SendImageAsync(ConversationId, part);
             Messages.Add(message);
-        }
-        catch
-        {
-            // volontairement silencieux
-        }
+        });
     }
 
-
+    // =====================================================
+    // 📝 TEXTE
+    // =====================================================
     [RelayCommand]
     public async Task SendMessageAsync()
     {
@@ -247,7 +269,10 @@ public partial class ChatViewModel : ObservableObject
             Contenu = NewMessage
         });
 
-        Messages.Add(sent);
-        NewMessage = string.Empty;
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            Messages.Add(sent);
+            NewMessage = string.Empty;
+        });
     }
 }

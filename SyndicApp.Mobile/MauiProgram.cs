@@ -4,10 +4,8 @@ using SyndicApp.Mobile.Api;
 using Plugin.Maui.Audio;
 using SyndicApp.Mobile.Services.Communication;
 using SyndicApp.Mobile.Api.Communication;
-using SyndicApp.Mobile.Converters;
 using SyndicApp.Mobile.Handlers;
 using SyndicApp.Mobile.Services;
-using SyndicApp.Mobile.Services.Communication;
 using SyndicApp.Mobile.ViewModels.Affectations;
 using SyndicApp.Mobile.ViewModels.Auth;
 using SyndicApp.Mobile.ViewModels.Batiments;
@@ -41,7 +39,7 @@ public static class MauiProgram
         builder.UseMauiApp<App>();
         builder.UseMicrocharts();
 
-        const string BaseUrl = "http://192.168.1.200:5041";
+        const string BaseUrl = "http://192.168.31.157:5041";
 
         // Refit JSON settings
         var jsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };

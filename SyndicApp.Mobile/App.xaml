@@ -8,7 +8,13 @@
     <Application.Resources>
         <ResourceDictionary>
 
-            
+            <Style x:Key="KpiLabelStyle"
+               TargetType="Label">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="TextColor" Value="#6B7280"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+            </Style>
+
             <!-- Thèmes / couleurs globales -->
             <Color x:Key="PrimaryColor">#1E63E9</Color>
             <Color x:Key="ErrorColor">#B3261E</Color>

@@ -17,6 +17,9 @@
         <member name="T:SyndicApp.Mobile.Models.MessageDto">
             <inheritdoc/>
         </member>
+        <member name="P:SyndicApp.Mobile.Models.MessageDto.Type">
+            <inheritdoc cref="F:SyndicApp.Mobile.Models.MessageDto.type"/>
+        </member>
         <member name="P:SyndicApp.Mobile.Models.MessageDto.IsPlaying">
             <inheritdoc cref="F:SyndicApp.Mobile.Models.MessageDto.isPlaying"/>
         </member>
@@ -25,6 +28,11 @@
         </member>
         <member name="P:SyndicApp.Mobile.Models.MessageDto.AudioTime">
             <inheritdoc cref="F:SyndicApp.Mobile.Models.MessageDto.audioTime"/>
+        </member>
+        <member name="M:SyndicApp.Mobile.Models.MessageDto.OnTypeChanged(System.String)">
+            <summary>Executes the logic for when <see cref="P:SyndicApp.Mobile.Models.MessageDto.Type"/> just changed.</summary>
+            <param name="value">The new property value that was set.</param>
+            <remarks>This method is invoked right after the value of <see cref="P:SyndicApp.Mobile.Models.MessageDto.Type"/> is changed.</remarks>
         </member>
         <member name="M:SyndicApp.Mobile.Services.TokenStore.GetUserId">
             <summary>
@@ -581,6 +589,11 @@
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.ConversationIdString">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.conversationIdString"/>
+        </member>
+        <member name="M:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.OnConversationIdStringChanged(System.String)">
+            <summary>Executes the logic for when <see cref="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.ConversationIdString"/> just changed.</summary>
+            <param name="value">The new property value that was set.</param>
+            <remarks>This method is invoked right after the value of <see cref="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.ConversationIdString"/> is changed.</remarks>
         </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.playAudioCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.PlayAudioCommand"/>.</summary>
@@ -2337,6 +2350,9 @@
             for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
             </summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Type">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Type" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsPlaying">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsPlaying" generated properties.</summary>
         </member>
@@ -2751,9 +2767,6 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.NumeroLot">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "NumeroLot" generated properties.</summary>
         </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Type">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Type" generated properties.</summary>
-        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Surface">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Surface" generated properties.</summary>
         </member>
@@ -2798,6 +2811,9 @@
             A helper type providing cached, reusable <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instances
             for all properties generated with <see cref="T:CommunityToolkit.Mvvm.ComponentModel.ObservablePropertyAttribute"/>.
             </summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Type">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Type" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsPlaying">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsPlaying" generated properties.</summary>
@@ -3212,9 +3228,6 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.NumeroLot">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "NumeroLot" generated properties.</summary>
-        </member>
-        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Type">
-            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Type" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Surface">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Surface" generated properties.</summary>

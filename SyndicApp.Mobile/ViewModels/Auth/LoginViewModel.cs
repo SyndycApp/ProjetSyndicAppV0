@@ -118,6 +118,6 @@ public partial class LoginViewModel : ViewModels.Common.BaseViewModel
         return "//syndic-dashboard";
     }
 
-    [RelayCommand] public Task GoToRegisterAsync() => Shell.Current.GoToAsync("//register");
+    [RelayCommand] public Task GoToRegisterAsync() => Shell.Current.GoToAsync("//rejegister");
     [RelayCommand] public Task GoToForgotPasswordAsync() => Shell.Current.GoToAsync("//forgot");
 }

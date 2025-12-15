@@ -38,8 +38,23 @@ namespace SyndicApp.Infrastructure.Services.Communication
                 Id = m.Id,
                 ConversationId = m.ConversationId,
                 UserId = m.UserId,
+
+                // 📝 TEXTE
                 Contenu = m.Contenu,
+
+                // 🔊 AUDIO 
                 AudioUrl = m.AudioPath,
+
+                // 📎 IMAGE / DOCUMENT
+                FileUrl = m.FileUrl,
+                FileName = m.FileName,
+                ContentType = m.ContentType,
+
+                // 📍 LOCALISATION
+                Latitude = m.Latitude,
+                Longitude = m.Longitude,
+
+                // META
                 Type = m.Type,
                 CreatedAt = m.CreatedAt,
                 IsRead = m.IsRead,

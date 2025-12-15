@@ -6,6 +6,9 @@
 
     public partial class MessageDto : ObservableObject
     {
+        // =====================
+        // 🔑 IDENTITÉ
+        // =====================
         public Guid Id { get; set; }
 
         [JsonPropertyName("conversationId")]
@@ -14,6 +17,9 @@
         [JsonPropertyName("userId")]
         public Guid UserId { get; set; }
 
+        // =====================
+        // 📝 TEXTE
+        // =====================
         [JsonPropertyName("contenu")]
         public string? Contenu { get; set; }
 
@@ -47,8 +53,9 @@
         // =====================
         // META
         // =====================
-        [JsonPropertyName("type")]
-        public string Type { get; set; } = "Text";
+        [ObservableProperty]
+        [property: JsonPropertyName("type")]
+        private string type = "Text";
 
         [JsonPropertyName("nomExpediteur")]
         public string NomExpediteur { get; set; } = string.Empty;
@@ -63,33 +70,34 @@
         public DateTime? ReadAt { get; set; }
 
         // =====================
-        // 🎯 HELPERS TYPE (SÉCURISÉS)
+        // 🎯 HELPERS TYPE (ROBUSTES)
         // =====================
         [JsonIgnore]
         public bool IsText =>
-            Type == "Text" && !string.IsNullOrWhiteSpace(Contenu);
+            Type?.Equals("Text", StringComparison.OrdinalIgnoreCase) == true
+            && !string.IsNullOrWhiteSpace(Contenu);
 
         [JsonIgnore]
         public bool IsAudio =>
-            Type == "Audio" && !string.IsNullOrWhiteSpace(AudioUrl);
+            Type?.Equals("Audio", StringComparison.OrdinalIgnoreCase) == true
+            && !string.IsNullOrWhiteSpace(AudioUrl);
 
         [JsonIgnore]
         public bool IsImage =>
-            Type == "Image"
+            Type?.Equals("Image", StringComparison.OrdinalIgnoreCase) == true
             && !string.IsNullOrWhiteSpace(FileUrl)
-            && ContentType != null
-            && ContentType.StartsWith("image/");
+            && ContentType?.StartsWith("image/", StringComparison.OrdinalIgnoreCase) == true;
 
         [JsonIgnore]
         public bool IsDocument =>
-            Type == "Document"
+            Type?.Equals("Document", StringComparison.OrdinalIgnoreCase) == true
             && !string.IsNullOrWhiteSpace(FileUrl)
             && ContentType != null
-            && !ContentType.StartsWith("image/");
+            && !ContentType.StartsWith("image/", StringComparison.OrdinalIgnoreCase);
 
         [JsonIgnore]
         public bool IsLocation =>
-            Type == "Location"
+            Type?.Equals("Location", StringComparison.OrdinalIgnoreCase) == true
             && Latitude.HasValue
             && Longitude.HasValue;
 
@@ -100,26 +108,41 @@
         public string AbsoluteAudioUrl =>
             string.IsNullOrWhiteSpace(AudioUrl)
                 ? string.Empty
-                : AudioUrl.StartsWith("http")
+                : AudioUrl.StartsWith("http", StringComparison.OrdinalIgnoreCase)
                     ? AudioUrl
-                    : $"http://192.168.1.200:5041{AudioUrl}";
+                    : $"http://192.168.31.157:5041{AudioUrl}";
 
         [JsonIgnore]
         public string AbsoluteFileUrl =>
             string.IsNullOrWhiteSpace(FileUrl)
                 ? string.Empty
-                : FileUrl.StartsWith("http")
+                : FileUrl.StartsWith("http", StringComparison.OrdinalIgnoreCase)
                     ? FileUrl
-                    : $"http://192.168.1.200:5041{FileUrl}";
+                    : $"http://192.168.31.157:5041{FileUrl}";
 
         // =====================
-        // 🔊 ÉTAT AUDIO (INTACT)
+        // 🔊 ÉTAT AUDIO (UI)
         // =====================
         [ObservableProperty] private bool isPlaying;
         [ObservableProperty] private double audioProgress;
         [ObservableProperty] private string audioTime = "00:00";
+
+        // =====================
+        // 🔁 FORCE RAFRAÎCHISSEMENT UI
+        // =====================
+        partial void OnTypeChanged(string value)
+        {
+            OnPropertyChanged(nameof(IsText));
+            OnPropertyChanged(nameof(IsAudio));
+            OnPropertyChanged(nameof(IsImage));
+            OnPropertyChanged(nameof(IsDocument));
+            OnPropertyChanged(nameof(IsLocation));
+        }
     }
 
+    // =====================
+    // DTO CREATION TEXTE
+    // =====================
     public class CreateMessageDto
     {
         public Guid ConversationId { get; set; }

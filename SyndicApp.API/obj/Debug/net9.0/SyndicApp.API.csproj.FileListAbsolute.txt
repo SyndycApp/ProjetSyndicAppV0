@@ -199,3 +199,6 @@ C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\obj\Debug\net
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\obj\Debug\net9.0\compressed\u0gtec37bm-7cktyzrl8g.gz
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\obj\Debug\net9.0\compressed\0iy6afcxtd-cjh9a5g7mm.gz
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\obj\Debug\net9.0\compressed\pq6ua74yox-01vxbea9nu.gz
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\obj\Debug\net9.0\compressed\23lafcepq7-mt1nd0vxwe.gz
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\obj\Debug\net9.0\compressed\l61dx2q46q-dflsy44tjb.gz
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\obj\Debug\net9.0\compressed\b2abjxqsew-d8lsj4bomp.gz
