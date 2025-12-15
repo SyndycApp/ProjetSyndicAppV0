@@ -1450,12 +1450,3 @@ C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\bin\Debug\
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\bin\Debug\net9.0-android\Microsoft.VisualStudio.DesignTools.TapContract.dll
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\bin\Debug\net9.0-android\Microsoft.VisualStudio.DesignTools.XamlTapContract.dll
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\SyndicAp.50C67D6C.Up2Date
-C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\typemaps.x86_64.ll
-C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\environment.x86_64.ll
-C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\compressed_assemblies.x86_64.ll
-C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\typemaps.x86_64.o
-C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\environment.x86_64.o
-C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\compressed_assemblies.x86_64.o
-C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\marshal_methods.x86_64.o
-C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\android\jni_remap.x86_64.o
-C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\app_shared_libraries\x86_64\libxamarin-app.so

@@ -2,6 +2,7 @@
 {
     using CommunityToolkit.Mvvm.ComponentModel;
     using System;
+    using System.Collections.ObjectModel;
     using System.Text.Json.Serialization;
 
     public partial class MessageDto : ObservableObject
@@ -110,7 +111,7 @@
                 ? string.Empty
                 : AudioUrl.StartsWith("http", StringComparison.OrdinalIgnoreCase)
                     ? AudioUrl
-                    : $"http://192.168.31.157:5041{AudioUrl}";
+                    : $"http://10.75.158.32:5041{AudioUrl}";
 
         [JsonIgnore]
         public string AbsoluteFileUrl =>
@@ -118,7 +119,17 @@
                 ? string.Empty
                 : FileUrl.StartsWith("http", StringComparison.OrdinalIgnoreCase)
                     ? FileUrl
-                    : $"http://192.168.31.157:5041{FileUrl}";
+                    : $"http://10.75.158.32:5041{FileUrl}";
+
+        // =====================
+        // 🔊 WAVE AUDIO (UI)
+        // =====================
+        [JsonIgnore]
+        public ObservableCollection<double> Waveform { get; } =
+        new ObservableCollection<double>(
+             Enumerable.Range(0, 25)
+            .Select(_ => Random.Shared.NextDouble())
+        );
 
         // =====================
         // 🔊 ÉTAT AUDIO (UI)

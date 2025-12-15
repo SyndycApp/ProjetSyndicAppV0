@@ -62,6 +62,9 @@
             <converters:BubbleColorConverter x:Key="BubbleColorConverter" />
             <converters:BubbleAlignmentConverter x:Key="BubbleAlignmentConverter" />
             <converters:MessageSeenIconConverter x:Key="MessageSeenIconConverter"/>
+            <converters:WaveBarColorConverter x:Key="WaveBarColorConverter" />
+            <converters:MultiplyConverter x:Key="MultiplyConverter" />
+
 
         </ResourceDictionary>
     </Application.Resources>
