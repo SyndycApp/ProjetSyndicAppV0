@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SyndicApp.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c10b83ba20096b6a7237759a43be2329ad79670b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+05475c0c012d50c20dbaaf693f3a9fe4a961dc0c")]
 [assembly: System.Reflection.AssemblyProductAttribute("SyndicApp.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SyndicApp.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

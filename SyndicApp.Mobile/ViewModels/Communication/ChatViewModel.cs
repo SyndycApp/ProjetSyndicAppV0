@@ -280,6 +280,39 @@ public partial class ChatViewModel : ObservableObject
         await Launcher.OpenAsync(url);
     }
 
+    [RelayCommand]
+    private async Task OpenFileAsync(MessageDto message)
+    {
+        if (message == null || string.IsNullOrWhiteSpace(message.AbsoluteFileUrl))
+            return;
+
+        try
+        {
+            var fileName = string.IsNullOrWhiteSpace(message.FileName)
+                ? Path.GetFileName(message.AbsoluteFileUrl)
+                : message.FileName;
+
+            var localPath = Path.Combine(FileSystem.CacheDirectory, fileName);
+
+            // ⬇️ Télécharger le fichier
+            using var http = new HttpClient();
+            var bytes = await http.GetByteArrayAsync(message.AbsoluteFileUrl);
+            await File.WriteAllBytesAsync(localPath, bytes);
+
+            // 📂 Ouvrir le fichier avec l’app système
+            await Launcher.OpenAsync(new OpenFileRequest
+            {
+                File = new ReadOnlyFile(localPath)
+            });
+        }
+        catch (Exception ex)
+        {
+            await Shell.Current.DisplayAlert(
+                "Erreur",
+                "Impossible d’ouvrir le fichier.",
+                "OK");
+        }
+    }
 
     // =====================================================
     // 📝 TEXTE

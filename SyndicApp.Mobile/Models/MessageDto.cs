@@ -184,6 +184,7 @@
         ? $"https://www.google.com/maps/search/?api=1&query={Latitude},{Longitude}"
         : string.Empty;
 
+
         // =====================
         // 🔁 FORCE RAFRAÎCHISSEMENT UI
         // =====================
