@@ -116,77 +116,97 @@
                                     </HorizontalStackLayout>
                                 </Frame>
 
-                                <!-- LOCATION -->
+                                <!-- ===================== LOCATION (STATIC MAP) ===================== -->
                                 <Frame IsVisible="{Binding IsLocation}"
-                                       Padding="10"
-                                       CornerRadius="10"
-                                       BackgroundColor="#DBEAFE">
-                                    <HorizontalStackLayout Spacing="10">
-                                        <Image Source="location_pin.png"
-                                               WidthRequest="26"
-                                               HeightRequest="26"/>
-                                        <VerticalStackLayout Spacing="2">
-                                            <Label Text="Localisation"
-                                                   FontSize="14"
-                                                   FontAttributes="Bold"/>
-                                            <Label Text="{Binding Latitude, StringFormat='Lat: {0:F4}'}"
-                                                   FontSize="11"/>
-                                            <Label Text="{Binding Longitude, StringFormat='Lng: {0:F4}'}"
-                                                   FontSize="11"/>
-                                        </VerticalStackLayout>
-                                        <ImageButton Source="map_icon.png"
-                                                     WidthRequest="32"
-                                                     HeightRequest="32"
-                                                     Padding="6"
-                                                     Aspect="AspectFit"
-                                                     BackgroundColor="Transparent"
-                                                     Command="{Binding BindingContext.OpenMapCommand, Source={x:Reference RootPage}}"
-                                                     CommandParameter="{Binding .}" />
-                                    </HorizontalStackLayout>
-                                </Frame>
+       Padding="0"
+       CornerRadius="12"
+       HasShadow="False"
+       BackgroundColor="#DBEAFE"
+       WidthRequest="240">
+
+    <Grid RowDefinitions="Auto,Auto">
+
+        <!-- MAP IMAGE -->
+        <Image Source="{Binding StaticMapUrl}"
+               HeightRequest="160"
+               Aspect="AspectFill"
+               BackgroundColor="#E5E7EB">
+
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer
+                    Command="{Binding BindingContext.OpenMapCommand, Source={x:Reference RootPage}}"
+                    CommandParameter="{Binding ExternalMapUrl}" />
+            </Image.GestureRecognizers>
+
+        </Image>
+
+        <!-- FOOTER -->
+        <Grid Grid.Row="1"
+              Padding="8"
+              ColumnDefinitions="Auto,*">
+
+            <Image Source="location_pin.png"
+                   WidthRequest="18"
+                   HeightRequest="18"
+                   VerticalOptions="Center"/>
+
+            <Label Grid.Column="1"
+                   Text="Position partagée"
+                   FontSize="12"
+                   TextColor="#1E3A8A"
+                   VerticalOptions="Center"/>
+
+        </Grid>
+
+    </Grid>
+</Frame>
+
 
                                 <!-- ===================== AUDIO WAVES ===================== -->
                                 <Grid IsVisible="{Binding IsAudio}"
-                                      ColumnDefinitions="Auto,*"
-                                      RowDefinitions="Auto,Auto"
-                                      ColumnSpacing="10">
+      ColumnDefinitions="Auto,*"
+      RowDefinitions="Auto,Auto"
+      ColumnSpacing="10">
 
-                                    <!-- PLAY / PAUSE -->
-                                    <ImageButton
-                                        Source="{Binding IsPlaying, Converter={StaticResource PlayPauseIconConverter}}"
-                                        WidthRequest="32"
-                                        HeightRequest="32"
-                                        Padding="6"
-                                        Aspect="AspectFit"
-                                        BackgroundColor="Transparent"
-                                        Command="{Binding BindingContext.PlayAudioCommand, Source={x:Reference RootPage}}"
-                                        CommandParameter="{Binding .}" />
+    <!-- PLAY / PAUSE -->
+    <ImageButton
+        Source="{Binding IsPlaying, Converter={StaticResource PlayPauseIconConverter}}"
+        WidthRequest="32"
+        HeightRequest="32"
+        Padding="6"
+        Aspect="AspectFit"
+        BackgroundColor="Transparent"
+        Command="{Binding BindingContext.PlayAudioCommand, Source={x:Reference RootPage}}"
+        CommandParameter="{Binding .}" />
 
-                                    <!-- WAVES -->
-                                    <HorizontalStackLayout Grid.Column="1"
-                                                           Spacing="3"
-                                                           VerticalOptions="Center"
-                                                           BindableLayout.ItemsSource="{Binding Waveform}">
+    <!-- WAVES -->
+    <HorizontalStackLayout Grid.Column="1"
+                           Spacing="3"
+                           VerticalOptions="Center"
+                           BindableLayout.ItemsSource="{Binding Waveform}">
 
-                                        <BindableLayout.ItemTemplate>
-                                            <DataTemplate>
-                                                <BoxView WidthRequest="3"
-                                                         HeightRequest="18"
-                                                         CornerRadius="2"
-                                                         Color="{Binding Source={RelativeSource AncestorType={x:Type models:MessageDto}},
-                                                                         Path=AudioProgress,
-                                                                         Converter={StaticResource WaveBarColorConverter},
-                                                                         ConverterParameter={Binding .}}" />
-                                            </DataTemplate>
-                                        </BindableLayout.ItemTemplate>
-                                    </HorizontalStackLayout>
+        <BindableLayout.ItemTemplate>
+            <DataTemplate>
+                <BoxView WidthRequest="3"
+                         HeightRequest="18"
+                         CornerRadius="2"
+                         Color="{Binding Source={RelativeSource AncestorType={x:Type models:MessageDto}},
+                                         Path=AudioProgress,
+                                         Converter={StaticResource WaveBarColorConverter},
+                                         ConverterParameter={Binding .}}" />
+            </DataTemplate>
+        </BindableLayout.ItemTemplate>
 
-                                    <Label Grid.Row="1"
-                                           Grid.ColumnSpan="2"
-                                           FontSize="11"
-                                           TextColor="#6B7280"
-                                           Text="{Binding AudioTime}" />
-                                </Grid>
+    </HorizontalStackLayout>
+
+    <!-- TIME -->
+    <Label Grid.Row="1"
+           Grid.ColumnSpan="2"
+           FontSize="11"
+           TextColor="#6B7280"
+           Text="{Binding AudioTime}" />
+</Grid>
+
                                 <!-- META -->
                                 <Grid ColumnDefinitions="*,Auto">
                                     <Label Text="{Binding CreatedAt, StringFormat='{0:HH:mm}'}"
@@ -275,7 +295,7 @@
                              BackgroundColor="Transparent"
                              Command="{Binding SendMessageCommand}" />
             </Frame>
-            
+
         </Grid>
 
     </Grid>

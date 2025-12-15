@@ -271,6 +271,16 @@ public partial class ChatViewModel : ObservableObject
     }
 
 
+    [RelayCommand]
+    private async Task OpenMapAsync(string url)
+    {
+        if (string.IsNullOrWhiteSpace(url))
+            return;
+
+        await Launcher.OpenAsync(url);
+    }
+
+
     // =====================================================
     // 📝 TEXTE
     // =====================================================

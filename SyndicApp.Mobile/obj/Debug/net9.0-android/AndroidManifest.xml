@@ -13,7 +13,7 @@
   <uses-permission android:name="android.permission.CAMERA" />
   <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-  <application android:usesCleartextTraffic="true" android:allowBackup="true" android:networkSecurityConfig="@xml/network_security_config" android:icon="@mipmap/appicon" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true" android:name="crc648a6c998532213fa5.MainApplication" android:label="CoproPulse" android:debuggable="true" android:extractNativeLibs="true">
+  <application android:theme="@style/MainTheme" android:usesCleartextTraffic="true" android:allowBackup="true" android:networkSecurityConfig="@xml/network_security_config" android:icon="@mipmap/appicon" android:roundIcon="@mipmap/appicon_round" android:supportsRtl="true" android:name="crc648a6c998532213fa5.MainApplication" android:label="CoproPulse" android:debuggable="true" android:extractNativeLibs="true">
     <activity android:configChanges="density|orientation|smallestScreenSize|screenLayout|screenSize|uiMode" android:launchMode="singleTop" android:theme="@style/Maui.SplashTheme" android:name="crc648a6c998532213fa5.MainActivity" android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />

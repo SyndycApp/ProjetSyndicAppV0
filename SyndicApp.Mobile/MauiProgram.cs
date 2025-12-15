@@ -39,7 +39,7 @@ public static class MauiProgram
         builder.UseMauiApp<App>();
         builder.UseMicrocharts();
 
-        const string BaseUrl = "http://10.75.158.32:5041";
+        const string BaseUrl = "http://192.168.31.157:5041";
 
         // Refit JSON settings
         var jsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };

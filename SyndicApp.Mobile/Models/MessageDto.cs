@@ -111,7 +111,7 @@
                 ? string.Empty
                 : AudioUrl.StartsWith("http", StringComparison.OrdinalIgnoreCase)
                     ? AudioUrl
-                    : $"http://10.75.158.32:5041{AudioUrl}";
+                    : $"http://192.168.31.157:5041{AudioUrl}";
 
         [JsonIgnore]
         public string AbsoluteFileUrl =>
@@ -119,7 +119,7 @@
                 ? string.Empty
                 : FileUrl.StartsWith("http", StringComparison.OrdinalIgnoreCase)
                     ? FileUrl
-                    : $"http://10.75.158.32:5041{FileUrl}";
+                    : $"http://192.168.31.157:5041{FileUrl}";
 
         // =====================
         // 🔊 WAVE AUDIO (UI)
@@ -138,6 +138,51 @@
         [ObservableProperty] private bool isPlaying;
         [ObservableProperty] private double audioProgress;
         [ObservableProperty] private string audioTime = "00:00";
+
+        [JsonIgnore]
+        public string StaticMapTileUrl
+        {
+            get
+            {
+                if (!IsLocation) return string.Empty;
+
+                const int zoom = 16;
+
+                var latRad = Latitude!.Value * Math.PI / 180;
+                var n = Math.Pow(2, zoom);
+
+                var xTile = (int)((Longitude!.Value + 180.0) / 360.0 * n);
+                var yTile = (int)((1.0 - Math.Log(Math.Tan(latRad) + 1 / Math.Cos(latRad)) / Math.PI) / 2.0 * n);
+
+                return $"https://tile.openstreetmap.org/{zoom}/{xTile}/{yTile}.png";
+            }
+        }
+
+        [JsonIgnore]
+        public string StaticMapUrl
+        {
+            get
+            {
+                if (!IsLocation || Latitude == null || Longitude == null)
+                    return string.Empty;
+
+                var lat = Latitude.Value.ToString(System.Globalization.CultureInfo.InvariantCulture);
+                var lng = Longitude.Value.ToString(System.Globalization.CultureInfo.InvariantCulture);
+
+                return
+                    $"https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/" +
+                    $"pin-s+2563EB({lng},{lat})/" +
+                    $"{lng},{lat},16/400x200" +
+                    $"?access_token=pk.eyJ1Ijoic3luZGljIiwiYSI6ImNtajdwMnVqcjA1cDMzZnNmdXdjazcxZnEifQ.SW3kQZqj_8ypQDi10Mq-rQ";
+            }
+        }
+
+
+        [JsonIgnore]
+        public string ExternalMapUrl =>
+    IsLocation
+        ? $"https://www.google.com/maps/search/?api=1&query={Latitude},{Longitude}"
+        : string.Empty;
 
         // =====================
         // 🔁 FORCE RAFRAÎCHISSEMENT UI

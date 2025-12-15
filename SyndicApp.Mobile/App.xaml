@@ -63,7 +63,6 @@
             <converters:BubbleAlignmentConverter x:Key="BubbleAlignmentConverter" />
             <converters:MessageSeenIconConverter x:Key="MessageSeenIconConverter"/>
             <converters:WaveBarColorConverter x:Key="WaveBarColorConverter" />
-            <converters:WaveSeekParameterConverter x:Key="WaveSeekParameterConverter" />
             <converters:MultiplyConverter x:Key="MultiplyConverter" />
             <converters:PlayPauseIconConverter x:Key="PlayPauseIconConverter" />
             
