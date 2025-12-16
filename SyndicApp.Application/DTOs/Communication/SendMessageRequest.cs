@@ -9,6 +9,7 @@ namespace SyndicApp.Application.DTOs.Communication
     public class SendMessageRequest
     {
         public Guid ConversationId { get; set; }
+        public Guid? ReplyToMessageId { get; set; }
         public string Contenu { get; set; } = string.Empty;
     }
 }

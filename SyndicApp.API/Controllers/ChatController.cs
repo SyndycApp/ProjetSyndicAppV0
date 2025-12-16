@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SyndicApp.Application.DTOs.Communication;
 using SyndicApp.Application.Interfaces.Communication;
 using SyndicApp.Infrastructure.Identity.Extensions;
@@ -222,6 +221,14 @@ namespace SyndicApp.API.Controllers.Communication
             return Ok(message);
         }
 
+
+        [HttpPost("message/{messageId}/reaction")]
+        public async Task<IActionResult> React(Guid messageId,[FromBody] string emoji)
+        {
+            var userId = User.GetUserId();
+            await _messageService.AddReactionAsync(messageId, userId, emoji);
+            return Ok();
+        }
 
     }
 }

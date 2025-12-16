@@ -180,11 +180,12 @@
 
         [JsonIgnore]
         public string ExternalMapUrl =>
-    IsLocation
+        IsLocation
         ? $"https://www.google.com/maps/search/?api=1&query={Latitude},{Longitude}"
         : string.Empty;
 
-
+        [JsonPropertyName("replyToMessage")]
+        public MessageDto? ReplyToMessage { get; set; }
         // =====================
         // 🔁 FORCE RAFRAÎCHISSEMENT UI
         // =====================

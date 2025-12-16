@@ -24,5 +24,11 @@ namespace SyndicApp.Domain.Entities.Communication
 
         public MessageType Type { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+        public Guid? ReplyToMessageId { get; set; }
+        public Message? ReplyToMessage { get; set; }
+
+        public ICollection<MessageReaction> Reactions { get; set; } = new List<MessageReaction>();
+
     }
 }

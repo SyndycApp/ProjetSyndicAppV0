@@ -18,6 +18,12 @@ namespace SyndicApp.API.Hubs
             await Groups.AddToGroupAsync(Context.ConnectionId, conversationId.ToString());
         }
 
+        public async Task ReactToMessage(Guid conversationId, Guid messageId, string emoji, Guid userId)
+        {
+            await Clients.Group(conversationId.ToString())
+                .SendAsync("MessageReacted", messageId, emoji, userId);
+        }
+
         // Indicateur "en train d'écrire..."
         public async Task Typing(Guid conversationId, Guid userId)
         {

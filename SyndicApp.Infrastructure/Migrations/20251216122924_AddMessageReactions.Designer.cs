@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SyndicApp.Infrastructure;
 
@@ -11,9 +12,11 @@ using SyndicApp.Infrastructure;
 namespace SyndicApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251216122924_AddMessageReactions")]
+    partial class AddMessageReactions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -65,24 +68,6 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.HasIndex("DocumentId");
 
                     b.ToTable("InterventionDocuments", (string)null);
-                });
-
-            modelBuilder.Entity("MessageReaction", b =>
-                {
-                    b.Property<Guid>("MessageId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Emoji")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("MessageId", "UserId", "Emoji");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("MessageReactions");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -535,6 +520,24 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Communication.MessageReaction", b =>
+                {
+                    b.Property<Guid>("MessageId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Emoji")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("MessageId", "UserId", "Emoji");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MessageReactions");
                 });
 
             modelBuilder.Entity("SyndicApp.Domain.Entities.Communication.UserConversation", b =>
@@ -1654,23 +1657,6 @@ namespace SyndicApp.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MessageReaction", b =>
-                {
-                    b.HasOne("SyndicApp.Domain.Entities.Communication.Message", "Message")
-                        .WithMany("Reactions")
-                        .HasForeignKey("MessageId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("SyndicApp.Infrastructure.Identity.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Message");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
@@ -1822,6 +1808,21 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.Navigation("Conversation");
 
                     b.Navigation("ReplyToMessage");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Communication.MessageReaction", b =>
+                {
+                    b.HasOne("SyndicApp.Domain.Entities.Communication.Message", null)
+                        .WithMany()
+                        .HasForeignKey("MessageId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SyndicApp.Infrastructure.Identity.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("SyndicApp.Domain.Entities.Communication.UserConversation", b =>
@@ -2184,11 +2185,6 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.Navigation("Messages");
 
                     b.Navigation("UserConversations");
-                });
-
-            modelBuilder.Entity("SyndicApp.Domain.Entities.Communication.Message", b =>
-                {
-                    b.Navigation("Reactions");
                 });
 
             modelBuilder.Entity("SyndicApp.Domain.Entities.Documents.CategorieDocument", b =>

@@ -37,6 +37,9 @@ namespace SyndicApp.Infrastructure
         public DbSet<DevisTravaux> DevisTravaux => Set<DevisTravaux>();
         public DbSet<Intervention> Interventions => Set<Intervention>();
 
+        public DbSet<MessageReaction> MessageReactions => Set<MessageReaction>();
+
+
         public DbSet<IncidentHistorique> IncidentsHistoriques => Set<IncidentHistorique>();
         public DbSet<DevisHistorique> DevisHistoriques => Set<DevisHistorique>();
         public DbSet<InterventionHistorique> InterventionsHistoriques => Set<InterventionHistorique>();
@@ -154,6 +157,11 @@ namespace SyndicApp.Infrastructure
                  .HasForeignKey(m => m.ConversationId)
                  .OnDelete(DeleteBehavior.Cascade);
 
+                b.HasOne(m => m.ReplyToMessage)
+                 .WithMany()
+                 .HasForeignKey(m => m.ReplyToMessageId)
+                 .OnDelete(DeleteBehavior.NoAction);
+
                 // Relation avec AspNetUsers
                 b.HasOne<ApplicationUser>()
                  .WithMany()
@@ -163,6 +171,21 @@ namespace SyndicApp.Infrastructure
                 // Valeur par défaut CreatedAt
                 b.Property(m => m.CreatedAt)
                  .HasDefaultValueSql("GETUTCDATE()");
+            });
+
+            modelBuilder.Entity<MessageReaction>(b =>
+            {
+                b.HasKey(x => new { x.MessageId, x.UserId, x.Emoji });
+
+                b.HasOne(x => x.Message)
+                 .WithMany(m => m.Reactions)
+                 .HasForeignKey(x => x.MessageId)
+                 .OnDelete(DeleteBehavior.NoAction);
+
+                b.HasOne<ApplicationUser>()
+                 .WithMany()
+                 .HasForeignKey(x => x.UserId)
+                 .OnDelete(DeleteBehavior.Cascade);
             });
 
             // ================= Assemblées =================

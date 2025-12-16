@@ -1,9 +1,5 @@
 ﻿using SyndicApp.Application.DTOs.Communication;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace SyndicApp.Application.Interfaces.Communication
 {
@@ -23,5 +19,8 @@ namespace SyndicApp.Application.Interfaces.Communication
            Stream audioStream,
            string fileName,
            string contentType);
+
+        Task AddReactionAsync(Guid messageId, Guid userId, string emoji);
+
     }
 }

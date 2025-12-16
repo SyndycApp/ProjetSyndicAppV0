@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SyndicApp.Domain.Entities.Communication;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,6 +30,11 @@ namespace SyndicApp.Application.DTOs.Communication
         public double? Longitude { get; set; }
 
         public MessageType Type { get; set; }
+
+        public MessageDto? ReplyToMessage { get; set; }
+
+        public List<MessageReactionDto> Reactions { get; set; }
+    = new();
     }
 
 }

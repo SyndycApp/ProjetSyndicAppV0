@@ -3,12 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using SyndicApp.Application.DTOs.Communication;
 using SyndicApp.Application.Interfaces.Communication;
 using SyndicApp.Domain.Entities.Communication;
-using SyndicApp.Domain.Enums;
 using SyndicApp.Infrastructure.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace SyndicApp.Infrastructure.Services.Communication
 {
@@ -29,57 +25,114 @@ namespace SyndicApp.Infrastructure.Services.Communication
         }
 
         // =========================
+        // 👍 REACTION
+        // =========================
+        public async Task AddReactionAsync(Guid messageId, Guid userId, string emoji)
+        {
+            var exists = await _db.Messages.AnyAsync(m => m.Id == messageId);
+            if (!exists)
+                throw new Exception("Message introuvable");
+
+            var alreadyExists = await _db.MessageReactions.AnyAsync(r =>
+                r.MessageId == messageId &&
+                r.UserId == userId &&
+                r.Emoji == emoji);
+
+            if (alreadyExists)
+                return;
+
+            _db.MessageReactions.Add(new MessageReaction
+            {
+                MessageId = messageId,
+                UserId = userId,
+                Emoji = emoji
+            });
+
+            await _db.SaveChangesAsync();
+        }
+
+        // =========================
         // 🔁 MAPPING COMMUN
         // =========================
-        private MessageDto MapMessage(Message m, string? nomExpediteur = null)
+        private MessageDto MapMessage(
+            Message m,
+            Dictionary<Guid, string> usersById)
         {
+            usersById.TryGetValue(m.UserId, out var senderName);
+
+            MessageDto? replyDto = null;
+
+            if (m.ReplyToMessage != null)
+            {
+                usersById.TryGetValue(
+                    m.ReplyToMessage.UserId,
+                    out var replySenderName);
+
+                replyDto = new MessageDto
+                {
+                    Id = m.ReplyToMessage.Id,
+                    Contenu = m.ReplyToMessage.Contenu,
+                    UserId = m.ReplyToMessage.UserId,
+                    CreatedAt = m.ReplyToMessage.CreatedAt,
+                    Type = m.ReplyToMessage.Type,
+                    NomExpediteur = replySenderName ?? "Utilisateur"
+                };
+            }
+
             return new MessageDto
             {
                 Id = m.Id,
                 ConversationId = m.ConversationId,
                 UserId = m.UserId,
 
-                // 📝 TEXTE
                 Contenu = m.Contenu,
-
-                // 🔊 AUDIO 
                 AudioUrl = m.AudioPath,
 
-                // 📎 IMAGE / DOCUMENT
                 FileUrl = m.FileUrl,
                 FileName = m.FileName,
                 ContentType = m.ContentType,
 
-                // 📍 LOCALISATION
                 Latitude = m.Latitude,
                 Longitude = m.Longitude,
 
-                // META
                 Type = m.Type,
                 CreatedAt = m.CreatedAt,
                 IsRead = m.IsRead,
                 ReadAt = m.ReadAt,
-                NomExpediteur = nomExpediteur ?? "Utilisateur"
+
+                ReplyToMessage = replyDto,
+
+                Reactions = m.Reactions
+          .Select(r => new MessageReactionDto
+          {
+              UserId = r.UserId,
+              Emoji = r.Emoji
+          })
+          .ToList(),
+
+                NomExpediteur = senderName ?? "Utilisateur"
             };
+
         }
 
         // =========================
-        // 📩 GET MESSAGES (LISTE)
+        // 📩 GET MESSAGES
         // =========================
         public async Task<List<MessageDto>> GetMessagesAsync(Guid conversationId, Guid userId)
         {
             var messages = await _db.Messages
+                .Include(m => m.ReplyToMessage)
+                .Include(m => m.Reactions)
                 .Where(m => m.ConversationId == conversationId)
                 .OrderBy(m => m.CreatedAt)
                 .ToListAsync();
 
-            var users = await _userManager.Users.ToListAsync();
+            var usersById = await _userManager.Users
+                .ToDictionaryAsync(u => u.Id, u => u.FullName);
 
-            return messages.Select(m =>
-            {
-                var userName = users.FirstOrDefault(u => u.Id == m.UserId)?.FullName;
-                return MapMessage(m, userName);
-            }).ToList();
+            return messages
+                .Select(m => MapMessage(m, usersById))
+                .ToList();
         }
 
         // =========================
@@ -91,6 +144,8 @@ namespace SyndicApp.Infrastructure.Services.Communication
             int pageSize)
         {
             var query = _db.Messages
+                .Include(m => m.ReplyToMessage)
+                .Include(m => m.Reactions)
                 .Where(m => m.ConversationId == conversationId)
                 .OrderByDescending(m => m.CreatedAt);
 
@@ -101,17 +156,22 @@ namespace SyndicApp.Infrastructure.Services.Communication
                 .Take(pageSize)
                 .ToListAsync();
 
+            var usersById = await _userManager.Users
+                .ToDictionaryAsync(u => u.Id, u => u.FullName);
+
             return new PagedMessagesDto
             {
                 Total = total,
                 Page = page,
                 PageSize = pageSize,
-                Messages = items.Select(m => MapMessage(m)).ToList()
+                Messages = items
+                    .Select(m => MapMessage(m, usersById))
+                    .ToList()
             };
         }
 
         // =========================
-        // 👁️ MARQUER COMME LU
+        // 👁️ MARK AS READ
         // =========================
         public async Task MarkMessagesAsReadAsync(Guid conversationId, Guid userId)
         {
@@ -132,7 +192,7 @@ namespace SyndicApp.Infrastructure.Services.Communication
         }
 
         // =========================
-        // ✉️ ENVOI MESSAGE TEXTE
+        // ✉️ SEND TEXT
         // =========================
         public async Task<MessageDto> SendMessageAsync(
             Guid userId,
@@ -144,20 +204,20 @@ namespace SyndicApp.Infrastructure.Services.Communication
                 UserId = userId,
                 Contenu = request.Contenu,
                 Type = MessageType.Text,
-                IsRead = false,
-                ReadAt = null
+                ReplyToMessageId = request.ReplyToMessageId
             };
 
             _db.Messages.Add(message);
             await _db.SaveChangesAsync();
 
-            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var usersById = await _userManager.Users
+                .ToDictionaryAsync(u => u.Id, u => u.FullName);
 
-            return MapMessage(message, user?.FullName);
+            return MapMessage(message, usersById);
         }
 
         // =========================
-        // 🎤 ENVOI MESSAGE AUDIO
+        // 🎤 SEND AUDIO
         // =========================
         public async Task<MessageDto> SendAudioMessageAsync(
             Guid userId,
@@ -176,17 +236,16 @@ namespace SyndicApp.Infrastructure.Services.Communication
                 ConversationId = conversationId,
                 UserId = userId,
                 AudioPath = audioPath,
-                Type = MessageType.Audio,
-                IsRead = false,
-                ReadAt = null
+                Type = MessageType.Audio
             };
 
             _db.Messages.Add(message);
             await _db.SaveChangesAsync();
 
-            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var usersById = await _userManager.Users
+                .ToDictionaryAsync(u => u.Id, u => u.FullName);
 
-            return MapMessage(message, user?.FullName);
+            return MapMessage(message, usersById);
         }
     }
 }
