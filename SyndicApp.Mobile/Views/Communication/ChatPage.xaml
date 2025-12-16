@@ -18,6 +18,8 @@
         <conv:MessageSeenIconConverter x:Key="MessageSeenIconConverter" />
         <conv:PlayPauseIconConverter x:Key="PlayPauseIconConverter" />
         <conv:WaveBarColorConverter x:Key="WaveBarColorConverter" />
+        <conv:IntToBoolConverter x:Key="IntToBoolConverter" />
+        <conv:ReactionCommandParamConverter x:Key="ReactionCommandParamConverter" />
     </ContentPage.Resources>
 
     <Grid RowDefinitions="Auto,*,Auto">
@@ -47,7 +49,6 @@
 
         <!-- ===================== MESSAGES ===================== -->
         <ScrollView Grid.Row="1" x:Name="MessagesScrollView" Padding="10">
-
             <VerticalStackLayout
                 Spacing="8"
                 x:Name="MessagesStack"
@@ -85,7 +86,6 @@
                                            Aspect="AspectFill"/>
                                 </Border>
 
-
                                 <!-- DOCUMENT -->
                                 <Frame IsVisible="{Binding IsDocument}"
                                        Padding="10"
@@ -94,13 +94,11 @@
                                     <HorizontalStackLayout Spacing="10">
                                         <Image Source="document_icon.png"
                                                WidthRequest="28"
-                                               HeightRequest="28"
-                                               Aspect="AspectFit"/>
+                                               HeightRequest="28"/>
                                         <VerticalStackLayout>
                                             <Label Text="{Binding FileName}"
                                                    FontAttributes="Bold"
-                                                   FontSize="14"
-                                                   LineBreakMode="TailTruncation"/>
+                                                   FontSize="14"/>
                                             <Label Text="{Binding ContentType}"
                                                    FontSize="11"
                                                    TextColor="#6B7280"/>
@@ -116,8 +114,8 @@
                                     </HorizontalStackLayout>
                                 </Frame>
 
-                                <!-- ===================== LOCATION (STATIC MAP) ===================== -->
-                                <Frame IsVisible="{Binding IsLocation}"
+                                <!-- LOCATION -->
+                               <Frame IsVisible="{Binding IsLocation}"
        Padding="0"
        CornerRadius="12"
        HasShadow="False"
@@ -160,9 +158,7 @@
 
     </Grid>
 </Frame>
-
-
-                                <!-- ===================== AUDIO WAVES ===================== -->
+ <!-- ===================== AUDIO WAVES ===================== -->
                                 <Grid IsVisible="{Binding IsAudio}"
       ColumnDefinitions="Auto,*"
       RowDefinitions="Auto,Auto"
@@ -206,6 +202,49 @@
            TextColor="#6B7280"
            Text="{Binding AudioTime}" />
 </Grid>
+                                <!-- ===================== REACT BUTTONS ===================== -->
+                                <HorizontalStackLayout Spacing="6" Margin="0,4,0,0">
+                                    <Label Text="👍" FontSize="18">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding BindingContext.ReactCommand, Source={x:Reference RootPage}}"
+                                                CommandParameter="{Binding ., Converter={StaticResource ReactionCommandParamConverter}, ConverterParameter=👍}" />
+                                        </Label.GestureRecognizers>
+                                    </Label>
+
+                                    <Label Text="❤️" FontSize="18">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding BindingContext.ReactCommand, Source={x:Reference RootPage}}"
+                                                CommandParameter="{Binding ., Converter={StaticResource ReactionCommandParamConverter}, ConverterParameter=❤️}" />
+                                        </Label.GestureRecognizers>
+                                    </Label>
+
+                                    <Label Text="😂" FontSize="18">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding BindingContext.ReactCommand, Source={x:Reference RootPage}}"
+                                                CommandParameter="{Binding ., Converter={StaticResource ReactionCommandParamConverter}, ConverterParameter=😂}" />
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                </HorizontalStackLayout>
+
+                                <!-- AFFICHAGE DES RÉACTIONS -->
+                                <HorizontalStackLayout
+                                    Spacing="4"
+                                    IsVisible="{Binding Reactions.Count, Converter={StaticResource IntToBoolConverter}}"
+                                    BindableLayout.ItemsSource="{Binding Reactions}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate x:DataType="models:MessageReactionDto">
+                                            <Frame Padding="6,2"
+                                                   CornerRadius="12"
+                                                   BackgroundColor="#E5E7EB"
+                                                   HasShadow="False">
+                                                <Label Text="{Binding Emoji}" FontSize="14"/>
+                                            </Frame>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </HorizontalStackLayout>
 
                                 <!-- META -->
                                 <Grid ColumnDefinitions="*,Auto">
@@ -220,7 +259,6 @@
 
                             </VerticalStackLayout>
                         </Frame>
-
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
 
@@ -279,7 +317,6 @@
                          Aspect="AspectFit"
                          BackgroundColor="Transparent"
                          Command="{Binding ToggleRecordingCommand}" />
-
             <Frame Grid.Column="5"
                    WidthRequest="44"
                    HeightRequest="44"

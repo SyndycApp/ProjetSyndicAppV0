@@ -16,6 +16,7 @@ public partial class ChatPage : ContentPage
         vm.Messages.CollectionChanged += Messages_CollectionChanged;
     }
 
+
     protected override async void OnAppearing()
     {
         base.OnAppearing();
@@ -34,6 +35,15 @@ public partial class ChatPage : ContentPage
             Console.WriteLine($"Erreur OnAppearing ChatPage : {ex}");
         }
     }
+
+
+private void OnMessageTextChanged(object sender, TextChangedEventArgs e)
+{
+    if (BindingContext is ChatViewModel vm)
+    {
+        _ = vm.OnTypingAsync();
+    }
+}
 
     // 🔔 Nouveau message → scroll automatique
     private void Messages_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)

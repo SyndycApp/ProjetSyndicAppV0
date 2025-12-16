@@ -577,6 +577,7 @@
             <inheritdoc/>
             <inheritdoc/>
             <inheritdoc/>
+            <inheritdoc/>
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.IsRecording">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.isRecording"/>
@@ -593,10 +594,22 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.ConversationIdString">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.conversationIdString"/>
         </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.IsUserTyping">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.isUserTyping"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.TypingText">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.typingText"/>
+        </member>
         <member name="M:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.OnConversationIdStringChanged(System.String)">
             <summary>Executes the logic for when <see cref="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.ConversationIdString"/> just changed.</summary>
             <param name="value">The new property value that was set.</param>
             <remarks>This method is invoked right after the value of <see cref="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.ConversationIdString"/> is changed.</remarks>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.reactCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.ReactCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.ReactCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.ReactAsync(SyndicApp.Mobile.Models.ReactionCommandParam)"/>.</summary>
         </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.playAudioCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.PlayAudioCommand"/>.</summary>
@@ -2518,6 +2531,12 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.ConversationIdString">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "ConversationIdString" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsUserTyping">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsUserTyping" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.TypingText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "TypingText" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.DisplayName">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "DisplayName" generated properties.</summary>
         </member>
@@ -2979,6 +2998,12 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.ConversationIdString">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "ConversationIdString" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsUserTyping">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsUserTyping" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.TypingText">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "TypingText" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.DisplayName">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "DisplayName" generated properties.</summary>
@@ -3700,6 +3725,9 @@
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIChatApi.SendLocationAsync(SyndicApp.Mobile.Models.SendLocationDto)">
             <inheritdoc />
         </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIChatApi.ReactToMessage(System.Guid,System.String)">
+            <inheritdoc />
+        </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIChatApi.SyndicApp#Mobile#Api#Communication#IChatApi#GetChatUsers">
             <inheritdoc />
         </member>
@@ -3722,6 +3750,9 @@
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIChatApi.SyndicApp#Mobile#Api#Communication#IChatApi#SendLocationAsync(SyndicApp.Mobile.Models.SendLocationDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIChatApi.SyndicApp#Mobile#Api#Communication#IChatApi#ReactToMessage(System.Guid,System.String)">
             <inheritdoc />
         </member>
         <member name="T:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIConversationsApi">
@@ -3988,6 +4019,9 @@
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.SendAudioMessageAsync(System.Guid,Refit.StreamPart)">
             <inheritdoc />
         </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.ReactToMessageAsync(System.Guid,System.String)">
+            <inheritdoc />
+        </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.SyndicApp#Mobile#Api#Communication#IMessagesApi#GetMessagesAsync(System.Guid)">
             <inheritdoc />
         </member>
@@ -4010,6 +4044,9 @@
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.SyndicApp#Mobile#Api#Communication#IMessagesApi#SendAudioMessageAsync(System.Guid,Refit.StreamPart)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiCommunicationIMessagesApi.SyndicApp#Mobile#Api#Communication#IMessagesApi#ReactToMessageAsync(System.Guid,System.String)">
             <inheritdoc />
         </member>
         <member name="T:Refit.Implementation.Generated.SyndicAppMobileApiIPaiementsApi">

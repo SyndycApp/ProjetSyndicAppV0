@@ -34,6 +34,16 @@ public partial class ChatViewModel : ObservableObject
     [ObservableProperty]
     private string conversationIdString = string.Empty;
 
+    [ObservableProperty]
+    private bool isUserTyping;
+
+    [ObservableProperty]
+    private string typingText = string.Empty;
+
+    private CancellationTokenSource? _typingCts;
+
+    private DateTime _lastTypingSent = DateTime.MinValue;
+
 
     public Guid ConversationId => Guid.Parse(ConversationIdString);
 
@@ -80,6 +90,66 @@ public partial class ChatViewModel : ObservableObject
 
         _hub.OnMessageReceived -= OnMessageReceived;
         _hub.OnMessageReceived += OnMessageReceived;
+
+        _hub.OnMessageReacted -= OnMessageReacted;
+        _hub.OnMessageReacted += OnMessageReacted;
+
+        _hub.OnUserTyping -= OnUserTyping;
+        _hub.OnUserTyping += OnUserTyping;
+    }
+
+    private void OnUserTyping(Guid userId)
+    {
+        // Ignore soi-même
+        if (userId == Guid.Parse(App.UserId!))
+            return;
+
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            TypingText = $"✍️ {NomDestinataire} est en train d’écrire…";
+            IsUserTyping = true;
+
+            // Reset timer
+            _typingCts?.Cancel();
+            _typingCts = new CancellationTokenSource();
+
+            _ = HideTypingAfterDelayAsync(_typingCts.Token);
+        });
+    }
+
+    private async Task HideTypingAfterDelayAsync(CancellationToken token)
+    {
+        try
+        {
+            await Task.Delay(2500, token); // 2.5s = UX parfait
+            IsUserTyping = false;
+            TypingText = string.Empty;
+        }
+        catch (TaskCanceledException)
+        {
+            // normal
+        }
+    }
+
+
+    private void OnMessageReacted(Guid messageId, string emoji, Guid userId)
+    {
+        MainThread.BeginInvokeOnMainThread(() =>
+        {
+            var msg = Messages.FirstOrDefault(m => m.Id == messageId);
+            if (msg == null)
+                return;
+
+            // Anti-doublon UI
+            if (msg.Reactions.Any(r => r.UserId == userId && r.Emoji == emoji))
+                return;
+
+            msg.Reactions.Add(new MessageReactionDto
+            {
+                UserId = userId,
+                Emoji = emoji
+            });
+        });
     }
 
     private void OnMessageReceived(MessageDto msg)
@@ -92,6 +162,56 @@ public partial class ChatViewModel : ObservableObject
             Messages.Add(msg);
         });
     }
+
+    // ========================React msg=============================
+    [RelayCommand]
+    private async Task ReactAsync(ReactionCommandParam param)
+    {
+        if (param?.Message == null || string.IsNullOrWhiteSpace(param.Emoji))
+            return;
+
+        var currentUserId = Guid.Parse(App.UserId!);
+
+        // 🔁 Anti-doublon local (UX)
+        if (param.Message.Reactions.Any(r =>
+            r.UserId == currentUserId &&
+            r.Emoji == param.Emoji))
+            return;
+
+        // ⚡ UX immédiate
+        param.Message.Reactions.Add(new MessageReactionDto
+        {
+            UserId = currentUserId,
+            Emoji = param.Emoji
+        });
+
+        try
+        {
+            // ✅ SignalR SAFE (géré DANS le service)
+            await _hub.SendReaction(
+                ConversationId,
+                param.Message.Id,
+                param.Emoji
+            );
+        }
+        catch (Exception ex)
+        {
+            // (optionnel) log debug
+            Console.WriteLine($"Erreur ReactAsync: {ex.Message}");
+        }
+    }
+
+
+    public async Task OnTypingAsync()
+    {
+        if (DateTime.UtcNow - _lastTypingSent < TimeSpan.FromSeconds(1))
+            return;
+
+        _lastTypingSent = DateTime.UtcNow;
+        await _hub.SendTyping(ConversationId);
+    }
+
+
 
     // =====================================================
     // ▶️ PLAY AUDIO (INCHANGÉ)

@@ -34,5 +34,8 @@ namespace SyndicApp.Mobile.Api.Communication
 
         [Post("/api/chat/message/location")]
         Task<MessageDto> SendLocationAsync([Body] SendLocationDto request);
+
+        [Post("/api/chat/message/{messageId}/reaction")]
+        Task ReactToMessage(Guid messageId, [Body] string emoji);
     }
 }

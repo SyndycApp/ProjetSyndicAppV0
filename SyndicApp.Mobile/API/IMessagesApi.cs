@@ -35,5 +35,8 @@ namespace SyndicApp.Mobile.Api.Communication
         [Multipart]
         [Post("/api/chat/message/audio/{conversationId}")]
         Task<MessageDto> SendAudioMessageAsync(Guid conversationId, [AliasAs("AudioFile")] StreamPart audioFile);
+
+        [Post("/api/chat/message/{messageId}/reaction")]
+        Task ReactToMessageAsync(Guid messageId, [Body] string emoji);
     }
 }

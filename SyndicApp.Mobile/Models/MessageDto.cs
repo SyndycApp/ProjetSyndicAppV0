@@ -186,9 +186,14 @@
 
         [JsonPropertyName("replyToMessage")]
         public MessageDto? ReplyToMessage { get; set; }
-        // =====================
+
+        [JsonPropertyName("reactions")]
+        public ObservableCollection<MessageReactionDto> Reactions { get; set; } = new();
+
+
+        // =============================
         // 🔁 FORCE RAFRAÎCHISSEMENT UI
-        // =====================
+        // =============================
         partial void OnTypeChanged(string value)
         {
             OnPropertyChanged(nameof(IsText));

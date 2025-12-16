@@ -65,7 +65,8 @@
             <converters:WaveBarColorConverter x:Key="WaveBarColorConverter" />
             <converters:MultiplyConverter x:Key="MultiplyConverter" />
             <converters:PlayPauseIconConverter x:Key="PlayPauseIconConverter" />
-            
+            <converters:IntToBoolConverter x:Key="IntToBoolConverter" />
+            <converters:ReactionCommandParamConverter x:Key="ReactionCommandParamConverter" />
         </ResourceDictionary>
     </Application.Resources>
 
