@@ -140,9 +140,16 @@ public partial class ChatViewModel : ObservableObject
             if (msg == null)
                 return;
 
-            // Anti-doublon UI
-            if (msg.Reactions.Any(r => r.UserId == userId && r.Emoji == emoji))
-                return;
+            var existing = msg.Reactions
+                .FirstOrDefault(r => r.UserId == userId);
+
+            if (existing != null)
+            {
+                if (existing.Emoji == emoji)
+                    return;
+
+                msg.Reactions.Remove(existing);
+            }
 
             msg.Reactions.Add(new MessageReactionDto
             {
@@ -172,33 +179,32 @@ public partial class ChatViewModel : ObservableObject
 
         var currentUserId = Guid.Parse(App.UserId!);
 
-        // 🔁 Anti-doublon local (UX)
-        if (param.Message.Reactions.Any(r =>
-            r.UserId == currentUserId &&
-            r.Emoji == param.Emoji))
-            return;
+        // 🔁 SUPPRIMER ANCIENNE REACTION DU USER
+        var existing = param.Message.Reactions
+            .FirstOrDefault(r => r.UserId == currentUserId);
 
-        // ⚡ UX immédiate
+        if (existing != null)
+        {
+            // même emoji → rien à faire
+            if (existing.Emoji == param.Emoji)
+                return;
+
+            param.Message.Reactions.Remove(existing);
+        }
+
+        // ⚡ AJOUT NOUVELLE REACTION
         param.Message.Reactions.Add(new MessageReactionDto
         {
             UserId = currentUserId,
             Emoji = param.Emoji
         });
 
-        try
-        {
-            // ✅ SignalR SAFE (géré DANS le service)
-            await _hub.SendReaction(
-                ConversationId,
-                param.Message.Id,
-                param.Emoji
-            );
-        }
-        catch (Exception ex)
-        {
-            // (optionnel) log debug
-            Console.WriteLine($"Erreur ReactAsync: {ex.Message}");
-        }
+        // 📡 SignalR (safe)
+        await _hub.SendReaction(
+            ConversationId,
+            param.Message.Id,
+            param.Emoji
+        );
     }
 
 

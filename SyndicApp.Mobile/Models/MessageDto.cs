@@ -3,6 +3,7 @@
     using CommunityToolkit.Mvvm.ComponentModel;
     using System;
     using System.Collections.ObjectModel;
+    using System.Linq;
     using System.Text.Json.Serialization;
 
     public partial class MessageDto : ObservableObject
@@ -71,36 +72,28 @@
         public DateTime? ReadAt { get; set; }
 
         // =====================
-        // 🎯 HELPERS TYPE (ROBUSTES)
+        // 🎯 HELPERS TYPE
         // =====================
-        [JsonIgnore]
-        public bool IsText =>
-            Type?.Equals("Text", StringComparison.OrdinalIgnoreCase) == true
-            && !string.IsNullOrWhiteSpace(Contenu);
-
-        [JsonIgnore]
-        public bool IsAudio =>
-            Type?.Equals("Audio", StringComparison.OrdinalIgnoreCase) == true
-            && !string.IsNullOrWhiteSpace(AudioUrl);
-
+        [JsonIgnore] public bool IsText => Type == "Text" && !string.IsNullOrWhiteSpace(Contenu);
+        [JsonIgnore] public bool IsAudio => Type == "Audio" && !string.IsNullOrWhiteSpace(AudioUrl);
         [JsonIgnore]
         public bool IsImage =>
-            Type?.Equals("Image", StringComparison.OrdinalIgnoreCase) == true
-            && !string.IsNullOrWhiteSpace(FileUrl)
-            && ContentType?.StartsWith("image/", StringComparison.OrdinalIgnoreCase) == true;
+            Type == "Image" &&
+            !string.IsNullOrWhiteSpace(FileUrl) &&
+            ContentType?.StartsWith("image/") == true;
 
         [JsonIgnore]
         public bool IsDocument =>
-            Type?.Equals("Document", StringComparison.OrdinalIgnoreCase) == true
-            && !string.IsNullOrWhiteSpace(FileUrl)
-            && ContentType != null
-            && !ContentType.StartsWith("image/", StringComparison.OrdinalIgnoreCase);
+            Type == "Document" &&
+            !string.IsNullOrWhiteSpace(FileUrl) &&
+            ContentType != null &&
+            !ContentType.StartsWith("image/");
 
         [JsonIgnore]
         public bool IsLocation =>
-            Type?.Equals("Location", StringComparison.OrdinalIgnoreCase) == true
-            && Latitude.HasValue
-            && Longitude.HasValue;
+            Type == "Location" &&
+            Latitude.HasValue &&
+            Longitude.HasValue;
 
         // =====================
         // 🌐 URL ABSOLUES
@@ -109,91 +102,109 @@
         public string AbsoluteAudioUrl =>
             string.IsNullOrWhiteSpace(AudioUrl)
                 ? string.Empty
-                : AudioUrl.StartsWith("http", StringComparison.OrdinalIgnoreCase)
+                : AudioUrl.StartsWith("http")
                     ? AudioUrl
-                    : $"http://192.168.31.157:5041{AudioUrl}";
+                    : $"http://192.168.11.137:5041{AudioUrl}";
 
         [JsonIgnore]
         public string AbsoluteFileUrl =>
             string.IsNullOrWhiteSpace(FileUrl)
                 ? string.Empty
-                : FileUrl.StartsWith("http", StringComparison.OrdinalIgnoreCase)
+                : FileUrl.StartsWith("http")
                     ? FileUrl
-                    : $"http://192.168.31.157:5041{FileUrl}";
+                    : $"http://192.168.11.137:5041{FileUrl}";
 
         // =====================
-        // 🔊 WAVE AUDIO (UI)
-        // =====================
-        [JsonIgnore]
-        public ObservableCollection<double> Waveform { get; } =
-              new ObservableCollection<double>(
-              Enumerable.Range(0, 25).Select(i => (double)i)
-        );
-
-        [JsonIgnore] public int WaveBarCount => Waveform.Count;
-
-        // =====================
-        // 🔊 ÉTAT AUDIO (UI)
+        // 🔊 AUDIO UI
         // =====================
         [ObservableProperty] private bool isPlaying;
         [ObservableProperty] private double audioProgress;
         [ObservableProperty] private string audioTime = "00:00";
 
-        [JsonIgnore]
-        public string StaticMapTileUrl
-        {
-            get
-            {
-                if (!IsLocation) return string.Empty;
-
-                const int zoom = 16;
-
-                var latRad = Latitude!.Value * Math.PI / 180;
-                var n = Math.Pow(2, zoom);
-
-                var xTile = (int)((Longitude!.Value + 180.0) / 360.0 * n);
-                var yTile = (int)((1.0 - Math.Log(Math.Tan(latRad) + 1 / Math.Cos(latRad)) / Math.PI) / 2.0 * n);
-
-                return $"https://tile.openstreetmap.org/{zoom}/{xTile}/{yTile}.png";
-            }
-        }
-
-        [JsonIgnore]
-        public string StaticMapUrl
-        {
-            get
-            {
-                if (!IsLocation || Latitude == null || Longitude == null)
-                    return string.Empty;
-
-                var lat = Latitude.Value.ToString(System.Globalization.CultureInfo.InvariantCulture);
-                var lng = Longitude.Value.ToString(System.Globalization.CultureInfo.InvariantCulture);
-
-                return
-                    $"https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/" +
-                    $"pin-s+2563EB({lng},{lat})/" +
-                    $"{lng},{lat},16/400x200" +
-                    $"?access_token=pk.eyJ1Ijoic3luZGljIiwiYSI6ImNtajdwMnVqcjA1cDMzZnNmdXdjazcxZnEifQ.SW3kQZqj_8ypQDi10Mq-rQ";
-            }
-        }
-
-
-        [JsonIgnore]
-        public string ExternalMapUrl =>
-        IsLocation
-        ? $"https://www.google.com/maps/search/?api=1&query={Latitude},{Longitude}"
-        : string.Empty;
-
+        // =====================
+        // 🔁 RÉPONSE
+        // =====================
         [JsonPropertyName("replyToMessage")]
         public MessageDto? ReplyToMessage { get; set; }
 
+        // =====================
+        // 👍 RÉACTIONS (BRUTES)
+        // =====================
+        private ObservableCollection<MessageReactionDto> _reactions = new();
+
         [JsonPropertyName("reactions")]
-        public ObservableCollection<MessageReactionDto> Reactions { get; set; } = new();
+        public ObservableCollection<MessageReactionDto> Reactions
+        {
+            get => _reactions;
+            set
+            {
+                if (_reactions == value)
+                    return;
+
+                if (_reactions != null)
+                    _reactions.CollectionChanged -= OnReactionsChanged;
+
+                _reactions = value ?? new ObservableCollection<MessageReactionDto>();
+                _reactions.CollectionChanged += OnReactionsChanged;
+
+                RebuildGroupedReactions();
+                OnPropertyChanged(nameof(HasGroupedReactions));
+            }
+        }
+
+        private void OnReactionsChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            RebuildGroupedReactions();
+            OnPropertyChanged(nameof(HasGroupedReactions));
+        }
 
 
-        // =============================
+        // =====================
+        // 👍 RÉACTIONS GROUPÉES (UI)
+        // =====================
+        [JsonIgnore]
+        public ObservableCollection<MessageReactionGroupDto> GroupedReactions { get; } = new();
+
+        [JsonIgnore]
+        public bool HasGroupedReactions => GroupedReactions.Count > 0;
+
+        // =====================
+        // 🔄 CONSTRUCTEUR (IMPORTANT)
+        // =====================
+        public MessageDto()
+        {
+            Reactions.CollectionChanged += (_, __) =>
+            {
+                RebuildGroupedReactions();
+                OnPropertyChanged(nameof(HasGroupedReactions));
+            };
+        }
+
+        // =====================
+        // 🔁 REGROUPEMENT
+        // =====================
+        private void RebuildGroupedReactions()
+        {
+            GroupedReactions.Clear();
+
+            if (Reactions.Count == 0)
+                return;
+
+            var groups = Reactions
+                .GroupBy(r => r.Emoji)
+                .Select(g => new MessageReactionGroupDto
+                {
+                    Emoji = g.Key,
+                    Count = g.Count()
+                });
+
+            foreach (var g in groups)
+                GroupedReactions.Add(g);
+        }
+
+        // =====================
         // 🔁 FORCE RAFRAÎCHISSEMENT UI
-        // =============================
+        // =====================
         partial void OnTypeChanged(string value)
         {
             OnPropertyChanged(nameof(IsText));
@@ -202,14 +213,5 @@
             OnPropertyChanged(nameof(IsDocument));
             OnPropertyChanged(nameof(IsLocation));
         }
-    }
-
-    // =====================
-    // DTO CREATION TEXTE
-    // =====================
-    public class CreateMessageDto
-    {
-        public Guid ConversationId { get; set; }
-        public string Contenu { get; set; } = string.Empty;
     }
 }

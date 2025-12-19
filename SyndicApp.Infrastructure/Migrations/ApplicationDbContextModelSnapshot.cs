@@ -76,9 +76,10 @@ namespace SyndicApp.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Emoji")
-                        .HasColumnType("nvarchar(450)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("MessageId", "UserId", "Emoji");
+                    b.HasKey("MessageId", "UserId");
 
                     b.HasIndex("UserId");
 

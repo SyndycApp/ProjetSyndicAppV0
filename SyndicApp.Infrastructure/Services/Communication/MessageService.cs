@@ -29,24 +29,32 @@ namespace SyndicApp.Infrastructure.Services.Communication
         // =========================
         public async Task AddReactionAsync(Guid messageId, Guid userId, string emoji)
         {
-            var exists = await _db.Messages.AnyAsync(m => m.Id == messageId);
-            if (!exists)
+            var message = await _db.Messages
+                .FirstOrDefaultAsync(m => m.Id == messageId);
+
+            if (message == null)
                 throw new Exception("Message introuvable");
 
-            var alreadyExists = await _db.MessageReactions.AnyAsync(r =>
-                r.MessageId == messageId &&
-                r.UserId == userId &&
-                r.Emoji == emoji);
+            var existing = await _db.MessageReactions
+                .FirstOrDefaultAsync(r =>
+                    r.MessageId == messageId &&
+                    r.UserId == userId);
 
-            if (alreadyExists)
-                return;
-
-            _db.MessageReactions.Add(new MessageReaction
+            if (existing != null)
             {
-                MessageId = messageId,
-                UserId = userId,
-                Emoji = emoji
-            });
+                if (existing.Emoji == emoji)
+                    return;
+                existing.Emoji = emoji;
+            }
+            else
+            {
+                _db.MessageReactions.Add(new MessageReaction
+                {
+                    MessageId = messageId,
+                    UserId = userId,
+                    Emoji = emoji
+                });
+            }
 
             await _db.SaveChangesAsync();
         }

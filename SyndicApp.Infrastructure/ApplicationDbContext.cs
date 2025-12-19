@@ -175,7 +175,11 @@ namespace SyndicApp.Infrastructure
 
             modelBuilder.Entity<MessageReaction>(b =>
             {
-                b.HasKey(x => new { x.MessageId, x.UserId, x.Emoji });
+                // ✅ 1 réaction max par utilisateur et par message
+                b.HasKey(x => new { x.MessageId, x.UserId });
+
+                b.Property(x => x.Emoji)
+                 .IsRequired();
 
                 b.HasOne(x => x.Message)
                  .WithMany(m => m.Reactions)
@@ -187,6 +191,7 @@ namespace SyndicApp.Infrastructure
                  .HasForeignKey(x => x.UserId)
                  .OnDelete(DeleteBehavior.Cascade);
             });
+
 
             // ================= Assemblées =================
             modelBuilder.Entity<Vote>(b =>
