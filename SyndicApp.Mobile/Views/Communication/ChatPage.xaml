@@ -83,33 +83,50 @@
                                            Aspect="AspectFill"/>
                                 </Border>
 
-                                <!-- DOCUMENT -->
-                                <Frame IsVisible="{Binding IsDocument}"
-                                       Padding="10"
-                                       CornerRadius="10"
-                                       BackgroundColor="#E5E7EB">
-                                    <HorizontalStackLayout Spacing="10">
-                                        <Image Source="document_icon.png"
-                                               WidthRequest="28"
-                                               HeightRequest="28"/>
-                                        <VerticalStackLayout>
-                                            <Label Text="{Binding FileName}"
-                                                   FontSize="14"
-                                                   FontAttributes="Bold"/>
-                                            <Label Text="{Binding ContentType}"
-                                                   FontSize="11"
-                                                   TextColor="#6B7280"/>
-                                        </VerticalStackLayout>
-                                        <ImageButton Source="download.png"
-                                                     WidthRequest="32"
-                                                     HeightRequest="32"
-                                                     BackgroundColor="Transparent"
-                                                     Command="{Binding BindingContext.OpenFileCommand, Source={x:Reference RootPage}}"
-                                                     CommandParameter="{Binding .}" />
-                                    </HorizontalStackLayout>
-                                </Frame>
-                                 <!-- LOCATION -->
-                               <Frame IsVisible="{Binding IsLocation}"
+<!-- DOCUMENT -->
+<Frame IsVisible="{Binding IsDocument}"
+       Padding="10"
+       CornerRadius="10"
+       BackgroundColor="#E5E7EB">
+
+    <Grid ColumnDefinitions="Auto,*,Auto"
+          ColumnSpacing="10"
+          VerticalOptions="Center">
+
+        <!-- ICON -->
+        <Image Grid.Column="0"
+               Source="document_icon.png"
+               WidthRequest="28"
+               HeightRequest="28"/>
+
+        <!-- TEXT -->
+        <VerticalStackLayout Grid.Column="1"
+                             Spacing="2"
+                             HorizontalOptions="Fill"
+                             VerticalOptions="Center">
+            <Label Text="{Binding FileName}"
+                   FontSize="14"
+                   FontAttributes="Bold"
+                   LineBreakMode="TailTruncation"
+                   MaxLines="1"/>
+            <Label Text="{Binding ContentType}"
+                   FontSize="11"
+                   TextColor="#1a1c1fdb"
+                   LineBreakMode="TailTruncation"
+                   MaxLines="1"/>
+        </VerticalStackLayout>
+        <!-- DOWNLOAD BUTTON -->
+        <ImageButton Grid.Column="2"
+                     Source="download.png"
+                     WidthRequest="32"
+                     HeightRequest="32"
+                     BackgroundColor="Transparent"
+                     Command="{Binding BindingContext.OpenFileCommand, Source={x:Reference RootPage}}"
+                     CommandParameter="{Binding .}" />
+    </Grid>
+</Frame>
+<!-- LOCATION -->
+<Frame IsVisible="{Binding IsLocation}"
        Padding="0"
        CornerRadius="12"
        HasShadow="False"
