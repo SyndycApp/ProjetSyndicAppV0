@@ -1,11 +1,13 @@
-﻿using System.Net;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Maui.Storage;
 using Refit;
 using SyndicApp.Mobile.Api;
+using SyndicApp.Mobile.Config;
 using SyndicApp.Mobile.Models;
 using SyndicApp.Mobile.Services;
-using Microsoft.Maui.Storage;
+using SyndicApp.Mobile.Services.AppelVocal;
+using System.Net;
 
 namespace SyndicApp.Mobile.ViewModels.Auth;
 
@@ -64,7 +66,6 @@ public partial class LoginViewModel : ViewModels.Common.BaseViewModel
             // 👉 Récupération du profil utilisateur
             var me = await _accountApi.MeAsync();
 
-            // 👉 Stockage UserId global
             App.UserId = me.Id.ToString();
             Preferences.Set("userId", me.Id.ToString());
 
@@ -74,6 +75,11 @@ public partial class LoginViewModel : ViewModels.Common.BaseViewModel
             var role = me.Roles?.FirstOrDefault()?.Trim();
             if (!string.IsNullOrEmpty(role))
                 _tokenStore.SaveRole(role);
+
+            var callHubService = ServiceHelper.Services.GetRequiredService<CallHubService>();
+            await callHubService.ConnectAsync(AppConfig.ApiBaseUrl, token);
+
+            Console.WriteLine("📞 CallHub connecté avec succès");
 
             // 👉 Redirection
             var route = GetHomeRouteForRole(role);

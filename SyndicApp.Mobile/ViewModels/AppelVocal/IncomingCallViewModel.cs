@@ -1,62 +1,35 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.AspNetCore.SignalR.Client;
+using CommunityToolkit.Mvvm.Input;
+using SyndicApp.Mobile.Services.AppelVocal;
 
-namespace SyndicApp.Mobile.ViewModels.AppelVocal
+public partial class IncomingCallViewModel : ObservableObject
 {
-    public partial class IncomingCallViewModel : ObservableObject
+    private readonly CallHubService _callHub;
+
+    [ObservableProperty] Guid callId;
+    [ObservableProperty] Guid callerId;
+
+    public IncomingCallViewModel(CallHubService callHub)
     {
-        private HubConnection? _connection;
+        _callHub = callHub;
+    }
 
-        [ObservableProperty]
-        Guid callerId;
+    [RelayCommand]
+    private async Task Accept()
+    {
+        await _callHub.AcceptCall(CallId);
 
-        [ObservableProperty]
-        Guid callId;
-
-        public async Task ConnectAsync(string token)
+        await Shell.Current.GoToAsync("active-call", new Dictionary<string, object>
         {
-            _connection = new HubConnectionBuilder()
-                .WithUrl("http://IP_LOCAL:5041/hubs/call", options =>
-                {
-                    options.AccessTokenProvider = () => Task.FromResult(token)!;
-                })
-                .WithAutomaticReconnect()
-                .Build();
+            ["CallId"] = CallId,
+            ["OtherUserName"] = "Appel entrant"
+        });
+    }
 
-            _connection.On<Guid>("IncomingCall", id =>
-            {
-                MainThread.BeginInvokeOnMainThread(() =>
-                {
-                    CallerId = id;
-                });
-            });
-
-            await _connection.StartAsync();
-        }
-
-        public async Task AcceptAsync()
-        {
-            if (_connection != null)
-                await _connection.InvokeAsync("AcceptCall", CallId);
-        }
-
-        [RelayCommand]
-        private async Task Accept()
-        {
-            await _connection!.InvokeAsync("AcceptCall", CallId);
-
-            await Shell.Current.GoToAsync("active-call", new Dictionary<string, object>
-            {
-                ["CallId"] = CallId,
-                ["OtherUserId"] = CallerId
-            });
-
-        }
-
-        public async Task RejectAsync()
-        {
-            if (_connection != null)
-                await _connection.InvokeAsync("EndCall", CallId);
-        }
+    [RelayCommand]
+    private async Task Reject()
+    {
+        await _callHub.EndCall(CallId);
+        await Shell.Current.GoToAsync("..");
     }
 }

@@ -429,38 +429,20 @@ public partial class ChatViewModel : ObservableObject
     [RelayCommand]
     private async Task StartCall()
     {
-        try
-        {
-            var result = await _callsApi.StartCallAsync(new StartCallRequest
-            {
-                ReceiverId = OtherUserId
-            });
+        Console.WriteLine("📞 StartCallCommand EXECUTED");
 
-            await Shell.Current.GoToAsync(
-                "active-call",
-                new Dictionary<string, object>
-                {
-                    ["CallId"] = result.Id,
-                    ["OtherUserId"] = OtherUserId
-                });
-        }
-        catch (Refit.ApiException ex) when (ex.StatusCode == System.Net.HttpStatusCode.BadRequest)
+        var call = await _callsApi.StartCallAsync(new StartCallRequest
         {
-            await Shell.Current.DisplayAlert(
-                "Appel impossible",
-                "L’un des utilisateurs est déjà en appel.",
-                "OK"
-            );
-        }
-        catch (Exception ex)
+            ReceiverId = OtherUserId
+        });
+
+        await Shell.Current.GoToAsync("active-call", new Dictionary<string, object>
         {
-            await Shell.Current.DisplayAlert(
-                "Erreur",
-                "Une erreur est survenue lors de l’appel.",
-                "OK"
-            );
-        }
+            ["CallId"] = call.Id,
+            ["OtherUserName"] = NomDestinataire
+        });
     }
+
 
 
     [RelayCommand]

@@ -22,7 +22,6 @@ namespace SyndicApp.Infrastructure.Services.AppelVocal
                 (c.CallerId == callerId || c.ReceiverId == callerId ||
                  c.CallerId == receiverId || c.ReceiverId == receiverId)
                 && c.EndedAt == null
-                && (c.Status == CallStatus.Ringing || c.Status == CallStatus.Accepted)
             );
 
             if (hasActiveCall)
@@ -33,6 +32,7 @@ namespace SyndicApp.Infrastructure.Services.AppelVocal
                 CallerId = callerId,
                 ReceiverId = receiverId,
                 StartedAt = DateTime.UtcNow,
+                EndedAt = null,
                 Status = CallStatus.Ringing
             };
 
@@ -55,13 +55,12 @@ namespace SyndicApp.Infrastructure.Services.AppelVocal
         public async Task EndCallAsync(Guid callId)
         {
             var call = await _db.Calls.FindAsync(callId);
+
             if (call == null || call.EndedAt != null)
                 return;
 
             call.EndedAt = DateTime.UtcNow;
-            call.Status = call.Status == CallStatus.Ringing
-                ? CallStatus.Missed
-                : CallStatus.Ended;
+            call.Status = CallStatus.Ended;
 
             await _db.SaveChangesAsync();
         }

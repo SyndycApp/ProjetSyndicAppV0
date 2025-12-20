@@ -1,11 +1,12 @@
 ﻿using Microcharts.Maui;
+using Plugin.Maui.Audio;
 using Refit;
 using SyndicApp.Mobile.Api;
-using Plugin.Maui.Audio;
-using SyndicApp.Mobile.Services.Communication;
 using SyndicApp.Mobile.Api.Communication;
 using SyndicApp.Mobile.Handlers;
 using SyndicApp.Mobile.Services;
+using SyndicApp.Mobile.Services.AppelVocal;
+using SyndicApp.Mobile.Services.Communication;
 using SyndicApp.Mobile.ViewModels.Affectations;
 using SyndicApp.Mobile.ViewModels.Auth;
 using SyndicApp.Mobile.ViewModels.Batiments;
@@ -18,6 +19,7 @@ using SyndicApp.Mobile.ViewModels.Personnel;
 using SyndicApp.Mobile.ViewModels.Residences;
 using SyndicApp.Mobile.Views;
 using SyndicApp.Mobile.Views.Affectations;
+using SyndicApp.Mobile.Views.AppelVocal;
 using SyndicApp.Mobile.Views.Auth;
 using SyndicApp.Mobile.Views.Batiments;
 using SyndicApp.Mobile.Views.Communication;
@@ -28,8 +30,6 @@ using SyndicApp.Mobile.Views.Lots;
 using SyndicApp.Mobile.Views.Personnel;
 using SyndicApp.Mobile.Views.Residences;
 using System.Text.Json;
-using SyndicApp.Mobile.Views.AppelVocal;
-using SyndicApp.Mobile.ViewModels.AppelVocal;
 
 
 
@@ -174,6 +174,7 @@ public static class MauiProgram
         builder.Services.AddTransient<ActiveCallViewModel>();
         builder.Services.AddTransient<IncomingCallViewModel>();
         builder.Services.AddTransient<NewConversationViewModel>();
+        builder.Services.AddSingleton<CallHubService>();
 
         // Pages
         builder.Services.AddTransient<LoginPage>();

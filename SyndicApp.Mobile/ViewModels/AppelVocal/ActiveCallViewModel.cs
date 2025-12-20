@@ -1,14 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.AspNetCore.SignalR.Client;
-using SyndicApp.Mobile.Api;
+using SyndicApp.Mobile.Services.AppelVocal;
 
 public partial class ActiveCallViewModel : ObservableObject, IQueryAttributable
 {
-    private HubConnection? _connection;
+    private readonly CallHubService _callHub;
     private Timer? _timer;
     private DateTime _start;
-    private readonly ICallApi _callApi;
 
     [ObservableProperty] string callDuration = "00:00";
     [ObservableProperty] string initials = "";
@@ -16,9 +14,15 @@ public partial class ActiveCallViewModel : ObservableObject, IQueryAttributable
 
     public Guid CallId { get; set; }
 
-    public ActiveCallViewModel(ICallApi callApi)
+    public ActiveCallViewModel(CallHubService callHub)
     {
-        _callApi = callApi;
+        _callHub = callHub;
+
+        _callHub.CallEnded += id =>
+        {
+            if (id == CallId)
+                Shell.Current.GoToAsync("..");
+        };
     }
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -46,19 +50,8 @@ public partial class ActiveCallViewModel : ObservableObject, IQueryAttributable
     [RelayCommand]
     private async Task EndCall()
     {
-        try
-        {
-            // ✅ TOUJOURS appeler le backend
-            await _callApi.EndCallAsync(CallId);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Erreur EndCall API : {ex}");
-        }
-        finally
-        {
-            _timer?.Dispose();
-            await Shell.Current.GoToAsync("..");
-        }
+        await _callHub.EndCall(CallId);
+        _timer?.Dispose();
+        await Shell.Current.GoToAsync("..");
     }
 }

@@ -1,4 +1,4 @@
-﻿using SyndicApp.Mobile.ViewModels.AppelVocal;
+﻿
 
 namespace SyndicApp.Mobile.Views.AppelVocal;
 

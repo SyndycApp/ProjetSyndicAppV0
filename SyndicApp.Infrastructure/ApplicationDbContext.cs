@@ -608,6 +608,9 @@ namespace SyndicApp.Infrastructure
                  .HasForeignKey(l => l.LotId)
                  .OnDelete(DeleteBehavior.Cascade);
             });
+            modelBuilder.Entity<Call>()
+                        .Property(c => c.EndedAt)
+                        .IsRequired(false);
 
             modelBuilder.Entity<Notification>(b =>
             {
