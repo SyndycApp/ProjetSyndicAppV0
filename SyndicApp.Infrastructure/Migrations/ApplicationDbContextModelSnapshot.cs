@@ -281,6 +281,46 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.ToTable("CategoriesAnnonces");
                 });
 
+            modelBuilder.Entity("SyndicApp.Domain.Entities.AppelVocal.Call", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CallerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("EndedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ReceiverId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("StartedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CallerId");
+
+                    b.HasIndex("ReceiverId");
+
+                    b.HasIndex("StartedAt");
+
+                    b.HasIndex("Status");
+
+                    b.ToTable("Calls", (string)null);
+                });
+
             modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.AssembleeGenerale", b =>
                 {
                     b.Property<Guid>("Id")

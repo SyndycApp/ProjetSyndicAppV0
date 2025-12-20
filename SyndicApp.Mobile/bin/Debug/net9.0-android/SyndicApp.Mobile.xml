@@ -196,6 +196,22 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationsListViewModel.GoToDetailsCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Affectations.AffectationsListViewModel.GoToDetails(System.Guid)"/>.</summary>
         </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.AppelVocal.IncomingCallViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.AppelVocal.IncomingCallViewModel.CallerId">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.AppelVocal.IncomingCallViewModel.callerId"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.AppelVocal.IncomingCallViewModel.CallId">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.AppelVocal.IncomingCallViewModel.callId"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.AppelVocal.IncomingCallViewModel.acceptCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.AppelVocal.IncomingCallViewModel.AcceptCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.AppelVocal.IncomingCallViewModel.AcceptCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.AppelVocal.IncomingCallViewModel.Accept"/>.</summary>
+        </member>
         <member name="T:SyndicApp.Mobile.ViewModels.Auth.ForgotPasswordViewModel">
             <inheritdoc/>
             <inheritdoc/>
@@ -578,12 +594,16 @@
             <inheritdoc/>
             <inheritdoc/>
             <inheritdoc/>
+            <inheritdoc/>
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.IsRecording">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.isRecording"/>
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.Messages">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.messages"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.OtherUserIdString">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.otherUserIdString"/>
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.NewMessage">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.newMessage"/>
@@ -599,6 +619,14 @@
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.TypingText">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.typingText"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.OtherUserId">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.otherUserId"/>
+        </member>
+        <member name="M:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.OnOtherUserIdStringChanged(System.String)">
+            <summary>Executes the logic for when <see cref="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.OtherUserIdString"/> just changed.</summary>
+            <param name="value">The new property value that was set.</param>
+            <remarks>This method is invoked right after the value of <see cref="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.OtherUserIdString"/> is changed.</remarks>
         </member>
         <member name="M:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.OnConversationIdStringChanged(System.String)">
             <summary>Executes the logic for when <see cref="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.ConversationIdString"/> just changed.</summary>
@@ -664,6 +692,12 @@
         </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.OpenMapCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.OpenMapAsync(System.String)"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.startCallCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.StartCallCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.StartCallCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.StartCall"/>.</summary>
         </member>
         <member name="F:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.openFileCommand">
             <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Communication.ChatViewModel.OpenFileCommand"/>.</summary>
@@ -2325,6 +2359,25 @@
             Exposes the Android Resource designer assembly into the project Namespace.
             </summary>
         </member>
+        <member name="T:ActiveCallViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:ActiveCallViewModel.CallDuration">
+            <inheritdoc cref="F:ActiveCallViewModel.callDuration"/>
+        </member>
+        <member name="P:ActiveCallViewModel.Initials">
+            <inheritdoc cref="F:ActiveCallViewModel.initials"/>
+        </member>
+        <member name="P:ActiveCallViewModel.OtherUserName">
+            <inheritdoc cref="F:ActiveCallViewModel.otherUserName"/>
+        </member>
+        <member name="F:ActiveCallViewModel.endCallCommand">
+            <summary>The backing field for <see cref="P:ActiveCallViewModel.EndCallCommand"/>.</summary>
+        </member>
+        <member name="P:ActiveCallViewModel.EndCallCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:ActiveCallViewModel.EndCall"/>.</summary>
+        </member>
         <member name="T:CommunityToolkit.Mvvm.Messaging.__Internals.__IMessengerExtensions">
             <summary>
             A helper type with generated registration stubs for types implementing <see cref="T:CommunityToolkit.Mvvm.Messaging.IRecipient`1"/>.
@@ -2447,6 +2500,21 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Items">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Items" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CallDuration">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CallDuration" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Initials">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Initials" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.OtherUserName">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "OtherUserName" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CallerId">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CallerId" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.CallId">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "CallId" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Email">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Email" generated properties.</summary>
         </member>
@@ -2522,6 +2590,9 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Messages">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Messages" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.OtherUserIdString">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "OtherUserIdString" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.NewMessage">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "NewMessage" generated properties.</summary>
         </member>
@@ -2536,6 +2607,9 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.TypingText">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "TypingText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.OtherUserId">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "OtherUserId" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.DisplayName">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "DisplayName" generated properties.</summary>
@@ -2915,6 +2989,21 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Items">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Items" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CallDuration">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CallDuration" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Initials">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Initials" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.OtherUserName">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "OtherUserName" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CallerId">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CallerId" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.CallId">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "CallId" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Email">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Email" generated properties.</summary>
         </member>
@@ -2990,6 +3079,9 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Messages">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Messages" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.OtherUserIdString">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "OtherUserIdString" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.NewMessage">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "NewMessage" generated properties.</summary>
         </member>
@@ -3004,6 +3096,9 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.TypingText">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "TypingText" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.OtherUserId">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "OtherUserId" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.DisplayName">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "DisplayName" generated properties.</summary>
@@ -3651,6 +3746,39 @@
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.IBatimentsApi.IBatimentsApi#ResolveIdAsync(System.String)">
+            <inheritdoc />
+        </member>
+        <member name="T:Refit.Implementation.Generated.SyndicAppMobileApiICallApi">
+            <inheritdoc />
+        </member>
+        <member name="P:Refit.Implementation.Generated.SyndicAppMobileApiICallApi.Client">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiICallApi.#ctor(System.Net.Http.HttpClient,Refit.IRequestBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiICallApi.StartCallAsync(StartCallRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiICallApi.EndCallAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiICallApi.GetHistoryAsync">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiICallApi.GetMissedAsync">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiICallApi.SyndicApp#Mobile#Api#ICallApi#StartCallAsync(StartCallRequest)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiICallApi.SyndicApp#Mobile#Api#ICallApi#EndCallAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiICallApi.SyndicApp#Mobile#Api#ICallApi#GetHistoryAsync">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiICallApi.SyndicApp#Mobile#Api#ICallApi#GetMissedAsync">
             <inheritdoc />
         </member>
         <member name="T:Refit.Implementation.Generated.SyndicAppMobileApiIChargesApi">

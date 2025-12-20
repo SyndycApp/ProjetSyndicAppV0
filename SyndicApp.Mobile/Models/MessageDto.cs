@@ -5,6 +5,7 @@
     using System.Collections.ObjectModel;
     using System.Linq;
     using System.Text.Json.Serialization;
+    using SyndicApp.Mobile.Config;
 
     public partial class MessageDto : ObservableObject
     {
@@ -104,7 +105,7 @@
                 ? string.Empty
                 : AudioUrl.StartsWith("http")
                     ? AudioUrl
-                    : $"http://192.168.11.137:5041{AudioUrl}";
+                    : $"{AppConfig.ApiBaseUrl}{AudioUrl}";
 
         [JsonIgnore]
         public string AbsoluteFileUrl =>
@@ -112,7 +113,7 @@
                 ? string.Empty
                 : FileUrl.StartsWith("http")
                     ? FileUrl
-                    : $"http://192.168.11.137:5041{FileUrl}";
+                    : $"{AppConfig.ApiBaseUrl}{FileUrl}";
 
         // =====================
         // 🔊 AUDIO UI

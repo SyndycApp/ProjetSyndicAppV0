@@ -28,6 +28,10 @@ using SyndicApp.Mobile.Views.Lots;
 using SyndicApp.Mobile.Views.Personnel;
 using SyndicApp.Mobile.Views.Residences;
 using System.Text.Json;
+using SyndicApp.Mobile.Views.AppelVocal;
+using SyndicApp.Mobile.ViewModels.AppelVocal;
+
+
 
 namespace SyndicApp.Mobile;
 
@@ -39,7 +43,7 @@ public static class MauiProgram
         builder.UseMauiApp<App>();
         builder.UseMicrocharts();
 
-        const string BaseUrl = "http://192.168.11.137:5041";
+        const string BaseUrl = "http://192.168.1.107:5041";
 
         // Refit JSON settings
         var jsonOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
@@ -76,6 +80,14 @@ public static class MauiProgram
                        c.Timeout = TimeSpan.FromSeconds(60);
                    })
                    .AddHttpMessageHandler<AuthHeaderHandler>();
+
+        builder.Services.AddRefitClient<ICallApi>(refitSettings)
+     .ConfigureHttpClient(c =>
+     {
+         c.BaseAddress = new Uri(BaseUrl);
+         c.Timeout = TimeSpan.FromSeconds(60);
+     })
+     .AddHttpMessageHandler<AuthHeaderHandler>();
 
         // 🔐 APIs sécurisées
         AddSecured<IChatApi>();
@@ -159,6 +171,8 @@ public static class MauiProgram
         builder.Services.AddTransient<PrestataireDetailsViewModel>();
         builder.Services.AddTransient<ChatViewModel>();
         builder.Services.AddTransient<ConversationsListViewModel>();
+        builder.Services.AddTransient<ActiveCallViewModel>();
+        builder.Services.AddTransient<IncomingCallViewModel>();
         builder.Services.AddTransient<NewConversationViewModel>();
 
         // Pages
@@ -217,6 +231,8 @@ public static class MauiProgram
         builder.Services.AddTransient<ChatPage>();
         builder.Services.AddTransient<ConversationsPage>();
         builder.Services.AddTransient<NewConversationPage>();
+        builder.Services.AddTransient<ActiveCallPage>();
+        builder.Services.AddTransient<IncomingCallPage>();
 
 
         builder.Services.AddSingleton<AudioRecorderService>();

@@ -5,7 +5,7 @@ using SyndicApp.Infrastructure;
 using SyndicApp.Infrastructure.Data;
 
 
-namespace SyndicApp.Application.Services.Communication
+namespace SyndicApp.Infrastructure.Services.Communication
 {
     public class DocumentMessageService : IDocumentMessageService
     {

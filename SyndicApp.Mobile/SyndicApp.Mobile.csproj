@@ -111,6 +111,13 @@
 	    <Using Include="CommunityToolkit.Mvvm" />
 	</ItemGroup>
 	<ItemGroup>
+	  <MauiXaml Update="Views\AppelVocal\ActiveCallPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\AppelVocal\IncomingCallPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Communication\ChatPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

@@ -28,7 +28,7 @@
         <Grid BackgroundColor="#2563EB"
               Padding="16"
               HeightRequest="60"
-              ColumnDefinitions="40,*">
+              ColumnDefinitions="40,*,40">
 
             <ImageButton
                 Source="arrow_back_white.png"
@@ -43,11 +43,18 @@
                    TextColor="White"
                    FontAttributes="Bold"
                    VerticalOptions="Center" />
+
+            <ImageButton Grid.Column="2"
+             Source="phone.png"
+             BackgroundColor="Transparent"
+             WidthRequest="32"
+             HeightRequest="32"
+             Command="{Binding StartCallCommand}" />
         </Grid>
 
         <!-- ===================== MESSAGES ===================== -->
-        <ScrollView Grid.Row="1" x:Name="MessagesScrollView" Padding="10">
-            <VerticalStackLayout
+<ScrollView Grid.Row="1" x:Name="MessagesScrollView" Padding="10">
+    <VerticalStackLayout
                 Spacing="8"
                 x:Name="MessagesStack"
                 BindableLayout.ItemsSource="{Binding Messages}">

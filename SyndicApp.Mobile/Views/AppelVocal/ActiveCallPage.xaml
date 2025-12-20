@@ -1,0 +1,44 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SyndicApp.Mobile.Views.AppelVocal.ActiveCallPage"
+             BackgroundColor="#111827">
+    <VerticalStackLayout VerticalOptions="Center"
+                         HorizontalOptions="Center"
+                         Spacing="25">
+
+        <!-- Initiales -->
+        <Frame WidthRequest="120"
+               HeightRequest="120"
+               CornerRadius="60"
+               BackgroundColor="#2563EB"
+               HorizontalOptions="Center"
+               VerticalOptions="Center">
+
+            <Label Text="{Binding Initials}"
+                   FontSize="40"
+                   TextColor="White"
+                   HorizontalTextAlignment="Center"
+                   VerticalTextAlignment="Center"/>
+        </Frame>
+
+        <!-- Nom -->
+        <Label Text="{Binding OtherUserName}"
+               TextColor="White"
+               FontSize="22"
+               HorizontalTextAlignment="Center"/>
+
+        <!-- Timer -->
+        <Label Text="{Binding CallDuration}"
+               TextColor="LightGray"
+               FontSize="18"
+               HorizontalTextAlignment="Center"/>
+
+        <!-- Raccrocher -->
+        <Button Text="Raccrocher"
+                BackgroundColor="#DC2626"
+                TextColor="White"
+                CornerRadius="30"
+                Padding="20,12"
+                Command="{Binding EndCallCommand}"/>
+    </VerticalStackLayout>
+</ContentPage>

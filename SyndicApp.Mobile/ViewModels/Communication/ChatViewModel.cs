@@ -1,22 +1,25 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Refit;
+using SyndicApp.Mobile.Api;
 using SyndicApp.Mobile.Api.Communication;
 using SyndicApp.Mobile.Models;
 using SyndicApp.Mobile.Services.Communication;
+using SyndicApp.Mobile.Views.AppelVocal;
 using System.Collections.ObjectModel;
 
 namespace SyndicApp.Mobile.ViewModels.Communication;
 
 [QueryProperty(nameof(ConversationIdString), "conversationId")]
 [QueryProperty(nameof(NomDestinataire), "name")]
+[QueryProperty(nameof(OtherUserIdString), "otherUserId")]
 public partial class ChatViewModel : ObservableObject
 {
     private readonly IMessagesApi _api;
     private readonly ChatHubService _hub;
     private readonly AudioRecorderService _recorder;
     private readonly AudioPlayerService _player;
-
+    private readonly ICallApi _callsApi;
     private MessageDto? _currentAudioMessage;
 
     [ObservableProperty]
@@ -24,6 +27,10 @@ public partial class ChatViewModel : ObservableObject
 
     [ObservableProperty]
     private ObservableCollection<MessageDto> messages = new();
+
+    [ObservableProperty]
+    private string otherUserIdString = string.Empty;
+
 
     [ObservableProperty]
     private string newMessage = string.Empty;
@@ -40,6 +47,9 @@ public partial class ChatViewModel : ObservableObject
     [ObservableProperty]
     private string typingText = string.Empty;
 
+    [ObservableProperty]
+    private Guid otherUserId;
+
     private CancellationTokenSource? _typingCts;
 
     private DateTime _lastTypingSent = DateTime.MinValue;
@@ -51,7 +61,8 @@ public partial class ChatViewModel : ObservableObject
         IMessagesApi api,
         ChatHubService hub,
         AudioRecorderService recorder,
-        AudioPlayerService player)
+        AudioPlayerService player,
+        ICallApi callsApi)
     {
         _api = api;
         _hub = hub;
@@ -78,6 +89,14 @@ public partial class ChatViewModel : ObservableObject
             _currentAudioMessage.AudioProgress = 0;
             _currentAudioMessage.AudioTime = "00:00";
         };
+        _callsApi = callsApi;
+    }
+
+
+    partial void OnOtherUserIdStringChanged(string value)
+    {
+        if (Guid.TryParse(value, out var id))
+            OtherUserId = id;
     }
 
     // =====================================================
@@ -405,6 +424,44 @@ public partial class ChatViewModel : ObservableObject
 
         await Launcher.OpenAsync(url);
     }
+
+
+    [RelayCommand]
+    private async Task StartCall()
+    {
+        try
+        {
+            var result = await _callsApi.StartCallAsync(new StartCallRequest
+            {
+                ReceiverId = OtherUserId
+            });
+
+            await Shell.Current.GoToAsync(
+                "active-call",
+                new Dictionary<string, object>
+                {
+                    ["CallId"] = result.Id,
+                    ["OtherUserId"] = OtherUserId
+                });
+        }
+        catch (Refit.ApiException ex) when (ex.StatusCode == System.Net.HttpStatusCode.BadRequest)
+        {
+            await Shell.Current.DisplayAlert(
+                "Appel impossible",
+                "L’un des utilisateurs est déjà en appel.",
+                "OK"
+            );
+        }
+        catch (Exception ex)
+        {
+            await Shell.Current.DisplayAlert(
+                "Erreur",
+                "Une erreur est survenue lors de l’appel.",
+                "OK"
+            );
+        }
+    }
+
 
     [RelayCommand]
     private async Task OpenFileAsync(MessageDto message)

@@ -5,13 +5,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using SyndicApp.Application.Interfaces;
+using SyndicApp.Application.Interfaces.AppelVocal;
 using SyndicApp.Application.Interfaces.Communication;
 using SyndicApp.Application.Interfaces.Residences;
-using SyndicApp.Application.Services.Communication;
 using SyndicApp.Infrastructure;
 using SyndicApp.Infrastructure.Files;
 using SyndicApp.Infrastructure.Identity;
 using SyndicApp.Infrastructure.Services;
+using SyndicApp.Infrastructure.Services.AppelVocal;
 using SyndicApp.Infrastructure.Services.Communication;
 using SyndicApp.Infrastructure.Services.Residences;
 using System.Text;
@@ -69,6 +70,7 @@ namespace SyndicApp.Infrastructure
                 };
             });
 
+            services.AddScoped<ICallService, CallService>();
             // 5️⃣ Services transverses et métiers
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();

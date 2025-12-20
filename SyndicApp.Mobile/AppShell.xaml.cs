@@ -2,6 +2,7 @@
 
 using SyndicApp.Mobile.Views;
 using SyndicApp.Mobile.Views.Affectations;
+using SyndicApp.Mobile.Views.AppelVocal;
 using SyndicApp.Mobile.Views.Auth;
 using SyndicApp.Mobile.Views.Batiments;
 using SyndicApp.Mobile.Views.Communication;
@@ -83,6 +84,9 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("conversations", typeof(ConversationsPage));
 
         Routing.RegisterRoute("new-conversation", typeof(NewConversationPage));
+
+        Routing.RegisterRoute("active-call", typeof(ActiveCallPage));
+        Routing.RegisterRoute("incoming-call", typeof(IncomingCallPage));
 
     }
 }

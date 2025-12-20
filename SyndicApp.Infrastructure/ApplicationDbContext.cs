@@ -2,12 +2,13 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SyndicApp.Domain.Entities.Annonces;
+using SyndicApp.Domain.Entities.AppelVocal;
 using SyndicApp.Domain.Entities.Assemblees;
+using SyndicApp.Domain.Entities.Common;
 using SyndicApp.Domain.Entities.Communication;
 using SyndicApp.Domain.Entities.Documents;
 using SyndicApp.Domain.Entities.Finances;
 using SyndicApp.Domain.Entities.Incidents;
-using SyndicApp.Domain.Entities.Common;
 using SyndicApp.Domain.Entities.LocauxCommerciaux;
 using SyndicApp.Domain.Entities.Personnel;
 using SyndicApp.Domain.Entities.Residences;
@@ -36,6 +37,8 @@ namespace SyndicApp.Infrastructure
         public DbSet<Incident> Incidents => Set<Incident>();
         public DbSet<DevisTravaux> DevisTravaux => Set<DevisTravaux>();
         public DbSet<Intervention> Interventions => Set<Intervention>();
+
+        public DbSet<Call> Calls { get; set; }
 
         public DbSet<MessageReaction> MessageReactions => Set<MessageReaction>();
 
@@ -560,6 +563,26 @@ namespace SyndicApp.Infrastructure
                  .HasForeignKey(a => a.UserId)
                  .OnDelete(DeleteBehavior.Cascade);
             });
+
+            // ================= Appels Vocaux =================
+            modelBuilder.Entity<Call>(b =>
+            {
+                b.ToTable("Calls");
+
+                b.Property(c => c.CallerId).IsRequired();
+                b.Property(c => c.ReceiverId).IsRequired();
+                b.Property(c => c.StartedAt).IsRequired();
+
+                b.Property(c => c.Status)
+                 .HasConversion<int>()
+                 .IsRequired();
+
+                b.HasIndex(c => c.CallerId);
+                b.HasIndex(c => c.ReceiverId);
+                b.HasIndex(c => c.StartedAt);
+                b.HasIndex(c => c.Status);
+            });
+
 
             modelBuilder.Entity<LocalCommercial>(b =>
             {
