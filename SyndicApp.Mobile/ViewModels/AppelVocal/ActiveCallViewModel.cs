@@ -18,6 +18,12 @@ public partial class ActiveCallViewModel : ObservableObject, IQueryAttributable
     {
         _callHub = callHub;
 
+        _callHub.CallAccepted += id =>
+        {
+            if (id == CallId)
+                StartTimer();
+        };
+
         _callHub.CallEnded += id =>
         {
             if (id == CallId)
@@ -30,11 +36,9 @@ public partial class ActiveCallViewModel : ObservableObject, IQueryAttributable
         CallId = (Guid)query["CallId"];
         OtherUserName = query["OtherUserName"]?.ToString() ?? "";
 
-        Initials = OtherUserName.Length > 0
-            ? string.Join("", OtherUserName.Split(' ').Select(x => x[0]))
-            : "?";
-
-        StartTimer();
+        Initials = string.Join("", OtherUserName.Split(' ')
+            .Where(x => x.Length > 0)
+            .Select(x => x[0]));
     }
 
     private void StartTimer()
@@ -42,8 +46,8 @@ public partial class ActiveCallViewModel : ObservableObject, IQueryAttributable
         _start = DateTime.UtcNow;
         _timer = new Timer(_ =>
         {
-            var elapsed = DateTime.UtcNow - _start;
-            CallDuration = elapsed.ToString(@"mm\:ss");
+            CallDuration = (DateTime.UtcNow - _start)
+                .ToString(@"mm\:ss");
         }, null, 0, 1000);
     }
 

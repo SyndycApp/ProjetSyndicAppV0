@@ -13,7 +13,6 @@ namespace SyndicApp.Infrastructure.Services.AppelVocal
         public CallService(ApplicationDbContext db)
         {
             _db = db;
-            
         }
 
         public async Task<CallDto> StartCallAsync(Guid callerId, Guid receiverId)
@@ -42,7 +41,6 @@ namespace SyndicApp.Infrastructure.Services.AppelVocal
             return Map(call);
         }
 
-
         public async Task AcceptCallAsync(Guid callId)
         {
             var call = await _db.Calls.FindAsync(callId);
@@ -55,16 +53,12 @@ namespace SyndicApp.Infrastructure.Services.AppelVocal
         public async Task EndCallAsync(Guid callId)
         {
             var call = await _db.Calls.FindAsync(callId);
-
-            if (call == null || call.EndedAt != null)
-                return;
+            if (call == null || call.EndedAt != null) return;
 
             call.EndedAt = DateTime.UtcNow;
             call.Status = CallStatus.Ended;
-
             await _db.SaveChangesAsync();
         }
-
 
         public async Task<IEnumerable<CallDto>> GetHistoryAsync(Guid userId)
         {
@@ -81,6 +75,12 @@ namespace SyndicApp.Infrastructure.Services.AppelVocal
                 .Where(c => c.ReceiverId == userId && c.Status == CallStatus.Missed)
                 .Select(c => Map(c))
                 .ToListAsync();
+        }
+
+        public async Task<CallDto?> GetByIdAsync(Guid callId)
+        {
+            var call = await _db.Calls.FirstOrDefaultAsync(c => c.Id == callId);
+            return call == null ? null : Map(call);
         }
 
         private static CallDto Map(Call c) => new()

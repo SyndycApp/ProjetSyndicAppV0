@@ -12,28 +12,24 @@ namespace SyndicApp.API.Hubs
             _callService = callService;
         }
 
-        public override async Task OnConnectedAsync()
-        {
-            Console.WriteLine($"[SignalR] Connected UserId = {Context.UserIdentifier}");
-            await base.OnConnectedAsync();
-        }
-        public async Task CallUser(Guid receiverId)
-        {
-            var callerId = Guid.Parse(Context.UserIdentifier!);
-            await _callService.StartCallAsync(callerId, receiverId);
-
-            await Clients.User(receiverId.ToString())
-                .SendAsync("IncomingCall", callerId);
-        }
-
         public async Task AcceptCall(Guid callId)
         {
             await _callService.AcceptCallAsync(callId);
+
+            var call = await _callService.GetByIdAsync(callId);
+            if (call == null) return;
+
+            await Clients.User(call.CallerId.ToString())
+                .SendAsync("CallAccepted", callId);
+
+            await Clients.User(call.ReceiverId.ToString())
+                .SendAsync("CallAccepted", callId);
         }
 
         public async Task EndCall(Guid callId)
         {
             await _callService.EndCallAsync(callId);
+            await Clients.All.SendAsync("CallEnded", callId);
         }
     }
 }
