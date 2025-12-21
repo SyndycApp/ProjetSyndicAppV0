@@ -25,6 +25,23 @@ namespace SyndicApp.API.Hubs
             await Clients.User(call.ReceiverId.ToString())
                 .SendAsync("CallAccepted", callId);
         }
+        public async Task SendOffer(Guid callId, Guid targetUserId, string sdp)
+        {
+            await Clients.User(targetUserId.ToString())
+                .SendAsync("ReceiveOffer", callId, sdp);
+        }
+
+        public async Task SendAnswer(Guid callId, Guid targetUserId, string sdp)
+        {
+            await Clients.User(targetUserId.ToString())
+                .SendAsync("ReceiveAnswer", callId, sdp);
+        }
+
+        public async Task SendIceCandidate(Guid callId, Guid targetUserId, string candidate)
+        {
+            await Clients.User(targetUserId.ToString())
+                .SendAsync("ReceiveIceCandidate", callId, candidate);
+        }
 
         public async Task EndCall(Guid callId)
         {
