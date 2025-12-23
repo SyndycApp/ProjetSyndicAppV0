@@ -118,6 +118,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\AppelVocal\WebRtcCallPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\Communication\ChatPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

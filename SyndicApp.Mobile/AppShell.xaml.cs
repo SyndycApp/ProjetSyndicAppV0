@@ -1,5 +1,6 @@
 ﻿namespace SyndicApp.Mobile;
 
+using SyndicApp.Mobile.Services.AppelVocal;
 using SyndicApp.Mobile.Views;
 using SyndicApp.Mobile.Views.Affectations;
 using SyndicApp.Mobile.Views.AppelVocal;
@@ -89,4 +90,29 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("incoming-call", typeof(IncomingCallPage));
 
     }
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        if (IncomingCallState.CallId != null)
+        {
+            var callId = IncomingCallState.CallId.Value;
+            var callerId = IncomingCallState.CallerId!.Value;
+
+            IncomingCallState.CallId = null;
+            IncomingCallState.CallerId = null;
+
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                Console.WriteLine("📞 Navigation IncomingCallPage");
+                await Shell.Current.GoToAsync("incoming-call",
+                    new Dictionary<string, object>
+                    {
+                        ["CallId"] = callId,
+                        ["CallerId"] = callerId
+                    });
+            });
+        }
+    }
+
 }

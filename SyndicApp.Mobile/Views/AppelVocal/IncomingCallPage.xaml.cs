@@ -1,4 +1,4 @@
-﻿
+﻿using SyndicApp.Mobile.ViewModels.AppelVocal;
 
 namespace SyndicApp.Mobile.Views.AppelVocal;
 
@@ -10,3 +10,4 @@ public partial class IncomingCallPage : ContentPage
         BindingContext = vm;
     }
 }
+

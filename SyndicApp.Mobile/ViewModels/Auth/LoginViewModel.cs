@@ -78,7 +78,7 @@ public partial class LoginViewModel : ViewModels.Common.BaseViewModel
 
             var callHubService = ServiceHelper.Services.GetRequiredService<CallHubService>();
             await callHubService.ConnectAsync(AppConfig.ApiBaseUrl, token);
-
+            await Task.Delay(2500);
             Console.WriteLine("📞 CallHub connecté avec succès");
 
             // 👉 Redirection

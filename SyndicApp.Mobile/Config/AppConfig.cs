@@ -2,6 +2,6 @@
 {
     public static class AppConfig
     {
-        public const string ApiBaseUrl = "http://192.168.1.107:5041";
+        public const string ApiBaseUrl = "http://192.168.11.115:5041";
     }
 }

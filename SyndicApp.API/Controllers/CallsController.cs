@@ -28,9 +28,27 @@ namespace SyndicApp.API.Controllers
         public async Task<IActionResult> StartCall([FromBody] CreateCallDto dto)
         {
             var callerId = User.GetUserId();
+
+            Console.WriteLine($"📞 StartCall API");
+            Console.WriteLine($"➡️ CallerId = {callerId}");
+            Console.WriteLine($"➡️ ReceiverId = {dto.ReceiverId}");
+
             var call = await _callService.StartCallAsync(callerId, dto.ReceiverId);
+
+            Console.WriteLine($"📡 Envoi IncomingCall vers {call.ReceiverId}");
+
+            await _hubContext.Clients.User(call.ReceiverId.ToString())
+                .SendAsync("IncomingCall", new
+                {
+                    callId = call.Id,
+                    callerId = call.CallerId
+                });
+
+            Console.WriteLine("✅ IncomingCall envoyé");
+
             return Ok(call);
         }
+
 
         [HttpPost("{callId}/end")]
         public async Task<IActionResult> End(Guid callId)

@@ -196,6 +196,29 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Affectations.AffectationsListViewModel.GoToDetailsCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Affectations.AffectationsListViewModel.GoToDetails(System.Guid)"/>.</summary>
         </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.AppelVocal.IncomingCallViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.AppelVocal.IncomingCallViewModel.CallId">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.AppelVocal.IncomingCallViewModel.callId"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.AppelVocal.IncomingCallViewModel.CallerId">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.AppelVocal.IncomingCallViewModel.callerId"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.AppelVocal.IncomingCallViewModel.acceptCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.AppelVocal.IncomingCallViewModel.AcceptCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.AppelVocal.IncomingCallViewModel.AcceptCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.AppelVocal.IncomingCallViewModel.Accept"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.AppelVocal.IncomingCallViewModel.rejectCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.AppelVocal.IncomingCallViewModel.RejectCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.AppelVocal.IncomingCallViewModel.RejectCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.AppelVocal.IncomingCallViewModel.Reject"/>.</summary>
+        </member>
         <member name="T:SyndicApp.Mobile.ViewModels.Auth.ForgotPasswordViewModel">
             <inheritdoc/>
             <inheritdoc/>
@@ -2361,29 +2384,6 @@
         </member>
         <member name="P:ActiveCallViewModel.EndCallCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:ActiveCallViewModel.EndCall"/>.</summary>
-        </member>
-        <member name="T:IncomingCallViewModel">
-            <inheritdoc/>
-            <inheritdoc/>
-            <inheritdoc/>
-        </member>
-        <member name="P:IncomingCallViewModel.CallId">
-            <inheritdoc cref="F:IncomingCallViewModel.callId"/>
-        </member>
-        <member name="P:IncomingCallViewModel.CallerId">
-            <inheritdoc cref="F:IncomingCallViewModel.callerId"/>
-        </member>
-        <member name="F:IncomingCallViewModel.acceptCommand">
-            <summary>The backing field for <see cref="P:IncomingCallViewModel.AcceptCommand"/>.</summary>
-        </member>
-        <member name="P:IncomingCallViewModel.AcceptCommand">
-            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:IncomingCallViewModel.Accept"/>.</summary>
-        </member>
-        <member name="F:IncomingCallViewModel.rejectCommand">
-            <summary>The backing field for <see cref="P:IncomingCallViewModel.RejectCommand"/>.</summary>
-        </member>
-        <member name="P:IncomingCallViewModel.RejectCommand">
-            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:IncomingCallViewModel.Reject"/>.</summary>
         </member>
         <member name="T:CommunityToolkit.Mvvm.Messaging.__Internals.__IMessengerExtensions">
             <summary>

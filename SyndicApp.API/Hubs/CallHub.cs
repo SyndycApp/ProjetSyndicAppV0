@@ -43,6 +43,16 @@ namespace SyndicApp.API.Hubs
                 .SendAsync("ReceiveIceCandidate", callId, candidate);
         }
 
+
+        public override async Task OnConnectedAsync()
+        {
+            var userId = Context.UserIdentifier;
+            Console.WriteLine($"🟢 Client SignalR prêt : {userId}");
+
+            await Clients.Caller.SendAsync("HubReady");
+            await base.OnConnectedAsync();
+        }
+
         public async Task EndCall(Guid callId)
         {
             await _callService.EndCallAsync(callId);

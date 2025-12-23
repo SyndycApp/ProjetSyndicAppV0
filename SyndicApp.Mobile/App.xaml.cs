@@ -1,32 +1,40 @@
-﻿namespace SyndicApp.Mobile;
+﻿using SyndicApp.Mobile.Services.AppelVocal;
+
+namespace SyndicApp.Mobile;
 
 public partial class App : Application
 {
     public static string? UserId { get; set; }
-    public App()
+
+    public App(CallHubService callHub)
     {
         InitializeComponent();
 
-        Microsoft.Maui.Controls.Application.Current.Dispatcher.Dispatch(() =>
+        // 🔥 LISTENER GLOBAL DES APPELS ENTRANTS
+        callHub.IncomingCall += async (callId, callerId) =>
         {
-            Console.WriteLine("🔵 App.UserId = " + UserId);
-        });
+            Console.WriteLine($"📞 APPEL ENTRANT GLOBAL → {callId}");
+            Console.WriteLine($"🔍 Shell.Current = {Shell.Current}");
+            Console.WriteLine($"🔍 MainPage = {MainPage}");
+
+            await MainThread.InvokeOnMainThreadAsync(async () =>
+            {
+                await Shell.Current.GoToAsync(
+                    "incoming-call",
+                    new Dictionary<string, object>
+                    {
+                        ["CallId"] = callId,
+                        ["CallerId"] = callerId
+                    }
+                );
+            });
+        };
+
+        Console.WriteLine("✅ IncomingCall handler global ACTIF");
     }
 
     protected override Window CreateWindow(IActivationState? activationState)
     {
-        
-        var window = new Window(new AppShell());
-
-        
-        window.Created += (s, e) =>
-        {
-            MainThread.BeginInvokeOnMainThread(async () =>
-            {
-                await Shell.Current.GoToAsync("//login");
-            });
-        };
-
-        return window;
+        return new Window(new AppShell());
     }
 }
