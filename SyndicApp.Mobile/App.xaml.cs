@@ -10,27 +10,20 @@ public partial class App : Application
     {
         InitializeComponent();
 
-        // 🔥 LISTENER GLOBAL DES APPELS ENTRANTS
+        // 🔥 LISTENER GLOBAL UNIQUE
         callHub.IncomingCall += async (callId, callerId) =>
         {
-            Console.WriteLine($"📞 APPEL ENTRANT GLOBAL → {callId}");
-            Console.WriteLine($"🔍 Shell.Current = {Shell.Current}");
-            Console.WriteLine($"🔍 MainPage = {MainPage}");
+            Console.WriteLine($"📞 APPEL ENTRANT → {callId}");
 
-            await MainThread.InvokeOnMainThreadAsync(async () =>
-            {
-                await Shell.Current.GoToAsync(
-                    "incoming-call",
+            await MainThread.InvokeOnMainThreadAsync(() =>
+                Shell.Current.GoToAsync("incoming-call",
                     new Dictionary<string, object>
                     {
                         ["CallId"] = callId,
                         ["CallerId"] = callerId
-                    }
-                );
-            });
+                    })
+            );
         };
-
-        Console.WriteLine("✅ IncomingCall handler global ACTIF");
     }
 
     protected override Window CreateWindow(IActivationState? activationState)

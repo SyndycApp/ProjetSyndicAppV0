@@ -7,7 +7,6 @@ public class CallHubService
 {
     private HubConnection? _connection;
 
-    // ===== EVENTS =====
     public event Action<Guid, Guid>? IncomingCall;
     public event Action<Guid>? CallAccepted;
     public event Action<Guid>? CallEnded;
@@ -18,12 +17,6 @@ public class CallHubService
             return;
 
         Console.WriteLine("🔌 Connexion CallHub...");
-        Console.WriteLine($"🔑 Token (début) = {token[..20]}...");
-
-        _connection.On("HubReady", () =>
-        {
-            Console.WriteLine("🟢 Hub prêt à recevoir des appels");
-        });
 
         _connection = new HubConnectionBuilder()
             .WithUrl($"{baseUrl}/hubs/call", options =>
@@ -33,39 +26,34 @@ public class CallHubService
             .WithAutomaticReconnect()
             .Build();
 
-        // =========================
-        // 📞 APPEL ENTRANT
-        // =========================
+        // ✅ HANDLERS APRÈS Build
         _connection.On<dynamic>("IncomingCall", data =>
         {
-            Guid callId = Guid.Parse(data.callId.ToString());
-            Guid callerId = Guid.Parse(data.callerId.ToString());
+            var callId = Guid.Parse(data.callId.ToString());
+            var callerId = Guid.Parse(data.callerId.ToString());
 
-            Console.WriteLine($"📞 IncomingCall SIGNALR reçu → {callId}");
+            Console.WriteLine($"📞 IncomingCall reçu → {callId}");
 
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                Console.WriteLine($"📞 Dispatch IncomingCall → {callId}");
                 IncomingCall?.Invoke(callId, callerId);
             });
         });
 
         _connection.On<Guid>("CallAccepted", callId =>
         {
-            Console.WriteLine($"✅ CallAccepted {callId}");
             MainThread.BeginInvokeOnMainThread(() =>
                 CallAccepted?.Invoke(callId));
         });
 
         _connection.On<Guid>("CallEnded", callId =>
         {
-            Console.WriteLine($"❌ CallEnded {callId}");
             MainThread.BeginInvokeOnMainThread(() =>
                 CallEnded?.Invoke(callId));
         });
 
         await _connection.StartAsync();
-        Console.WriteLine("🔌 CallHub connecté");
+        Console.WriteLine("✅ CallHub connecté");
     }
 
     public Task AcceptCall(Guid callId)

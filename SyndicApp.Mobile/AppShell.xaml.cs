@@ -89,6 +89,9 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("active-call", typeof(ActiveCallPage));
         Routing.RegisterRoute("incoming-call", typeof(IncomingCallPage));
 
+        Routing.RegisterRoute("//personnel/employes", typeof(EmployesPage));
+        Routing.RegisterRoute("//personnel/plannings", typeof(PlanningPresencePage));
+
     }
     protected override void OnAppearing()
     {

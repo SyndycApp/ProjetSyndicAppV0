@@ -1,0 +1,76 @@
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\wwwroot\uploads\audio\df4f5152-344a-4ad4-9b15-031b3f7c1cf0_audio_639012547482841034.wav
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\wwwroot\uploads\audio\0b66e735-fe6d-4f84-9a2a-bd802e350021_audio_639012715473288795.wav
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\wwwroot\uploads\audio\10c7fdbe-e47e-4ac0-a3b7-560a2bb726db_audio_639012547313972068.wav
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\wwwroot\uploads\audio\872a69c9-0acd-47bc-8f95-bacbe91bbc2b_audio_639012485730885203.wav
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\wwwroot\uploads\audio\f842e946-4bc6-47b2-aefb-a6d45212d3e0_audio_639012483526178781.wav
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\wwwroot\uploads\audio\481fa750-9bc4-401c-a587-0f3e396e4d40_audio_639014236087717469.wav
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\wwwroot\uploads\audio\6981d516-bd93-4771-8370-0253d0404630_audio_639015041962222272.wav
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\wwwroot\uploads\audio\f2348a66-a19d-4240-9d11-3e2d1584dec6_audio_639013452871837423.wav
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\wwwroot\uploads\audio\17cdd281-dd4d-487f-9af2-50907d490f67_audio_639012545457968345.wav
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\wwwroot\uploads\audio\060425df-9d06-48e7-b37c-87c8013c9bce_audio_639012485091147374.wav
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\wwwroot\uploads\audio\c48602af-c0ef-49e1-8871-7ad279ca6298_audio_639012487084212883.wav
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\wwwroot\uploads\audio\1ca690c6-bf8a-443b-9dd7-82eed4c0b87a_audio_639012530709144968.wav
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\wwwroot\uploads\audio\fb5d52c9-0359-44f9-8e39-5c1971518b46_audio_639015818822201306.wav
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\wwwroot\uploads\audio\d1a38637-a8d7-4dae-bea7-551be24319b9_audio_639012485033455676.wav
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\wwwroot\uploads\audio\9b927ca0-4def-417a-a2d5-b6e7efa8287a_audio_639012530848138375.wav
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\wwwroot\uploads\audio\f3a9dd69-d2f7-42b3-b7ac-10cb3e3d7b5f_audio_639012717109415893.wav
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\wwwroot\uploads\audio\32b1c79b-6e7a-4249-b295-6a3b4fe9a456_audio_639012530402966269.wav
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\wwwroot\uploads\audio\87895ff1-dcb8-4809-842e-f4042e8c8dc0_audio_639012530589134925.wav
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\wwwroot\uploads\audio\31de5062-ed55-4514-bbd5-0c9ba41440f0_audio_639012530747191737.wav
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\wwwroot\uploads\audio\5484e5b7-6002-4e3d-b29e-5b966f5ad3ae_audio_639012533131528476.wav
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\wwwroot\uploads\audio\2bb9bd17-3b86-427f-8b67-8ba254ba7aa8_audio_639014235868318688.wav
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\wwwroot\uploads\audio\0a06e70c-9707-43f1-8182-f3eefee747d2_audio_639012549132548222.wav
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\wwwroot\uploads\audio\a8bdac01-af42-4937-9269-229c26b4e7ef_audio_639012552815127287.wav
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\wwwroot\uploads\audio\7f896cf4-fe23-4685-94ee-768610c8460b_audio_639012532874429107.wav
+wwwroot\uploads\audio\060425df-9d06-48e7-b37c-87c8013c9bce_audio_639012485091147374.wav
+wwwroot\uploads\audio\0a06e70c-9707-43f1-8182-f3eefee747d2_audio_639012549132548222.wav
+wwwroot\uploads\audio\0b66e735-fe6d-4f84-9a2a-bd802e350021_audio_639012715473288795.wav
+wwwroot\uploads\audio\10c7fdbe-e47e-4ac0-a3b7-560a2bb726db_audio_639012547313972068.wav
+wwwroot\uploads\audio\17cdd281-dd4d-487f-9af2-50907d490f67_audio_639012545457968345.wav
+wwwroot\uploads\audio\1ca690c6-bf8a-443b-9dd7-82eed4c0b87a_audio_639012530709144968.wav
+wwwroot\uploads\audio\2bb9bd17-3b86-427f-8b67-8ba254ba7aa8_audio_639014235868318688.wav
+wwwroot\uploads\audio\31de5062-ed55-4514-bbd5-0c9ba41440f0_audio_639012530747191737.wav
+wwwroot\uploads\audio\32b1c79b-6e7a-4249-b295-6a3b4fe9a456_audio_639012530402966269.wav
+wwwroot\uploads\audio\411e4660-6bb5-42fa-ad8a-62db900bb3d3_WINNERS 2005 - VENTANNI - مازال مكملين.mp3
+wwwroot\uploads\audio\481fa750-9bc4-401c-a587-0f3e396e4d40_audio_639014236087717469.wav
+wwwroot\uploads\audio\5484e5b7-6002-4e3d-b29e-5b966f5ad3ae_audio_639012533131528476.wav
+wwwroot\uploads\audio\6981d516-bd93-4771-8370-0253d0404630_audio_639015041962222272.wav
+wwwroot\uploads\audio\7f896cf4-fe23-4685-94ee-768610c8460b_audio_639012532874429107.wav
+wwwroot\uploads\audio\872a69c9-0acd-47bc-8f95-bacbe91bbc2b_audio_639012485730885203.wav
+wwwroot\uploads\audio\87895ff1-dcb8-4809-842e-f4042e8c8dc0_audio_639012530589134925.wav
+wwwroot\uploads\audio\9b927ca0-4def-417a-a2d5-b6e7efa8287a_audio_639012530848138375.wav
+wwwroot\uploads\audio\a8bdac01-af42-4937-9269-229c26b4e7ef_audio_639012552815127287.wav
+wwwroot\uploads\audio\ab7c3336-9c20-4aaa-a2b1-b5fe3b6bad8d_WINNERS 2005 - VENTANNI - مازال مكملين.mp3
+wwwroot\uploads\audio\c48602af-c0ef-49e1-8871-7ad279ca6298_audio_639012487084212883.wav
+wwwroot\uploads\audio\d1a38637-a8d7-4dae-bea7-551be24319b9_audio_639012485033455676.wav
+wwwroot\uploads\audio\df4f5152-344a-4ad4-9b15-031b3f7c1cf0_audio_639012547482841034.wav
+wwwroot\uploads\audio\f2348a66-a19d-4240-9d11-3e2d1584dec6_audio_639013452871837423.wav
+wwwroot\uploads\audio\f3a9dd69-d2f7-42b3-b7ac-10cb3e3d7b5f_audio_639012717109415893.wav
+wwwroot\uploads\audio\f842e946-4bc6-47b2-aefb-a6d45212d3e0_audio_639012483526178781.wav
+wwwroot\uploads\audio\fb5d52c9-0359-44f9-8e39-5c1971518b46_audio_639015818822201306.wav
+wwwroot\uploads\documents\0474ebea-3315-4076-b8cf-1b8b5693b0ec_Cahier de charge.pdf
+wwwroot\uploads\documents\16286dfb-a40d-4f69-8587-d28cda19fb65_Cahier de charge.pdf
+wwwroot\uploads\documents\16f86dd8-54b4-40af-acaf-8985315b2baa_Cahier de charge.pdf
+wwwroot\uploads\documents\1e22b26c-15fa-4e48-b7d8-2059231918af_CV Omar El Alaoui El Aoufoussi-1.pdf
+wwwroot\uploads\documents\2240bfcf-aad8-41a6-b6ef-1fd63140bdbc_Cahier de charge.pdf
+wwwroot\uploads\documents\27a603c8-d253-4cf2-a582-d268c37e92ef_Cahier de charge.pdf
+wwwroot\uploads\documents\4201b28a-5223-40e1-9c03-991792f2bbe6_Cahier de charge.pdf
+wwwroot\uploads\documents\5d3e0355-b030-4dcb-a0b0-0d6bd762d3f4_CV Omar El Alaoui El Aoufoussi-1.pdf
+wwwroot\uploads\documents\7df0c490-0f11-45de-ad28-5a1e6e8574be_Cahier de charge.pdf
+wwwroot\uploads\documents\a6c7460d-f29a-4d17-83f0-ecff22c61196_Anas imane.,.pdf
+wwwroot\uploads\documents\d7ca7b82-ec2a-43dc-826f-0fb131266bc1_CvOmar_ElAlaouiElAoufoussi-9.pdf
+wwwroot\uploads\documents\dde10364-1a22-4a31-8623-8af6860504fe_IMG-20251214-WA0014.jpeg
+wwwroot\uploads\documents\e552acd3-f27d-49de-a3f4-5e3d08d68250_IMG-20251215-WA0022.jpg
+wwwroot\uploads\documents\ee4ac039-1921-4e5b-8469-6b0f27cda3c2_CV Omar El Alaoui El Aoufoussi-1.pdf
+wwwroot\uploads\documents\f090471a-6f1b-4b60-b532-d2378785b28c_IMG-20251214-WA0014.jpeg
+wwwroot\uploads\images\02f9c5bf-9e17-401b-96e0-af563ee11f0b_1000058712.jpg
+wwwroot\uploads\images\049a0fec-9b53-4e20-b6de-117feebcb326_1000058994.jpg
+wwwroot\uploads\images\0adaf00d-df56-49f7-ac0c-0bf21f64469d_1000058193.jpg
+wwwroot\uploads\images\34259ef7-625e-4939-a0b7-ac3dfb9fa424_1000058649.jpg
+wwwroot\uploads\images\3de20838-7e65-4876-8516-4e3993497432_1000028649.jpg
+wwwroot\uploads\images\8be6ee9c-2347-4e2f-a648-05b5fa198e5a_1000058712.jpg
+wwwroot\uploads\images\9585ea62-582b-4f13-bc89-96ddf3c81685_1000058267.jpg
+wwwroot\uploads\images\b08a359d-6d59-4f6e-815c-8621fac7a636_1000058574.jpg
+wwwroot\uploads\images\b8c8cea2-1f55-4048-ae96-5f071de6ec83_IMAGE.jpeg
+wwwroot\uploads\images\bf5c1f4d-44bf-4a23-a091-be8827244aa7_1000058565.jpg
+wwwroot\uploads\images\e8b4661c-7187-4d37-bbd9-218f7e196b86_IMAGE.jpeg

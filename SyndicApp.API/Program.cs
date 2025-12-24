@@ -127,6 +127,8 @@ builder.Services.AddScoped<IPrestataireService, PrestataireService>();
 builder.Services.AddScoped<IConversationService, ConversationService>();
 builder.Services.AddScoped<IMessageService, MessageService>();
 builder.Services.AddScoped<IChatService, ChatService>();
+builder.Services.AddScoped<IPersonnelService, PersonnelService>();
+
 
 
 

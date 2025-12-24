@@ -1448,8 +1448,3 @@ C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\bin\Debug\net9.0-android\Views\AppelVocal\IncomingCallPage.xaml
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\resizetizer\r\drawable\phone.png
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\assets\webrtc_call.html
-C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\bin\Debug\net9.0-android\Microsoft.Maui.Controls.HotReload.Forms.dll
-C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\bin\Debug\net9.0-android\Microsoft.VisualStudio.DesignTools.MobileTapContracts.dll
-C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\bin\Debug\net9.0-android\Microsoft.VisualStudio.DesignTools.TapContract.dll
-C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\bin\Debug\net9.0-android\Microsoft.VisualStudio.DesignTools.XamlTapContract.dll
-C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\obj\Debug\net9.0-android\SyndicAp.50C67D6C.Up2Date

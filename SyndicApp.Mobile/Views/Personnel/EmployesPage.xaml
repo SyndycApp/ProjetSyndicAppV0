@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="SyndicApp.Mobile.Views.Personnel.EmployesPage"
+    Title="Employes">
+
+    <VerticalStackLayout Padding="16">
+
+        <CollectionView
+            ItemsSource="{Binding Employes}"
+            SelectionMode="Single"
+            SelectedItem="{Binding SelectedEmploye}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Padding="12" Margin="6">
+                        <VerticalStackLayout>
+                            <Label Text="{Binding FullName}" FontAttributes="Bold"/>
+                            <Label Text="{Binding Role}" FontSize="12"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Button
+            Text="Voir planning et presence"
+            Command="{Binding OpenPlanningCommand}"
+            Margin="0,12"/>
+
+    </VerticalStackLayout>
+</ContentPage>

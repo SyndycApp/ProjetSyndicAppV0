@@ -126,6 +126,7 @@ public static class MauiProgram
         AddSecured<IConversationsApi>();
         AddSecured<IMessagesApi>();
         AddSecured<IAccountApi>();
+        AddSecured<IPersonnelApi>();
 
         // =========================
         // 🔌 SignalR
@@ -294,6 +295,12 @@ public static class MauiProgram
 
         builder.Services.AddTransient<ActiveCallPage>();
         builder.Services.AddTransient<IncomingCallPage>();
+
+
+        builder.Services.AddTransient<EmployesViewModel>();
+        builder.Services.AddTransient<PlanningPresenceViewModel>();
+        builder.Services.AddTransient<EmployesPage>();
+        builder.Services.AddTransient<PlanningPresencePage>();
 
         var app = builder.Build();
         ServiceHelper.Services = app.Services;

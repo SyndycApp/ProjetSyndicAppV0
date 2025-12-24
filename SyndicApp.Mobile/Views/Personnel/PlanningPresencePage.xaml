@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="SyndicApp.Mobile.Views.Personnel.PlanningPresencePage"
+    Title="{Binding UserName}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="12">
+
+            <Label Text="Planning" FontAttributes="Bold"/>
+
+            <CollectionView ItemsSource="{Binding Planning}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <HorizontalStackLayout>
+                            <Label Text="{Binding Jour}" WidthRequest="80"/>
+                            <Label Text="{Binding HeureDebut}"/>
+                            <Label Text=" - "/>
+                            <Label Text="{Binding HeureFin}"/>
+                        </HorizontalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Label Text="Presences" FontAttributes="Bold"/>
+
+            <CollectionView ItemsSource="{Binding Presences}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <HorizontalStackLayout>
+                            <Label Text="{Binding Date, StringFormat='{0:dd/MM/yyyy}'}" WidthRequest="100"/>
+                            <Label Text="{Binding HeureArrivee}"/>
+                            <Label Text=" / "/>
+                            <Label Text="{Binding HeureDepart}"/>
+                        </HorizontalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

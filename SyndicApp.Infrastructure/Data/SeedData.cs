@@ -13,7 +13,7 @@ namespace SyndicApp.Infrastructure.Data
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-            string[] roles = new[] { "Syndic", "Coproprietaire", "Gardien" };
+            string[] roles = new[] { "Syndic", "Coproprietaire", "Gardien", "FemmeDeMenage" };
 
             foreach (var role in roles)
             {

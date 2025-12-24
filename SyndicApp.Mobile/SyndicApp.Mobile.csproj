@@ -68,6 +68,12 @@
 	<!-- ⭐⭐⭐ TOUS TES MAUI XAML EXACTS – JE NE CHANGE RIEN ⭐⭐⭐ -->
 
 	<ItemGroup>
+	    <Compile Update="Views\Personnel\PlanningPresencePage.xaml.cs">
+	      <DependentUpon>PlanningPresencePage.xaml</DependentUpon>
+	    </Compile>
+	    <Compile Update="Views\Personnel\PlanningsPage.xaml.cs">
+	      <DependentUpon>PlanningsPage.xaml</DependentUpon>
+	    </Compile>
 	    <Compile Update="Views\Residences\ResidenceDetailPage.xaml.cs">
 	        <DependentUpon>ResidenceDetailPage.xaml</DependentUpon>
 	    </Compile>
@@ -128,6 +134,15 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Communication\NewConversationPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Personnel\EmployesPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Personnel\PlanningPresencePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Personnel\PlanningsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

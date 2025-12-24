@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+
+    <script>
+let pc;
+let connection;
+let callId;
+let otherUserId;
+
+async function start(callIdParam, otherUserIdParam, token, baseUrl, isCaller) {
+  callId = callIdParam;
+  otherUserId = otherUserIdParam;
+
+  connection = new signalR.HubConnectionBuilder()
+    .withUrl(baseUrl + "/hubs/call", {
+      accessTokenFactory: () => token
+    })
+    .withAutomaticReconnect()
+    .build();
+
+  await connection.start();
+
+  const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+  pc = new RTCPeerConnection({
+    iceServers: [{ urls: "stun:stun.l.google.com:19302" }]
+  });
+
+  stream.getTracks().forEach(t => pc.addTrack(t, stream));
+
+  pc.onicecandidate = e => {
+    if (e.candidate) {
+      connection.invoke("SendIceCandidate", callId, otherUserId, JSON.stringify(e.candidate));
+    }
+  };
+
+  connection.on("ReceiveOffer", async (cid, sdp) => {
+    if (cid !== callId) return;
+
+    await pc.setRemoteDescription(JSON.parse(sdp));
+    const answer = await pc.createAnswer();
+    await pc.setLocalDescription(answer);
+
+    connection.invoke("SendAnswer", callId, otherUserId, JSON.stringify(answer));
+  });
+
+  connection.on("ReceiveAnswer", async (cid, sdp) => {
+    if (cid !== callId) return;
+    await pc.setRemoteDescription(JSON.parse(sdp));
+  });
+
+  connection.on("ReceiveIceCandidate", async (cid, candidate) => {
+    if (cid !== callId) return;
+    await pc.addIceCandidate(JSON.parse(candidate));
+  });
+
+  if (isCaller) {
+    const offer = await pc.createOffer();
+    await pc.setLocalDescription(offer);
+
+    connection.invoke("SendOffer", callId, otherUserId, JSON.stringify(offer));
+  }
+}
+
+window.startCall = start;
+    </script>
+</body>
+</html>

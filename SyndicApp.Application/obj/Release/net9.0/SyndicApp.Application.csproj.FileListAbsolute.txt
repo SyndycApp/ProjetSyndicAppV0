@@ -1,0 +1,16 @@
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Application\bin\Release\net9.0\SyndicApp.Application.deps.json
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Application\bin\Release\net9.0\SyndicApp.Application.dll
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Application\bin\Release\net9.0\SyndicApp.Application.pdb
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Application\bin\Release\net9.0\SyndicApp.Domain.dll
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Application\bin\Release\net9.0\SyndicApp.Domain.pdb
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Application\obj\Release\net9.0\SyndicApp.Application.csproj.AssemblyReference.cache
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Application\obj\Release\net9.0\SyndicApp.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Application\obj\Release\net9.0\SyndicApp.Application.AssemblyInfoInputs.cache
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Application\obj\Release\net9.0\SyndicApp.Application.AssemblyInfo.cs
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Application\obj\Release\net9.0\SyndicApp.Application.csproj.CoreCompileInputs.cache
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Application\obj\Release\net9.0\SyndicApp.Application.sourcelink.json
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Application\obj\Release\net9.0\SyndicAp.89EC5CA9.Up2Date
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Application\obj\Release\net9.0\SyndicApp.Application.dll
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Application\obj\Release\net9.0\refint\SyndicApp.Application.dll
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Application\obj\Release\net9.0\SyndicApp.Application.pdb
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Application\obj\Release\net9.0\ref\SyndicApp.Application.dll

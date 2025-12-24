@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SyndicApp.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cceb7eccb973554043751f4b79e1541f52c7cd89")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+15707fee18c0646eee2e3002fde6ffa6c83fe328")]
 [assembly: System.Reflection.AssemblyProductAttribute("SyndicApp.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SyndicApp.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
