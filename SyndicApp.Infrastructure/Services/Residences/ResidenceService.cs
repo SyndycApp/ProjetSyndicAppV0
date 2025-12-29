@@ -1,22 +1,25 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using SyndicApp.Application.DTOs.Residences;
+using SyndicApp.Application.Interfaces.Common;
+using SyndicApp.Application.Interfaces.Residences;
+using SyndicApp.Domain.Entities.Residences;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using SyndicApp.Application.DTOs.Residences;
-using SyndicApp.Application.Interfaces.Residences;
-using SyndicApp.Domain.Entities.Residences;
 
 namespace SyndicApp.Infrastructure.Services.Residences
 {
     public class ResidenceService : IResidenceService
     {
         private readonly ApplicationDbContext _db;
+        private readonly IGeocodingService _geo;
 
-        public ResidenceService(ApplicationDbContext db)
+        public ResidenceService(ApplicationDbContext db, IGeocodingService geo)
         {
             _db = db;
+            _geo = geo;
         }
 
         public async Task<IReadOnlyList<ResidenceDto>> GetAllAsync(CancellationToken ct = default)
@@ -84,18 +87,41 @@ namespace SyndicApp.Infrastructure.Services.Residences
         }
         public async Task<Guid> CreateAsync(CreateResidenceDto dto, CancellationToken ct = default)
         {
+            double latitude = dto.Latitude ?? 0;
+            double longitude = dto.Longitude ?? 0;
+
+            // 🔥 AUTO-GEO SI ABSENT
+            if (latitude == 0 && longitude == 0)
+            {
+                var address =
+                    $"{dto.Adresse}, {dto.CodePostal}, {dto.Ville}, Maroc";
+
+                var geo = await _geo.GeocodeAsync(address);
+                if (geo.HasValue)
+                {
+                    latitude = geo.Value.lat;
+                    longitude = geo.Value.lng;
+                }
+            }
+
             var entity = new Residence
             {
-                Nom = dto.Nom?.Trim() ?? string.Empty,
-                Adresse = dto.Adresse?.Trim() ?? string.Empty,
-                Ville = dto.Ville?.Trim() ?? string.Empty,
-                CodePostal = dto.CodePostal?.Trim() ?? string.Empty
+                Nom = dto.Nom.Trim(),
+                Adresse = dto.Adresse.Trim(),
+                Ville = dto.Ville.Trim(),
+                CodePostal = dto.CodePostal.Trim(),
+
+                Latitude = latitude,
+                Longitude = longitude,
+                RayonAutoriseMetres = dto.RayonAutoriseMetres ?? 100
             };
 
             _db.Residences.Add(entity);
             await _db.SaveChangesAsync(ct);
+
             return entity.Id;
         }
+
 
         public async Task<bool> UpdateAsync(Guid id, UpdateResidenceDto dto, CancellationToken ct = default)
         {

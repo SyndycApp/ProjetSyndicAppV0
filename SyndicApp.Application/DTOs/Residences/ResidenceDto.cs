@@ -22,6 +22,10 @@ namespace SyndicApp.Application.DTOs.Residences
         public string Adresse { get; set; } = string.Empty;
         public string Ville { get; set; } = string.Empty;
         public string CodePostal { get; set; } = string.Empty;
+
+        public double? Latitude { get; set; }
+        public double? Longitude { get; set; }
+        public double? RayonAutoriseMetres { get; set; }
     }
 
     public class UpdateResidenceDto : CreateResidenceDto { }

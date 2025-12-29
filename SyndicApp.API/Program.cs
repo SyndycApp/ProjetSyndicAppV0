@@ -6,6 +6,7 @@ using Microsoft.OpenApi.Models;
 using SyndicApp.API.Hubs;
 using SyndicApp.API.SignalR;
 using SyndicApp.Application.Interfaces;
+using SyndicApp.Application.Interfaces.Common;
 using SyndicApp.Application.Interfaces.Communication;
 using SyndicApp.Application.Interfaces.Finances;
 using SyndicApp.Application.Interfaces.Incidents;
@@ -139,8 +140,11 @@ builder.Services.AddScoped<IPersonnelPerformanceService, PersonnelPerformanceSer
 builder.Services.AddScoped<IPersonnelDashboardService, PersonnelDashboardService>();
 builder.Services.AddScoped<IEmployeDocumentService, EmployeDocumentService>();
 builder.Services.AddScoped<IPlanningCalendarService, PlanningCalendarService>();
+builder.Services.AddScoped<IPresenceMissionService, PresenceMissionService>();
+builder.Services.AddScoped<IGeocodingService, MapboxGeocodingService>();
+builder.Services.AddScoped<IGeoPresenceService, GeoPresenceService>();
 
-
+builder.Services.AddHttpClient();
 // ================== SignalR ==================
 builder.Services.AddSignalR();
 

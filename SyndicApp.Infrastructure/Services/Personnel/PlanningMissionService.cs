@@ -17,83 +17,80 @@ namespace SyndicApp.Infrastructure.Services.Personnel
         // ================= CREATE =================
         public async Task<Guid> CreateAsync(CreatePlanningMissionDto dto)
         {
-            // 1️⃣ Vérifier que le user existe
-            var user = await _db.Users
-                .AsNoTracking()
-                .FirstOrDefaultAsync(u => u.Id == dto.EmployeId);
-
-            if (user == null)
-                throw new InvalidOperationException("Utilisateur introuvable.");
-
-            // 2️⃣ Récupérer OU créer l’employé
+            // 1️⃣ Vérifier que l'employé existe (TABLE Employes)
             var employe = await _db.Employes
-                .FirstOrDefaultAsync(e => e.UserId == user.Id);
+                .AsNoTracking()
+                .FirstOrDefaultAsync(e => e.Id == dto.EmployeId);
 
             if (employe == null)
-            {
-                employe = new Employe
-                {
-                    Id = Guid.NewGuid(),
-                    UserId = user.Id,
-                    Nom = user.FullName?.Split(' ').FirstOrDefault() ?? "",
-                    Prenom = user.FullName?.Split(' ').Skip(1).FirstOrDefault() ?? "",
-                    Email = user.Email ?? "",
-                    Poste = "Personnel"
-                };
+                throw new InvalidOperationException("Employé introuvable.");
 
-                _db.Employes.Add(employe);
-                await _db.SaveChangesAsync();
-            }
-
-            // 3️⃣ Vérifier la résidence
+            // 2️⃣ Vérifier la résidence
             var residenceExists = await _db.Residences
                 .AnyAsync(r => r.Id == dto.ResidenceId);
 
             if (!residenceExists)
                 throw new InvalidOperationException("Résidence introuvable.");
 
-            // 4️⃣ Détection conflit horaire
-            var conflit = await _db.PlanningMissions.AnyAsync(p =>
-                p.EmployeId == employe.Id &&
-                p.Date == dto.Date &&
-                dto.HeureDebut < p.HeureFin &&
-                dto.HeureFin > p.HeureDebut);
+            // 3️⃣ Normalisation heures (MISSION DE NUIT)
+            var heureDebut = dto.HeureDebut;
+            var heureFin = dto.HeureFin;
 
-            if (conflit)
-                throw new InvalidOperationException("Conflit horaire détecté.");
+            if (heureFin <= heureDebut)
+                heureFin = heureFin.Add(TimeSpan.FromDays(1));
 
-            // 4️⃣ bis – Limite journalière (EF-safe)
+            // 4️⃣ Récupérer missions existantes du jour
+            var missionsJour = await _db.PlanningMissions
+                .Where(p =>
+                    p.EmployeId == dto.EmployeId &&
+                    p.Date == dto.Date)
+                .ToListAsync();
+
+            // 5️⃣ Détection conflits horaires
+            foreach (var p in missionsJour)
+            {
+                var pDebut = p.HeureDebut;
+                var pFin = p.HeureFin;
+
+                if (pFin <= pDebut)
+                    pFin = pFin.Add(TimeSpan.FromDays(1));
+
+                if (heureDebut < pFin && heureFin > pDebut)
+                    throw new InvalidOperationException("Conflit horaire détecté.");
+            }
+
+            // 6️⃣ Limite journalière par résidence
             var maxConfig = await _db.ResidencePlanningConfigs
                 .AsNoTracking()
                 .FirstOrDefaultAsync(c => c.ResidenceId == dto.ResidenceId);
 
             var maxHeures = maxConfig?.MaxHeuresParJour ?? 8;
 
-            // 👉 Récupération SQL
-            var missionsJour = await _db.PlanningMissions
-                .Where(p => p.EmployeId == employe.Id && p.Date == dto.Date)
-                .ToListAsync();
+            var heuresJour = missionsJour.Sum(p =>
+            {
+                var d = p.HeureDebut;
+                var f = p.HeureFin;
 
-            // 👉 Calcul C#
-            var heuresJour = missionsJour
-                .Sum(p => (p.HeureFin - p.HeureDebut).TotalHours);
+                if (f <= d)
+                    f = f.Add(TimeSpan.FromDays(1));
 
-            var nouvellesHeures = (dto.HeureFin - dto.HeureDebut).TotalHours;
+                return (f - d).TotalHours;
+            });
+
+            var nouvellesHeures = (heureFin - heureDebut).TotalHours;
 
             if (heuresJour + nouvellesHeures > maxHeures)
-            {
                 throw new InvalidOperationException(
                     $"Dépassement horaire journalier ({maxHeures}h max).");
-            }
 
-            // 5️⃣ Création mission
+            // 7️⃣ Création mission
             var entity = new PlanningMission
             {
-                EmployeId = employe.Id,
+                EmployeId = dto.EmployeId,
                 ResidenceId = dto.ResidenceId,
                 Mission = dto.Mission,
                 Date = dto.Date,
-                HeureDebut = dto.HeureDebut,
+                HeureDebut = dto.HeureDebut, // stock brut
                 HeureFin = dto.HeureFin,
                 Statut = "Planifiee"
             };
