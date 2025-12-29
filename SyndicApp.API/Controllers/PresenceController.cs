@@ -12,26 +12,30 @@ namespace SyndicApp.API.Controllers;
 public class PresenceController : ControllerBase
 {
     private readonly IPresenceService _service;
+    private readonly IPresenceMissionService _IpresenceServ;
 
-    public PresenceController(IPresenceService service)
+    public PresenceController(IPresenceService service, IPresenceMissionService Ipresenceservice)
     {
         _service = service;
+        _IpresenceServ = Ipresenceservice;
     }
 
     private Guid UserId =>
         Guid.Parse(User.FindFirstValue("uid")!);
 
     [HttpPost("start")]
-    public async Task<IActionResult> Start(StartPresenceDto dto)
+    public async Task<IActionResult> Start(StartMissionPresenceDto dto)
     {
-        await _service.StartAsync(UserId, dto);
+        var userId = Guid.Parse(User.FindFirst("uid")!.Value);
+        await _IpresenceServ.StartAsync(userId, dto);
         return Ok();
     }
 
     [HttpPost("end")]
-    public async Task<IActionResult> End()
+    public async Task<IActionResult> End(EndMissionPresenceDto dto)
     {
-        await _service.EndAsync(UserId);
+        var userId = Guid.Parse(User.FindFirst("uid")!.Value);
+        await _IpresenceServ.EndAsync(userId, dto);
         return Ok();
     }
 

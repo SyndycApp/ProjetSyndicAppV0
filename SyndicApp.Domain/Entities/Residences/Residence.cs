@@ -17,6 +17,10 @@ public class Residence : BaseEntity
     public string CodePostal { get; set; } = string.Empty;
     public DateTime DateCreation { get; set; } = DateTime.UtcNow;
 
+    public double Latitude { get; set; }
+    public double Longitude { get; set; }
+    public double RayonAutoriseMetres { get; set; } = 100;
+
     // --- Structure ---
     public ICollection<Batiment> Batiments { get; set; } = new List<Batiment>();
     public ICollection<Lot> Lots { get; set; } = new List<Lot>();
