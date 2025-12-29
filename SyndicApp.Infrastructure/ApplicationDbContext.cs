@@ -97,6 +97,9 @@ namespace SyndicApp.Infrastructure
 
         public DbSet<EmployeDocument> EmployeDocuments => Set<EmployeDocument>();
 
+        public DbSet<ResidencePlanningConfig> ResidencePlanningConfigs => Set<ResidencePlanningConfig>();
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -153,6 +156,15 @@ namespace SyndicApp.Infrastructure
                 .HasForeignKey(lt => lt.LotId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<ResidencePlanningConfig>(b =>
+            {
+                b.HasOne(c => c.Residence)
+                 .WithMany()
+                 .HasForeignKey(c => c.ResidenceId)
+                 .OnDelete(DeleteBehavior.Cascade);
+
+                b.HasIndex(c => c.ResidenceId).IsUnique();
+            });
             modelBuilder.Entity<PlanningMission>(entity =>
             {
                 entity.HasKey(p => p.Id);

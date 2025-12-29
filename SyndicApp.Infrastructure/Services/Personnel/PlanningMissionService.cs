@@ -35,8 +35,8 @@ namespace SyndicApp.Infrastructure.Services.Personnel
                 {
                     Id = Guid.NewGuid(),
                     UserId = user.Id,
-                    Nom = user.FullName.Split(' ').FirstOrDefault() ?? "",
-                    Prenom = user.FullName.Split(' ').Skip(1).FirstOrDefault() ?? "",
+                    Nom = user.FullName?.Split(' ').FirstOrDefault() ?? "",
+                    Prenom = user.FullName?.Split(' ').Skip(1).FirstOrDefault() ?? "",
                     Email = user.Email ?? "",
                     Poste = "Personnel"
                 };
@@ -61,6 +61,30 @@ namespace SyndicApp.Infrastructure.Services.Personnel
 
             if (conflit)
                 throw new InvalidOperationException("Conflit horaire détecté.");
+
+            // 4️⃣ bis – Limite journalière (EF-safe)
+            var maxConfig = await _db.ResidencePlanningConfigs
+                .AsNoTracking()
+                .FirstOrDefaultAsync(c => c.ResidenceId == dto.ResidenceId);
+
+            var maxHeures = maxConfig?.MaxHeuresParJour ?? 8;
+
+            // 👉 Récupération SQL
+            var missionsJour = await _db.PlanningMissions
+                .Where(p => p.EmployeId == employe.Id && p.Date == dto.Date)
+                .ToListAsync();
+
+            // 👉 Calcul C#
+            var heuresJour = missionsJour
+                .Sum(p => (p.HeureFin - p.HeureDebut).TotalHours);
+
+            var nouvellesHeures = (dto.HeureFin - dto.HeureDebut).TotalHours;
+
+            if (heuresJour + nouvellesHeures > maxHeures)
+            {
+                throw new InvalidOperationException(
+                    $"Dépassement horaire journalier ({maxHeures}h max).");
+            }
 
             // 5️⃣ Création mission
             var entity = new PlanningMission
