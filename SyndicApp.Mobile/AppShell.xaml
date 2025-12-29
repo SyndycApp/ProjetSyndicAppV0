@@ -17,7 +17,7 @@
     xmlns:Incidents="clr-namespace:SyndicApp.Mobile.Views.Incidents"
     xmlns:viewsPers="clr-namespace:SyndicApp.Mobile.Views.Personnel"
     Shell.NavBarIsVisible="False"
-    Shell.FlyoutBehavior="Disabled">
+    Shell.FlyoutBehavior="Flyout">
 
     <!-- ======= Auth (pages racines) ======= -->
     <ShellContent
@@ -138,6 +138,5 @@
     <ShellContent
         Route="chatpage"
         ContentTemplate="{DataTemplate views:ChatPage}" />
-
 
 </Shell>

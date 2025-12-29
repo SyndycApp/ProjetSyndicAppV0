@@ -1215,6 +1215,37 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.ToTable("Candidatures");
                 });
 
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.DocumentRH", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("UploadedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DocumentsRH");
+                });
+
             modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.Employe", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1252,6 +1283,128 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.ToTable("Employes");
                 });
 
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.EmployeProfil", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Commentaire")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateDebut")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateFin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("TypeContrat")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EmployeProfils");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.HoraireTheorique", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<TimeSpan>("HeureDebut")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("HeureFin")
+                        .HasColumnType("time");
+
+                    b.Property<int>("Jour")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("HorairesTheoriques");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.HoraireTravail", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("EmployeProfilId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<TimeSpan>("HeureDebut")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("HeureFin")
+                        .HasColumnType("time");
+
+                    b.Property<int>("Jour")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeProfilId");
+
+                    b.ToTable("HorairesTravail");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.MissionEmploye", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("EmployeProfilId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Libelle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeProfilId");
+
+                    b.ToTable("MissionsEmployes");
+                });
+
             modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.OffreEmploi", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1278,6 +1431,38 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("OffresEmploi");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.Presence", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("HeureDebut")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("HeureFin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ResidenceNom")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Presences");
                 });
 
             modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.Prestataire", b =>
@@ -2125,6 +2310,22 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.Navigation("OffreEmploi");
                 });
 
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.HoraireTravail", b =>
+                {
+                    b.HasOne("SyndicApp.Domain.Entities.Personnel.EmployeProfil", null)
+                        .WithMany("Horaires")
+                        .HasForeignKey("EmployeProfilId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.MissionEmploye", b =>
+                {
+                    b.HasOne("SyndicApp.Domain.Entities.Personnel.EmployeProfil", null)
+                        .WithMany("Missions")
+                        .HasForeignKey("EmployeProfilId");
+                });
+
             modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.Prestataire", b =>
                 {
                     b.HasOne("SyndicApp.Infrastructure.Identity.ApplicationUser", null)
@@ -2273,6 +2474,13 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.Navigation("Interventions");
 
                     b.Navigation("ResidencesAffectees");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.EmployeProfil", b =>
+                {
+                    b.Navigation("Horaires");
+
+                    b.Navigation("Missions");
                 });
 
             modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.OffreEmploi", b =>

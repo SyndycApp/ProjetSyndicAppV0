@@ -531,7 +531,7 @@ target triple = "aarch64-unknown-linux-android21"
 		ptr @__compressedAssemblyData_101; uint8_t* data
 	}, ; 101: Xamarin.KotlinX.Serialization.Core.Jvm
 	%struct.CompressedAssemblyDescriptor {
-		i32 2918400, ; uint32_t uncompressed_file_size
+		i32 2963968, ; uint32_t uncompressed_file_size
 		i1 false, ; bool loaded
 		ptr @__compressedAssemblyData_102; uint8_t* data
 	}, ; 102: SyndicApp.Mobile
@@ -914,7 +914,7 @@ target triple = "aarch64-unknown-linux-android21"
 @__compressedAssemblyData_99 = internal dso_local global [86016 x i8] zeroinitializer, align 1
 @__compressedAssemblyData_100 = internal dso_local global [18432 x i8] zeroinitializer, align 1
 @__compressedAssemblyData_101 = internal dso_local global [89600 x i8] zeroinitializer, align 1
-@__compressedAssemblyData_102 = internal dso_local global [2918400 x i8] zeroinitializer, align 1
+@__compressedAssemblyData_102 = internal dso_local global [2963968 x i8] zeroinitializer, align 1
 @__compressedAssemblyData_103 = internal dso_local global [225792 x i8] zeroinitializer, align 1
 @__compressedAssemblyData_104 = internal dso_local global [29184 x i8] zeroinitializer, align 1
 @__compressedAssemblyData_105 = internal dso_local global [18432 x i8] zeroinitializer, align 1

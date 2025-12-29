@@ -128,7 +128,8 @@ builder.Services.AddScoped<IConversationService, ConversationService>();
 builder.Services.AddScoped<IMessageService, MessageService>();
 builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<IPersonnelService, PersonnelService>();
-
+builder.Services.AddScoped<IPresenceService, PresenceService>();
+builder.Services.AddScoped<IEmployeService, EmployeService>();
 
 
 

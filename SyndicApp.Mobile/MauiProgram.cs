@@ -1,6 +1,6 @@
 ﻿using Microcharts.Maui;
 using Plugin.Maui.Audio;
-using Refit;
+using SyndicApp.Mobile.Config;
 using SyndicApp.Mobile.Api;
 using SyndicApp.Mobile.Api.Communication;
 using SyndicApp.Mobile.Handlers;
@@ -44,7 +44,7 @@ public static class MauiProgram
             .UseMauiApp<App>()
             .UseMicrocharts();
 
-        const string BaseUrl = "http://192.168.11.115:5041";
+        const string BaseUrl = AppConfig.ApiBaseUrl;
 
         // =========================
         // 🔧 JSON / Refit
@@ -127,6 +127,7 @@ public static class MauiProgram
         AddSecured<IMessagesApi>();
         AddSecured<IAccountApi>();
         AddSecured<IPersonnelApi>();
+        AddSecured<IPresenceApi>();
 
         // =========================
         // 🔌 SignalR
@@ -220,6 +221,11 @@ public static class MauiProgram
 
         builder.Services.AddTransient<ActiveCallViewModel>();
         builder.Services.AddTransient<IncomingCallViewModel>();
+        builder.Services.AddTransient<PresenceViewModel>();
+        builder.Services.AddTransient<EmployesViewModel>();
+        builder.Services.AddTransient<PlanningPresenceViewModel>();
+        builder.Services.AddTransient<EmployeDetailsViewModel>();
+
 
         // =========================
         // 📄 Pages
@@ -297,10 +303,10 @@ public static class MauiProgram
         builder.Services.AddTransient<IncomingCallPage>();
 
 
-        builder.Services.AddTransient<EmployesViewModel>();
-        builder.Services.AddTransient<PlanningPresenceViewModel>();
         builder.Services.AddTransient<EmployesPage>();
         builder.Services.AddTransient<PlanningPresencePage>();
+        builder.Services.AddTransient<PresencePage>();
+        builder.Services.AddTransient<EmployeDetailsPage>();
 
         var app = builder.Build();
         ServiceHelper.Services = app.Services;

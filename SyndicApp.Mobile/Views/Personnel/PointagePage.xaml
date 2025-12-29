@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SyndicApp.Mobile.Views.Personnel.PresencePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:layout="clr-namespace:SyndicApp.Mobile.Views.Layout"
+    xmlns:vm="clr-namespace:SyndicApp.Mobile.ViewModels.Personnel"
+    x:DataType="vm:PresenceViewModel"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="#F9FAFB">
+
+    <!-- ========================= DRAWER WRAPPER ========================= -->
+    <layout:RoleDrawerLayout>
+
+        <layout:RoleDrawerLayout.MainContent>
+
+            <VerticalStackLayout Padding="20" Spacing="16">
+
+                <!-- ===== TITRE ===== -->
+                <Label
+                    Text="Présence &amp; Pointage"
+                    FontSize="26"
+                    FontAttributes="Bold"
+                    HorizontalOptions="Center"
+                    TextColor="#111827" />
+
+                <!-- ===== STATUT ===== -->
+                <Frame
+                    Padding="16"
+                    CornerRadius="12"
+                    BackgroundColor="#2563EB">
+
+                    <Label
+                        Text="{Binding IsWorking, Converter={StaticResource BoolToPresenceTextConverter}}"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        HorizontalOptions="Center"
+                        TextColor="White" />
+                </Frame>
+
+                <!-- ===== START ===== -->
+                <Button
+                    Text="Début de service"
+                    Command="{Binding StartCommand}"
+                    IsVisible="{Binding IsWorking, Converter={StaticResource InverseBoolConverter}}"
+                    BackgroundColor="#16A34A"
+                    TextColor="White"
+                    CornerRadius="12" />
+
+                <!-- ===== END ===== -->
+                <Button
+                    Text="Fin de service"
+                    Command="{Binding EndCommand}"
+                    IsVisible="{Binding IsWorking}"
+                    BackgroundColor="#DC2626"
+                    TextColor="White"
+                    CornerRadius="12" />
+
+            </VerticalStackLayout>
+
+        </layout:RoleDrawerLayout.MainContent>
+
+    </layout:RoleDrawerLayout>
+</ContentPage>

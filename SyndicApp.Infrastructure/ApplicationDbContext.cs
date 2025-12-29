@@ -80,6 +80,15 @@ namespace SyndicApp.Infrastructure
 
         public DbSet<Prestataire> Prestataires { get; set; } = default!;
 
+        public DbSet<Presence> Presences => Set<Presence>();
+
+        public DbSet<EmployeProfil> EmployeProfils => Set<EmployeProfil>();
+        public DbSet<HoraireTheorique> HorairesTheoriques => Set<HoraireTheorique>();
+        public DbSet<MissionEmploye> MissionsEmployes => Set<MissionEmploye>();
+
+        public DbSet<HoraireTravail> HorairesTravail => Set<HoraireTravail>();
+        public DbSet<DocumentRH> DocumentsRH => Set<DocumentRH>();
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

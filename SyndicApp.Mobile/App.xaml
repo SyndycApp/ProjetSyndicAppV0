@@ -7,7 +7,7 @@
 
     <Application.Resources>
         <ResourceDictionary>
-
+            
             <Style x:Key="KpiLabelStyle"
                TargetType="Label">
                 <Setter Property="FontSize" Value="14"/>
@@ -29,20 +29,25 @@
                 <Setter Property="FontAttributes" Value="Bold"/>
                 <Setter Property="TextColor" Value="#111827"/>
             </Style>
+
             <Style x:Key="Card" TargetType="Frame">
                 <Setter Property="CornerRadius" Value="12" />
-                <Setter Property="Padding" Value="12" />
                 <Setter Property="BackgroundColor" Value="White" />
-                <Setter Property="Shadow">
-                    <Setter.Value>
-                        <Shadow Brush="#00000022"
-                    Offset="0,4"
-                    Radius="10" />
-                    </Setter.Value>
-                </Setter>
+                <Setter Property="BorderColor" Value="#E5E7EB" />
+                <Setter Property="HasShadow" Value="False" />
+                <Setter Property="Padding" Value="12" />
+                <Setter Property="Margin" Value="0,0,0,12" />
             </Style>
 
-            
+            <Style x:Key="OutlineButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="TextColor" Value="#2563EB" />
+                <Setter Property="BorderColor" Value="#2563EB" />
+                <Setter Property="BorderWidth" Value="1" />
+                <Setter Property="CornerRadius" Value="8" />
+                <Setter Property="Padding" Value="12,6" />
+            </Style>
+
             <Style x:Key="KpiCardStyle" TargetType="Frame">
                 <Setter Property="CornerRadius" Value="12"/>
                 <Setter Property="Padding" Value="16"/>
@@ -67,6 +72,9 @@
             <converters:PlayPauseIconConverter x:Key="PlayPauseIconConverter" />
             <converters:IntToBoolConverter x:Key="IntToBoolConverter" />
             <converters:ReactionCommandParamConverter x:Key="ReactionCommandParamConverter" />
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
+            <converters:NullToBoolConverter x:Key="NullToBoolConverter" />
+            <converters:BoolToPresenceTextConverter x:Key="BoolToPresenceTextConverter" />
         </ResourceDictionary>
     </Application.Resources>
 

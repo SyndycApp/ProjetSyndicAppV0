@@ -92,26 +92,32 @@ namespace SyndicApp.Mobile.Views.Layout
         }
 
         // 🔴 IMPORTANT : on ferme le drawer AVANT la navigation
-        private async void OnMenuItemClicked(object sender, EventArgs e)
-        {
-            if (sender is not Button btn)
-                return;
+       private async void OnMenuItemClicked(object sender, EventArgs e)
+{
+    if (sender is not Button btn)
+        return;
 
-            if (btn.CommandParameter is not string route || string.IsNullOrWhiteSpace(route))
-                return;
+    if (btn.CommandParameter is not string route || string.IsNullOrWhiteSpace(route))
+        return;
 
-            // 1) Fermer le drawer sur la page actuelle
-            await CloseDrawerAsync();
+    await CloseDrawerAsync();
 
-            // 2) Naviguer vers la nouvelle page
-            try
-            {
-                await Shell.Current.GoToAsync(route);
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"Navigation error: {ex}");
-            }
-        }
+    try
+    {
+        // ✅ RELATIVE navigation (OBLIGATOIRE ICI)
+        await Shell.Current.GoToAsync(route);
+    }
+    catch (Exception ex)
+    {
+        System.Diagnostics.Debug.WriteLine(ex);
+        await Application.Current.MainPage.DisplayAlert(
+            "Erreur navigation",
+            ex.Message,
+            "OK"
+        );
+    }
+}
+
+
     }
 }

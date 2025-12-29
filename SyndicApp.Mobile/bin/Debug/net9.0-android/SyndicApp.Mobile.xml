@@ -2108,6 +2108,50 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Lots.LotsListViewModel.Items">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Lots.LotsListViewModel.items"/>
         </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Personnel.EmployeDetailsViewModel">
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.EmployeDetailsViewModel.UserId">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Personnel.EmployeDetailsViewModel.userId"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.EmployeDetailsViewModel.Employe">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Personnel.EmployeDetailsViewModel.employe"/>
+        </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Personnel.PlanningPresenceViewModel">
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.PlanningPresenceViewModel.UserId">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Personnel.PlanningPresenceViewModel.userId"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.PlanningPresenceViewModel.UserName">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Personnel.PlanningPresenceViewModel.userName"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.PlanningPresenceViewModel.Planning">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Personnel.PlanningPresenceViewModel.planning"/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.PlanningPresenceViewModel.Presences">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Personnel.PlanningPresenceViewModel.presences"/>
+        </member>
+        <member name="T:SyndicApp.Mobile.ViewModels.Personnel.PresenceViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.PresenceViewModel.IsWorking">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Personnel.PresenceViewModel.isWorking"/>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Personnel.PresenceViewModel.startCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Personnel.PresenceViewModel.StartCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.PresenceViewModel.StartCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Personnel.PresenceViewModel.StartAsync"/>.</summary>
+        </member>
+        <member name="F:SyndicApp.Mobile.ViewModels.Personnel.PresenceViewModel.endCommand">
+            <summary>The backing field for <see cref="P:SyndicApp.Mobile.ViewModels.Personnel.PresenceViewModel.EndCommand"/>.</summary>
+        </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.PresenceViewModel.EndCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:SyndicApp.Mobile.ViewModels.Personnel.PresenceViewModel.EndAsync"/>.</summary>
+        </member>
         <member name="T:SyndicApp.Mobile.ViewModels.Personnel.PrestataireCreateViewModel">
             <inheritdoc/>
             <inheritdoc/>
@@ -2384,6 +2428,43 @@
         </member>
         <member name="P:ActiveCallViewModel.EndCallCommand">
             <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:ActiveCallViewModel.EndCall"/>.</summary>
+        </member>
+        <member name="T:EmployesViewModel">
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+            <inheritdoc/>
+        </member>
+        <member name="P:EmployesViewModel.Employes">
+            <inheritdoc cref="F:EmployesViewModel.employes"/>
+        </member>
+        <member name="P:EmployesViewModel.SelectedEmploye">
+            <inheritdoc cref="F:EmployesViewModel.selectedEmploye"/>
+        </member>
+        <member name="F:EmployesViewModel.loadCommand">
+            <summary>The backing field for <see cref="P:EmployesViewModel.LoadCommand"/>.</summary>
+        </member>
+        <member name="P:EmployesViewModel.LoadCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:EmployesViewModel.LoadAsync"/>.</summary>
+        </member>
+        <member name="F:EmployesViewModel.openDetailsCommand">
+            <summary>The backing field for <see cref="P:EmployesViewModel.OpenDetailsCommand"/>.</summary>
+        </member>
+        <member name="P:EmployesViewModel.OpenDetailsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:EmployesViewModel.OpenDetailsAsync(Microsoft.Maui.Controls.SelectionChangedEventArgs)"/>.</summary>
+        </member>
+        <member name="F:EmployesViewModel.goToDetailsCommand">
+            <summary>The backing field for <see cref="P:EmployesViewModel.GoToDetailsCommand"/>.</summary>
+        </member>
+        <member name="P:EmployesViewModel.GoToDetailsCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand`1"/> instance wrapping <see cref="M:EmployesViewModel.GoToDetailsAsync(System.Guid)"/>.</summary>
+        </member>
+        <member name="F:EmployesViewModel.openPlanningCommand">
+            <summary>The backing field for <see cref="P:EmployesViewModel.OpenPlanningCommand"/>.</summary>
+        </member>
+        <member name="P:EmployesViewModel.OpenPlanningCommand">
+            <summary>Gets an <see cref="T:CommunityToolkit.Mvvm.Input.IAsyncRelayCommand"/> instance wrapping <see cref="M:EmployesViewModel.OpenPlanningAsync"/>.</summary>
         </member>
         <member name="T:CommunityToolkit.Mvvm.Messaging.__Internals.__IMessengerExtensions">
             <summary>
@@ -2909,6 +2990,27 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.OccupantDisplay">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "OccupantDisplay" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Employe">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Employe" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Employes">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Employes" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.SelectedEmploye">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "SelectedEmploye" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.UserName">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "UserName" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Planning">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Planning" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Presences">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Presences" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsWorking">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsWorking" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.TypeService">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "TypeService" generated properties.</summary>
         </member>
@@ -3397,6 +3499,27 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.OccupantDisplay">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "OccupantDisplay" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Employe">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Employe" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Employes">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Employes" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.SelectedEmploye">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "SelectedEmploye" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.UserName">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "UserName" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Planning">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Planning" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Presences">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Presences" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsWorking">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsWorking" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.TypeService">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "TypeService" generated properties.</summary>
@@ -4260,6 +4383,66 @@
             <inheritdoc />
         </member>
         <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPasswordApi.SyndicApp#Mobile#Api#IPasswordApi#LogoutAsync">
+            <inheritdoc />
+        </member>
+        <member name="T:Refit.Implementation.Generated.SyndicAppMobileApiIPersonnelApi">
+            <inheritdoc />
+        </member>
+        <member name="P:Refit.Implementation.Generated.SyndicAppMobileApiIPersonnelApi.Client">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPersonnelApi.#ctor(System.Net.Http.HttpClient,Refit.IRequestBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPersonnelApi.GetPersonnelInterneAsync">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPersonnelApi.GetPlanningAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPersonnelApi.GetPresencesAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPersonnelApi.GetEmployeDetailsAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPersonnelApi.SyndicApp#Mobile#Api#IPersonnelApi#GetPersonnelInterneAsync">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPersonnelApi.SyndicApp#Mobile#Api#IPersonnelApi#GetPlanningAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPersonnelApi.SyndicApp#Mobile#Api#IPersonnelApi#GetPresencesAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPersonnelApi.SyndicApp#Mobile#Api#IPersonnelApi#GetEmployeDetailsAsync(System.Guid)">
+            <inheritdoc />
+        </member>
+        <member name="T:Refit.Implementation.Generated.SyndicAppMobileApiIPresenceApi">
+            <inheritdoc />
+        </member>
+        <member name="P:Refit.Implementation.Generated.SyndicAppMobileApiIPresenceApi.Client">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPresenceApi.#ctor(System.Net.Http.HttpClient,Refit.IRequestBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPresenceApi.StartAsync(SyndicApp.Mobile.Models.StartPresenceDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPresenceApi.EndAsync">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPresenceApi.GetMyHistoryAsync">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPresenceApi.SyndicApp#Mobile#Api#IPresenceApi#StartAsync(SyndicApp.Mobile.Models.StartPresenceDto)">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPresenceApi.SyndicApp#Mobile#Api#IPresenceApi#EndAsync">
+            <inheritdoc />
+        </member>
+        <member name="M:Refit.Implementation.Generated.SyndicAppMobileApiIPresenceApi.SyndicApp#Mobile#Api#IPresenceApi#GetMyHistoryAsync">
             <inheritdoc />
         </member>
         <member name="T:Refit.Implementation.Generated.SyndicAppMobileApiIPrestatairesApi">

@@ -1,32 +1,87 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
+    x:Class="SyndicApp.Mobile.Views.Personnel.EmployesPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="SyndicApp.Mobile.Views.Personnel.EmployesPage"
-    Title="Employes">
+    xmlns:layout="clr-namespace:SyndicApp.Mobile.Views.Layout"
+    xmlns:vm="clr-namespace:SyndicApp.Mobile.ViewModels.Personnel;assembly=SyndicApp.Mobile"
+    xmlns:models="clr-namespace:SyndicApp.Mobile.Models;assembly=SyndicApp.Mobile"
+    x:Name="RootPage"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="#F9FAFB">
 
-    <VerticalStackLayout Padding="16">
+    <layout:RoleDrawerLayout>
 
-        <CollectionView
-            ItemsSource="{Binding Employes}"
-            SelectionMode="Single"
-            SelectedItem="{Binding SelectedEmploye}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Border Padding="12" Margin="6">
-                        <VerticalStackLayout>
-                            <Label Text="{Binding FullName}" FontAttributes="Bold"/>
-                            <Label Text="{Binding Role}" FontSize="12"/>
-                        </VerticalStackLayout>
-                    </Border>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+        <layout:RoleDrawerLayout.MainContent>
 
-        <Button
-            Text="Voir planning et presence"
-            Command="{Binding OpenPlanningCommand}"
-            Margin="0,12"/>
+            <Grid RowDefinitions="Auto,*">
 
-    </VerticalStackLayout>
+                <!-- ===== HEADER ===== -->
+                <Grid Padding="12,16">
+                    <Label
+                        Text="Employés"
+                        FontSize="26"
+                        FontAttributes="Bold"
+                        HorizontalOptions="Center"
+                        TextColor="#111827" />
+                </Grid>
+
+                <!-- ===== LISTE ===== -->
+                <CollectionView
+                    Grid.Row="1"
+                    ItemsSource="{Binding Employes}"
+                    SelectionMode="None"
+                    Margin="16">
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:PersonnelLookupDto">
+
+                            <Frame
+                                Padding="12"
+                                Margin="6"
+                                CornerRadius="12"
+                                BorderColor="#E5E7EB"
+                                BackgroundColor="White"
+                                HasShadow="False">
+
+                                <Grid ColumnDefinitions="*,Auto"
+                                      VerticalOptions="Center">
+
+                                    <!-- ===== INFOS EMPLOYÉ ===== -->
+                                    <VerticalStackLayout Spacing="4">
+                                        <Label
+                                            Text="{Binding FullName}"
+                                            FontSize="16"
+                                            FontAttributes="Bold"
+                                            TextColor="#111827" />
+
+                                        <Label
+                                            Text="{Binding Role}"
+                                            FontSize="12"
+                                            TextColor="#6B7280" />
+                                    </VerticalStackLayout>
+
+                                    <!-- ===== BOUTON DETAILS ===== -->
+                                    <Button Grid.Column="1"
+                                            Text="Détails"
+                                            BackgroundColor="#2563EB"
+                                            TextColor="White"
+                                            Command="{Binding BindingContext.GoToDetailsCommand, Source={x:Reference RootPage}}"
+                                            CommandParameter="{Binding UserId}" />
+
+                                </Grid>
+
+                            </Frame>
+
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+
+            </Grid>
+
+        </layout:RoleDrawerLayout.MainContent>
+
+    </layout:RoleDrawerLayout>
+
 </ContentPage>

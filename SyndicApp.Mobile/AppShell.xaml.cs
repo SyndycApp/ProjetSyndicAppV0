@@ -20,8 +20,9 @@ public partial class AppShell : Shell
     {
         InitializeComponent();
 
-        // 👉 NE PAS enregistrer ici les routes déjà déclarées en <ShellContent>
-        // (login, register, forgot, syndic-dashboard, appels, residences, batiments, drawer)
+        // =========================================================
+        // ⚠️ NE PAS déclarer ici les routes déjà en <ShellContent>
+        // =========================================================
 
         // ===== Auth secondaires =====
         Routing.RegisterRoute("forgotcode", typeof(ForgotPasswordPage));
@@ -29,70 +30,74 @@ public partial class AppShell : Shell
         Routing.RegisterRoute("resetpwd", typeof(ResetWithCodePage));
         Routing.RegisterRoute("resetpassword", typeof(ResetPasswordPage));
 
-        // ===== Finances secondaires =====
+        // ===== Finances =====
         Routing.RegisterRoute("appel-create", typeof(AppelCreatePage));
         Routing.RegisterRoute("appel-details", typeof(AppelDetailsPage));
         Routing.RegisterRoute("appel-edit", typeof(AppelEditPage));
 
-        // ===== Résidences secondaires =====
-        Routing.RegisterRoute("residence-create", typeof(ResidenceCreatePage));
-        Routing.RegisterRoute("residence-details", typeof(ResidenceDetailsPage));
-        Routing.RegisterRoute("residence-edit", typeof(ResidenceEditPage));
-
-        // ===== Bâtiments secondaires =====
-        Routing.RegisterRoute("batiment-create", typeof(BatimentCreatePage));
-        Routing.RegisterRoute("batiment-details", typeof(BatimentDetailsPage));
-        Routing.RegisterRoute("batiment-edit", typeof(BatimentEditPage));
-
-        // ===== Lots secondaires =====
-        Routing.RegisterRoute("lot-create", typeof(LotCreatePage));
-        Routing.RegisterRoute("lot-details", typeof(LotDetailsPage));
-        Routing.RegisterRoute("lot-edit", typeof(LotEditPage));
-
-        // ===== Affectations secondaires =====
-        Routing.RegisterRoute("affectation-create", typeof(AffectationCreatePage));
-        Routing.RegisterRoute("affectation-details", typeof(AffectationDetailsPage));
-        Routing.RegisterRoute("affectation-historique", typeof(AffectationHistoriquePage));
-
-
-        // ===== Charges secondaires =====
         Routing.RegisterRoute("charge-create", typeof(ChargeCreatePage));
         Routing.RegisterRoute("charge-edit", typeof(ChargeEditPage));
         Routing.RegisterRoute("charge-details", typeof(ChargeDetailsPage));
 
-        // ===== Paiements secondaires =====
         Routing.RegisterRoute("paiement-create", typeof(PaiementCreatePage));
         Routing.RegisterRoute("paiement-details", typeof(PaiementDetailsPage));
 
-        // ===== Incidents =====
+        // ===== Résidences =====
+        Routing.RegisterRoute("residence-create", typeof(ResidenceCreatePage));
+        Routing.RegisterRoute("residence-details", typeof(ResidenceDetailsPage));
+        Routing.RegisterRoute("residence-edit", typeof(ResidenceEditPage));
+
+        // ===== Bâtiments =====
+        Routing.RegisterRoute("batiment-create", typeof(BatimentCreatePage));
+        Routing.RegisterRoute("batiment-details", typeof(BatimentDetailsPage));
+        Routing.RegisterRoute("batiment-edit", typeof(BatimentEditPage));
+
+        // ===== Lots =====
+        Routing.RegisterRoute("lot-create", typeof(LotCreatePage));
+        Routing.RegisterRoute("lot-details", typeof(LotDetailsPage));
+        Routing.RegisterRoute("lot-edit", typeof(LotEditPage));
+
+        // ===== Affectations =====
+        Routing.RegisterRoute("affectation-create", typeof(AffectationCreatePage));
+        Routing.RegisterRoute("affectation-details", typeof(AffectationDetailsPage));
+        Routing.RegisterRoute("affectation-historique", typeof(AffectationHistoriquePage));
+
+        // ===== Incidents & travaux =====
         Routing.RegisterRoute("incident-create", typeof(IncidentCreatePage));
         Routing.RegisterRoute("incident-details", typeof(IncidentDetailsPage));
         Routing.RegisterRoute("incident-edit", typeof(IncidentEditPage));
         Routing.RegisterRoute("incident-status", typeof(IncidentStatusPage));
 
-        // ===== Devis Travaux =====
+        Routing.RegisterRoute("devis-create", typeof(DevisTravauxCreatePage));
         Routing.RegisterRoute("devis-details", typeof(DevisTravauxDetailsPage));
         Routing.RegisterRoute("devis-decision", typeof(DevisTravauxDecisionPage));
-        Routing.RegisterRoute("devis-create", typeof(DevisTravauxCreatePage));
-
 
         Routing.RegisterRoute("intervention-details", typeof(InterventionDetailsPage));
 
+        // ===== Prestataires =====
         Routing.RegisterRoute("prestataire-create", typeof(PrestataireCreatePage));
         Routing.RegisterRoute("prestataire-details", typeof(PrestataireDetailsPage));
 
+        // ===== Messagerie =====
         Routing.RegisterRoute("chat", typeof(ChatPage));
         Routing.RegisterRoute("conversations", typeof(ConversationsPage));
-
         Routing.RegisterRoute("new-conversation", typeof(NewConversationPage));
 
+        // ===== Appel vocal =====
         Routing.RegisterRoute("active-call", typeof(ActiveCallPage));
         Routing.RegisterRoute("incoming-call", typeof(IncomingCallPage));
 
-        Routing.RegisterRoute("//personnel/employes", typeof(EmployesPage));
-        Routing.RegisterRoute("//personnel/plannings", typeof(PlanningPresencePage));
+        // =========================================================
+        // 👷 PERSONNEL (CORRIGÉ SANS RÉGRESSION)
+        // =========================================================
+        Routing.RegisterRoute("personnel/plannings", typeof(PlanningsPage));
+        Routing.RegisterRoute("personnel/planning-details", typeof(PlanningPresencePage));
+        Routing.RegisterRoute("personnel/presence", typeof(PresencePage));
+        Routing.RegisterRoute("personnel/employe-details", typeof(EmployeDetailsPage));
+        Routing.RegisterRoute("personnel/employes", typeof(EmployesPage));
 
     }
+
     protected override void OnAppearing()
     {
         base.OnAppearing();
@@ -107,15 +112,15 @@ public partial class AppShell : Shell
 
             MainThread.BeginInvokeOnMainThread(async () =>
             {
-                Console.WriteLine("📞 Navigation IncomingCallPage");
-                await Shell.Current.GoToAsync("incoming-call",
+                await Shell.Current.GoToAsync(
+                    "incoming-call",
                     new Dictionary<string, object>
                     {
                         ["CallId"] = callId,
                         ["CallerId"] = callerId
-                    });
+                    }
+                );
             });
         }
     }
-
 }

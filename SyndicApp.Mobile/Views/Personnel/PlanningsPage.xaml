@@ -1,27 +1,31 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
+    x:Class="SyndicApp.Mobile.Views.Personnel.PlanningsPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="SyndicApp.Mobile.Views.Personnel.PlanningsPage"
-    Title="Plannings et Presences"
+    xmlns:layout="clr-namespace:SyndicApp.Mobile.Views.Layout"
+    Shell.NavBarIsVisible="False"
     BackgroundColor="#F9FAFB">
 
-    <VerticalStackLayout Padding="16" Spacing="12">
+    <layout:RoleDrawerLayout>
 
-        <Label
-            Text="Planning du personnel"
-            FontSize="18"
-            FontAttributes="Bold" />
+        <layout:RoleDrawerLayout.MainContent>
 
-        <CollectionView>
-            <CollectionView.EmptyView>
-                <Label
-                    Text="Aucun planning disponible"
-                    TextColor="#6B7280"
-                    HorizontalOptions="Center" />
-            </CollectionView.EmptyView>
-        </CollectionView>
+            <VerticalStackLayout Padding="16" Spacing="12">
 
-    </VerticalStackLayout>
+                <Label Text="Plannings et Présences"
+                       FontSize="26"
+                       FontAttributes="Bold"
+                       TextColor="#111827"
+                       HorizontalOptions="Center"/>
 
+                <Label Text="Sélectionnez un employé pour voir le détail."
+                       TextColor="#6B7280"
+                       HorizontalOptions="Center"/>
+
+            </VerticalStackLayout>
+
+        </layout:RoleDrawerLayout.MainContent>
+
+    </layout:RoleDrawerLayout>
 </ContentPage>

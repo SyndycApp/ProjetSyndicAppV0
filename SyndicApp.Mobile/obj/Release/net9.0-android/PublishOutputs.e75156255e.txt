@@ -1,0 +1,4 @@
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\bin\Release\net9.0-android\publish\com.companyname.syndicapp.mobile-Signed.apk
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\bin\Release\net9.0-android\publish\com.companyname.syndicapp.mobile.apk
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\bin\Release\net9.0-android\publish\com.companyname.syndicapp.mobile-Signed.aab
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.Mobile\bin\Release\net9.0-android\publish\_Microsoft.Android.Resource.Designer.dll

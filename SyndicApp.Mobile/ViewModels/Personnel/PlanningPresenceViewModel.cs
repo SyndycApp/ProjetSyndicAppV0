@@ -1,7 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using SyndicApp.Mobile.Api;
 using SyndicApp.Mobile.Models;
-using static Android.Provider.ContactsContract;
 
 namespace SyndicApp.Mobile.ViewModels.Personnel;
 
@@ -11,8 +10,8 @@ public partial class PlanningPresenceViewModel : ObservableObject
 {
     private readonly IPersonnelApi _api;
 
-    [ObservableProperty] public Guid userId;
-    [ObservableProperty] public string userName = string.Empty;
+    [ObservableProperty] private Guid userId;
+    [ObservableProperty] private string userName = string.Empty;
 
     [ObservableProperty] private List<PlanningDto> planning = new();
     [ObservableProperty] private List<PresenceDto> presences = new();
@@ -24,6 +23,10 @@ public partial class PlanningPresenceViewModel : ObservableObject
 
     public async Task LoadAsync()
     {
+        // 🔒 PROTECTION CRITIQUE
+        if (UserId == Guid.Empty)
+            return;
+
         Planning = await _api.GetPlanningAsync(UserId);
         Presences = await _api.GetPresencesAsync(UserId);
     }

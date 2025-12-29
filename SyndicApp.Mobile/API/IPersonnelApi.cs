@@ -14,4 +14,8 @@ public interface IPersonnelApi
 
     [Get("/api/presence/{userId}")]
     Task<List<PresenceDto>> GetPresencesAsync(Guid userId);
+
+    [Get("/api/personnel/{userId}/details")]
+    Task<EmployeDetailsDto> GetEmployeDetailsAsync(Guid userId);
+
 }

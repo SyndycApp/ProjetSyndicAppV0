@@ -227,13 +227,18 @@
 
                 <Button Text="Employés"
                         Style="{StaticResource MenuButtonStyle}"
-                        CommandParameter="//personnel/employes"
+                        CommandParameter="personnel/employes"
                         Clicked="OnMenuItemClicked"/>
 
                 <Button Text="Plannings et Présences"
                         Style="{StaticResource MenuButtonStyle}"
                         CommandParameter="//personnel/plannings"
-                        Clicked="OnMenuItemClicked"/>         
+                        Clicked="OnMenuItemClicked"/>      
+
+                <Button Text="Pointage"
+                        Style="{StaticResource MenuButtonStyle}"
+                        CommandParameter="//personnel/presence"
+                        Clicked="OnMenuItemClicked"/>           
         
 
                         <!-- LOGOUT -->

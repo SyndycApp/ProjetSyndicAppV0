@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SyndicApp.Mobile.Views.Personnel.EmployeDetailsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:layout="clr-namespace:SyndicApp.Mobile.Views.Layout"
+    xmlns:vm="clr-namespace:SyndicApp.Mobile.ViewModels.Personnel"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="#F9FAFB">
+
+    <layout:RoleDrawerLayout>
+
+        <layout:RoleDrawerLayout.MainContent>
+
+            <ScrollView>
+                <VerticalStackLayout Padding="16" Spacing="16">
+
+                    <!-- ===== HEADER ===== -->
+                    <Label
+                        Text="{Binding Employe.FullName}"
+                        FontSize="26"
+                        FontAttributes="Bold"
+                        TextColor="#111827"
+                        HorizontalOptions="Center" />
+
+                    <Label
+                        Text="{Binding Employe.Role}"
+                        FontSize="14"
+                        TextColor="#6B7280"
+                        HorizontalOptions="Center" />
+
+                    <!-- ===== CONTRAT ===== -->
+                    <Frame Style="{StaticResource Card}">
+                        <VerticalStackLayout Spacing="6">
+
+                            <Label
+                                Text="Contrat"
+                                FontAttributes="Bold"
+                                FontSize="18"/>
+
+                            <Label Text="{Binding Employe.TypeContrat}" />
+
+                            <Label
+                                Text="{Binding Employe.DateDebutContrat,
+                                       StringFormat='Début : {0:dd/MM/yyyy}'}"/>
+
+                            <Label
+                                Text="{Binding Employe.DateFinContrat,
+                                       StringFormat='Fin : {0:dd/MM/yyyy}'}"
+                                IsVisible="{Binding Employe.DateFinContrat}" />
+
+                            <Label
+                                Text="Fin : —"
+                                IsVisible="{Binding Employe.DateFinContrat, Converter={StaticResource NullToBoolConverter}, ConverterParameter=invert}"
+                                TextColor="#6B7280"/>
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- ===== HORAIRES ===== -->
+                    <Frame Style="{StaticResource Card}">
+                        <VerticalStackLayout Spacing="8">
+
+                            <Label
+                                Text="Horaires théoriques"
+                                FontAttributes="Bold"
+                                FontSize="18"/>
+
+                            <CollectionView
+                                ItemsSource="{Binding Employe.Horaires}"
+                                SelectionMode="None">
+
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <HorizontalStackLayout Spacing="12">
+                                            <Label
+                                                Text="{Binding Jour}"
+                                                WidthRequest="90"
+                                                FontAttributes="Bold"/>
+                                            <Label Text="{Binding HeureDebut}" />
+                                            <Label Text=" - " />
+                                            <Label Text="{Binding HeureFin}" />
+                                        </HorizontalStackLayout>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+
+                            </CollectionView>
+
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- ===== MISSIONS ===== -->
+                    <Frame Style="{StaticResource Card}">
+                        <VerticalStackLayout Spacing="8">
+
+                            <Label
+                                Text="Missions"
+                                FontAttributes="Bold"
+                                FontSize="18"/>
+
+                            <CollectionView
+                                ItemsSource="{Binding Employe.Missions}"
+                                SelectionMode="None">
+
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Label Text="• {Binding .}" />
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+
+                            </CollectionView>
+
+                        </VerticalStackLayout>
+                    </Frame>
+
+                    <!-- ===== RESIDENCES ===== -->
+                    <Frame Style="{StaticResource Card}">
+                        <VerticalStackLayout Spacing="8">
+
+                            <Label
+                                Text="Résidences affectées"
+                                FontAttributes="Bold"
+                                FontSize="18"/>
+
+                            <CollectionView
+                                ItemsSource="{Binding Employe.Residences}"
+                                SelectionMode="None">
+
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Label Text="{Binding ., StringFormat='• {0}'}" />
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+
+                            </CollectionView>
+
+                        </VerticalStackLayout>
+                    </Frame>
+
+                </VerticalStackLayout>
+            </ScrollView>
+
+        </layout:RoleDrawerLayout.MainContent>
+
+    </layout:RoleDrawerLayout>
+</ContentPage>

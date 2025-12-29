@@ -1,7 +1,8 @@
-﻿using SyndicApp.Mobile.Api;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.Maui.Controls;
+using SyndicApp.Mobile.Api;
 using SyndicApp.Mobile.Models;
-
-namespace SyndicApp.Mobile.ViewModels.Personnel;
 
 public partial class EmployesViewModel : ObservableObject
 {
@@ -21,7 +22,61 @@ public partial class EmployesViewModel : ObservableObject
     [RelayCommand]
     public async Task LoadAsync()
     {
-        Employes = await _api.GetPersonnelInterneAsync();
+        try
+        {
+            Employes = await _api.GetPersonnelInterneAsync();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine(ex);
+
+            await Application.Current.MainPage.DisplayAlert(
+                "Erreur",
+                "Impossible de charger la liste des employés",
+                "OK"
+            );
+
+            Employes = new List<PersonnelLookupDto>();
+        }
+    }
+
+
+    // ✅ SIGNATURE OBLIGATOIRE
+    [RelayCommand]
+    private async Task OpenDetailsAsync(SelectionChangedEventArgs args)
+    {
+        var employe = args?.CurrentSelection?.FirstOrDefault() as PersonnelLookupDto;
+
+        if (employe == null)
+            return;
+
+        SelectedEmploye = employe;
+
+        await Shell.Current.GoToAsync(
+            "personnel/employe-details",
+            new Dictionary<string, object>
+            {
+                ["userId"] = employe.UserId
+            }
+        );
+
+        // ✅ évite le bug du 2e clic
+        SelectedEmploye = null;
+    }
+
+    [RelayCommand]
+    private async Task GoToDetailsAsync(Guid userId)
+    {
+        if (userId == Guid.Empty)
+            return;
+
+        await Shell.Current.GoToAsync(
+            "personnel/employe-details",
+            new Dictionary<string, object>
+            {
+                ["userId"] = userId
+            }
+        );
     }
 
     [RelayCommand]

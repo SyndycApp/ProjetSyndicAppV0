@@ -1,43 +1,77 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
+    x:Class="SyndicApp.Mobile.Views.Personnel.PlanningPresencePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    x:Class="SyndicApp.Mobile.Views.Personnel.PlanningPresencePage"
-    Title="{Binding UserName}">
+    xmlns:layout="clr-namespace:SyndicApp.Mobile.Views.Layout"
+    xmlns:vm="clr-namespace:SyndicApp.Mobile.ViewModels.Personnel"
+    x:DataType="vm:PlanningPresenceViewModel"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="White">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="16" Spacing="12">
+    <layout:RoleDrawerLayout>
 
-            <Label Text="Planning" FontAttributes="Bold"/>
+        <layout:RoleDrawerLayout.MainContent>
 
-            <CollectionView ItemsSource="{Binding Planning}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <HorizontalStackLayout>
-                            <Label Text="{Binding Jour}" WidthRequest="80"/>
-                            <Label Text="{Binding HeureDebut}"/>
-                            <Label Text=" - "/>
-                            <Label Text="{Binding HeureFin}"/>
-                        </HorizontalStackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+            <Grid RowDefinitions="Auto,*">
 
-            <Label Text="Presences" FontAttributes="Bold"/>
+                <!-- HEADER -->
+                <Grid Padding="12,16">
+                    <Label Text="{Binding UserName}"
+                           FontSize="26"
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           TextColor="#111827" />
+                </Grid>
 
-            <CollectionView ItemsSource="{Binding Presences}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <HorizontalStackLayout>
-                            <Label Text="{Binding Date, StringFormat='{0:dd/MM/yyyy}'}" WidthRequest="100"/>
-                            <Label Text="{Binding HeureArrivee}"/>
-                            <Label Text=" / "/>
-                            <Label Text="{Binding HeureDepart}"/>
-                        </HorizontalStackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                <!-- CONTENU -->
+                <ScrollView Grid.Row="1">
+                    <VerticalStackLayout Padding="16" Spacing="12">
 
-        </VerticalStackLayout>
-    </ScrollView>
+                        <Label Text="Planning" FontAttributes="Bold" FontSize="18"/>
+
+                        <CollectionView ItemsSource="{Binding Planning}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame Padding="10" Margin="4" CornerRadius="10">
+                                        <HorizontalStackLayout>
+                                            <Label Text="{Binding Jour}" WidthRequest="80"/>
+                                            <Label Text="{Binding HeureDebut}"/>
+                                            <Label Text=" - "/>
+                                            <Label Text="{Binding HeureFin}"/>
+                                        </HorizontalStackLayout>
+                                    </Frame>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                        <Label Text="Présences"
+                               FontAttributes="Bold"
+                               FontSize="18"
+                               Margin="0,12,0,0"/>
+
+                        <CollectionView ItemsSource="{Binding Presences}">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame Padding="10" Margin="4" CornerRadius="10">
+                                        <HorizontalStackLayout>
+                                            <Label Text="{Binding Date, StringFormat='{0:dd/MM/yyyy}'}"
+                                                   WidthRequest="100"/>
+                                            <Label Text="{Binding HeureArrivee}"/>
+                                            <Label Text=" / "/>
+                                            <Label Text="{Binding HeureDepart}"/>
+                                        </HorizontalStackLayout>
+                                    </Frame>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                    </VerticalStackLayout>
+                </ScrollView>
+
+            </Grid>
+
+        </layout:RoleDrawerLayout.MainContent>
+
+    </layout:RoleDrawerLayout>
 </ContentPage>
