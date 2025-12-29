@@ -88,6 +88,14 @@ namespace SyndicApp.Infrastructure
 
         public DbSet<HoraireTravail> HorairesTravail => Set<HoraireTravail>();
         public DbSet<DocumentRH> DocumentsRH => Set<DocumentRH>();
+        public DbSet<EmployeAffectationResidence> EmployeAffectationResidences => Set<EmployeAffectationResidence>();
+        public DbSet<PlanningMission> PlanningMissions => Set<PlanningMission>();
+
+        public DbSet<MissionValidation> MissionValidations => Set<MissionValidation>();
+
+        public DbSet<AbsenceJustification> AbsenceJustifications => Set<AbsenceJustification>();
+
+        public DbSet<EmployeDocument> EmployeDocuments => Set<EmployeDocument>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -101,6 +109,30 @@ namespace SyndicApp.Infrastructure
                 b.Property(x => x.Ville).HasMaxLength(150);
                 b.Property(x => x.CodePostal).HasMaxLength(20);
             });
+
+            modelBuilder.Entity<EmployeDocument>(b =>
+            {
+                b.Property(d => d.Type)
+                 .HasConversion<string>()
+                 .HasMaxLength(50)
+                 .IsRequired();
+
+                b.Property(d => d.FilePath)
+                 .HasMaxLength(500)
+                 .IsRequired();
+
+                b.HasOne(d => d.Employe)
+                 .WithMany()
+                 .HasForeignKey(d => d.EmployeId)
+                 .OnDelete(DeleteBehavior.Cascade);
+            });
+
+
+            modelBuilder.Entity<PlanningMission>()
+                        .HasOne(m => m.Validation)
+                        .WithOne(v => v.PlanningMission)
+                        .HasForeignKey<MissionValidation>(v => v.PlanningMissionId)
+                        .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Batiment>().ToTable("Batiment");
             modelBuilder.Entity<Batiment>()
@@ -120,6 +152,78 @@ namespace SyndicApp.Infrastructure
                 .WithMany(l => l.LocationsTemporaires)
                 .HasForeignKey(lt => lt.LotId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<PlanningMission>(entity =>
+            {
+                entity.HasKey(p => p.Id);
+
+                entity.HasOne(p => p.Employe)
+                    .WithMany()
+                    .HasForeignKey(p => p.EmployeId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(p => p.Residence)
+                    .WithMany()
+                    .HasForeignKey(p => p.ResidenceId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.Property(p => p.Mission)
+                    .IsRequired()
+                    .HasMaxLength(200);
+
+                entity.Property(p => p.Statut)
+                    .HasMaxLength(50)
+                    .HasDefaultValue("Planifiee");
+
+                entity.HasIndex(p => new { p.EmployeId, p.Date });
+            });
+
+
+            modelBuilder.Entity<EmployeAffectationResidence>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.HasOne<ApplicationUser>()
+                    .WithMany()
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(e => e.Residence)
+                    .WithMany()
+                    .HasForeignKey(e => e.ResidenceId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasIndex(e => new { e.UserId, e.ResidenceId })
+                    .HasFilter("[DateFin] IS NULL")
+                    .IsUnique();
+            });
+
+            modelBuilder.Entity<AbsenceJustification>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.HasOne<ApplicationUser>()
+                    .WithMany()
+                    .HasForeignKey(e => e.UserId)
+                    .OnDelete(DeleteBehavior.Restrict);
+                entity.Property(e => e.Date)
+                    .IsRequired()
+                    .HasConversion(
+                        d => d.ToDateTime(TimeOnly.MinValue),
+                        d => DateOnly.FromDateTime(d)
+                    );
+                entity.Property(e => e.Type)
+                    .IsRequired()
+                    .HasConversion<string>()
+                    .HasMaxLength(20);
+                entity.Property(e => e.Motif)
+                    .HasMaxLength(500);
+                entity.Property(e => e.DocumentUrl)
+                    .HasMaxLength(500);
+                entity.Property(e => e.Validee)
+                    .HasDefaultValue(false);
+                entity.HasIndex(e => new { e.UserId, e.Date })
+                    .IsUnique();
+            });
 
             // ================= AffectationLot =================
             modelBuilder.Entity<AffectationLot>(b =>
@@ -627,6 +731,16 @@ namespace SyndicApp.Infrastructure
                  .WithMany()
                  .HasForeignKey(n => n.UserId)
                  .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<Employe>(b =>
+            {
+                b.HasOne<ApplicationUser>()
+                 .WithMany()
+                 .HasForeignKey(e => e.UserId)
+                 .OnDelete(DeleteBehavior.Cascade);
+
+                b.HasIndex(e => e.UserId).IsUnique();
             });
 
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);

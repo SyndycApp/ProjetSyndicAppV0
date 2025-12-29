@@ -130,7 +130,14 @@ builder.Services.AddScoped<IChatService, ChatService>();
 builder.Services.AddScoped<IPersonnelService, PersonnelService>();
 builder.Services.AddScoped<IPresenceService, PresenceService>();
 builder.Services.AddScoped<IEmployeService, EmployeService>();
-
+builder.Services.AddScoped<IPlanningMissionService, PlanningMissionService>();
+builder.Services.AddScoped<IAffectationEmployeService, AffectationEmployeService>();
+builder.Services.AddScoped<IPersonnelAnalyticsService, PersonnelAnalyticsService>();
+builder.Services.AddScoped<IPlanningValidationService,PlanningValidationService>();
+builder.Services.AddScoped<IPresenceValidationService, PresenceValidationService>();
+builder.Services.AddScoped<IPersonnelPerformanceService, PersonnelPerformanceService>();
+builder.Services.AddScoped<IPersonnelDashboardService, PersonnelDashboardService>();
+builder.Services.AddScoped<IEmployeDocumentService, EmployeDocumentService>();
 
 
 // ================== SignalR ==================

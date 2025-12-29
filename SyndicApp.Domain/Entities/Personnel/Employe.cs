@@ -8,6 +8,7 @@ namespace SyndicApp.Domain.Entities.Personnel;
 
 public class Employe : BaseEntity
 {
+    public Guid UserId { get; set; }
     public string Nom { get; set; } = string.Empty;
     public string Prenom { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;

@@ -1171,6 +1171,50 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.ToTable("LocauxCommerciaux", (string)null);
                 });
 
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.AbsenceJustification", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DocumentUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Motif")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Validee")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId", "Date")
+                        .IsUnique();
+
+                    b.ToTable("AbsenceJustifications");
+                });
+
             modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.Candidature", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1224,6 +1268,9 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("EmployeId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("FilePath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1238,10 +1285,9 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.Property<DateTime>("UploadedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
+
+                    b.HasIndex("EmployeId");
 
                     b.ToTable("DocumentsRH");
                 });
@@ -1278,9 +1324,96 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
                     b.ToTable("Employes");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.EmployeAffectationResidence", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateDebut")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateFin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ResidenceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("RoleSurSite")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ResidenceId");
+
+                    b.HasIndex("UserId", "ResidenceId")
+                        .IsUnique()
+                        .HasFilter("[DateFin] IS NULL");
+
+                    b.ToTable("EmployeAffectationResidences");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.EmployeDocument", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("EmployeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<long>("FileSize")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UploadedByUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeId");
+
+                    b.ToTable("EmployeDocuments");
                 });
 
             modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.EmployeProfil", b =>
@@ -1405,6 +1538,38 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.ToTable("MissionsEmployes");
                 });
 
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.MissionValidation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Commentaire")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateValidation")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("EstValidee")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("PlanningMissionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlanningMissionId")
+                        .IsUnique();
+
+                    b.ToTable("MissionValidations");
+                });
+
             modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.OffreEmploi", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1433,6 +1598,54 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.ToTable("OffresEmploi");
                 });
 
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.PlanningMission", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<Guid>("EmployeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<TimeSpan>("HeureDebut")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("HeureFin")
+                        .HasColumnType("time");
+
+                    b.Property<string>("Mission")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<Guid>("ResidenceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Statut")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasDefaultValue("Planifiee");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ResidenceId");
+
+                    b.HasIndex("EmployeId", "Date");
+
+                    b.ToTable("PlanningMissions");
+                });
+
             modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.Presence", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1451,6 +1664,18 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.Property<DateTime?>("HeureFin")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsGeoValidated")
+                        .HasColumnType("bit");
+
+                    b.Property<double?>("Latitude")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("Longitude")
+                        .HasColumnType("float");
+
+                    b.Property<Guid?>("PlanningMissionId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("ResidenceNom")
                         .HasColumnType("nvarchar(max)");
 
@@ -1461,6 +1686,8 @@ namespace SyndicApp.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PlanningMissionId");
 
                     b.ToTable("Presences");
                 });
@@ -2299,6 +2526,15 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.Navigation("Lot");
                 });
 
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.AbsenceJustification", b =>
+                {
+                    b.HasOne("SyndicApp.Infrastructure.Identity.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.Candidature", b =>
                 {
                     b.HasOne("SyndicApp.Domain.Entities.Personnel.OffreEmploi", "OffreEmploi")
@@ -2308,6 +2544,54 @@ namespace SyndicApp.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("OffreEmploi");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.DocumentRH", b =>
+                {
+                    b.HasOne("SyndicApp.Domain.Entities.Personnel.Employe", "Employe")
+                        .WithMany()
+                        .HasForeignKey("EmployeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employe");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.Employe", b =>
+                {
+                    b.HasOne("SyndicApp.Infrastructure.Identity.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.EmployeAffectationResidence", b =>
+                {
+                    b.HasOne("SyndicApp.Domain.Entities.Residences.Residence", "Residence")
+                        .WithMany()
+                        .HasForeignKey("ResidenceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SyndicApp.Infrastructure.Identity.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Residence");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.EmployeDocument", b =>
+                {
+                    b.HasOne("SyndicApp.Domain.Entities.Personnel.Employe", "Employe")
+                        .WithMany()
+                        .HasForeignKey("EmployeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employe");
                 });
 
             modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.HoraireTravail", b =>
@@ -2324,6 +2608,45 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.HasOne("SyndicApp.Domain.Entities.Personnel.EmployeProfil", null)
                         .WithMany("Missions")
                         .HasForeignKey("EmployeProfilId");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.MissionValidation", b =>
+                {
+                    b.HasOne("SyndicApp.Domain.Entities.Personnel.PlanningMission", "PlanningMission")
+                        .WithOne("Validation")
+                        .HasForeignKey("SyndicApp.Domain.Entities.Personnel.MissionValidation", "PlanningMissionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PlanningMission");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.PlanningMission", b =>
+                {
+                    b.HasOne("SyndicApp.Domain.Entities.Personnel.Employe", "Employe")
+                        .WithMany()
+                        .HasForeignKey("EmployeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SyndicApp.Domain.Entities.Residences.Residence", "Residence")
+                        .WithMany()
+                        .HasForeignKey("ResidenceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Employe");
+
+                    b.Navigation("Residence");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.Presence", b =>
+                {
+                    b.HasOne("SyndicApp.Domain.Entities.Personnel.PlanningMission", "PlanningMission")
+                        .WithMany()
+                        .HasForeignKey("PlanningMissionId");
+
+                    b.Navigation("PlanningMission");
                 });
 
             modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.Prestataire", b =>
@@ -2486,6 +2809,11 @@ namespace SyndicApp.Infrastructure.Migrations
             modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.OffreEmploi", b =>
                 {
                     b.Navigation("Candidatures");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.PlanningMission", b =>
+                {
+                    b.Navigation("Validation");
                 });
 
             modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.Prestataire", b =>

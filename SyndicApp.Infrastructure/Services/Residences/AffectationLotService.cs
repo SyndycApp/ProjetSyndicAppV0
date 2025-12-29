@@ -7,9 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using SyndicApp.Application.DTOs.Residences;
 using SyndicApp.Application.Interfaces.Residences;
 using SyndicApp.Domain.Entities.Residences;
-using SyndicApp.Infrastructure.Identity; // <-- IMPORTANT : ApplicationUser
-// ReSharper disable All
-
+using SyndicApp.Infrastructure.Identity; 
 namespace SyndicApp.Infrastructure.Services.Residences
 {
     public class AffectationLotService : IAffectationLotService
