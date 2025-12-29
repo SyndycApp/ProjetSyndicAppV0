@@ -138,6 +138,7 @@ builder.Services.AddScoped<IPresenceValidationService, PresenceValidationService
 builder.Services.AddScoped<IPersonnelPerformanceService, PersonnelPerformanceService>();
 builder.Services.AddScoped<IPersonnelDashboardService, PersonnelDashboardService>();
 builder.Services.AddScoped<IEmployeDocumentService, EmployeDocumentService>();
+builder.Services.AddScoped<IPlanningCalendarService, PlanningCalendarService>();
 
 
 // ================== SignalR ==================
