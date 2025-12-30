@@ -9,11 +9,13 @@ public class PresenceMissionService : IPresenceMissionService
 {
     private readonly ApplicationDbContext _db;
     private readonly IGeoPresenceService _geo;
+    private readonly IPersonnelNotificationService _notification;
 
-    public PresenceMissionService(ApplicationDbContext db, IGeoPresenceService geo)
+    public PresenceMissionService(ApplicationDbContext db, IGeoPresenceService geo, IPersonnelNotificationService notification)
     {
         _db = db;
         _geo = geo;
+        _notification = notification;
     }
 
     public async Task StartAsync(Guid userId, StartMissionPresenceDto dto)
@@ -30,6 +32,18 @@ public class PresenceMissionService : IPresenceMissionService
             mission.Residence.Longitude,
             mission.Residence.RayonAutoriseMetres);
 
+        var now = DateTime.UtcNow;
+
+        // 🕒 Heure théorique de début
+        var heureTheorique = mission.Date.ToDateTime(
+            TimeOnly.FromTimeSpan(mission.HeureDebut));
+
+        // ⏱️ RETARD (>10 min)
+        if (now > heureTheorique.AddMinutes(15))
+        {
+            await _notification.RetardDetecteAsync(userId);
+        }
+
         _db.Presences.Add(new Presence
         {
             UserId = userId,
@@ -42,6 +56,31 @@ public class PresenceMissionService : IPresenceMissionService
         });
 
         await _db.SaveChangesAsync();
+    }
+
+    public async Task<IReadOnlyList<TempsTravailJourDto>> GetTempsTravailParJourAsync(Guid employeUserId)
+    {
+        var presences = await _db.Presences
+            .AsNoTracking()
+            .Where(p =>
+                p.UserId == employeUserId &&
+                p.IsGeoValidated == true &&
+                p.HeureDebut != null &&
+                p.HeureFin != null)
+            .ToListAsync();
+
+        var result = presences
+            .GroupBy(p => DateOnly.FromDateTime(p.HeureDebut!.Value))
+            .Select(g => new TempsTravailJourDto
+            {
+                Date = g.Key,
+                HeuresTravaillees = g.Sum(p =>
+                    (p.HeureFin!.Value - p.HeureDebut!.Value).TotalHours)
+            })
+            .OrderBy(r => r.Date)
+            .ToList();
+
+        return result;
     }
 
     public async Task EndAsync(Guid userId, EndMissionPresenceDto dto)

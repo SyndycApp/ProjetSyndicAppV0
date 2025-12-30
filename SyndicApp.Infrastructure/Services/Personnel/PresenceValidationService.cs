@@ -2,21 +2,20 @@
 using SyndicApp.Application.DTOs.Personnel;
 using SyndicApp.Application.Interfaces.Personnel;
 using SyndicApp.Domain.Entities.Personnel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SyndicApp.Infrastructure.Services.Personnel
 {
     public class PresenceValidationService : IPresenceValidationService
     {
         private readonly ApplicationDbContext _db;
+        private readonly IPersonnelNotificationService _notification;
 
-        public PresenceValidationService(ApplicationDbContext db)
+        public PresenceValidationService(
+            ApplicationDbContext db,
+            IPersonnelNotificationService notification)
         {
             _db = db;
+            _notification = notification;
         }
 
         public async Task DeclarerAsync(Guid userId, DeclareAbsenceDto dto)
@@ -40,7 +39,6 @@ namespace SyndicApp.Infrastructure.Services.Personnel
             j.Validee = true;
             await _db.SaveChangesAsync();
         }
-
 
         public async Task<IReadOnlyList<AbsenceJustificationDto>> GetNonValideesAsync()
         {
@@ -77,6 +75,21 @@ namespace SyndicApp.Infrastructure.Services.Personnel
         }
 
 
-    }
+        public async Task VerifierMissionAsync(Guid presenceId, Guid syndicUserId)
+        {
+            var presence = await _db.Presences
+                .AsNoTracking()
+                .Include(p => p.PlanningMission)
+                .FirstOrDefaultAsync(p => p.Id == presenceId)
+                ?? throw new InvalidOperationException("Présence introuvable.");
 
+            if (!presence.IsGeoValidated && presence.PlanningMissionId.HasValue)
+            {
+                await _notification.MissionNonValideeAsync(
+                    syndicUserId,
+                    presence.PlanningMissionId.Value
+                );
+            }
+        }
+    }
 }

@@ -22,7 +22,7 @@
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
-          "net8.0"
+          "net9.0"
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
@@ -31,7 +31,7 @@
         },
         "frameworks": {
           "net9.0": {
-            "targetAlias": "net8.0",
+            "targetAlias": "net9.0",
             "projectReferences": {
               "C:\\Users\\elala\\Desktop\\SyndicAppV0\\ProjetSyndicAppV0\\SyndicApp.Application\\SyndicApp.Application.csproj": {
                 "projectPath": "C:\\Users\\elala\\Desktop\\SyndicAppV0\\ProjetSyndicAppV0\\SyndicApp.Application\\SyndicApp.Application.csproj"
@@ -59,7 +59,7 @@
       },
       "frameworks": {
         "net9.0": {
-          "targetAlias": "net8.0",
+          "targetAlias": "net9.0",
           "dependencies": {
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",

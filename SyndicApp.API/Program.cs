@@ -21,6 +21,7 @@ using SyndicApp.Infrastructure.Services.Finances;
 using SyndicApp.Infrastructure.Services.Incidents;
 using SyndicApp.Infrastructure.Services.Personnel;
 using SyndicApp.Infrastructure.Services.Residences;
+using SyndicApp.Infrastructure.SignalR;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -143,6 +144,7 @@ builder.Services.AddScoped<IPlanningCalendarService, PlanningCalendarService>();
 builder.Services.AddScoped<IPresenceMissionService, PresenceMissionService>();
 builder.Services.AddScoped<IGeocodingService, MapboxGeocodingService>();
 builder.Services.AddScoped<IGeoPresenceService, GeoPresenceService>();
+builder.Services.AddScoped<IPersonnelNotificationService, PersonnelNotificationService>();
 
 builder.Services.AddHttpClient();
 // ================== SignalR ==================
@@ -207,6 +209,8 @@ app.MapControllers();
 // ================== SignalR Hubs ==================
 app.MapHub<ChatHub>("/chatHub");
 app.MapHub<CallHub>("/hubs/call");
+app.MapHub<NotificationHub>("/notificationHub");
+
 
 // ================== RUN ==================
 app.Run();

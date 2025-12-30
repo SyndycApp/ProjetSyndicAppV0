@@ -31,12 +31,21 @@ public class PresenceController : ControllerBase
         return Ok();
     }
 
+
     [HttpPost("end")]
     public async Task<IActionResult> End(EndMissionPresenceDto dto)
     {
         var userId = Guid.Parse(User.FindFirst("uid")!.Value);
         await _IpresenceServ.EndAsync(userId, dto);
         return Ok();
+    }
+
+    [Authorize(Roles = "Syndic")]
+    [HttpGet("temps-travail/jour/{employeUserId}")]
+    public async Task<IActionResult> TempsTravailParJour(Guid employeUserId)
+    {
+        var result = await _IpresenceServ.GetTempsTravailParJourAsync(employeUserId);
+        return Ok(result);
     }
 
     [HttpGet("me")]
