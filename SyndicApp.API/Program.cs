@@ -145,7 +145,9 @@ builder.Services.AddScoped<IPresenceMissionService, PresenceMissionService>();
 builder.Services.AddScoped<IGeocodingService, MapboxGeocodingService>();
 builder.Services.AddScoped<IGeoPresenceService, GeoPresenceService>();
 builder.Services.AddScoped<IPersonnelNotificationService, PersonnelNotificationService>();
+builder.Services.AddScoped<IAbsenceDocumentService, AbsenceDocumentService>();
 
+// ================== HTTP Client ==================
 builder.Services.AddHttpClient();
 // ================== SignalR ==================
 builder.Services.AddSignalR();

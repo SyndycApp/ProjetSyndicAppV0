@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SyndicApp.Application.DTOs.Personnel;
 using SyndicApp.Application.Interfaces.Personnel;
+using SyndicApp.API.Requests;
 using System.Security.Claims;
 
 namespace SyndicApp.API.Controllers
@@ -12,10 +13,12 @@ namespace SyndicApp.API.Controllers
     public class PresenceValidationController : ControllerBase
     {
         private readonly IPresenceValidationService _service;
+        private readonly IAbsenceDocumentService _absenceDocumentService;
 
-        public PresenceValidationController(IPresenceValidationService service)
+        public PresenceValidationController(IPresenceValidationService service, IAbsenceDocumentService absenceDocumentService)
         {
             _service = service;
+            _absenceDocumentService = absenceDocumentService;
         }
 
 
@@ -44,6 +47,43 @@ namespace SyndicApp.API.Controllers
 
             return Ok();
         }
+
+        [HttpGet("absences/{justificationId}/document")]
+        public async Task<IActionResult> DownloadJustificatif(Guid justificationId)
+        {
+            var (content, fileName) =
+                await _absenceDocumentService.DownloadAsync(justificationId);
+
+            return File(
+                content,
+                "application/octet-stream",
+                fileName);
+        }
+
+        [HttpPost("absences/upload")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> UploadJustificatif(
+     [FromForm] UploadAbsenceJustificatifRequest request)
+        {
+            if (request.File == null || request.File.Length == 0)
+                return BadRequest("Fichier manquant.");
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrWhiteSpace(userId))
+                return Unauthorized();
+
+            using var ms = new MemoryStream();
+            await request.File.CopyToAsync(ms);
+
+            await _absenceDocumentService.UploadAsync(
+                request.JustificationId,
+                Guid.Parse(userId),
+                request.File.FileName,
+                ms.ToArray());
+
+            return Ok(new { message = "Justificatif uploadé avec succès." });
+        }
+
 
         // =========================================================
         // 👔 SYNDIC / RH – Valider un justificatif
