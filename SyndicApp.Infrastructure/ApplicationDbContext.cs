@@ -97,6 +97,8 @@ namespace SyndicApp.Infrastructure
 
         public DbSet<EmployeDocument> EmployeDocuments => Set<EmployeDocument>();
 
+        public DbSet<PersonnelScoreHistorique> PersonnelScoreHistoriques => Set<PersonnelScoreHistorique>();
+
         public DbSet<ResidencePlanningConfig> ResidencePlanningConfigs => Set<ResidencePlanningConfig>();
 
 
@@ -130,6 +132,35 @@ namespace SyndicApp.Infrastructure
                  .OnDelete(DeleteBehavior.Cascade);
             });
 
+            modelBuilder.Entity<PersonnelScoreHistorique>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.EmployeId)
+                    .IsRequired();
+
+                entity.Property(e => e.Annee)
+                    .IsRequired();
+
+                entity.Property(e => e.Mois)
+                    .IsRequired();
+
+
+                entity.Property(e => e.ScoreBrut)
+                    .IsRequired()
+                    .HasPrecision(5, 2); 
+
+                entity.Property(e => e.ScoreNormalise)
+                    .IsRequired();
+
+                entity.HasIndex(e => new { e.EmployeId, e.Annee, e.Mois })
+                    .IsUnique();
+
+                entity.HasOne<Employe>()
+                    .WithMany()
+                    .HasForeignKey(e => e.EmployeId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
 
             modelBuilder.Entity<PlanningMission>()
                         .HasOne(m => m.Validation)

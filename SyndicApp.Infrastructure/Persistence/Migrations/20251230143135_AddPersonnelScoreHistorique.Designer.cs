@@ -3,17 +3,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SyndicApp.Infrastructure;
 
 #nullable disable
 
-namespace SyndicApp.Infrastructure.Migrations
+namespace SyndicApp.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251230143135_AddPersonnelScoreHistorique")]
+    partial class AddPersonnelScoreHistorique
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1598,42 +1601,6 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.ToTable("OffresEmploi");
                 });
 
-            modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.PersonnelScoreHistorique", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Annee")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("EmployeId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Mois")
-                        .HasColumnType("int");
-
-                    b.Property<double>("ScoreBrut")
-                        .HasPrecision(5, 2)
-                        .HasColumnType("float(5)");
-
-                    b.Property<int>("ScoreNormalise")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EmployeId", "Annee", "Mois")
-                        .IsUnique();
-
-                    b.ToTable("PersonnelScoreHistoriques");
-                });
-
             modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.PlanningMission", b =>
                 {
                     b.Property<Guid>("Id")
@@ -2693,15 +2660,6 @@ namespace SyndicApp.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("PlanningMission");
-                });
-
-            modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.PersonnelScoreHistorique", b =>
-                {
-                    b.HasOne("SyndicApp.Domain.Entities.Personnel.Employe", null)
-                        .WithMany()
-                        .HasForeignKey("EmployeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.PlanningMission", b =>

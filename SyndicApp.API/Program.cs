@@ -146,6 +146,8 @@ builder.Services.AddScoped<IGeocodingService, MapboxGeocodingService>();
 builder.Services.AddScoped<IGeoPresenceService, GeoPresenceService>();
 builder.Services.AddScoped<IPersonnelNotificationService, PersonnelNotificationService>();
 builder.Services.AddScoped<IAbsenceDocumentService, AbsenceDocumentService>();
+builder.Services.AddScoped<IPersonnelScoreHistoryService, PersonnelScoreHistoryService>();
+builder.Services.AddScoped<IPersonnelRhDashboardService, PersonnelRhDashboardService>();
 
 // ================== HTTP Client ==================
 builder.Services.AddHttpClient();
