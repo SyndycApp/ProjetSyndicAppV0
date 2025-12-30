@@ -2114,6 +2114,9 @@
         <member name="P:SyndicApp.Mobile.ViewModels.Personnel.EmployeDetailsViewModel.UserId">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Personnel.EmployeDetailsViewModel.userId"/>
         </member>
+        <member name="P:SyndicApp.Mobile.ViewModels.Personnel.EmployeDetailsViewModel.IsLoaded">
+            <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Personnel.EmployeDetailsViewModel.isLoaded"/>
+        </member>
         <member name="P:SyndicApp.Mobile.ViewModels.Personnel.EmployeDetailsViewModel.Employe">
             <inheritdoc cref="F:SyndicApp.Mobile.ViewModels.Personnel.EmployeDetailsViewModel.employe"/>
         </member>
@@ -2990,6 +2993,9 @@
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.OccupantDisplay">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "OccupantDisplay" generated properties.</summary>
         </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.IsLoaded">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "IsLoaded" generated properties.</summary>
+        </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangingArgs.Employe">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangingEventArgs"/> instance for all "Employe" generated properties.</summary>
         </member>
@@ -3499,6 +3505,9 @@
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.OccupantDisplay">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "OccupantDisplay" generated properties.</summary>
+        </member>
+        <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.IsLoaded">
+            <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "IsLoaded" generated properties.</summary>
         </member>
         <member name="F:CommunityToolkit.Mvvm.ComponentModel.__Internals.__KnownINotifyPropertyChangedArgs.Employe">
             <summary>The cached <see cref="T:System.ComponentModel.PropertyChangedEventArgs"/> instance for all "Employe" generated properties.</summary>
