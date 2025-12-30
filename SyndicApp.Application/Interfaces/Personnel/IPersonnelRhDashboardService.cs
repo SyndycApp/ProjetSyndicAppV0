@@ -10,5 +10,10 @@ namespace SyndicApp.Application.Interfaces.Personnel
             Guid employeId,
             DateOnly dateFrom,
             DateOnly to);
+
+        Task<RhKpiDto> GetKpisAsync(
+        Guid employeId,
+        DateOnly dateFrom,
+        DateOnly to);
     }
 }

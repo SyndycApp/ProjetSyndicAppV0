@@ -2,6 +2,9 @@
 using SyndicApp.Application.Interfaces.Personnel;
 using SyndicApp.Application.DTOs.Personnel;
 using SyndicApp.Domain.Entities.Personnel;
+using Microsoft.Extensions.Options;
+using SyndicApp.Application.Config;
+
 
 namespace SyndicApp.Infrastructure.Services.Personnel;
 
@@ -10,12 +13,14 @@ public class PresenceMissionService : IPresenceMissionService
     private readonly ApplicationDbContext _db;
     private readonly IGeoPresenceService _geo;
     private readonly IPersonnelNotificationService _notification;
+    private readonly PresenceGeoOptions _geoOptions;
 
-    public PresenceMissionService(ApplicationDbContext db, IGeoPresenceService geo, IPersonnelNotificationService notification)
+    public PresenceMissionService(ApplicationDbContext db, IGeoPresenceService geo, IPersonnelNotificationService notification, IOptions<PresenceGeoOptions> geoOptions)
     {
         _db = db;
         _geo = geo;
         _notification = notification;
+        _geoOptions = geoOptions.Value;
     }
 
     public async Task StartAsync(Guid userId, StartMissionPresenceDto dto)
@@ -25,12 +30,28 @@ public class PresenceMissionService : IPresenceMissionService
             .FirstOrDefaultAsync(m => m.Id == dto.PlanningMissionId)
             ?? throw new InvalidOperationException("Mission introuvable.");
 
+        if (mission.Employe.UserId != userId)
+        {
+            throw new UnauthorizedAccessException(
+                "Cette mission ne vous appartient pas.");
+        }
+
         var isValid = _geo.IsWithinRadius(
             dto.Latitude,
             dto.Longitude,
             mission.Residence.Latitude,
             mission.Residence.Longitude,
-            mission.Residence.RayonAutoriseMetres);
+            mission.Residence.RayonAutoriseMetres + _geoOptions.ToleranceMetres);
+
+        if (!isValid && _geoOptions.Mode == "Strict")
+        {
+            await _notification.MissionNonValideeAsync(
+                mission.Employe.UserId,
+                mission.Id);
+
+            throw new InvalidOperationException(
+                "Pointage refusé : vous êtes hors zone autorisée.");
+        }
 
         var now = DateTime.UtcNow;
 
@@ -52,7 +73,7 @@ public class PresenceMissionService : IPresenceMissionService
             Latitude = dto.Latitude,
             Longitude = dto.Longitude,
             IsGeoValidated = isValid,
-            Anomalie = isValid ? null : "Hors zone autorisée"
+            Anomalie = isValid ? "Pointage validé" : _geoOptions.Mode == "Informative" ? "Hors zone (non bloquant)" : "Hors zone autorisée"
         });
 
         await _db.SaveChangesAsync();

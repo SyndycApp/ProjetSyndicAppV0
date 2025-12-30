@@ -101,11 +101,12 @@ namespace SyndicApp.Infrastructure
 
         public DbSet<ResidencePlanningConfig> ResidencePlanningConfigs => Set<ResidencePlanningConfig>();
 
-
+        public DbSet<PrestataireNote> PrestataireNotes => Set<PrestataireNote>();
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
+            
             // ================= Résidences / Bâtiments / Lots =================
             modelBuilder.Entity<Residence>(b =>
             {
@@ -186,6 +187,20 @@ namespace SyndicApp.Infrastructure
                 .WithMany(l => l.LocationsTemporaires)
                 .HasForeignKey(lt => lt.LotId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<PrestataireNote>(b =>
+            {
+                b.ToTable("PrestataireNotes");
+                b.HasKey(n => n.Id);
+                b.Property(n => n.Qualite)
+                    .IsRequired();
+                b.Property(n => n.Delai)
+                    .IsRequired();
+                b.Property(n => n.Communication)
+                    .IsRequired();
+                b.HasIndex(n => new { n.PrestataireId, n.AuteurSyndicId })
+                    .IsUnique();
+            });
 
             modelBuilder.Entity<ResidencePlanningConfig>(b =>
             {

@@ -1776,6 +1776,41 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.ToTable("Prestataires", (string)null);
                 });
 
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Personnel.PrestataireNote", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AuteurSyndicId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Communication")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Delai")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("PrestataireId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Qualite")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PrestataireId", "AuteurSyndicId")
+                        .IsUnique();
+
+                    b.ToTable("PrestataireNotes", (string)null);
+                });
+
             modelBuilder.Entity("SyndicApp.Domain.Entities.Residences.AffectationLot", b =>
                 {
                     b.Property<Guid>("Id")

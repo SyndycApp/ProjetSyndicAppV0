@@ -206,3 +206,11 @@ C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\obj\Debug\net
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\obj\Debug\net9.0\SyndicApp.API.pdb
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\obj\Debug\net9.0\SyndicApp.API.genruntimeconfig.cache
 C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\obj\Debug\net9.0\ref\SyndicApp.API.dll
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\bin\Debug\net9.0\ClosedXML.dll
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\bin\Debug\net9.0\ClosedXML.Parser.dll
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\bin\Debug\net9.0\DocumentFormat.OpenXml.dll
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\bin\Debug\net9.0\DocumentFormat.OpenXml.Framework.dll
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\bin\Debug\net9.0\ExcelNumberFormat.dll
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\bin\Debug\net9.0\RBush.dll
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\bin\Debug\net9.0\SixLabors.Fonts.dll
+C:\Users\elala\Desktop\SyndicAppV0\ProjetSyndicAppV0\SyndicApp.API\bin\Debug\net9.0\System.IO.Packaging.dll

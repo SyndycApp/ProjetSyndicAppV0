@@ -128,5 +128,63 @@ namespace SyndicApp.Infrastructure.Services.Personnel
                 absencesNonJustifiees
             );
         }
+
+
+        public async Task<RhKpiDto> GetKpisAsync(
+    Guid employeId,
+    DateOnly dateFrom,
+    DateOnly to)
+        {
+            var userId = await _db.Employes
+                .Where(e => e.Id == employeId)
+                .Select(e => e.UserId)
+                .FirstAsync();
+
+            // Total missions prévues
+            var totalMissions = await _db.PlanningMissions
+                .CountAsync(m =>
+                    m.EmployeId == employeId &&
+                    m.Date >= dateFrom &&
+                    m.Date <= to);
+
+            if (totalMissions == 0)
+                return new RhKpiDto(0, 0, 0);
+
+            // Présences valides
+            var presencesValides = await _db.Presences
+                .CountAsync(p =>
+                    p.UserId == userId &&
+                    p.IsGeoValidated &&
+                    p.HeureDebut != null &&
+                    p.HeureDebut >= dateFrom.ToDateTime(TimeOnly.MinValue) &&
+                    p.HeureDebut <= to.ToDateTime(TimeOnly.MaxValue));
+
+            var tauxPresence = (double)presencesValides / totalMissions * 100;
+
+            // Ponctualité
+            var retards = await (
+                from p in _db.Presences
+                join m in _db.PlanningMissions on p.PlanningMissionId equals m.Id
+                where p.UserId == userId
+                      && p.HeureDebut != null
+                      && m.Date >= dateFrom
+              && m.Date <= to
+                select (p.HeureDebut.Value >
+                        m.Date.ToDateTime(TimeOnly.MinValue).Add(m.HeureDebut))
+            ).CountAsync(isLate => isLate);
+
+            var tauxPonctualite =
+                100 - ((double)retards / totalMissions * 100);
+
+            // ⚠️ Evolution mois N/N-1 (placeholder propre)
+            var evolution = 0.0;
+
+            return new RhKpiDto(
+                Math.Round(tauxPresence, 2),
+                Math.Round(tauxPonctualite, 2),
+                evolution
+            );
+        }
+
     }
 }

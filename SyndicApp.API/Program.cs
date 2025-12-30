@@ -5,15 +5,19 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using SyndicApp.API.Hubs;
 using SyndicApp.API.SignalR;
+using SyndicApp.Application.Config;
+using SyndicApp.Application.DTOs.Personnel;
 using SyndicApp.Application.Interfaces;
 using SyndicApp.Application.Interfaces.Common;
 using SyndicApp.Application.Interfaces.Communication;
+using SyndicApp.Application.Interfaces.Exports;
 using SyndicApp.Application.Interfaces.Finances;
 using SyndicApp.Application.Interfaces.Incidents;
 using SyndicApp.Application.Interfaces.Personnel;
 using SyndicApp.Application.Interfaces.Residences;
 using SyndicApp.Infrastructure;
 using SyndicApp.Infrastructure.Data;
+using SyndicApp.Infrastructure.Exports;
 using SyndicApp.Infrastructure.Identity;
 using SyndicApp.Infrastructure.Services;
 using SyndicApp.Infrastructure.Services.Communication;
@@ -148,7 +152,14 @@ builder.Services.AddScoped<IPersonnelNotificationService, PersonnelNotificationS
 builder.Services.AddScoped<IAbsenceDocumentService, AbsenceDocumentService>();
 builder.Services.AddScoped<IPersonnelScoreHistoryService, PersonnelScoreHistoryService>();
 builder.Services.AddScoped<IPersonnelRhDashboardService, PersonnelRhDashboardService>();
+builder.Services.AddScoped<IPrestataireAnalyticsService, PrestataireAnalyticsService>();
+builder.Services.AddScoped<IPrestataireNoteService, PrestataireNoteService>();
+builder.Services.AddHostedService<PersonnelReminderService>();
+builder.Services.AddScoped<IPresenceExportService, PresenceExportService>();
 
+
+builder.Services.Configure<PresenceGeoOptions>(
+    builder.Configuration.GetSection("PresenceGeo"));
 // ================== HTTP Client ==================
 builder.Services.AddHttpClient();
 // ================== SignalR ==================
