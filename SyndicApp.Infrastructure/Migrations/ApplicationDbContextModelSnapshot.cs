@@ -327,23 +327,46 @@ namespace SyndicApp.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("Cloturee")
-                        .HasColumnType("bit");
+                    b.Property<int>("Annee")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("Date")
+                    b.Property<Guid>("CreeParId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DateCloture")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Lieu")
+                    b.Property<DateTime>("DateDebut")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateFin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("EstArchivee")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("ResidenceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Statut")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Titre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ResidenceId");
 
                     b.ToTable("AssembleesGenerales");
                 });
@@ -357,10 +380,39 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.Property<Guid>("AssembleeGeneraleId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Contenu")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DateEnvoi")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssembleeGeneraleId");
+
+                    b.ToTable("Convocations");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.ConvocationDestinataire", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ConvocationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateLecture")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("EstLu")
@@ -374,11 +426,9 @@ namespace SyndicApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AssembleeGeneraleId");
+                    b.HasIndex("ConvocationId");
 
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Convocations");
+                    b.ToTable("ConvocationDestinataires");
                 });
 
             modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.Decision", b =>
@@ -414,7 +464,7 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.ToTable("Decisions");
                 });
 
-            modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.Vote", b =>
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.ProcesVerbal", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -423,9 +473,74 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.Property<Guid>("AssembleeGeneraleId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Choix")
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateGeneration")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("EstArchive")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UrlPdf")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssembleeGeneraleId")
+                        .IsUnique();
+
+                    b.ToTable("ProcesVerbaux");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.Resolution", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AssembleeGeneraleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Numero")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Statut")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Titre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssembleeGeneraleId");
+
+                    b.ToTable("Resolutions");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.Vote", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Choix")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -433,9 +548,17 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.Property<DateTime>("DateVote")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Question")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("EstModifie")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("LotId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("PoidsVote")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("ResolutionId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -445,11 +568,9 @@ namespace SyndicApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("AssembleeGeneraleId", "UserId")
+                    b.HasIndex("ResolutionId", "UserId")
                         .IsUnique()
-                        .HasDatabaseName("UX_Vote_UniqueParAG");
+                        .HasDatabaseName("UX_Vote_ParResolution");
 
                     b.ToTable("Votes");
                 });
@@ -2308,6 +2429,17 @@ namespace SyndicApp.Infrastructure.Migrations
                     b.Navigation("Residence");
                 });
 
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.AssembleeGenerale", b =>
+                {
+                    b.HasOne("SyndicApp.Domain.Entities.Residences.Residence", "Residence")
+                        .WithMany()
+                        .HasForeignKey("ResidenceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Residence");
+                });
+
             modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.Convocation", b =>
                 {
                     b.HasOne("SyndicApp.Domain.Entities.Assemblees.AssembleeGenerale", "AssembleeGenerale")
@@ -2316,19 +2448,46 @@ namespace SyndicApp.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SyndicApp.Infrastructure.Identity.ApplicationUser", null)
+                    b.Navigation("AssembleeGenerale");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.ConvocationDestinataire", b =>
+                {
+                    b.HasOne("SyndicApp.Domain.Entities.Assemblees.Convocation", "Convocation")
+                        .WithMany("Destinataires")
+                        .HasForeignKey("ConvocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Convocation");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.Decision", b =>
+                {
+                    b.HasOne("SyndicApp.Domain.Entities.Assemblees.AssembleeGenerale", "AssembleeGenerale")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("AssembleeGeneraleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("AssembleeGenerale");
                 });
 
-            modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.Decision", b =>
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.ProcesVerbal", b =>
                 {
                     b.HasOne("SyndicApp.Domain.Entities.Assemblees.AssembleeGenerale", "AssembleeGenerale")
-                        .WithMany("Decisions")
+                        .WithOne("ProcesVerbal")
+                        .HasForeignKey("SyndicApp.Domain.Entities.Assemblees.ProcesVerbal", "AssembleeGeneraleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AssembleeGenerale");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.Resolution", b =>
+                {
+                    b.HasOne("SyndicApp.Domain.Entities.Assemblees.AssembleeGenerale", "AssembleeGenerale")
+                        .WithMany("Resolutions")
                         .HasForeignKey("AssembleeGeneraleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -2338,19 +2497,13 @@ namespace SyndicApp.Infrastructure.Migrations
 
             modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.Vote", b =>
                 {
-                    b.HasOne("SyndicApp.Domain.Entities.Assemblees.AssembleeGenerale", "AssembleeGenerale")
+                    b.HasOne("SyndicApp.Domain.Entities.Assemblees.Resolution", "Resolution")
                         .WithMany("Votes")
-                        .HasForeignKey("AssembleeGeneraleId")
+                        .HasForeignKey("ResolutionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SyndicApp.Infrastructure.Identity.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AssembleeGenerale");
+                    b.Navigation("Resolution");
                 });
 
             modelBuilder.Entity("SyndicApp.Domain.Entities.Common.Notification", b =>
@@ -2866,10 +3019,20 @@ namespace SyndicApp.Infrastructure.Migrations
                 {
                     b.Navigation("Convocations");
 
-                    b.Navigation("Decisions");
-
                     b.Navigation("Documents");
 
+                    b.Navigation("ProcesVerbal");
+
+                    b.Navigation("Resolutions");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.Convocation", b =>
+                {
+                    b.Navigation("Destinataires");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.Resolution", b =>
+                {
                     b.Navigation("Votes");
                 });
 

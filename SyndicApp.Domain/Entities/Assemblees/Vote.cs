@@ -1,16 +1,20 @@
 using SyndicApp.Domain.Entities.Common;
-using System;
+using SyndicApp.Domain.Enums.Assemblees;
 
 namespace SyndicApp.Domain.Entities.Assemblees;
 
 public class Vote : BaseEntity
 {
-    public Guid AssembleeGeneraleId { get; set; }
-    public AssembleeGenerale AssembleeGenerale { get; set; } = null!;
+    public Guid ResolutionId { get; set; }
+    public Resolution Resolution { get; set; } = null!;
 
     public Guid UserId { get; set; }
+    public Guid LotId { get; set; }
 
-    public string Question { get; set; } = string.Empty;
-    public string Choix { get; set; } = string.Empty; // Oui / Non / Abstention
+    public ChoixVote Choix { get; set; }
+
+    public decimal PoidsVote { get; set; } 
+
     public DateTime DateVote { get; set; }
+    public bool EstModifie { get; set; }
 }

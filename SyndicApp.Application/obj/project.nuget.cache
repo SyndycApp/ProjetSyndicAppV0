@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "bgp4Fj+b8d8=",
+  "dgSpecHash": "Q7f3xQjmFTE=",
   "success": true,
   "projectFilePath": "C:\\Users\\elala\\Desktop\\SyndicAppV0\\ProjetSyndicAppV0\\SyndicApp.Application\\SyndicApp.Application.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\elala\\.nuget\\packages\\questpdf\\2025.12.1\\questpdf.2025.12.1.nupkg.sha512"
+  ],
   "logs": []
 }

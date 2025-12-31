@@ -8,6 +8,7 @@ using SyndicApp.API.SignalR;
 using SyndicApp.Application.Config;
 using SyndicApp.Application.DTOs.Personnel;
 using SyndicApp.Application.Interfaces;
+using SyndicApp.Application.Interfaces.Assemblees;
 using SyndicApp.Application.Interfaces.Common;
 using SyndicApp.Application.Interfaces.Communication;
 using SyndicApp.Application.Interfaces.Exports;
@@ -20,6 +21,7 @@ using SyndicApp.Infrastructure.Data;
 using SyndicApp.Infrastructure.Exports;
 using SyndicApp.Infrastructure.Identity;
 using SyndicApp.Infrastructure.Services;
+using SyndicApp.Infrastructure.Services.Assemblees;
 using SyndicApp.Infrastructure.Services.Communication;
 using SyndicApp.Infrastructure.Services.Finances;
 using SyndicApp.Infrastructure.Services.Incidents;
@@ -156,7 +158,11 @@ builder.Services.AddScoped<IPrestataireAnalyticsService, PrestataireAnalyticsSer
 builder.Services.AddScoped<IPrestataireNoteService, PrestataireNoteService>();
 builder.Services.AddHostedService<PersonnelReminderService>();
 builder.Services.AddScoped<IPresenceExportService, PresenceExportService>();
-
+builder.Services.AddScoped<IAssembleeService, AssembleeService>();
+builder.Services.AddScoped<IResolutionService, ResolutionService>();
+builder.Services.AddScoped<IVoteService, VoteService>();
+builder.Services.AddScoped<IConvocationService, ConvocationService>();
+builder.Services.AddScoped<IProcesVerbalService, ProcesVerbalService>();
 
 builder.Services.Configure<PresenceGeoOptions>(
     builder.Configuration.GetSection("PresenceGeo"));

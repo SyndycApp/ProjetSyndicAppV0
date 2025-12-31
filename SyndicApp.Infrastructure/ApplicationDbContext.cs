@@ -59,6 +59,9 @@ namespace SyndicApp.Infrastructure
         // Assemblées
         public DbSet<AssembleeGenerale> AssembleesGenerales => Set<AssembleeGenerale>();
         public DbSet<Convocation> Convocations => Set<Convocation>();
+        public DbSet<ConvocationDestinataire> ConvocationDestinataires => Set<ConvocationDestinataire>();
+        public DbSet<ProcesVerbal> ProcesVerbaux => Set<ProcesVerbal>();
+        public DbSet<Resolution> Resolutions => Set<Resolution>();
         public DbSet<Vote> Votes => Set<Vote>();
         public DbSet<Decision> Decisions => Set<Decision>();
 
@@ -363,38 +366,6 @@ namespace SyndicApp.Infrastructure
                 b.HasOne<ApplicationUser>()
                  .WithMany()
                  .HasForeignKey(x => x.UserId)
-                 .OnDelete(DeleteBehavior.Cascade);
-            });
-
-
-            // ================= Assemblées =================
-            modelBuilder.Entity<Vote>(b =>
-            {
-                b.HasOne(v => v.AssembleeGenerale)
-                 .WithMany(ag => ag.Votes)
-                 .HasForeignKey(v => v.AssembleeGeneraleId)
-                 .OnDelete(DeleteBehavior.Cascade);
-
-                b.HasOne<ApplicationUser>()
-                 .WithMany()
-                 .HasForeignKey(v => v.UserId)
-                 .OnDelete(DeleteBehavior.Cascade);
-
-                b.HasIndex(v => new { v.AssembleeGeneraleId, v.UserId })
-                 .IsUnique()
-                 .HasDatabaseName("UX_Vote_UniqueParAG");
-            });
-
-            modelBuilder.Entity<Convocation>(b =>
-            {
-                b.HasOne(c => c.AssembleeGenerale)
-                 .WithMany(ag => ag.Convocations)
-                 .HasForeignKey(c => c.AssembleeGeneraleId)
-                 .OnDelete(DeleteBehavior.Cascade);
-
-                b.HasOne<ApplicationUser>()
-                 .WithMany()
-                 .HasForeignKey(c => c.UserId)
                  .OnDelete(DeleteBehavior.Cascade);
             });
 
@@ -733,6 +704,40 @@ namespace SyndicApp.Infrastructure
                  .WithMany()
                  .HasForeignKey(a => a.UserId)
                  .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            // ================= Assemblées =================
+            modelBuilder.Entity<Vote>(b =>
+            {
+                b.HasOne(v => v.Resolution)
+                 .WithMany(r => r.Votes)
+                 .HasForeignKey(v => v.ResolutionId)
+                 .OnDelete(DeleteBehavior.Cascade);
+
+                b.HasIndex(v => new { v.ResolutionId, v.UserId })
+                 .IsUnique()
+                 .HasDatabaseName("UX_Vote_ParResolution");
+            });
+
+            modelBuilder.Entity<Resolution>(b =>
+            {
+                b.HasOne(r => r.AssembleeGenerale)
+                 .WithMany(a => a.Resolutions)
+                 .HasForeignKey(r => r.AssembleeGeneraleId);
+            });
+
+            modelBuilder.Entity<ConvocationDestinataire>(b =>
+            {
+                b.HasOne(d => d.Convocation)
+                 .WithMany(c => c.Destinataires)
+                 .HasForeignKey(d => d.ConvocationId);
+            });
+
+            modelBuilder.Entity<ProcesVerbal>(b =>
+            {
+                b.HasOne(p => p.AssembleeGenerale)
+                 .WithOne(a => a.ProcesVerbal)
+                 .HasForeignKey<ProcesVerbal>(p => p.AssembleeGeneraleId);
             });
 
             // ================= Appels Vocaux =================
