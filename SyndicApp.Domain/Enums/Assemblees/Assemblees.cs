@@ -28,3 +28,19 @@ public enum StatutResolution
     Adoptee = 2,
     Rejetee = 3
 }
+
+
+public enum TypePresence
+{
+    Physique = 1,
+    EnLigne = 2,
+    Representee = 3
+}
+
+public enum TypeMajorite
+{
+    Simple = 1,
+    Absolue = 2,
+    Unanimite = 3,
+    Personnalisee = 4
+}

@@ -64,6 +64,9 @@ namespace SyndicApp.Infrastructure
         public DbSet<Resolution> Resolutions => Set<Resolution>();
         public DbSet<Vote> Votes => Set<Vote>();
         public DbSet<Decision> Decisions => Set<Decision>();
+        public DbSet<Procuration> Procurations => Set<Procuration>();
+
+        public DbSet<PresenceAss> PresenceAss => Set<PresenceAss>();
 
         // Documents
         public DbSet<Document> Documents => Set<Document>();
@@ -367,6 +370,18 @@ namespace SyndicApp.Infrastructure
                  .WithMany()
                  .HasForeignKey(x => x.UserId)
                  .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<PresenceAss>(b =>
+            {
+                b.HasIndex(p => new { p.AssembleeGeneraleId, p.UserId })
+                 .IsUnique();
+            });
+
+            modelBuilder.Entity<Procuration>(b =>
+            {
+                b.HasIndex(p => new { p.AssembleeGeneraleId, p.DonneurId })
+                 .IsUnique();
             });
 
             // ================= Finances =================

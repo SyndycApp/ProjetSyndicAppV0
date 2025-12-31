@@ -15,4 +15,8 @@ public class Resolution : BaseEntity
     public StatutResolution Statut { get; set; } = StatutResolution.EnAttente;
 
     public ICollection<Vote> Votes { get; set; } = new List<Vote>();
+
+    // nouveaux 
+    public TypeMajorite TypeMajorite { get; set; } = TypeMajorite.Simple;
+    public decimal? SeuilMajorite { get; set; }
 }
