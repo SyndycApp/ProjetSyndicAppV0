@@ -19,4 +19,5 @@ public class Resolution : BaseEntity
     // nouveaux 
     public TypeMajorite TypeMajorite { get; set; } = TypeMajorite.Simple;
     public decimal? SeuilMajorite { get; set; }
+    public Decision? Decision { get; set; }
 }

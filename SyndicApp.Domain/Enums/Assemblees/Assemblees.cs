@@ -8,7 +8,8 @@ public enum TypeAssemblee
 
 public enum StatutAssemblee
 {
-    Brouillon = 1,
+    Brouillon = 0,
+    Ouverte = 1,
     Publiee = 2,
     EnCours = 3,
     Cloturee = 4,

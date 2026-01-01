@@ -166,6 +166,8 @@ builder.Services.AddScoped<IProcesVerbalService, ProcesVerbalService>();
 builder.Services.AddScoped<IPresenceAssService, PresenceAssService>();
 builder.Services.AddScoped<IQuorumService, QuorumService>();
 builder.Services.AddScoped<IProcurationService, ProcurationService>();
+builder.Services.AddScoped<IDecisionService, DecisionService>();
+builder.Services.AddScoped<IClotureAssembleeService, ClotureAssembleeService>();
 
 builder.Services.Configure<PresenceGeoOptions>(
     builder.Configuration.GetSection("PresenceGeo"));

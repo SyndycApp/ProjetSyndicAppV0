@@ -29,5 +29,6 @@ public class AssembleeGenerale : BaseEntity
     public ICollection<Convocation> Convocations { get; set; } = new List<Convocation>();
     public ICollection<Document> Documents { get; set; } = new List<Document>();
 
+    public ICollection<Decision> Decisions { get; set; } = new List<Decision>();
     public ProcesVerbal? ProcesVerbal { get; set; }
 }

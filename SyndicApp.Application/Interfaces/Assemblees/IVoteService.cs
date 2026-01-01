@@ -10,6 +10,8 @@ namespace SyndicApp.Application.Interfaces.Assemblees
     public interface IVoteService
     {
         Task VoteAsync(Guid userId, VoteDto dto);
+
+        Task<ResultatVoteDto> CalculerResultatAsync(Guid resolutionId);
     }
 
 }

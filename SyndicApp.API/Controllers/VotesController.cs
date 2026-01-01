@@ -25,4 +25,11 @@ public class VotesController : ControllerBase
         await _service.VoteAsync(userId, dto);
         return NoContent();
     }
+
+    [HttpGet("/resultat/{resolutionId}")]
+    public async Task<IActionResult> Get(Guid resolutionId)
+    {
+        var resultat = await _service.CalculerResultatAsync(resolutionId);
+        return Ok(resultat);
+    }
 }

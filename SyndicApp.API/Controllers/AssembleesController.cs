@@ -12,10 +12,20 @@ namespace SyndicApp.API.Controllers;
 public class AssembleesController : ControllerBase
 {
     private readonly IAssembleeService _service;
+    private readonly IClotureAssembleeService _clotureAssembleService;
 
-    public AssembleesController(IAssembleeService service)
+    public AssembleesController(IAssembleeService service, IClotureAssembleeService clotureAssembleService)
     {
         _service = service;
+        _clotureAssembleService = clotureAssembleService;
+    }
+
+    [HttpPost("{assembleeId}/cloturer")]
+    public async Task<IActionResult> Cloturer(Guid assembleeId)
+    {
+        var syndicId = Guid.Parse(User.FindFirst("uid")!.Value);
+        await _clotureAssembleService.CloturerAsync(assembleeId, syndicId);
+        return NoContent();
     }
 
     [HttpPost]

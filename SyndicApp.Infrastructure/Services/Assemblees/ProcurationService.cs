@@ -17,6 +17,34 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
             _db = db;
         }
 
+        public async Task<List<ProcurationViewDto>> GetProcurationsAsync(Guid assembleeId)
+        {
+            return await _db.Procurations
+                .Where(p => p.AssembleeGeneraleId == assembleeId)
+                .Join(
+                    _db.Users,
+                    p => p.DonneurId,
+                    d => d.Id,
+                    (p, donneur) => new { p, donneur }
+                )
+                .Join(
+                    _db.Users,
+                    x => x.p.MandataireId,
+                    m => m.Id,
+                    (x, mandataire) => new { x.p, x.donneur, mandataire }
+                )
+                .Join(
+                    _db.Lots,
+                    x => x.p.LotId,
+                    l => l.Id,
+                    (x, lot) => new ProcurationViewDto(
+                        x.donneur.FullName,
+                        x.mandataire.FullName,
+                        lot.Tantiemes
+                    )
+                )
+                .ToListAsync();
+        }
         public async Task DonnerProcurationAsync(Guid userId, CreateProcurationDto dto)
         {
             var count = await _db.Procurations

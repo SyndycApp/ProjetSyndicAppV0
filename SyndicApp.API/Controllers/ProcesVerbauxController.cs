@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SyndicApp.Application.Interfaces.Assemblees;
+using System.Security.Claims;
 
 namespace SyndicApp.API.Controllers;
 
@@ -16,22 +17,20 @@ public class ProcesVerbauxController : ControllerBase
         _service = service;
     }
 
-    [HttpPost("{assembleeId}/generer")]
+    [HttpPost("{assembleeId}")]
     public async Task<IActionResult> Generate(Guid assembleeId)
     {
-        await _service.GenerateAsync(assembleeId);
+        var syndicId = Guid.Parse(User.FindFirstValue("uid")!);
+        await _service.GenerateAsync(assembleeId, syndicId);
         return NoContent();
     }
 
-    [HttpGet("{assembleeId}/telecharger")]
-    public async Task<IActionResult> Telecharger(Guid assembleeId)
+    [HttpGet("{assembleeId}/pdf")]
+    public async Task<IActionResult> GetPdf(Guid assembleeId)
     {
         var (content, fileName) = await _service.GetPdfAsync(assembleeId);
-
-        return File(
-            content,
-            "application/pdf",
-            fileName
-        );
+        return File(content, "application/pdf", fileName);
     }
+
+    
 }

@@ -19,6 +19,14 @@ namespace SyndicApp.API.Controllers
             _service = service;
         }
 
+
+        [HttpGet("{assembleeId}/procurations")]
+        public async Task<IActionResult> Get(Guid assembleeId)
+        {
+            var result = await _service.GetProcurationsAsync(assembleeId);
+            return Ok(result);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Donner(CreateProcurationDto dto)
         {

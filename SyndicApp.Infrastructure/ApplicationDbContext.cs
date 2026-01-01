@@ -182,11 +182,26 @@ namespace SyndicApp.Infrastructure
                 .HasForeignKey(b => b.ResidenceId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<Decision>(b =>
+            {
+                b.HasOne(d => d.Resolution)
+                 .WithOne(r => r.Decision)
+                 .HasForeignKey<Decision>(d => d.ResolutionId)
+                 .OnDelete(DeleteBehavior.Restrict); 
+
+                b.HasIndex(d => d.ResolutionId)
+                 .IsUnique();
+            });
+
             modelBuilder.Entity<Lot>()
                 .HasOne(l => l.Residence)
                 .WithMany(r => r.Lots)
                 .HasForeignKey(l => l.ResidenceId)
                 .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Lot>()
+                        .Property(l => l.Tantiemes)
+                        .HasPrecision(10, 2)
+                        .IsRequired();
 
             modelBuilder.Entity<LocataireTemporaire>()
                 .HasOne(lt => lt.Lot)

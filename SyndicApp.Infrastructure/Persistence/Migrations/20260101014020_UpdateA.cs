@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace SyndicApp.Infrastructure.Migrations
+namespace SyndicApp.Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class Update_AppDbContext_202502 : Migration
+    public partial class UpdateA : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

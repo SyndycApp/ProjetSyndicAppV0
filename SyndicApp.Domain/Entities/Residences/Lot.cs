@@ -26,5 +26,8 @@ namespace SyndicApp.Domain.Entities.Residences
         // --- Relations complémentaires (optionnelles mais recommandées) ---
         public ICollection<Charge> Charges { get; set; } = new List<Charge>();
         public ICollection<LocalCommercial> LocauxCommerciaux { get; set; } = new List<LocalCommercial>();
+
+        public decimal Tantiemes { get; set; } = 1;
+
     }
 }

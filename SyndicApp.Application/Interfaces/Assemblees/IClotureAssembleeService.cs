@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace SyndicApp.Application.Interfaces.Assemblees
 {
-    public interface IProcesVerbalService
+    public interface IClotureAssembleeService
     {
-        Task GenerateAsync(Guid assembleeId, Guid syndicId);
-        Task<(byte[] Content, string FileName)> GetPdfAsync(Guid assembleeId);
+        Task CloturerAsync(Guid assembleeId, Guid syndicId);
     }
-
 }
