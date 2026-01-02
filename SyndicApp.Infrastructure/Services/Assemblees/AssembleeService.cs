@@ -70,13 +70,121 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
             await _db.SaveChangesAsync();
         }
 
+        public async Task AnnulerAsync(Guid assembleeId)
+        {
+            var ag = await _db.AssembleesGenerales.FindAsync(assembleeId);
+
+            if (ag == null)
+                throw new InvalidOperationException("AG introuvable");
+
+            if (ag.Statut == StatutAssemblee.Cloturee)
+                throw new InvalidOperationException("AG déjà clôturée");
+
+            ag.Statut = StatutAssemblee.Annulee;
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task<Guid> DupliquerAsync(Guid assembleeId)
+        {
+            var ag = await _db.AssembleesGenerales
+                .Include(a => a.Resolutions)
+                .FirstAsync(a => a.Id == assembleeId);
+
+            var nouvelleAg = new AssembleeGenerale
+            {
+                Titre = ag.Titre,
+                Type = ag.Type,
+                ResidenceId = ag.ResidenceId,
+                DateDebut = ag.DateDebut.AddYears(1),
+                DateFin = ag.DateFin.AddYears(1),
+                Annee = ag.Annee + 1,
+                Statut = StatutAssemblee.Brouillon
+            };
+
+            foreach (var r in ag.Resolutions)
+            {
+                nouvelleAg.Resolutions.Add(new Resolution
+                {
+                    Numero = r.Numero,
+                    Titre = r.Titre,
+                    Description = r.Description
+                });
+            }
+
+            _db.AssembleesGenerales.Add(nouvelleAg);
+            await _db.SaveChangesAsync();
+
+            return nouvelleAg.Id;
+        }
+
+        public async Task MettreAJourStatutSiNecessaireAsync(AssembleeGenerale ag)
+        {
+            var now = DateTime.UtcNow;
+
+            if (ag.Statut == StatutAssemblee.Publiee &&
+                ag.DateDebut <= now &&
+                ag.DateFin >= now)
+            {
+                ag.Statut = StatutAssemblee.Ouverte;
+                await _db.SaveChangesAsync();
+            }
+        }
+
+        public async Task<List<AssembleeDto>> GetHistoriqueAsync(Guid residenceId, AssembleeHistoriqueFilterDto filter)
+        {
+            var query = _db.AssembleesGenerales
+                .Where(a => a.ResidenceId == residenceId)
+                .AsQueryable();
+
+            if (filter.Annee.HasValue)
+                query = query.Where(a => a.Annee == filter.Annee.Value);
+
+            if (filter.Statut.HasValue)
+                query = query.Where(a => a.Statut == filter.Statut.Value);
+
+            if (filter.Type.HasValue)
+                query = query.Where(a => a.Type == filter.Type.Value);
+
+            var ags = await query
+                .OrderByDescending(a => a.DateDebut)
+                .ToListAsync();
+
+            // Mise à jour auto du statut si besoin
+            foreach (var ag in ags)
+                await MettreAJourStatutSiNecessaireAsync(ag);
+
+            return ags.Select(a => new AssembleeDto(
+                a.Id,
+                a.Titre,
+                a.Type,
+                a.Statut,
+                a.DateDebut,
+                a.DateFin,
+                a.Annee))
+                .ToList();
+        }
+
+
         public async Task<List<AssembleeDto>> GetUpcomingAsync(Guid residenceId)
         {
-            return await _db.AssembleesGenerales
-                .Where(a => a.ResidenceId == residenceId && a.Statut != StatutAssemblee.Cloturee)
-                .Select(a => new AssembleeDto(
-                    a.Id, a.Titre, a.Type, a.Statut, a.DateDebut, a.DateFin, a.Annee))
-                .ToListAsync();
+            var ags = await _db.AssembleesGenerales
+                     .Where(a => a.ResidenceId == residenceId &&
+                     a.Statut != StatutAssemblee.Cloturee &&
+                     a.Statut != StatutAssemblee.Annulee)
+                     .ToListAsync();
+
+            foreach (var ag in ags)
+                await MettreAJourStatutSiNecessaireAsync(ag);
+
+            return ags.Select(a => new AssembleeDto(
+                a.Id,
+                a.Titre,
+                a.Type,
+                a.Statut,
+                a.DateDebut,
+                a.DateFin,
+                a.Annee))
+                .ToList();
         }
     }
 

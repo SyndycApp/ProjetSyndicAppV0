@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SyndicApp.Application.Interfaces.Assemblees;
+using SyndicApp.Domain.Entities.Assemblees;
 using SyndicApp.Domain.Enums.Assemblees;
 
 namespace SyndicApp.Infrastructure.Services.Assemblees
@@ -35,13 +36,20 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
                     .AnyAsync(d => d.ResolutionId == resolution.Id);
 
                 if (!decisionExiste)
-                {
                     await _decisionService.CreerDecisionAsync(resolution.Id);
-                }
             }
 
             assemblee.Statut = StatutAssemblee.Cloturee;
             assemblee.DateCloture = DateTime.UtcNow;
+
+            // 🔍 AUDIT
+            _db.AuditLogs.Add(new AuditLog
+            {
+                UserId = syndicId,
+                Action = "CLOTURE_AG",
+                Cible = $"Assemblee:{assembleeId}",
+                DateAction = DateTime.UtcNow
+            });
 
             await _db.SaveChangesAsync();
         }

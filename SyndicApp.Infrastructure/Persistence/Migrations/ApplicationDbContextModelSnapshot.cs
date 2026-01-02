@@ -371,6 +371,37 @@ namespace SyndicApp.Infrastructure.Persistence.Migrations
                     b.ToTable("AssembleesGenerales");
                 });
 
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.AuditLog", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Cible")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateAction")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AuditLogs");
+                });
+
             modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.Convocation", b =>
                 {
                     b.Property<Guid>("Id")
@@ -418,6 +449,12 @@ namespace SyndicApp.Infrastructure.Persistence.Migrations
                     b.Property<bool>("EstLu")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime?>("LuLe")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("RelanceLe")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
@@ -429,6 +466,77 @@ namespace SyndicApp.Infrastructure.Persistence.Migrations
                     b.HasIndex("ConvocationId");
 
                     b.ToTable("ConvocationDestinataires");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.ConvocationEnvoiLog", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ConvocationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateEnvoi")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("Erreur")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Succes")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConvocationId");
+
+                    b.ToTable("ConvocationEnvoiLogs");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.ConvocationPieceJointe", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ConvocationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NomFichier")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UrlFichier")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConvocationId");
+
+                    b.ToTable("ConvocationPiecesJointes");
                 });
 
             modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.Decision", b =>
@@ -489,6 +597,70 @@ namespace SyndicApp.Infrastructure.Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("Decisions");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.ModeleConvocation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Contenu")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("EstParDefaut")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("Nom")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ModelesConvocation");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.OrdreDuJourItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AssembleeGeneraleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Ordre")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Titre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssembleeGeneraleId", "Ordre")
+                        .IsUnique();
+
+                    b.ToTable("OrdreDuJour");
                 });
 
             modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.PresenceAss", b =>
@@ -2592,6 +2764,28 @@ namespace SyndicApp.Infrastructure.Persistence.Migrations
                     b.Navigation("Convocation");
                 });
 
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.ConvocationEnvoiLog", b =>
+                {
+                    b.HasOne("SyndicApp.Domain.Entities.Assemblees.Convocation", "Convocation")
+                        .WithMany("Envois")
+                        .HasForeignKey("ConvocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Convocation");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.ConvocationPieceJointe", b =>
+                {
+                    b.HasOne("SyndicApp.Domain.Entities.Assemblees.Convocation", "Convocation")
+                        .WithMany("PiecesJointes")
+                        .HasForeignKey("ConvocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Convocation");
+                });
+
             modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.Decision", b =>
                 {
                     b.HasOne("SyndicApp.Domain.Entities.Assemblees.AssembleeGenerale", "AssembleeGenerale")
@@ -2609,6 +2803,17 @@ namespace SyndicApp.Infrastructure.Persistence.Migrations
                     b.Navigation("AssembleeGenerale");
 
                     b.Navigation("Resolution");
+                });
+
+            modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.OrdreDuJourItem", b =>
+                {
+                    b.HasOne("SyndicApp.Domain.Entities.Assemblees.AssembleeGenerale", "AssembleeGenerale")
+                        .WithMany("OrdreDuJour")
+                        .HasForeignKey("AssembleeGeneraleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AssembleeGenerale");
                 });
 
             modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.PresenceAss", b =>
@@ -3172,6 +3377,8 @@ namespace SyndicApp.Infrastructure.Persistence.Migrations
 
                     b.Navigation("Documents");
 
+                    b.Navigation("OrdreDuJour");
+
                     b.Navigation("ProcesVerbal");
 
                     b.Navigation("Resolutions");
@@ -3180,6 +3387,10 @@ namespace SyndicApp.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.Convocation", b =>
                 {
                     b.Navigation("Destinataires");
+
+                    b.Navigation("Envois");
+
+                    b.Navigation("PiecesJointes");
                 });
 
             modelBuilder.Entity("SyndicApp.Domain.Entities.Assemblees.Resolution", b =>

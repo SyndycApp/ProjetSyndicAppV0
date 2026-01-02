@@ -11,4 +11,7 @@ public class ConvocationDestinataire : BaseEntity
 
     public bool EstLu { get; set; }
     public DateTime? DateLecture { get; set; }
+
+    public DateTime? LuLe { get; set; }
+    public DateTime? RelanceLe { get; set; }
 }

@@ -23,10 +23,8 @@ public class ResolutionService : IResolutionService
         if (assemblee == null)
             throw new InvalidOperationException("Assemblée introuvable");
 
-        if (assemblee.Statut != StatutAssemblee.Brouillon &&
-            assemblee.Statut != StatutAssemblee.Publiee)
-            throw new InvalidOperationException(
-                "Impossible d’ajouter une résolution après l’ouverture ou la clôture de l’AG");
+        if (assemblee.Statut != StatutAssemblee.Brouillon)
+            throw new InvalidOperationException("Impossible de modifier les résolutions après publication de l’AG");
 
         var numeroExiste = await _db.Resolutions
             .AnyAsync(r => r.AssembleeGeneraleId == assembleeId && r.Numero == dto.Numero);

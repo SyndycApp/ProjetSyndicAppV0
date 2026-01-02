@@ -19,7 +19,6 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
             _quorumService = quorumService;
         }
 
-
         public async Task<ResultatVoteDto> CalculerResultatAsync(Guid resolutionId)
         {
             var votes = await _db.Votes
@@ -29,21 +28,10 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
             if (!votes.Any())
                 throw new InvalidOperationException("Aucun vote enregistré pour cette résolution.");
 
-            var totalPour = votes
-                .Where(v => v.Choix == ChoixVote.Pour)
-                .Sum(v => v.PoidsVote);
-
-            var totalContre = votes
-                .Where(v => v.Choix == ChoixVote.Contre)
-                .Sum(v => v.PoidsVote);
-
-            var totalAbstention = votes
-                .Where(v => v.Choix == ChoixVote.Abstention)
-                .Sum(v => v.PoidsVote);
-
+            var totalPour = votes.Where(v => v.Choix == ChoixVote.Pour).Sum(v => v.PoidsVote);
+            var totalContre = votes.Where(v => v.Choix == ChoixVote.Contre).Sum(v => v.PoidsVote);
+            var totalAbstention = votes.Where(v => v.Choix == ChoixVote.Abstention).Sum(v => v.PoidsVote);
             var totalExprime = totalPour + totalContre;
-
-            var estAdoptee = totalPour > (totalExprime / 2);
 
             return new ResultatVoteDto(
                 resolutionId,
@@ -51,13 +39,12 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
                 totalContre,
                 totalAbstention,
                 totalExprime,
-                estAdoptee
+                totalPour > (totalExprime / 2)
             );
         }
 
         public async Task VoteAsync(Guid userId, VoteDto dto)
         {
-            // 🔎 Charger la résolution + AG
             var resolution = await _db.Resolutions
                 .Include(r => r.AssembleeGenerale)
                 .FirstOrDefaultAsync(r => r.Id == dto.ResolutionId);
@@ -65,60 +52,62 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
             if (resolution == null)
                 throw new InvalidOperationException("Résolution introuvable");
 
-            // 🚫 Blocage si quorum non atteint
             if (!await _quorumService.QuorumAtteintAsync(resolution.AssembleeGeneraleId))
                 throw new InvalidOperationException("Quorum non atteint");
 
-            // 🚫 Interdire le vote au donneur de procuration
             var aDonneProcuration = await _db.Procurations.AnyAsync(p =>
                 p.AssembleeGeneraleId == resolution.AssembleeGeneraleId &&
                 p.DonneurId == userId);
 
             if (aDonneProcuration)
-                throw new InvalidOperationException(
-                    "Vous avez donné procuration, vous ne pouvez pas voter.");
+                throw new InvalidOperationException("Vous avez donné procuration, vous ne pouvez pas voter.");
 
-            // 🚫 Empêcher double vote
-            var exists = await _db.Votes.AnyAsync(v =>
-                v.ResolutionId == dto.ResolutionId &&
-                v.UserId == userId);
-
-            if (exists)
-                throw new InvalidOperationException("Vote déjà existant");
-
-            // 🔢 Calcul du poids réel du vote
-
-            // Poids du lot principal
             var poids = await _db.Lots
                 .Where(l => l.Id == dto.LotId)
                 .Select(l => l.Tantiemes)
                 .FirstAsync();
 
-            // Ajouter les tantièmes des procurations reçues
             var procurations = await _db.Procurations
                 .Where(p =>
                     p.AssembleeGeneraleId == resolution.AssembleeGeneraleId &&
                     p.MandataireId == userId)
-                .Join(_db.Lots,
-                    p => p.LotId,
-                    l => l.Id,
-                    (p, l) => l.Tantiemes)
+                .Join(_db.Lots, p => p.LotId, l => l.Id, (p, l) => l.Tantiemes)
                 .SumAsync();
 
             poids += procurations;
 
-            // 🗳 Création du vote juridiquement pondéré
-            var vote = new Vote
-            {
-                ResolutionId = dto.ResolutionId,
-                UserId = userId,
-                LotId = dto.LotId,
-                Choix = dto.Choix,
-                PoidsVote = poids,
-                DateVote = DateTime.UtcNow
-            };
+            var vote = await _db.Votes.FirstOrDefaultAsync(v =>
+                v.ResolutionId == dto.ResolutionId &&
+                v.UserId == userId);
 
-            _db.Votes.Add(vote);
+            if (vote != null)
+            {
+                vote.Choix = dto.Choix;
+                vote.DateVote = DateTime.UtcNow;
+                vote.PoidsVote = poids;
+            }
+            else
+            {
+                _db.Votes.Add(new Vote
+                {
+                    ResolutionId = dto.ResolutionId,
+                    UserId = userId,
+                    LotId = dto.LotId,
+                    Choix = dto.Choix,
+                    PoidsVote = poids,
+                    DateVote = DateTime.UtcNow
+                });
+            }
+
+            // 🔍 AUDIT
+            _db.AuditLogs.Add(new AuditLog
+            {
+                UserId = userId,
+                Action = "VOTE",
+                Cible = $"Resolution:{dto.ResolutionId}",
+                DateAction = DateTime.UtcNow
+            });
+
             await _db.SaveChangesAsync();
         }
     }

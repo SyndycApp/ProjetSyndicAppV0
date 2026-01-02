@@ -168,6 +168,10 @@ builder.Services.AddScoped<IQuorumService, QuorumService>();
 builder.Services.AddScoped<IProcurationService, ProcurationService>();
 builder.Services.AddScoped<IDecisionService, DecisionService>();
 builder.Services.AddScoped<IClotureAssembleeService, ClotureAssembleeService>();
+builder.Services.AddScoped<IOrdreDuJourService, OrdreDuJourService>();
+builder.Services.AddScoped<IMailService, MailService>();
+
+
 
 builder.Services.Configure<PresenceGeoOptions>(
     builder.Configuration.GetSection("PresenceGeo"));

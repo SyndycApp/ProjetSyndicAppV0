@@ -31,4 +31,11 @@ public class AssembleeGenerale : BaseEntity
 
     public ICollection<Decision> Decisions { get; set; } = new List<Decision>();
     public ProcesVerbal? ProcesVerbal { get; set; }
+
+    public bool EstEnCours =>
+    Statut == StatutAssemblee.Publiee &&
+    DateDebut <= DateTime.UtcNow &&
+    DateFin > DateTime.UtcNow;
+
+    public ICollection<OrdreDuJourItem> OrdreDuJour { get; set; } = new List<OrdreDuJourItem>();
 }

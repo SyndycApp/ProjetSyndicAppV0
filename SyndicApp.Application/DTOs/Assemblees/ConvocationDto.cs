@@ -8,6 +8,7 @@ namespace SyndicApp.Application.DTOs.Assemblees
 {
     public record CreateConvocationDto(
     Guid AssembleeGeneraleId,
+    Guid? ModeleId, 
     string Contenu,
     List<Guid> DestinataireUserIds
 );

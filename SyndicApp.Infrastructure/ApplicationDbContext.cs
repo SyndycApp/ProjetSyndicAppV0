@@ -99,6 +99,8 @@ namespace SyndicApp.Infrastructure
 
         public DbSet<MissionValidation> MissionValidations => Set<MissionValidation>();
 
+        public DbSet<OrdreDuJourItem> OrdreDuJour => Set<OrdreDuJourItem>();
+
         public DbSet<AbsenceJustification> AbsenceJustifications => Set<AbsenceJustification>();
 
         public DbSet<EmployeDocument> EmployeDocuments => Set<EmployeDocument>();
@@ -108,6 +110,15 @@ namespace SyndicApp.Infrastructure
         public DbSet<ResidencePlanningConfig> ResidencePlanningConfigs => Set<ResidencePlanningConfig>();
 
         public DbSet<PrestataireNote> PrestataireNotes => Set<PrestataireNote>();
+
+        public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
+
+        public DbSet<ConvocationPieceJointe> ConvocationPiecesJointes => Set<ConvocationPieceJointe>();
+
+        public DbSet<ModeleConvocation> ModelesConvocation => Set<ModeleConvocation>();
+
+        public DbSet<ConvocationEnvoiLog> ConvocationEnvoiLogs => Set<ConvocationEnvoiLog>();
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -169,6 +180,50 @@ namespace SyndicApp.Infrastructure
                     .OnDelete(DeleteBehavior.Cascade);
             });
 
+            modelBuilder.Entity<ConvocationPieceJointe>(entity =>
+            {
+                entity.HasKey(p => p.Id);
+
+                entity.Property(p => p.NomFichier)
+                    .IsRequired()
+                    .HasMaxLength(255);
+
+                entity.Property(p => p.UrlFichier)
+                    .IsRequired()
+                    .HasMaxLength(500);
+
+                entity.HasOne(p => p.Convocation)
+                    .WithMany(c => c.PiecesJointes)
+                    .HasForeignKey(p => p.ConvocationId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<ConvocationEnvoiLog>(entity =>
+            {
+                entity.HasOne(e => e.Convocation)
+                    .WithMany(c => c.Envois)
+                    .HasForeignKey(e => e.ConvocationId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.Property(e => e.Email)
+                    .IsRequired()
+                    .HasMaxLength(256);
+            });
+            modelBuilder.Entity<ModeleConvocation>(entity =>
+            {
+                entity.HasKey(m => m.Id);
+
+                entity.Property(m => m.Nom)
+                    .IsRequired()
+                    .HasMaxLength(100);
+
+                entity.Property(m => m.Contenu)
+                    .IsRequired();
+
+                entity.Property(m => m.EstParDefaut)
+                    .HasDefaultValue(false);
+            });
+
             modelBuilder.Entity<PlanningMission>()
                         .HasOne(m => m.Validation)
                         .WithOne(v => v.PlanningMission)
@@ -181,6 +236,17 @@ namespace SyndicApp.Infrastructure
                 .WithMany()
                 .HasForeignKey(b => b.ResidenceId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<OrdreDuJourItem>()
+                        .HasOne(o => o.AssembleeGenerale)
+                        .WithMany(a => a.OrdreDuJour)
+                        .HasForeignKey(o => o.AssembleeGeneraleId)
+                        .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<OrdreDuJourItem>()
+                        .HasIndex(o => new { o.AssembleeGeneraleId, o.Ordre })
+                        .IsUnique();
+
 
             modelBuilder.Entity<Decision>(b =>
             {
