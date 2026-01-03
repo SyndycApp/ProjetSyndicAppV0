@@ -8,6 +8,7 @@ public class OrdreDuJourItem : BaseEntity
     public AssembleeGenerale AssembleeGenerale { get; set; } = null!;
 
     public int Ordre { get; set; }
+
     public string Titre { get; set; } = null!;
     public string? Description { get; set; }
 }

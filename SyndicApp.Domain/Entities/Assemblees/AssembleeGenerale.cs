@@ -24,6 +24,7 @@ public class AssembleeGenerale : BaseEntity
 
     public DateTime? DateCloture { get; set; }
     public bool EstArchivee { get; set; }
+    public DateTime? DateArchivage { get; set; }
 
     public ICollection<Resolution> Resolutions { get; set; } = new List<Resolution>();
     public ICollection<Convocation> Convocations { get; set; } = new List<Convocation>();

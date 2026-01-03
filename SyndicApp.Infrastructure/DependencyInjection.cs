@@ -90,6 +90,8 @@ namespace SyndicApp.Infrastructure
             services.AddScoped<IImageMessageService, ImageMessageService>();
             services.AddScoped<IDocumentMessageService, DocumentMessageService>();
             services.AddScoped<ILocationMessageService, LocationMessageService>();
+            services.AddScoped<ConvocationContentBuilder>();
+
 
             return services;
         }

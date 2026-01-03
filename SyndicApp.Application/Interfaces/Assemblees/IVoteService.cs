@@ -12,6 +12,9 @@ namespace SyndicApp.Application.Interfaces.Assemblees
         Task VoteAsync(Guid userId, VoteDto dto);
 
         Task<ResultatVoteDto> CalculerResultatAsync(Guid resolutionId);
+
+        Task<List<VotePersonnelDto>> GetMesVotesAsync(Guid assembleeId, Guid userId);
+
     }
 
 }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SyndicApp.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+718884b3619a6857c911ca1c16ab5d709e84c61a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2a844d92a82d1c57429553a1e3d00137ef5c66fd")]
 [assembly: System.Reflection.AssemblyProductAttribute("SyndicApp.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SyndicApp.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

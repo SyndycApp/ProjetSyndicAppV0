@@ -24,7 +24,9 @@ public class ResolutionService : IResolutionService
             throw new InvalidOperationException("Assemblée introuvable");
 
         if (assemblee.Statut != StatutAssemblee.Brouillon)
-            throw new InvalidOperationException("Impossible de modifier les résolutions après publication de l’AG");
+            throw new InvalidOperationException(
+                "Impossible de modifier les résolutions après publication de l’AG"
+            );
 
         var numeroExiste = await _db.Resolutions
             .AnyAsync(r => r.AssembleeGeneraleId == assembleeId && r.Numero == dto.Numero);
@@ -32,18 +34,44 @@ public class ResolutionService : IResolutionService
         if (numeroExiste)
             throw new InvalidOperationException("Une résolution avec ce numéro existe déjà");
 
-        var resolution = new Resolution
-        {
-            AssembleeGeneraleId = assembleeId,
-            Numero = dto.Numero,
-            Titre = dto.Titre,
-            Description = dto.Description,
-            Statut = StatutResolution.EnAttente
-        };
+        using var transaction = await _db.Database.BeginTransactionAsync();
 
-        _db.Resolutions.Add(resolution);
-        await _db.SaveChangesAsync();
+        try
+        {
+            // 1️⃣ Création de la résolution
+            var resolution = new Resolution
+            {
+                AssembleeGeneraleId = assembleeId,
+                Numero = dto.Numero,
+                Titre = dto.Titre,
+                Description = dto.Description,
+                Statut = StatutResolution.EnAttente
+            };
+
+            _db.Resolutions.Add(resolution);
+
+            // 2️⃣ Création de l’ordre du jour associé
+            var odj = new OrdreDuJourItem
+            {
+                AssembleeGeneraleId = assembleeId,
+                Ordre = dto.Numero,              // même ordre que la résolution
+                Titre = dto.Titre,
+                Description = dto.Description,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            _db.OrdreDuJour.Add(odj);
+
+            await _db.SaveChangesAsync();
+            await transaction.CommitAsync();
+        }
+        catch
+        {
+            await transaction.RollbackAsync();
+            throw;
+        }
     }
+
 
     public async Task<List<ResolutionDto>> GetByAssembleeAsync(Guid assembleeId)
     {

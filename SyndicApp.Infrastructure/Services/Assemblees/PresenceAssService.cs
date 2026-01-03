@@ -8,14 +8,20 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
     public class PresenceAssService : IPresenceAssService
     {
         private readonly ApplicationDbContext _db;
-
-        public PresenceAssService(ApplicationDbContext db)
+        private readonly IAssembleeAccessPolicy _accessPolicy;
+        public PresenceAssService(ApplicationDbContext db, IAssembleeAccessPolicy accessPolicy)
         {
             _db = db;
+            _accessPolicy = accessPolicy;
         }
 
         public async Task EnregistrerPresenceAsync(Guid userId, PresenceAssDto dto)
         {
+            var assemblee = await _db.AssembleesGenerales.FirstAsync(a => a.Id == dto.AssembleeId);
+
+            if (_accessPolicy.EstLectureSeule(assemblee))
+                throw new InvalidOperationException("Impossible d’enregistrer une présence après clôture.");
+
             var exists = await _db.PresenceAss.AnyAsync(p =>
                 p.AssembleeGeneraleId == dto.AssembleeId &&
                 p.UserId == userId);

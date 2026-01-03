@@ -9,6 +9,7 @@ using SyndicApp.Application.Config;
 using SyndicApp.Application.DTOs.Personnel;
 using SyndicApp.Application.Interfaces;
 using SyndicApp.Application.Interfaces.Assemblees;
+using SyndicApp.Application.Interfaces.Audit;
 using SyndicApp.Application.Interfaces.Common;
 using SyndicApp.Application.Interfaces.Communication;
 using SyndicApp.Application.Interfaces.Exports;
@@ -170,8 +171,16 @@ builder.Services.AddScoped<IDecisionService, DecisionService>();
 builder.Services.AddScoped<IClotureAssembleeService, ClotureAssembleeService>();
 builder.Services.AddScoped<IOrdreDuJourService, OrdreDuJourService>();
 builder.Services.AddScoped<IMailService, MailService>();
+builder.Services.AddScoped<IAssembleeAccessPolicy, AssembleeAccessPolicy>();
+builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<IRappelAssembleeService, RappelAssembleeService>();
+builder.Services.AddHostedService<AssembleeRappelWorker>();
+builder.Services.AddScoped<IAnnotationAssembleeService, AnnotationAssembleeService>();
+builder.Services.AddScoped<IAuditExportService, AuditExportService>();
 
 
+builder.Services.Configure<AssembleeQuorumOptions>(
+    builder.Configuration.GetSection("AssembleeQuorumRules"));
 
 builder.Services.Configure<PresenceGeoOptions>(
     builder.Configuration.GetSection("PresenceGeo"));

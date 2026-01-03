@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SyndicApp.Application.DTOs.Assemblees;
 using SyndicApp.Application.Interfaces.Assemblees;
+using SyndicApp.Application.Interfaces.Common;
 using SyndicApp.Domain.Entities.Assemblees;
 using SyndicApp.Domain.Enums.Assemblees;
 
@@ -10,13 +11,18 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
     {
         private readonly ApplicationDbContext _db;
         private readonly IQuorumService _quorumService;
+        private readonly IAssembleeAccessPolicy _accessPolicy;
+        private readonly INotificationService _notificationService;
 
         public VoteService(
             ApplicationDbContext db,
-            IQuorumService quorumService)
+            IQuorumService quorumService,
+            IAssembleeAccessPolicy accessPolicy, INotificationService notificationService)
         {
             _db = db;
             _quorumService = quorumService;
+            _accessPolicy = accessPolicy;
+            _notificationService = notificationService;
         }
 
         public async Task<ResultatVoteDto> CalculerResultatAsync(Guid resolutionId)
@@ -45,9 +51,18 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
 
         public async Task VoteAsync(Guid userId, VoteDto dto)
         {
+
             var resolution = await _db.Resolutions
                 .Include(r => r.AssembleeGenerale)
                 .FirstOrDefaultAsync(r => r.Id == dto.ResolutionId);
+
+            if (!_accessPolicy.PeutVoter(resolution.AssembleeGenerale))
+                throw new InvalidOperationException("Le vote est fermé pour cette assemblée.");
+
+            var now = DateTime.UtcNow;
+
+            if (!_accessPolicy.EstDansPlageHoraireVote(resolution.AssembleeGenerale, now))
+                throw new InvalidOperationException("Le vote n’est autorisé que pendant la période officielle de l’assemblée.");
 
             if (resolution == null)
                 throw new InvalidOperationException("Résolution introuvable");
@@ -109,6 +124,42 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
             });
 
             await _db.SaveChangesAsync();
+            await _notificationService.NotifierAsync(
+                        userId: userId,
+                        titre: "Vote enregistré",
+                        message: "Votre vote a été enregistré avec succès.",
+                        type: "VOTE",
+                        cibleId: dto.ResolutionId,
+                        cibleType: "Resolution");
+
         }
+
+        public async Task<List<VotePersonnelDto>> GetMesVotesAsync(Guid assembleeId, Guid userId)
+        {
+            _db.AuditLogs.Add(new AuditLog
+            {
+                UserId = userId,
+                Action = "CONSULTATION_VOTES",
+                Cible = $"Assemblee:{assembleeId}",
+                DateAction = DateTime.UtcNow
+            });
+
+            return await _db.Votes
+                .Where(v =>
+                    v.UserId == userId &&
+                    v.Resolution.AssembleeGeneraleId == assembleeId)
+                .Include(v => v.Resolution)
+                .OrderBy(v => v.Resolution.Numero)
+                .Select(v => new VotePersonnelDto(
+                    v.ResolutionId,
+                    v.Resolution.Numero,
+                    v.Resolution.Titre,
+                    v.Choix.ToString(),
+                    v.PoidsVote,
+                    v.DateVote
+                ))
+                .ToListAsync();
+        }
+
     }
 }

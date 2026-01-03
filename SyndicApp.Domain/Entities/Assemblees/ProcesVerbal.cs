@@ -18,4 +18,7 @@ public class ProcesVerbal : BaseEntity
 
     public bool EstVerrouille { get; set; }
     public bool EstArchive { get; set; }
+
+    public ICollection<ProcesVerbalVersion> Versions { get; set; }
+    = new List<ProcesVerbalVersion>();
 }

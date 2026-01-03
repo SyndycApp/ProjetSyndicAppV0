@@ -133,8 +133,8 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
         public async Task<List<AssembleeDto>> GetHistoriqueAsync(Guid residenceId, AssembleeHistoriqueFilterDto filter)
         {
             var query = _db.AssembleesGenerales
-                .Where(a => a.ResidenceId == residenceId)
-                .AsQueryable();
+                        .Where(a => a.ResidenceId == residenceId && !a.EstArchivee)
+                        .AsQueryable();
 
             if (filter.Annee.HasValue)
                 query = query.Where(a => a.Annee == filter.Annee.Value);
@@ -168,9 +168,7 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
         public async Task<List<AssembleeDto>> GetUpcomingAsync(Guid residenceId)
         {
             var ags = await _db.AssembleesGenerales
-                     .Where(a => a.ResidenceId == residenceId &&
-                     a.Statut != StatutAssemblee.Cloturee &&
-                     a.Statut != StatutAssemblee.Annulee)
+                     .Where(a => a.ResidenceId == residenceId && !a.EstArchivee && a.Statut != StatutAssemblee.Cloturee && a.Statut != StatutAssemblee.Annulee)
                      .ToListAsync();
 
             foreach (var ag in ags)

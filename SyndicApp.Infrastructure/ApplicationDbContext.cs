@@ -119,11 +119,82 @@ namespace SyndicApp.Infrastructure
 
         public DbSet<ConvocationEnvoiLog> ConvocationEnvoiLogs => Set<ConvocationEnvoiLog>();
 
+        public DbSet<AssembleeRappel> AssembleeRappels => Set<AssembleeRappel>();
+
+        public DbSet<ProcesVerbalVersion> ProcesVerbalVersions => Set<ProcesVerbalVersion>();
+
+        public DbSet<AnnotationAssemblee> AnnotationsAssemblee => Set<AnnotationAssemblee>();
+
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            
+            modelBuilder.Entity<ProcesVerbalVersion>(entity =>
+            {
+                entity.ToTable("ProcesVerbalVersions");
+
+                entity.HasKey(v => v.Id);
+
+                entity.Property(v => v.NumeroVersion)
+                    .IsRequired();
+
+                entity.Property(v => v.Contenu)
+                    .IsRequired();
+
+                entity.Property(v => v.UrlPdf)
+                    .IsRequired()
+                    .HasMaxLength(500);
+
+                entity.Property(v => v.EstOfficielle)
+                    .IsRequired();
+
+                entity.Property(v => v.DateGeneration)
+                    .IsRequired();
+
+                entity.Property(v => v.GenereParId)
+                    .IsRequired();
+
+                // 🔗 Relation avec ProcesVerbal (1 -> N)
+                entity.HasOne(v => v.ProcesVerbal)
+                    .WithMany(pv => pv.Versions)
+                    .HasForeignKey(v => v.ProcesVerbalId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                // 🔒 Une seule version officielle par PV
+                entity.HasIndex(v => new { v.ProcesVerbalId, v.EstOfficielle })
+                    .HasFilter("[EstOfficielle] = 1")
+                    .IsUnique();
+
+                // 🔎 Index utile pour l’historique
+                entity.HasIndex(v => new { v.ProcesVerbalId, v.NumeroVersion })
+                    .IsUnique();
+            });
+
+
+            modelBuilder.Entity<AnnotationAssemblee>(entity =>
+            {
+                entity.ToTable("AnnotationAssemblees");
+
+                entity.HasKey(a => a.Id);
+
+                entity.Property(a => a.Contenu)
+                    .IsRequired()
+                    .HasMaxLength(2000);
+
+                entity.Property(a => a.DateCreation)
+                    .IsRequired();
+
+                entity.HasOne(a => a.AssembleeGenerale)
+                    .WithMany()
+                    .HasForeignKey(a => a.AssembleeGeneraleId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasIndex(a => a.AssembleeGeneraleId);
+            });
+
+
             // ================= Résidences / Bâtiments / Lots =================
             modelBuilder.Entity<Residence>(b =>
             {

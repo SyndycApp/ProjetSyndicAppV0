@@ -11,8 +11,11 @@ public class MailService : IMailService
     {
         _config = config;
     }
-
-    public async Task EnvoyerAsync(string email, string sujet, string contenu)
+    public async Task EnvoyerAsync(
+    string email,
+    string sujet,
+    string contenu,
+    bool isHtml = false)
     {
         if (string.IsNullOrWhiteSpace(email))
             throw new InvalidOperationException("Email destinataire invalide");
@@ -38,11 +41,12 @@ public class MailService : IMailService
             ),
             Subject = sujet,
             Body = contenu,
-            IsBodyHtml = true
+            IsBodyHtml = isHtml
         };
 
         message.To.Add(email);
 
         await client.SendMailAsync(message);
     }
+
 }

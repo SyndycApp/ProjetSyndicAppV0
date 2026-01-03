@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using SyndicApp.Application.DTOs.Assemblees;
 using SyndicApp.Application.Interfaces.Assemblees;
 using SyndicApp.Application.Interfaces.Common;
@@ -10,11 +11,15 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
     {
         private readonly ApplicationDbContext _db;
         private readonly IMailService _mailService;
+        private readonly IWebHostEnvironment _env;
+        private readonly INotificationService _notificationService;
 
-        public ConvocationService(ApplicationDbContext db, IMailService mailService)
+        public ConvocationService(ApplicationDbContext db, IMailService mailService, IWebHostEnvironment env, INotificationService notificationService)
         {
             _db = db;
             _mailService = mailService;
+            _env = env;
+            _notificationService = notificationService;
         }
 
         public async Task RelancerNonLecteursAsync(Guid convocationId)
@@ -38,10 +43,11 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
             foreach (var dest in nonLecteurs)
             {
                 await _mailService.EnvoyerAsync(
-                    dest.Email,
-                    "Relance Convocation",
-                    "Merci de consulter la convocation."
-                );
+                        email: dest.Email,
+                        sujet: "Relance Convocation",
+                        contenu: "<p>Merci de consulter la convocation.</p>",
+                        isHtml: true
+);
 
                 // (optionnel mais recommandé)
                 await _db.ConvocationDestinataires
@@ -81,6 +87,15 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
             if (convocation == null)
                 throw new InvalidOperationException("Convocation introuvable");
 
+            var ag = await _db.AssembleesGenerales
+                .Include(a => a.OrdreDuJour)
+                .FirstAsync(a => a.Id == convocation.AssembleeGeneraleId);
+
+            var residence = await _db.Residences
+                .FirstAsync(r => r.Id == ag.ResidenceId);
+
+            var contenuHtml = ConvocationContentBuilder.BuildHtml(_env,ag,residence,ag.OrdreDuJour,"SyndicApp");
+
             var destinataires = await _db.ConvocationDestinataires
                 .Where(d => d.ConvocationId == convocationId)
                 .Join(
@@ -90,7 +105,7 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
                     (d, u) => new
                     {
                         d.UserId,
-                        Email = u.Email
+                        u.Email
                     }
                 )
                 .ToListAsync();
@@ -102,7 +117,8 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
                     await _mailService.EnvoyerAsync(
                         dest.Email,
                         "Convocation Assemblée Générale",
-                        convocation.Contenu
+                        contenuHtml,
+                        isHtml: true
                     );
 
                     _db.ConvocationEnvoiLogs.Add(new ConvocationEnvoiLog
@@ -113,6 +129,15 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
                         DateEnvoi = DateTime.UtcNow,
                         Succes = true
                     });
+
+                    await _notificationService.NotifierAsync(
+                            userId: dest.UserId,
+                            titre: "Convocation Assemblée Générale",
+                            message: $"Une convocation pour l’assemblée « {ag.Titre} » est disponible.",
+                            type: "CONVOCATION",
+                            cibleId: ag.Id,
+                            cibleType: "Assemblee"
+);
                 }
                 catch (Exception ex)
                 {
@@ -130,6 +155,7 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
 
             await _db.SaveChangesAsync();
         }
+
 
 
         public async Task MarquerCommeLueAsync(Guid convocationId, Guid userId)

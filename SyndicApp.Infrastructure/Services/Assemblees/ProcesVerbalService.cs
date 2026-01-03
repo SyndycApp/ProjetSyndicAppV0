@@ -2,7 +2,9 @@
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
+using SyndicApp.Application.DTOs.Assemblees;
 using SyndicApp.Application.Interfaces.Assemblees;
+using SyndicApp.Application.Interfaces.Common;
 using SyndicApp.Domain.Entities.Assemblees;
 using SyndicApp.Domain.Enums.Assemblees;
 using System.Text;
@@ -12,35 +14,34 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
     public class ProcesVerbalService : IProcesVerbalService
     {
         private readonly ApplicationDbContext _db;
+        private readonly INotificationService _notificationService;
 
-        public ProcesVerbalService(ApplicationDbContext db)
+        public ProcesVerbalService(ApplicationDbContext db, INotificationService notificationService)
         {
             _db = db;
+            _notificationService = notificationService;
         }
 
-        // =========================
-        // 📄 GÉNÉRATION DU PV
-        // =========================
         public async Task GenerateAsync(Guid assembleeId, Guid syndicId)
         {
             QuestPDF.Settings.License = LicenseType.Community;
 
-            // 🔎 Charger AG + Résolutions + Décisions
+            // =========================
+            // 🔎 CHARGER AG + RÉSOLUTIONS + DÉCISIONS
+            // =========================
             var ag = await _db.AssembleesGenerales
-                 .Include(a => a.Resolutions)
+                .Include(a => a.Resolutions)
                     .ThenInclude(r => r.Decision)
-                 .FirstOrDefaultAsync(a => a.Id == assembleeId);
-
+                .FirstOrDefaultAsync(a => a.Id == assembleeId);
 
             if (ag == null)
                 throw new InvalidOperationException("Assemblée introuvable.");
 
             if (ag.Statut != StatutAssemblee.Cloturee)
-                throw new InvalidOperationException("Le PV ne peut être généré que pour une AG clôturée.");
+                throw new InvalidOperationException(
+                    "Le PV ne peut être généré que pour une AG clôturée."
+                );
 
-            // =========================
-            // 🧠 CONTENU MÉTIER DU PV
-            // =========================
             var contenu = new StringBuilder();
 
             contenu.AppendLine("PROCÈS-VERBAL D’ASSEMBLÉE GÉNÉRALE");
@@ -60,13 +61,12 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
                 contenu.AppendLine($"Pour : {d.TotalPour}");
                 contenu.AppendLine($"Contre : {d.TotalContre}");
                 contenu.AppendLine($"Abstention : {d.TotalAbstention}");
-                contenu.AppendLine($"Décision : {(d.EstAdoptee ? "ADOPTÉE" : "REJETÉE")}");
+                contenu.AppendLine(
+                    $"Décision : {(d.EstAdoptee ? "ADOPTÉE" : "REJETÉE")}"
+                );
                 contenu.AppendLine(new string('-', 30));
             }
 
-            // =========================
-            // 📁 CHEMIN PDF
-            // =========================
             var root = Path.Combine(
                 Directory.GetCurrentDirectory(),
                 "wwwroot",
@@ -78,12 +78,42 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
             if (!Directory.Exists(root))
                 Directory.CreateDirectory(root);
 
-            var fileName = $"PV_{ag.Annee}_{assembleeId}.pdf";
+            var pv = await _db.ProcesVerbaux
+                .FirstOrDefaultAsync(p => p.AssembleeGeneraleId == assembleeId);
+
+            if (pv == null)
+            {
+                pv = new ProcesVerbal
+                {
+                    AssembleeGeneraleId = assembleeId,
+                    NumeroPV = $"PV-{ag.Annee}-{assembleeId.ToString()[..6]}",
+                    GenereParId = syndicId,
+                    DateGeneration = DateTime.UtcNow,
+                    EstVerrouille = true,
+                    EstArchive = true
+                };
+
+                _db.ProcesVerbaux.Add(pv);
+                await _db.SaveChangesAsync();
+            }
+            var derniereVersion = await _db.ProcesVerbalVersions
+                .Where(v => v.ProcesVerbalId == pv.Id)
+                .OrderByDescending(v => v.NumeroVersion)
+                .Select(v => v.NumeroVersion)
+                .FirstOrDefaultAsync();
+
+            var numeroVersion = derniereVersion + 1;
+
+            await _db.ProcesVerbalVersions
+                .Where(v =>
+                    v.ProcesVerbalId == pv.Id &&
+                    v.EstOfficielle)
+                .ExecuteUpdateAsync(s =>
+                    s.SetProperty(v => v.EstOfficielle, false));
+
+            var fileName = $"PV_{ag.Annee}_{assembleeId}_v{numeroVersion}.pdf";
             var fullPath = Path.Combine(root, fileName);
 
-            // =========================
-            // 📄 GÉNÉRATION PDF
-            // =========================
             Document.Create(container =>
             {
                 container.Page(page =>
@@ -115,9 +145,14 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
                             col.Item().Text($"Pour : {d.TotalPour}");
                             col.Item().Text($"Contre : {d.TotalContre}");
                             col.Item().Text($"Abstention : {d.TotalAbstention}");
-                            col.Item().Text(d.EstAdoptee ? "ADOPTÉE" : "REJETÉE")
+                            col.Item()
+                                .Text(d.EstAdoptee ? "ADOPTÉE" : "REJETÉE")
                                 .Bold()
-                                .FontColor(d.EstAdoptee ? Colors.Green.Medium : Colors.Red.Medium);
+                                .FontColor(
+                                    d.EstAdoptee
+                                        ? Colors.Green.Medium
+                                        : Colors.Red.Medium
+                                );
                             col.Item().LineHorizontal(0.5f);
                         }
                     });
@@ -128,60 +163,113 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
                 });
             }).GeneratePdf(fullPath);
 
-            // =========================
-            // 💾 SAUVEGARDE BDD
-            // =========================
-            var pv = await _db.ProcesVerbaux
-                .FirstOrDefaultAsync(p => p.AssembleeGeneraleId == assembleeId);
 
-            if (pv == null)
+            _db.ProcesVerbalVersions.Add(new ProcesVerbalVersion
             {
-                pv = new ProcesVerbal
-                {
-                    AssembleeGeneraleId = assembleeId,
-                    DateGeneration = DateTime.UtcNow,
-                    Contenu = contenu.ToString(),
-                    NumeroPV = $"PV-{ag.Annee}-{assembleeId.ToString()[..6]}",
-                    GenereParId = syndicId,
-                    UrlPdf = $"uploads/documents/pv/{fileName}",
-                    EstVerrouille = true,
-                    EstArchive = true
-                };
-
-                _db.ProcesVerbaux.Add(pv);
-            }
-            else
+                ProcesVerbalId = pv.Id,
+                NumeroVersion = numeroVersion,
+                Contenu = contenu.ToString(),
+                UrlPdf = $"uploads/documents/pv/{fileName}",
+                EstOfficielle = true,
+                DateGeneration = DateTime.UtcNow,
+                GenereParId = syndicId
+            });
+            
+            _db.AuditLogs.Add(new AuditLog
             {
-                pv.Contenu = contenu.ToString();
-                pv.DateGeneration = DateTime.UtcNow;
-                pv.UrlPdf = $"uploads/documents/pv/{fileName}";
-            }
+                UserId = syndicId,
+                Action = "GENERATION_PV_VERSION",
+                Cible = $"Assemblee:{assembleeId}/Version:{numeroVersion}",
+                DateAction = DateTime.UtcNow
+            });
+            
 
             await _db.SaveChangesAsync();
+
+            // =========================
+            // 🔔 NOTIFICATIONS
+            // =========================
+            var userIds = await _db.AffectationsLots
+                .Where(a => a.Lot.ResidenceId == ag.ResidenceId)
+                .Select(a => a.UserId)
+                .Distinct()
+                .ToListAsync();
+
+            foreach (var userId in userIds)
+            {
+                await _notificationService.NotifierAsync(
+                    userId,
+                    "Procès-verbal disponible",
+                    $"Le procès-verbal de l’assemblée « {ag.Titre} » est disponible.",
+                    "PROCES_VERBAL",
+                    ag.Id,
+                    "ProcesVerbal"
+                );
+            }
         }
 
-        // =========================
-        // 📥 TÉLÉCHARGEMENT PDF
-        // =========================
+        public async Task<List<ProcesVerbalVersionDto>> GetVersionsAsync(Guid assembleeId)
+        {
+            return await _db.ProcesVerbalVersions
+                .Where(v => v.ProcesVerbal.AssembleeGeneraleId == assembleeId)
+                .OrderByDescending(v => v.NumeroVersion)
+                .Select(v => new ProcesVerbalVersionDto(
+                    v.NumeroVersion,
+                    v.EstOfficielle,
+                    v.DateGeneration,
+                    v.UrlPdf
+                ))
+                .ToListAsync();
+        }
+
+
         public async Task<(byte[] Content, string FileName)> GetPdfAsync(Guid assembleeId)
         {
-            var pv = await _db.ProcesVerbaux
-                .FirstOrDefaultAsync(p => p.AssembleeGeneraleId == assembleeId);
+            // 🔎 Charger AG
+            var ag = await _db.AssembleesGenerales
+                .FirstOrDefaultAsync(a => a.Id == assembleeId);
 
-            if (pv == null)
-                throw new InvalidOperationException("Procès-verbal introuvable.");
+            if (ag == null)
+                throw new InvalidOperationException("Assemblée introuvable.");
 
+            // 🔎 Charger la version officielle du PV
+            var version = await _db.ProcesVerbalVersions
+                .Where(v =>
+                    v.ProcesVerbal.AssembleeGeneraleId == assembleeId &&
+                    v.EstOfficielle)
+                .OrderByDescending(v => v.NumeroVersion)
+                .FirstOrDefaultAsync();
+
+            if (version == null)
+                throw new InvalidOperationException("Procès-verbal non disponible.");
+
+            // 📁 Chemin réel du fichier (technique)
             var fullPath = Path.Combine(
                 Directory.GetCurrentDirectory(),
                 "wwwroot",
-                pv.UrlPdf.Replace("/", Path.DirectorySeparatorChar.ToString())
+                version.UrlPdf.Replace("/", Path.DirectorySeparatorChar.ToString())
             );
 
             if (!File.Exists(fullPath))
                 throw new FileNotFoundException("PDF introuvable.", fullPath);
 
             var bytes = await File.ReadAllBytesAsync(fullPath);
-            return (bytes, Path.GetFileName(fullPath));
+
+            // 🧼 Nettoyage du nom AG (anti caractères interdits)
+            string Safe(string value)
+            {
+                foreach (var c in Path.GetInvalidFileNameChars())
+                    value = value.Replace(c, '_');
+
+                return value.Replace(" ", "_");
+            }
+
+            // 📄 NOM MÉTIER DU FICHIER
+            var fileName =
+                $"PV_{Safe(ag.Titre)}_v{version.NumeroVersion}.pdf";
+
+            return (bytes, fileName);
         }
+
     }
 }

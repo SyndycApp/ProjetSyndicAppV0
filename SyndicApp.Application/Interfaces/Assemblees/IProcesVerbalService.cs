@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SyndicApp.Application.DTOs.Assemblees;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,8 @@ namespace SyndicApp.Application.Interfaces.Assemblees
     {
         Task GenerateAsync(Guid assembleeId, Guid syndicId);
         Task<(byte[] Content, string FileName)> GetPdfAsync(Guid assembleeId);
+        Task<List<ProcesVerbalVersionDto>> GetVersionsAsync(Guid assembleeId);
+
     }
 
 }
