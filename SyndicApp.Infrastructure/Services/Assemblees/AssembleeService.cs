@@ -55,7 +55,6 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
 
             ag.Statut = StatutAssemblee.Cloturee;
             ag.DateCloture = DateTime.UtcNow;
-            ag.EstArchivee = true;
 
             foreach (var r in ag.Resolutions)
             {

@@ -1,15 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using SyndicApp.Application.DTOs.Auth;
 using SyndicApp.Application.Interfaces;
-using SyndicApp.Infrastructure;
-using System;
-using System.Net;
-using System.Net.Mail;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
+
 
 namespace SyndicApp.API.Controllers
 {

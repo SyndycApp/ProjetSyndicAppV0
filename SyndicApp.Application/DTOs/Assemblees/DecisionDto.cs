@@ -9,6 +9,8 @@ namespace SyndicApp.Application.DTOs.Assemblees
     public record DecisionDto(
     Guid ResolutionId,
     Guid AssembleeGeneraleId,
+    string Titre,
+    string Description,
     decimal TotalPour,
     decimal TotalContre,
     decimal TotalAbstention,

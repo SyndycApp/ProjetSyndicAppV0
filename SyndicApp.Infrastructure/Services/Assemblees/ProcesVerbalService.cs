@@ -7,6 +7,7 @@ using SyndicApp.Application.Interfaces.Assemblees;
 using SyndicApp.Application.Interfaces.Common;
 using SyndicApp.Domain.Entities.Assemblees;
 using SyndicApp.Domain.Enums.Assemblees;
+using SyndicApp.Infrastructure.Services.Common;
 using System.Text;
 
 namespace SyndicApp.Infrastructure.Services.Assemblees
@@ -20,6 +21,99 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
         {
             _db = db;
             _notificationService = notificationService;
+        }
+
+        public async Task ScellerVersionAsync(Guid procesVerbalVersionId, Guid syndicId)
+        {
+            var version = await _db.ProcesVerbalVersions
+                .Include(v => v.ProcesVerbal)
+                .FirstOrDefaultAsync(v => v.Id == procesVerbalVersionId);
+
+            if (version == null)
+                throw new InvalidOperationException("Version introuvable.");
+
+            if (version.EstScelle)
+                throw new InvalidOperationException("Cette version est déjà scellée.");
+
+            var payload =
+                $"{version.ProcesVerbalId}|{version.NumeroVersion}|{version.Contenu}|{version.DateGeneration:o}";
+
+            version.HashScellage = HashService.ComputeSha256(payload);
+
+            var fullPath = Path.Combine(
+                Directory.GetCurrentDirectory(),
+                "wwwroot",
+                version.UrlPdf
+            );
+
+            if (!File.Exists(fullPath))
+                throw new InvalidOperationException("Fichier PDF introuvable pour scellage.");
+
+            version.HashPdf = CalculerHashPdf(fullPath);
+
+
+            version.DateScellage = DateTime.UtcNow;
+            version.ScelleParId = syndicId;
+            version.EstScelle = true;
+
+            version.ProcesVerbal.EstVerrouille = true;
+
+            _db.AuditLogs.Add(new AuditLog
+            {
+                UserId = syndicId,
+                Action = "SCELLAGE_PV",
+                Cible = $"ProcesVerbalVersion:{procesVerbalVersionId}",
+                DateAction = DateTime.UtcNow
+            });
+
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task AjouterCommentaireAsync(Guid procesVerbalVersionId, string commentaire, Guid syndicId)
+        {
+            var version = await _db.ProcesVerbalVersions
+                .Include(v => v.ProcesVerbal)
+                .ThenInclude(pv => pv.AssembleeGenerale)
+                .FirstOrDefaultAsync(v => v.Id == procesVerbalVersionId);
+
+            if (version == null)
+                throw new InvalidOperationException("Version de procès-verbal introuvable.");
+
+            if (version.EstScelle)
+                throw new InvalidOperationException(
+                    "PV scellé juridiquement. Annotation interdite."
+                );
+
+
+            if (version.ProcesVerbal.EstVerrouille)
+                throw new InvalidOperationException(
+                    "Le procès-verbal est verrouillé. Annotation impossible."
+                );
+
+            if (string.IsNullOrWhiteSpace(commentaire))
+                throw new InvalidOperationException("Le commentaire est vide.");
+
+
+            version.Contenu +=
+                $"\n\n--- COMMENTAIRE SYNDIC ({DateTime.UtcNow:dd/MM/yyyy HH:mm}) ---\n{commentaire}";
+
+            _db.AuditLogs.Add(new AuditLog
+            {
+                UserId = syndicId,
+                Action = "ANNOTATION_PV",
+                Cible = $"ProcesVerbalVersion:{procesVerbalVersionId}",
+                DateAction = DateTime.UtcNow
+            });
+
+            await _db.SaveChangesAsync();
+        }
+
+        private static string CalculerHashPdf(string fullPath)
+        {
+            using var sha = System.Security.Cryptography.SHA256.Create();
+            using var stream = File.OpenRead(fullPath);
+            var hash = sha.ComputeHash(stream);
+            return Convert.ToHexString(hash);
         }
 
         public async Task GenerateAsync(Guid assembleeId, Guid syndicId)
@@ -81,6 +175,12 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
             var pv = await _db.ProcesVerbaux
                 .FirstOrDefaultAsync(p => p.AssembleeGeneraleId == assembleeId);
 
+            if (pv != null && pv.EstVerrouille)
+                throw new InvalidOperationException(
+                    "PV scellé juridiquement. Génération interdite."
+                );
+
+
             if (pv == null)
             {
                 pv = new ProcesVerbal
@@ -89,8 +189,8 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
                     NumeroPV = $"PV-{ag.Annee}-{assembleeId.ToString()[..6]}",
                     GenereParId = syndicId,
                     DateGeneration = DateTime.UtcNow,
-                    EstVerrouille = true,
-                    EstArchive = true
+                    EstVerrouille = false,
+                    EstArchive = false
                 };
 
                 _db.ProcesVerbaux.Add(pv);
@@ -186,9 +286,7 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
 
             await _db.SaveChangesAsync();
 
-            // =========================
-            // 🔔 NOTIFICATIONS
-            // =========================
+
             var userIds = await _db.AffectationsLots
                 .Where(a => a.Lot.ResidenceId == ag.ResidenceId)
                 .Select(a => a.UserId)
@@ -221,7 +319,6 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
                 ))
                 .ToListAsync();
         }
-
 
         public async Task<(byte[] Content, string FileName)> GetPdfAsync(Guid assembleeId)
         {
@@ -269,6 +366,48 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
                 $"PV_{Safe(ag.Titre)}_v{version.NumeroVersion}.pdf";
 
             return (bytes, fileName);
+        }
+
+        public async Task<VerifierIntegritePvDto> VerifierIntegriteAsync(Guid procesVerbalVersionId)
+        {
+            var version = await _db.ProcesVerbalVersions
+                .Include(v => v.ProcesVerbal)
+                .FirstOrDefaultAsync(v => v.Id == procesVerbalVersionId);
+
+            if (version == null)
+                throw new InvalidOperationException("Version de PV introuvable.");
+
+            if (!version.EstScelle)
+                throw new InvalidOperationException("Cette version n’est pas scellée.");
+
+            var payload =
+                $"{version.ProcesVerbalId}|{version.NumeroVersion}|{version.Contenu}|{version.DateGeneration:o}";
+
+            var hashMetierCalcule = HashService.ComputeSha256(payload);
+            var contenuValide = hashMetierCalcule == version.HashScellage;
+
+            var fullPath = Path.Combine(
+                Directory.GetCurrentDirectory(),
+                "wwwroot",
+                version.UrlPdf
+            );
+
+            if (!File.Exists(fullPath))
+                throw new InvalidOperationException("Fichier PDF introuvable.");
+
+            var hashPdfCalcule = CalculerHashPdf(fullPath);
+
+            var pdfValide = hashPdfCalcule == version.HashPdf;
+
+            return new VerifierIntegritePvDto(
+                    version.Id,
+                    pdfValide && contenuValide,   
+                    pdfValide,                   
+                    contenuValide,                
+                    version.HashScellage,         
+                    hashMetierCalcule,             
+                    DateTime.UtcNow
+             );
         }
 
     }

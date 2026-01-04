@@ -9,10 +9,12 @@ namespace SyndicApp.Infrastructure.Services.Assemblees;
 public class ResolutionService : IResolutionService
 {
     private readonly ApplicationDbContext _db;
+    private readonly IAssembleeAccessPolicy _accessPolicy;
 
-    public ResolutionService(ApplicationDbContext db)
+    public ResolutionService(ApplicationDbContext db, IAssembleeAccessPolicy accessPolicy)
     {
         _db = db;
+        _accessPolicy = accessPolicy;
     }
 
     public async Task AddAsync(Guid assembleeId, CreateResolutionDto dto)
@@ -23,10 +25,16 @@ public class ResolutionService : IResolutionService
         if (assemblee == null)
             throw new InvalidOperationException("Assemblée introuvable");
 
-        if (assemblee.Statut != StatutAssemblee.Brouillon)
+        if (_accessPolicy.EstVerrouillee(assemblee))
             throw new InvalidOperationException(
-                "Impossible de modifier les résolutions après publication de l’AG"
+                "Assemblée clôturée : modification interdite."
             );
+
+        if (!_accessPolicy.PeutModifierContenu(assemblee))
+            throw new InvalidOperationException(
+                "Modification des résolutions interdite à ce stade."
+            );
+
 
         var numeroExiste = await _db.Resolutions
             .AnyAsync(r => r.AssembleeGeneraleId == assembleeId && r.Numero == dto.Numero);

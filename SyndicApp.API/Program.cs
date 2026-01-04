@@ -177,6 +177,7 @@ builder.Services.AddScoped<IRappelAssembleeService, RappelAssembleeService>();
 builder.Services.AddHostedService<AssembleeRappelWorker>();
 builder.Services.AddScoped<IAnnotationAssembleeService, AnnotationAssembleeService>();
 builder.Services.AddScoped<IAuditExportService, AuditExportService>();
+builder.Services.AddScoped<IRelanceVoteService, RelanceVoteService>();
 
 
 builder.Services.Configure<AssembleeQuorumOptions>(

@@ -15,5 +15,7 @@ namespace SyndicApp.Application.Interfaces.Assemblees
 
         bool PeutSupprimer(AssembleeGenerale ag);
 
+        bool EstVerrouillee(AssembleeGenerale ag);
+
     }
 }

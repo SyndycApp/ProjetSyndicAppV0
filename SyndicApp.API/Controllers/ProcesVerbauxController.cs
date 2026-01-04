@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SyndicApp.Application.DTOs.Assemblees;
 using SyndicApp.Application.Interfaces.Assemblees;
 using System.Security.Claims;
 
@@ -32,5 +33,41 @@ public class ProcesVerbauxController : ControllerBase
         return File(content, "application/pdf", fileName);
     }
 
-    
+    [HttpPost("versions/{versionId}/sceller")]
+    public async Task<IActionResult> Sceller(Guid versionId)
+    {
+        var syndicId = Guid.Parse(User.FindFirstValue("uid")!);
+
+        await _service.ScellerVersionAsync(versionId, syndicId);
+
+        return NoContent();
+    }
+
+    [HttpGet("versions/{versionId}/integrite")]
+    [Authorize(Roles = "Syndic")]
+    public async Task<IActionResult> VerifierIntegrite(Guid versionId)
+    {
+        var resultat = await _service.VerifierIntegriteAsync(versionId);
+        return Ok(resultat);
+    }
+
+    [HttpPost("versions/{versionId}/commentaire")]
+    public async Task<IActionResult> AjouterCommentaire(
+            Guid versionId,
+            [FromBody] AjouterCommentairePvDto dto)
+    {
+        var syndicId = Guid.Parse(
+            User.FindFirstValue("uid")!
+        );
+
+        await _service.AjouterCommentaireAsync(
+            versionId,
+            dto.Commentaire,
+            syndicId
+        );
+
+        return NoContent();
+    }
+
+
 }

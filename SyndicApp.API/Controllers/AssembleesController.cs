@@ -20,7 +20,7 @@ public class AssembleesController : ControllerBase
         _clotureAssembleService = clotureAssembleService;
     }
 
-    [HttpPost("{assembleeId}/cloturer")]
+    [HttpPost("{assembleeId:guid}/cloturer")]
     public async Task<IActionResult> Cloturer(Guid assembleeId)
     {
         var syndicId = Guid.Parse(User.FindFirst("uid")!.Value);

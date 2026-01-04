@@ -11,6 +11,14 @@ public class ProcesVerbalVersion : BaseEntity
     public bool EstOfficielle { get; set; }
     public DateTime DateGeneration { get; set; }
     public Guid GenereParId { get; set; }
-
     public ProcesVerbal ProcesVerbal { get; set; } = null!;
+    public string? CommentaireSyndic { get; set; }
+    public DateTime? DateCommentaire { get; set; }
+    public Guid? CommentaireParId { get; set; }
+    public string HashScellage { get; set; } = string.Empty;
+    public DateTime? DateScellage { get; set; }
+    public Guid? ScelleParId { get; set; }
+    public bool EstScelle { get; set; }
+    public string HashPdf { get; set; } = string.Empty;
+
 }

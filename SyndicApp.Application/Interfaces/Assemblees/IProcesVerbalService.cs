@@ -12,6 +12,11 @@ namespace SyndicApp.Application.Interfaces.Assemblees
         Task GenerateAsync(Guid assembleeId, Guid syndicId);
         Task<(byte[] Content, string FileName)> GetPdfAsync(Guid assembleeId);
         Task<List<ProcesVerbalVersionDto>> GetVersionsAsync(Guid assembleeId);
+        Task ScellerVersionAsync(Guid procesVerbalVersionId, Guid syndicId);
+
+        Task<VerifierIntegritePvDto> VerifierIntegriteAsync(Guid procesVerbalVersionId);
+
+        Task AjouterCommentaireAsync(Guid procesVerbalVersionId, string commentaire,Guid syndicId);
 
     }
 

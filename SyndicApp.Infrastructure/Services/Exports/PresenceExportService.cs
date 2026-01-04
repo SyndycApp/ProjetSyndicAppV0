@@ -52,9 +52,8 @@ public class PresenceExportService : IPresenceExportService
         return ms.ToArray();
     }
 
-    public async Task<byte[]> ExportPdfAsync(Guid employeId, DateOnly from, DateOnly to)
+    public Task<byte[]> ExportPdfAsync(Guid employeId, DateOnly from, DateOnly to)
     {
-        // À implémenter plus tard (QuestPDF / iText)
         throw new NotImplementedException("PDF export à implémenter");
     }
 }

@@ -47,6 +47,13 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
             return ag.Statut == StatutAssemblee.Brouillon;
         }
 
+        public bool EstVerrouillee(AssembleeGenerale ag)
+        {
+            return ag.Statut == StatutAssemblee.Cloturee
+                || ag.Statut == StatutAssemblee.Annulee;
+        }
+
+
         public bool EstLectureSeule(AssembleeGenerale ag)
         {
             return ag.Statut == StatutAssemblee.Cloturee

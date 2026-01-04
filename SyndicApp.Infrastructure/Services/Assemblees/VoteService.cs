@@ -27,6 +27,19 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
 
         public async Task<ResultatVoteDto> CalculerResultatAsync(Guid resolutionId)
         {
+            var resolution = await _db.Resolutions
+                .Include(r => r.AssembleeGenerale)
+                .FirstOrDefaultAsync(r => r.Id == resolutionId);
+
+            if (resolution == null)
+                throw new InvalidOperationException("Résolution introuvable.");
+
+            if (_accessPolicy.EstVerrouillee(resolution.AssembleeGenerale))
+                throw new InvalidOperationException(
+                    "Résultat figé : assemblée clôturée."
+                );
+
+
             var votes = await _db.Votes
                 .Where(v => v.ResolutionId == resolutionId)
                 .ToListAsync();
@@ -39,33 +52,49 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
             var totalAbstention = votes.Where(v => v.Choix == ChoixVote.Abstention).Sum(v => v.PoidsVote);
             var totalExprime = totalPour + totalContre;
 
+            var totalTantiemes = await _db.Lots
+                .Where(l => l.ResidenceId == resolution.AssembleeGenerale.ResidenceId)
+                .SumAsync(l => l.Tantiemes);
+
+            var adoptee = EstResolutionAdoptee(
+                resolution,
+                totalPour,
+                totalContre,
+                totalExprime,
+                totalTantiemes
+            );
+
             return new ResultatVoteDto(
                 resolutionId,
                 totalPour,
                 totalContre,
                 totalAbstention,
                 totalExprime,
-                totalPour > (totalExprime / 2)
+                adoptee
             );
         }
 
+
         public async Task VoteAsync(Guid userId, VoteDto dto)
         {
-
+            var now = DateTime.UtcNow;
             var resolution = await _db.Resolutions
                 .Include(r => r.AssembleeGenerale)
                 .FirstOrDefaultAsync(r => r.Id == dto.ResolutionId);
 
+            if (resolution == null)
+                throw new InvalidOperationException("Résolution introuvable");
+
+            if (_accessPolicy.EstVerrouillee(resolution.AssembleeGenerale))
+                throw new InvalidOperationException("Assemblée clôturée : vote interdit.");
+
+
             if (!_accessPolicy.PeutVoter(resolution.AssembleeGenerale))
                 throw new InvalidOperationException("Le vote est fermé pour cette assemblée.");
 
-            var now = DateTime.UtcNow;
-
             if (!_accessPolicy.EstDansPlageHoraireVote(resolution.AssembleeGenerale, now))
-                throw new InvalidOperationException("Le vote n’est autorisé que pendant la période officielle de l’assemblée.");
+                throw new InvalidOperationException("Le vote n’est autorisé que pendant la période officielle.");
 
-            if (resolution == null)
-                throw new InvalidOperationException("Résolution introuvable");
 
             if (!await _quorumService.QuorumAtteintAsync(resolution.AssembleeGeneraleId))
                 throw new InvalidOperationException("Quorum non atteint");
@@ -154,11 +183,41 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
                     v.ResolutionId,
                     v.Resolution.Numero,
                     v.Resolution.Titre,
-                    v.Choix.ToString(),
+                    v.Choix,
                     v.PoidsVote,
                     v.DateVote
                 ))
                 .ToListAsync();
+        }
+
+
+        private bool EstResolutionAdoptee(
+    Resolution resolution,
+    decimal totalPour,
+    decimal totalContre,
+    decimal totalExprime,
+    decimal totalTantiemes)
+        {
+            return resolution.TypeMajorite switch
+            {
+                TypeMajorite.Simple =>
+                    totalPour > (totalExprime / 2),
+
+                TypeMajorite.Absolue =>
+                    totalPour > (totalTantiemes / 2),
+
+                TypeMajorite.Qualifiee =>
+                    totalPour >= (totalTantiemes * 0.66m),
+
+                TypeMajorite.Unanimite =>
+                    totalContre == 0 && totalExprime == totalPour,
+
+                TypeMajorite.Personnalisee =>
+                    resolution.SeuilMajorite.HasValue &&
+                    totalPour >= (totalTantiemes * resolution.SeuilMajorite.Value),
+
+                _ => false
+            };
         }
 
     }

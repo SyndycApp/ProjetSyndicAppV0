@@ -42,6 +42,7 @@ public enum TypeMajorite
 {
     Simple = 1,
     Absolue = 2,
-    Unanimite = 3,
-    Personnalisee = 4
+    Qualifiee = 3,    
+    Unanimite = 4,  
+    Personnalisee = 5
 }

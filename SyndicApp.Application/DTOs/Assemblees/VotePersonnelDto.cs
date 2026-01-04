@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using SyndicApp.Domain.Enums.Assemblees;
 namespace SyndicApp.Application.DTOs.Assemblees
 {
     public record VotePersonnelDto(
         Guid ResolutionId,
         int NumeroResolution,
         string TitreResolution,
-        string Choix,
+        ChoixVote Choix,
         decimal PoidsVote,
         DateTime DateVote
     );

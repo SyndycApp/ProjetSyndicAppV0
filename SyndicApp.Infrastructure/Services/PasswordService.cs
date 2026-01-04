@@ -8,12 +8,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using SyndicApp.Infrastructure.Identity;
 using Microsoft.Extensions.Configuration;
-using System.Security.Cryptography;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
-using SyndicApp.Infrastructure.Identity;
-
 
 
 namespace SyndicApp.Infrastructure.Services

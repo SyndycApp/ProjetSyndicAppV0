@@ -14,7 +14,11 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
         private readonly IWebHostEnvironment _env;
         private readonly INotificationService _notificationService;
 
-        public ConvocationService(ApplicationDbContext db, IMailService mailService, IWebHostEnvironment env, INotificationService notificationService)
+        public ConvocationService(
+            ApplicationDbContext db,
+            IMailService mailService,
+            IWebHostEnvironment env,
+            INotificationService notificationService)
         {
             _db = db;
             _mailService = mailService;
@@ -22,6 +26,9 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
             _notificationService = notificationService;
         }
 
+        // =====================================================
+        // 🔁 RELANCE DES NON-LECTEURS
+        // =====================================================
         public async Task RelancerNonLecteursAsync(Guid convocationId)
         {
             var nonLecteurs = await _db.ConvocationDestinataires
@@ -35,21 +42,23 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
                     (d, u) => new
                     {
                         d.UserId,
-                        Email = u.Email
+                        u.Email
                     }
                 )
                 .ToListAsync();
 
             foreach (var dest in nonLecteurs)
             {
-                await _mailService.EnvoyerAsync(
-                        email: dest.Email,
-                        sujet: "Relance Convocation",
-                        contenu: "<p>Merci de consulter la convocation.</p>",
-                        isHtml: true
-);
+                if (string.IsNullOrWhiteSpace(dest.Email))
+                    continue;
 
-                // (optionnel mais recommandé)
+                await _mailService.EnvoyerAsync(
+                    dest.Email,
+                    "Relance Convocation",
+                    "<p>Merci de consulter la convocation.</p>",
+                    isHtml: true
+                );
+
                 await _db.ConvocationDestinataires
                     .Where(d =>
                         d.ConvocationId == convocationId &&
@@ -59,13 +68,15 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
             }
         }
 
-
+        // =====================================================
+        // 👀 LECTEURS DE CONVOCATION
+        // =====================================================
         public async Task<List<ConvocationLectureDto>> GetLecteursAsync(Guid convocationId)
         {
             return await _db.ConvocationDestinataires
                 .Where(d => d.ConvocationId == convocationId)
                 .Join(
-                    _db.Users,                
+                    _db.Users,
                     d => d.UserId,
                     u => u.Id,
                     (d, u) => new ConvocationLectureDto(
@@ -78,7 +89,9 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
                 .ToListAsync();
         }
 
-
+        // =====================================================
+        // 📧 ENVOI DES CONVOCATIONS
+        // =====================================================
         public async Task EnvoyerEmailsAsync(Guid convocationId)
         {
             var convocation = await _db.Convocations
@@ -89,12 +102,24 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
 
             var ag = await _db.AssembleesGenerales
                 .Include(a => a.OrdreDuJour)
-                .FirstAsync(a => a.Id == convocation.AssembleeGeneraleId);
+                .FirstOrDefaultAsync(a => a.Id == convocation.AssembleeGeneraleId);
+
+            if (ag == null)
+                throw new InvalidOperationException("Assemblée introuvable");
 
             var residence = await _db.Residences
-                .FirstAsync(r => r.Id == ag.ResidenceId);
+                .FirstOrDefaultAsync(r => r.Id == ag.ResidenceId);
 
-            var contenuHtml = ConvocationContentBuilder.BuildHtml(_env,ag,residence,ag.OrdreDuJour,"SyndicApp");
+            if (residence == null)
+                throw new InvalidOperationException("Résidence introuvable");
+
+            var contenuHtml = ConvocationContentBuilder.BuildHtml(
+                _env,
+                ag,
+                residence,
+                ag.OrdreDuJour,
+                "SyndicApp"
+            );
 
             var destinataires = await _db.ConvocationDestinataires
                 .Where(d => d.ConvocationId == convocationId)
@@ -112,6 +137,9 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
 
             foreach (var dest in destinataires)
             {
+                if (string.IsNullOrWhiteSpace(dest.Email))
+                    continue;
+
                 try
                 {
                     await _mailService.EnvoyerAsync(
@@ -131,13 +159,13 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
                     });
 
                     await _notificationService.NotifierAsync(
-                            userId: dest.UserId,
-                            titre: "Convocation Assemblée Générale",
-                            message: $"Une convocation pour l’assemblée « {ag.Titre} » est disponible.",
-                            type: "CONVOCATION",
-                            cibleId: ag.Id,
-                            cibleType: "Assemblee"
-);
+                        userId: dest.UserId,
+                        titre: "Convocation Assemblée Générale",
+                        message: $"Une convocation pour l’assemblée « {ag.Titre} » est disponible.",
+                        type: "CONVOCATION",
+                        cibleId: ag.Id,
+                        cibleType: "Assemblee"
+                    );
                 }
                 catch (Exception ex)
                 {
@@ -156,8 +184,9 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
             await _db.SaveChangesAsync();
         }
 
-
-
+        // =====================================================
+        // 👁 MARQUER COMME LUE
+        // =====================================================
         public async Task MarquerCommeLueAsync(Guid convocationId, Guid userId)
         {
             var dest = await _db.ConvocationDestinataires
@@ -174,6 +203,9 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
             await _db.SaveChangesAsync();
         }
 
+        // =====================================================
+        // 📎 PIÈCE JOINTE
+        // =====================================================
         public async Task AjouterPieceJointeAsync(Guid convocationId, string nomFichier, string urlFichier)
         {
             var convocationExiste = await _db.Convocations
@@ -192,9 +224,11 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
             await _db.SaveChangesAsync();
         }
 
+        // =====================================================
+        // 🆕 CRÉATION + ENVOI
+        // =====================================================
         public async Task SendAsync(CreateConvocationDto dto)
         {
-            // 🧠 Choix du contenu
             var contenu = dto.ModeleId != null
                 ? await _db.ModelesConvocation
                     .Where(m => m.Id == dto.ModeleId)
@@ -220,7 +254,5 @@ namespace SyndicApp.Infrastructure.Services.Assemblees
             _db.Convocations.Add(convocation);
             await _db.SaveChangesAsync();
         }
-
     }
-
 }

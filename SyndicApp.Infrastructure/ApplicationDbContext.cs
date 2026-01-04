@@ -125,6 +125,9 @@ namespace SyndicApp.Infrastructure
 
         public DbSet<AnnotationAssemblee> AnnotationsAssemblee => Set<AnnotationAssemblee>();
 
+        public DbSet<RelanceVoteLog> RelanceVoteLogs => Set<RelanceVoteLog>();
+
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -170,6 +173,20 @@ namespace SyndicApp.Infrastructure
                 // 🔎 Index utile pour l’historique
                 entity.HasIndex(v => new { v.ProcesVerbalId, v.NumeroVersion })
                     .IsUnique();
+            });
+
+            modelBuilder.Entity<RelanceVoteLog>(entity =>
+            {
+                entity.ToTable("RelanceVoteLogs");
+
+                entity.HasKey(r => r.Id);
+
+                entity.HasIndex(r => new { r.AssembleeGeneraleId, r.UserId, r.Type })
+                    .IsUnique();
+
+                entity.Property(r => r.Type)
+                    .HasMaxLength(50)
+                    .IsRequired();
             });
 
 
