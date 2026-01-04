@@ -4,7 +4,7 @@ using SyndicApp.Application.Interfaces.Assemblees;
 using SyndicApp.Application.Interfaces.Common;
 using SyndicApp.Domain.Entities.Assemblees;
 using SyndicApp.Domain.Enums.Assemblees;
-using SyndicApp.Infrastructure.Persistence;
+
 
 namespace SyndicApp.Infrastructure.Services.Assemblees;
 
@@ -121,13 +121,18 @@ public class SignatureProcesVerbalService : ISignatureProcesVerbalService
 
         var signatures = pv.Signatures
             .OrderBy(s => s.OrdreSignature)
-            .Select(s => new SignatureProcesVerbalDto(
-                s.UserId,
-                s.UserId.ToString(), // à mapper vers nom réel plus tard
-                s.OrdreSignature,
-                s.EstSigne,
-                s.DateSignature
-            ))
+            .Join(
+                _db.Users,
+                s => s.UserId,
+                u => u.Id,
+                (s, u) => new SignatureProcesVerbalDto(
+                    s.UserId,
+                    u.FullName,            
+                    s.OrdreSignature,
+                    s.EstSigne,
+                    s.DateSignature
+                )
+            )
             .ToList();
 
         return new ProcesVerbalEtatDto(
@@ -137,4 +142,5 @@ public class SignatureProcesVerbalService : ISignatureProcesVerbalService
             signatures
         );
     }
+
 }
