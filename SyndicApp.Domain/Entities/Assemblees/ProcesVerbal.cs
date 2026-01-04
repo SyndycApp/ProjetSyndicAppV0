@@ -1,4 +1,5 @@
 ﻿using SyndicApp.Domain.Entities.Common;
+using SyndicApp.Domain.Enums.Assemblees;
 
 namespace SyndicApp.Domain.Entities.Assemblees;
 
@@ -21,4 +22,12 @@ public class ProcesVerbal : BaseEntity
 
     public ICollection<ProcesVerbalVersion> Versions { get; set; }
     = new List<ProcesVerbalVersion>();
+
+    public StatutProcesVerbal Statut { get; set; } = StatutProcesVerbal.Brouillon;
+
+    public ICollection<SignatureProcesVerbal> Signatures { get; set; }
+        = new List<SignatureProcesVerbal>();
+
+    public ICollection<RelanceSignatureLog> RelancesSignature { get; set; }
+    = new List<RelanceSignatureLog>();
 }

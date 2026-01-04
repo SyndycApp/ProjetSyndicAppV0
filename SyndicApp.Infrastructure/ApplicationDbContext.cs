@@ -127,12 +127,76 @@ namespace SyndicApp.Infrastructure
 
         public DbSet<RelanceVoteLog> RelanceVoteLogs => Set<RelanceVoteLog>();
 
+        public DbSet<SignatureProcesVerbal> SignatureProcesVerbals => Set<SignatureProcesVerbal>();
 
+        public DbSet<RelanceSignatureLog> RelanceSignatureLogs => Set<RelanceSignatureLog>();
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<RelanceSignatureLog>(entity =>
+            {
+                entity.ToTable("RelanceSignatureLogs");
+
+                entity.HasKey(x => x.Id);
+
+                entity.Property(x => x.ProcesVerbalId)
+                    .IsRequired();
+
+                entity.Property(x => x.UserId)
+                    .IsRequired();
+
+                entity.Property(x => x.DateRelance)
+                    .IsRequired();
+
+                entity.HasOne<ProcesVerbal>()
+                    .WithMany(pv => pv.RelancesSignature)
+                    .HasForeignKey(x => x.ProcesVerbalId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasIndex(x => new { x.ProcesVerbalId, x.UserId, x.DateRelance });
+
+                entity.HasIndex(x => new { x.ProcesVerbalId, x.UserId });
+            });
+
+
+            modelBuilder.Entity<SignatureProcesVerbal>(entity =>
+            {
+                entity.ToTable("SignatureProcesVerbals");
+
+                entity.HasKey(x => x.Id);
+
+                entity.Property(x => x.UserId)
+                    .IsRequired();
+
+                entity.Property(x => x.OrdreSignature)
+                    .IsRequired();
+
+                entity.Property(x => x.EstObligatoire)
+                    .IsRequired();
+
+                entity.Property(x => x.EstSigne)
+                    .IsRequired();
+
+                entity.Property(x => x.DateSignature)
+                    .IsRequired(false);
+
+                entity.Property(x => x.Commentaire)
+                    .HasMaxLength(1000);
+
+                entity.HasOne(x => x.ProcesVerbal)
+                    .WithMany(pv => pv.Signatures)
+                    .HasForeignKey(x => x.ProcesVerbalId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasIndex(x => new { x.ProcesVerbalId, x.UserId })
+                    .IsUnique();
+
+                entity.HasIndex(x => new { x.ProcesVerbalId, x.OrdreSignature });
+            });
+
 
             modelBuilder.Entity<ProcesVerbalVersion>(entity =>
             {
